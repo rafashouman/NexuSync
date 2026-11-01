@@ -80,7 +80,7 @@ export function Contact() {
       });
       if (result.ok) {
         setSent(
-          `Olá! Sou ${name} e acabei de enviar um pedido de orçamento (${interestLabel}) pelo site da Nexusync.`
+          `Olá! Sou ${name} e acabei de enviar um pedido de orçamento (${interestLabel}) pelo site da NexuSync.`
         );
         form.reset();
       } else {
@@ -236,7 +236,7 @@ export function Contact() {
               <label className="flex items-start gap-3 text-xs leading-relaxed text-muted-foreground">
                 <input type="checkbox" name="consentContact" required className="mt-0.5 h-4 w-4 shrink-0 accent-violet-400" />
                 <span>
-                  Autorizo a Nexusync a usar estes dados para entrar em contato
+                  Autorizo a NexuSync a usar estes dados para entrar em contato
                   sobre este orçamento, conforme o{" "}
                   <Link href="/privacidade" className="font-semibold text-violet-200 underline-offset-4 hover:underline">
                     Aviso de Privacidade
@@ -246,7 +246,7 @@ export function Contact() {
               </label>
               <label className="flex items-start gap-3 text-xs leading-relaxed text-muted-foreground">
                 <input type="checkbox" name="consentPromo" className="mt-0.5 h-4 w-4 shrink-0 accent-violet-400" />
-                <span>(Opcional) Aceito receber novidades e ofertas da Nexusync.</span>
+                <span>(Opcional) Aceito receber novidades e ofertas da NexuSync.</span>
               </label>
 
               <button

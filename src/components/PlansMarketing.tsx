@@ -253,7 +253,7 @@ export function PlansMarketing() {
           </p>
           <a
             href={waLink(
-              "Olá! Minha empresa tem uma operação maior e quero um escopo sob medida com a Nexusync."
+              "Olá! Minha empresa tem uma operação maior e quero um escopo sob medida com a NexuSync."
             )}
             target="_blank"
             rel="noopener noreferrer"

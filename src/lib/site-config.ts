@@ -1,4 +1,4 @@
-export const BRAND = "Nexusync";
+export const BRAND = "NexuSync";
 export const WA_NUMBER = "5551993583936";
 
 export function waLink(message: string) {

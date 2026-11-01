@@ -1,9 +1,9 @@
-# Nexusync — Plano de desenvolvimento comercial e do site
+# NexuSync — Plano de desenvolvimento comercial e do site
 Versão 1.0 • 1 de novembro de 2026 • Documento para implementação
 
 ## 1. Objetivo e decisões propostas
 
-Ampliar o posicionamento da Nexusync para desenvolvimento web, marketing digital e automação, atendendo pequenos e médios negócios. O site deverá explicar como contratar cada serviço isoladamente e apresentar três pacotes recorrentes com escopo comparável.
+Ampliar o posicionamento da NexuSync para desenvolvimento web, marketing digital e automação, atendendo pequenos e médios negócios. O site deverá explicar como contratar cada serviço isoladamente e apresentar três pacotes recorrentes com escopo comparável.
 
 Este documento especifica alterações; não representa alterações já aplicadas ao site. Os preços são propostas comerciais próprias, baseadas no escopo abaixo, e não uma pesquisa de média de mercado. Validar esforço e margem antes de publicar.
 
@@ -25,7 +25,7 @@ Navbar, Footer, FloatingWA, FAQ, Contact, estilos globais, package.json e config
 
 ### Correções prioritárias
 
-- Substituir FocusPulse por Nexusync na mensagem gerada em Services.
+- Substituir FocusPulse por NexuSync na mensagem gerada em Services.
 - Trocar “desenvolvimento de [serviço]” por “serviço de [serviço]” no WhatsApp, para funcionar também com tráfego e redes sociais.
 - Remover “+68% Leads” até existir case verificável. Substituir por “Captação de contatos”.
 - Substituir “Core Web Vitals 99+” por “Otimização de desempenho”: a expressão atual mistura uma pontuação com o nome de um conjunto de métricas.
@@ -54,7 +54,7 @@ Manter fundo escuro, tipografia existente, cartões arredondados e gradientes vi
 
 **Botão secundário:** Conhecer serviços e pacotes
 
-**Mensagem do WhatsApp:** Olá! Quero conhecer as soluções da Nexusync. Meu negócio é [segmento] e meu principal objetivo é [objetivo].
+**Mensagem do WhatsApp:** Olá! Quero conhecer as soluções da NexuSync. Meu negócio é [segmento] e meu principal objetivo é [objetivo].
 
 ### Seção de serviços
 
@@ -97,7 +97,7 @@ O cliente fornece identidade visual, informações, fotos e aprovações. Não i
 
 **CTA:** Quero minha marca presente
 
-**WhatsApp:** Olá! Tenho interesse no Presença Ativa da Nexusync, por R$ 690/mês mais R$ 290 de implantação. Quero apresentar meu negócio.
+**WhatsApp:** Olá! Tenho interesse no Presença Ativa da NexuSync, por R$ 690/mês mais R$ 290 de implantação. Quero apresentar meu negócio.
 
 ### Aquisição Local
 
@@ -109,7 +109,7 @@ As quatro variações são peças estáticas/textos, sem vídeo produzido. O esc
 
 **CTA:** Quero gerar oportunidades
 
-**WhatsApp:** Olá! Tenho interesse no Aquisição Local da Nexusync, por R$ 890/mês mais R$ 490 de implantação, com anúncios pagos à parte.
+**WhatsApp:** Olá! Tenho interesse no Aquisição Local da NexuSync, por R$ 890/mês mais R$ 490 de implantação, com anúncios pagos à parte.
 
 ### Crescimento Integrado
 
@@ -125,7 +125,7 @@ Fluxo inicial sugerido: formulário recebido → cadastrar contato no CRM → av
 
 **CTA:** Quero conectar meu marketing
 
-**WhatsApp:** Olá! Tenho interesse no Crescimento Integrado da Nexusync, por R$ 1.790/mês mais R$ 990 de implantação. Quero integrar conteúdo, anúncios e leads.
+**WhatsApp:** Olá! Tenho interesse no Crescimento Integrado da NexuSync, por R$ 1.790/mês mais R$ 990 de implantação. Quero integrar conteúdo, anúncios e leads.
 
 ### Microtexto comum aos cards
 
@@ -171,13 +171,13 @@ Para o período de início, exibir “Início previsto em 5 a 10 dias úteis ap�
 
 Adicionar PlansMarketing à página principal e a âncora correspondente à navegação. Manter page e layout como componentes de servidor quando possível; usar componente de cliente apenas onde houver animação ou interação.
 
-Usar o mesmo padrão encodeURIComponent nas mensagens de WhatsApp. Centralizar a marca Nexusync. Testar cada botão com plano, valor e mensagem corretos.
+Usar o mesmo padrão encodeURIComponent nas mensagens de WhatsApp. Centralizar a marca NexuSync. Testar cada botão com plano, valor e mensagem corretos.
 
 ### Metadata proposta
 
-Título: “Nexusync | Marketing Digital, Sites e Automações”
+Título: “NexuSync | Marketing Digital, Sites e Automações”
 
-Descrição: “Sites, tráfego pago, gestão de redes sociais e automações para pequenos e médios negócios. Conheça os serviços e pacotes da Nexusync.”
+Descrição: “Sites, tráfego pago, gestão de redes sociais e automações para pequenos e médios negócios. Conheça os serviços e pacotes da NexuSync.”
 
 Revisar Open Graph e imagem social quando a configuração completa estiver disponível.
 

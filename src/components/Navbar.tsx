@@ -41,10 +41,10 @@ export function Navbar() {
         }`}
     >
       <div className="mx-auto flex h-20 w-full max-w-[1440px] items-center justify-between gap-6 px-6 sm:px-10 lg:px-16">
-        <Link href="/" aria-label="Nexusync — início" className="logo-pulse flex items-center gap-2 group">
+        <Link href="/" aria-label="NexuSync — início" className="logo-pulse flex items-center gap-2 group">
           <Image
             src="/images/logo-text.png"
-            alt="Nexusync"
+            alt="NexuSync"
             width={300}
             height={99}
             className="h-6 h-auto transition-transform duration-300 group-hover:scale-105"

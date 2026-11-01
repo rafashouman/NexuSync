@@ -46,7 +46,7 @@ export const marketingPlans: MarketingPlan[] = [
     highlight: false,
     buttonText: "Quero minha marca presente",
     waMessage:
-      "Olá! Tenho interesse no Presença Ativa da Nexusync, por R$ 690/mês mais R$ 290 de implantação. Quero apresentar meu negócio.",
+      "Olá! Tenho interesse no Presença Ativa da NexuSync, por R$ 690/mês mais R$ 290 de implantação. Quero apresentar meu negócio.",
   },
   {
     id: "aquisicao-local",
@@ -75,7 +75,7 @@ export const marketingPlans: MarketingPlan[] = [
     highlight: false,
     buttonText: "Quero gerar oportunidades",
     waMessage:
-      "Olá! Tenho interesse no Aquisição Local da Nexusync, por R$ 890/mês mais R$ 490 de implantação, com anúncios pagos à parte.",
+      "Olá! Tenho interesse no Aquisição Local da NexuSync, por R$ 890/mês mais R$ 490 de implantação, com anúncios pagos à parte.",
   },
   {
     id: "crescimento-integrado",
@@ -108,7 +108,7 @@ export const marketingPlans: MarketingPlan[] = [
     badge: "Recomendado",
     buttonText: "Quero conectar meu marketing",
     waMessage:
-      "Olá! Tenho interesse no Crescimento Integrado da Nexusync, por R$ 1.790/mês mais R$ 990 de implantação. Quero integrar conteúdo, anúncios e leads.",
+      "Olá! Tenho interesse no Crescimento Integrado da NexuSync, por R$ 1.790/mês mais R$ 990 de implantação. Quero integrar conteúdo, anúncios e leads.",
   },
 ];
 

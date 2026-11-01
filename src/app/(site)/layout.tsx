@@ -6,8 +6,8 @@ import DemoShell from "@/components/ui/DemoShell";
 import { ScrollProgress } from "@/components/ui/MotionKit";
 
 export const metadata: Metadata = {
-  title: "Nexusync | Marketing Digital, Sites e Automações",
-  description: "Sites, tráfego pago, gestão de redes sociais e automações para pequenos e médios negócios. Conheça os serviços e pacotes da Nexusync.",
+  title: "NexuSync | Marketing Digital, Sites e Automações",
+  description: "Sites, tráfego pago, gestão de redes sociais e automações para pequenos e médios negócios. Conheça os serviços e pacotes da NexuSync.",
 };
 
 export default function RootLayout({

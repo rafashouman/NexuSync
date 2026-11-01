@@ -10,10 +10,10 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
 
           <div className="lg:col-span-2">
-            <Link href="/" aria-label="Nexusync — início" className="logo-pulse group flex items-center gap-2 mb-6">
+            <Link href="/" aria-label="NexuSync — início" className="logo-pulse group flex items-center gap-2 mb-6">
               <Image
                 src="/images/logo-text.png"
-                alt="Nexusync"
+                alt="NexuSync"
                 width={202}
                 height={24}
                 className="h-6 w-auto transition-transform duration-300 group-hover:scale-105"
@@ -50,7 +50,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-border/50 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-          <p>© <Suspense fallback={null}><CurrentYear /></Suspense> Nexusync. Todos os direitos reservados.</p>
+          <p>© <Suspense fallback={null}><CurrentYear /></Suspense> NexuSync. Todos os direitos reservados.</p>
           <p>Desenvolvido com foco em performance e experiência do utilizador.</p>
         </div>
       </div>

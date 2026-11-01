@@ -225,7 +225,7 @@ export function Services() {
             const Icon = service.icon;
             const waUrl = waLink(
               service.waMessage ??
-                `Olá! Quero saber mais sobre o serviço de ${service.title} na Nexusync.`
+                `Olá! Quero saber mais sobre o serviço de ${service.title} na NexuSync.`
             );
 
             return (

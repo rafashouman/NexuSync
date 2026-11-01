@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import QuoteAdminPanel from "./QuoteAdminPanel";
 
 export const metadata: Metadata = {
-  title: "Orçamentos e vagas | Nexusync",
+  title: "Orçamentos e vagas | NexuSync",
   robots: { index: false, follow: false },
 };
 

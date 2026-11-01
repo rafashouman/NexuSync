@@ -92,7 +92,7 @@ export default function QuoteAdminPanel() {
     return (
       <main className="grid min-h-screen place-items-center bg-[#07070c] p-6">
         <form onSubmit={login} className={`${card} w-full max-w-sm space-y-4`}>
-          <h1 className="font-display text-xl font-bold text-white">Painel Nexusync</h1>
+          <h1 className="font-display text-xl font-bold text-white">Painel NexuSync</h1>
           <input
             type="password"
             value={password}

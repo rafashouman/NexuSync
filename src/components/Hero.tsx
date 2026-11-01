@@ -23,7 +23,7 @@ import {
 import { waLink } from "@/lib/site-config";
 
 const WA = waLink(
-  "Olá! Quero conhecer as soluções da Nexusync. Meu negócio é [segmento] e meu principal objetivo é [objetivo]."
+  "Olá! Quero conhecer as soluções da NexuSync. Meu negócio é [segmento] e meu principal objetivo é [objetivo]."
 );
 
 const projects = [
