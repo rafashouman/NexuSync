@@ -150,7 +150,7 @@ export function PlansMarketing() {
                 ))}
               </ul>
 
-              <details className="mb-8 flex-1 rounded-xl border border-white/[0.07] bg-white/[0.02] p-4 text-sm text-muted-foreground open:bg-white/[0.04]">
+              <details className="mb-8 rounded-xl border border-white/[0.07] bg-white/[0.02] p-4 text-sm text-muted-foreground open:bg-white/[0.04]">
                 <summary className="cursor-pointer font-medium text-violet-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-300">
                   Detalhes do escopo e o que não está incluído
                 </summary>
@@ -185,7 +185,7 @@ export function PlansMarketing() {
                   });
                   selectInterest(plan.id);
                 }}
-                className="mb-3 flex w-full items-center justify-center gap-2 rounded-xl bg-violet-gradient py-4 text-sm font-bold text-white shadow-violet-glow transition-all duration-300 hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300"
+                className="mb-3 mt-auto flex w-full items-center justify-center gap-2 rounded-xl bg-violet-gradient py-4 text-sm font-bold text-white shadow-violet-glow transition-all duration-300 hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300"
               >
                 Pedir proposta
                 <ArrowRight className="h-4 w-4" />
