@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -25,7 +25,7 @@ const appPlans = [
     category: "Reservas & Gestão de Horários",
     price: "499,00",
     originalPrice: "699,00",
-    promoLabel: "Mais Procurado · 5 vagas promocionais",
+    promoLabel: "Recomendado · 5 vagas promocionais",
     deliveryTime: "7 a 15 dias úteis",
     idealFor: "Clínicas, Barbearias, Estúdios e Consultorias",
     description:

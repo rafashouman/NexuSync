@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -20,11 +20,11 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-const WA =
-  "https://wa.me/5551993583936?text=" +
-  encodeURIComponent(
-    "Olá! Vi o portfólio da FocusPulse e quero conversar sobre um projeto."
-  );
+import { waLink } from "@/lib/site-config";
+
+const WA = waLink(
+  "Olá! Quero conhecer as soluções da Nexusync. Meu negócio é [segmento] e meu principal objetivo é [objetivo]."
+);
 
 const projects = [
   {
@@ -199,7 +199,7 @@ export function Hero() {
               <Sparkles className="h-4 w-4" />
             </span>
             <span className="min-w-0">
-              Estúdio de desenvolvimento digital e UX/UI
+              Marketing digital, sites e automações
             </span>
           </motion.div>
 
@@ -209,11 +209,10 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.08 }}
             className="min-w-0 max-w-3xl text-balance font-display text-[clamp(1.75rem,8.8vw,3.6rem)] font-semibold uppercase leading-[1.1] tracking-[-.050em]"
           >
-            <span className="text-violet-gradient">Presença digital</span>
+            <span className="text-violet-gradient">Sua empresa em destaque.</span>
             <br />
-            que gera resultados.
-            <br />
-            Sua marca em <span className="text-fuchsia-gradient">destaque</span>.
+            Mais caminhos para{" "}
+            <span className="text-fuchsia-gradient">novos clientes</span>.
           </motion.h1>
 
           <motion.div
@@ -223,12 +222,9 @@ export function Hero() {
             className="mt-8 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between"
           >
             <p className="max-w-lg text-base leading-7 text-muted-foreground sm:text-lg">
-              <span className="font-medium text-violet-100">
-                Estratégia, design e tecnologia
-              </span>{" "}
-              para transformar a presença da sua marca em uma{" "}
-              <span className="font-medium text-fuchsia-200">experiência</span>{" "}
-              que traz resultados.
+              Conectamos sites, anúncios, redes sociais e automações para ajudar
+              seu negócio a atrair pessoas interessadas, organizar
+              oportunidades e atender melhor.
             </p>
             <div className="flex shrink-0 flex-col items-start gap-5 sm:items-end">
               <a
@@ -237,14 +233,14 @@ export function Hero() {
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 rounded-full bg-violet-gradient px-6 py-4 text-sm font-bold text-white shadow-violet-glow transition-transform hover:scale-[1.03]"
               >
-                Vamos criar algo?
+                Quero um plano para meu negócio
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
               <a
-                href="#trabalhos"
+                href="#servicos"
                 className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-foreground"
               >
-                Conheça nosso trabalho
+                Conhecer serviços e pacotes
                 <ArrowDown className="h-3.5 w-3.5" />
               </a>
             </div>
@@ -428,7 +424,7 @@ export function Hero() {
                 className="pointer-events-none absolute -bottom-4 -left-4 z-30 hidden rounded-2xl border border-violet-200/15 bg-[#17111f]/85 px-4 py-3 shadow-xl shadow-violet-950/30 backdrop-blur-xl sm:block"
               >
                 <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
-                  Prévia ao vivo · {activeProject.number}
+                  Demonstração de desenvolvimento web · {activeProject.number}
                 </p>
                 <p className="mt-0.5 text-xs font-semibold text-foreground">
                   {activeProject.title} — {activeProject.category}

@@ -11,7 +11,7 @@ import {
   Layers,
 } from "lucide-react";
 
-const WA_NUMBER = "5551993583936";
+import { waLink } from "@/lib/site-config";
 
 
 const plans = [
@@ -154,7 +154,7 @@ export function Plans() {
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-400/[0.06] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-violet-200"
           >
             <Sparkles className="h-3.5 w-3.5 text-fuchsia-300" />
-            Investimento Transparente
+            Investimento em projetos avulsos
           </motion.div>
 
           <motion.h2
@@ -293,11 +293,13 @@ export function Plans() {
                   ))}
                 </ul>
 
+                <p className="mb-6 text-xs leading-relaxed text-muted-foreground">
+                  {plan.scope}
+                </p>
+
                 {/* Botão de Ação */}
                 <a
-                  href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
-                    plan.waMessage
-                  )}`}
+                  href={waLink(plan.waMessage)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`group/btn flex w-full items-center justify-center gap-2 rounded-xl py-4 text-sm font-bold transition-all duration-300 ${plan.highlight

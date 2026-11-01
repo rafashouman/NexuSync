@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import {
@@ -50,7 +50,7 @@ const designPlans = [
     name: "Design Profissional",
     price: "650,00",
     originalPrice: "799,00",
-    promoLabel: "Mais Escolhido · 5 primeiros projetos",
+    promoLabel: "Recomendado · 5 primeiros projetos",
     deliveryTime: "5 a 8 dias úteis",
     idealFor: "Marcas em estruturação ou reposicionamento",
     description:

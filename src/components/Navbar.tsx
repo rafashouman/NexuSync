@@ -1,4 +1,4 @@
-"use client"; // Necessário pois usamos hooks (useState, useEffect) no Next.js App Router
+﻿"use client"; // Necessário pois usamos hooks (useState, useEffect) no Next.js App Router
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,6 +10,7 @@ const links = [
   { label: "Contato", href: "/#contato" },
   { label: "Projetos", href: "/#trabalhos" },
   { label: "Serviços", href: "/#servicos" },
+  { label: "Planos", href: "/#planos-marketing" },
   { label: "Sites", href: "/templates" },
   { label: "Apps", href: "/apps" },
   { label: "Web Design", href: "/design" },
@@ -40,10 +41,10 @@ export function Navbar() {
         }`}
     >
       <div className="mx-auto flex h-20 w-full max-w-[1440px] items-center justify-between gap-6 px-6 sm:px-10 lg:px-16">
-        <Link href="/" aria-label="FocusPulse — início" className="logo-pulse flex items-center gap-2 group">
+        <Link href="/" aria-label="Nexusync — início" className="logo-pulse flex items-center gap-2 group">
           <Image
             src="/images/logo-text.png"
-            alt="FocusPulse"
+            alt="Nexusync"
             width={300}
             height={99}
             className="h-6 h-auto transition-transform duration-300 group-hover:scale-105"

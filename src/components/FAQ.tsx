@@ -7,6 +7,38 @@ import { ChevronDown } from "lucide-react";
 // Perguntas baseadas no seu briefing, com foco em profissionalismo e transparência
 const faqs = [
   {
+    q: "O investimento nos anúncios está incluído?",
+    a: "Não. A mensalidade remunera planejamento, gestão e acompanhamento. A verba de mídia é definida com você e paga diretamente à plataforma."
+  },
+  {
+    q: "Posso contratar apenas um serviço?",
+    a: "Sim. Você pode contratar redes sociais, tráfego pago, captação de leads ou automações separadamente, conforme o escopo da proposta."
+  },
+  {
+    q: "Preciso ter um site para anunciar?",
+    a: "Depende do objetivo. Algumas campanhas levam a formulários ou canais de contato. Quando uma página for necessária, indicamos uma solução compatível."
+  },
+  {
+    q: "Vocês respondem meus clientes nas redes sociais?",
+    a: "Os pacotes apresentados incluem produção e publicação de conteúdo. Atendimento de mensagens e gestão diária da comunidade são avaliados separadamente."
+  },
+  {
+    q: "O que é um lead?",
+    a: "É um contato de alguém que demonstrou interesse no seu negócio. Esse contato ainda precisa ser atendido e qualificado pela equipe comercial."
+  },
+  {
+    q: "Vocês garantem vendas?",
+    a: "Trabalhamos com planejamento, testes e acompanhamento. As vendas dependem também da oferta, do mercado, do investimento e do atendimento."
+  },
+  {
+    q: "As ferramentas de automação estão incluídas?",
+    a: "Licenças e créditos de terceiros são apresentados separadamente. Você conhece esses custos antes de aprovar a solução."
+  },
+  {
+    q: "Como começa o trabalho?",
+    a: "Após o aceite da proposta, reunimos informações, acessos e materiais. Em seguida, apresentamos o planejamento e iniciamos a configuração e as entregas."
+  },
+  {
     q: "Quanto tempo demora para a plataforma ficar pronta?",
     a: "Os projetos Starter são entregues de forma acelerada. Os planos Profissional e Premium levam em média de 1 a 2 semanas, dependendo da complexidade das integrações e da agilidade nas aprovações de design. Nosso foco é colocar sua empresa no ar rapidamente, sem sacrificar a qualidade estrutural."
   },

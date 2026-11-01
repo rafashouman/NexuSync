@@ -2,6 +2,7 @@ import { Hero } from "@/components/Hero";
 import { SelectedWork } from "@/components/SelectedWork";
 import { Services } from "@/components/Services";
 import { Segments } from "@/components/Segments";
+import { PlansMarketing } from "@/components/PlansMarketing";
 import { Plans } from "@/components/Plans";
 import { PlansApps } from "@/components/PlansApps";
 import { PlansDG } from "@/components/PlansDG";
@@ -15,6 +16,7 @@ export default function HomePage() {
       <SelectedWork />
       <Services />
       <Segments />
+      <PlansMarketing />
       <Plans />
       <PlansApps />
       <PlansDG />

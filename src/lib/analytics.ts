@@ -12,6 +12,12 @@ export type AnalyticsEvent =
         | "success"
         | "sticky_bar";
     }
+  | {
+      eventName: "marketing_plan_click" | "whatsapp_click";
+      plan_id: string;
+      section: string;
+      destination: "whatsapp";
+    }
   | { eventName: "pilot_form_start" | "pilot_lead_save_error" }
   | {
       eventName: "pilot_form_validation_error";

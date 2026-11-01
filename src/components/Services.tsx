@@ -11,18 +11,32 @@ import {
   ArrowUpRight,
   Zap,
   Sparkles,
+  Megaphone,
+  Share2,
+  Users,
+  Workflow,
 } from "lucide-react";
 
-const WA_NUMBER = "5551993583936";
+import { waLink } from "@/lib/site-config";
 
-const services = [
+const services: {
+  icon: typeof Globe;
+  title: string;
+  desc: string;
+  span: string;
+  tag: string;
+  metrics: string[];
+  accent: string;
+  featured: boolean;
+  waMessage?: string;
+}[] = [
   {
     icon: LayoutTemplate,
     title: "Landing Pages",
     desc: "Páginas focadas em um objetivo claro: transformar visitantes em contatos e oportunidades reais para o seu negócio.",
     span: "lg:col-span-7",
     tag: "Alta Conversão",
-    metrics: ["+68% Leads", "Copy & UX", "A/B Ready"],
+    metrics: ["Captação de contatos", "Copy & UX", "A/B Ready"],
     accent: "from-violet-500/20 via-fuchsia-500/5 to-transparent",
     featured: true,
   },
@@ -62,7 +76,7 @@ const services = [
     desc: "Estrutura técnica bem organizada para ajudar sua empresa a ganhar visibilidade nos mecanismos de busca.",
     span: "lg:col-span-6",
     tag: "Tráfego Orgânico",
-    metrics: ["Core Web Vitals 99+", "Schema Markup", "Indexação Rápida"],
+    metrics: ["Otimização de desempenho", "Schema Markup", "Indexação Rápida"],
     accent: "from-emerald-500/15 via-transparent to-transparent",
     featured: false,
   },
@@ -75,6 +89,50 @@ const services = [
     metrics: ["Monitoramento Uptime", "Backups & SSL", "Evolução Contínua"],
     accent: "from-cyan-500/15 via-transparent to-transparent",
     featured: false,
+  },
+  {
+    icon: Megaphone,
+    title: "Tráfego pago",
+    desc: "Coloque sua empresa no caminho de quem procura soluções como a sua. Planejamos, acompanhamos e ajustamos campanhas para gerar oportunidades dentro do seu orçamento.",
+    span: "lg:col-span-6",
+    tag: "Anúncios",
+    metrics: ["Meta Ads", "Google Ads", "Acompanhamento"],
+    accent: "from-orange-500/15 via-transparent to-transparent",
+    featured: false,
+    waMessage: "Olá! Quero atrair clientes com tráfego pago. Meu negócio é [segmento] e meu principal objetivo é [objetivo].",
+  },
+  {
+    icon: Share2,
+    title: "Gestão de redes sociais",
+    desc: "Sua marca presente, com conteúdo que faz sentido. Organizamos o calendário, criamos publicações e mantemos uma comunicação consistente com seu público.",
+    span: "lg:col-span-6",
+    tag: "Conteúdo",
+    metrics: ["Planejamento", "Conteúdo", "Publicação"],
+    accent: "from-pink-500/15 via-transparent to-transparent",
+    featured: false,
+    waMessage: "Olá! Quero fortalecer minha marca nas redes sociais. Meu negócio é [segmento] e meu principal objetivo é [objetivo].",
+  },
+  {
+    icon: Users,
+    title: "Captação e gestão de leads",
+    desc: "Cada contato merece um próximo passo. Estruturamos páginas, formulários e organização comercial para sua equipe acompanhar as oportunidades recebidas.",
+    span: "lg:col-span-6",
+    tag: "Oportunidades",
+    metrics: ["Landing pages", "Formulários", "CRM"],
+    accent: "from-sky-500/15 via-transparent to-transparent",
+    featured: false,
+    waMessage: "Olá! Quero organizar os contatos que recebo. Meu negócio é [segmento] e meu principal objetivo é [objetivo].",
+  },
+  {
+    icon: Workflow,
+    title: "Automações",
+    desc: "Menos tarefas repetidas. Mais tempo para atender bem. Conectamos ferramentas para organizar contatos, enviar avisos e apoiar o acompanhamento comercial.",
+    span: "lg:col-span-6",
+    tag: "Processos",
+    metrics: ["Integrações", "Lembretes", "Fluxos"],
+    accent: "from-lime-500/15 via-transparent to-transparent",
+    featured: false,
+    waMessage: "Olá! Quero automatizar processos. Meu negócio é [segmento] e meu principal objetivo é [objetivo].",
   },
 ];
 
@@ -133,9 +191,9 @@ export function Services() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-balance font-display text-4xl font-semibold leading-[1.02] tracking-[-0.055em] text-foreground sm:text-5xl md:text-6xl"
             >
-              Engenharia web
+              Da primeira impressão
               <br />
-              <span className="text-violet-gradient">feita para avançar.</span>
+              <span className="text-violet-gradient">ao próximo contato.</span>
             </motion.h2>
           </div>
 
@@ -146,8 +204,9 @@ export function Services() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="max-w-sm text-base leading-7 text-muted-foreground"
           >
-            Da primeira impressão à próxima venda: soluções digitais construídas
-            em torno do que o seu negócio precisa.
+            Sua presença digital precisa trabalhar junto. Escolha o serviço de
+            que precisa agora ou conecte conteúdo, anúncios e atendimento em um
+            plano integrado.
             <span className="mt-3 block font-medium text-violet-100">
               Estratégia, design e tecnologia em cada detalhe.
             </span>
@@ -164,9 +223,10 @@ export function Services() {
         >
           {services.map((service, idx) => {
             const Icon = service.icon;
-            const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
-              `Olá! Quero saber mais sobre o desenvolvimento de ${service.title} na FocusPulse.`
-            )}`;
+            const waUrl = waLink(
+              service.waMessage ??
+                `Olá! Quero saber mais sobre o serviço de ${service.title} na Nexusync.`
+            );
 
             return (
               <motion.article
@@ -209,7 +269,10 @@ export function Services() {
 
                     <div className="flex items-center gap-3">
                       <span className="font-mono text-xs tracking-[0.16em] text-white/30">
-                        0{idx + 1} <span className="text-violet-300/50">/ 06</span>
+                        {String(idx + 1).padStart(2, "0")}{" "}
+                        <span className="text-violet-300/50">
+                          / {String(services.length).padStart(2, "0")}
+                        </span>
                       </span>
                       <a
                         href={waUrl}
@@ -252,7 +315,7 @@ export function Services() {
                     <div className="hidden items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 sm:inline-flex">
                       <Zap className="h-3 w-3 text-emerald-300" />
                       <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-emerald-200">
-                        Alta Demanda
+                        Em destaque
                       </span>
                     </div>
                   )}
