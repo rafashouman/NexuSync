@@ -1,7 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowRight, Sparkles } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  ArrowDown,
+  ArrowRight,
+  BellRing,
+  Globe,
+  Megaphone,
+  MessageCircle,
+  MousePointerClick,
+  Search,
+  Share2,
+  Sparkles,
+  Users,
+} from "lucide-react";
 
 import { waLink } from "@/lib/site-config";
 
@@ -79,7 +92,37 @@ const copies: HeroCopy[] = [
 
 const ROTATE_TIME = 10000;
 
+const insights = [
+  {
+    icon: MousePointerClick,
+    label: "Anúncios",
+    text: "Campanhas atraindo visitantes",
+    tone: "bg-fuchsia-500/15 text-fuchsia-300",
+  },
+  {
+    icon: Users,
+    label: "Site",
+    text: "Visitantes viram contatos",
+    tone: "bg-violet-500/15 text-violet-300",
+  },
+  {
+    icon: BellRing,
+    label: "WhatsApp",
+    text: "Novo pedido de orçamento",
+    tone: "bg-emerald-500/15 text-emerald-300",
+  },
+];
+
+const channels = [
+  { icon: Globe, label: "Site profissional" },
+  { icon: Search, label: "Google Ads" },
+  { icon: Megaphone, label: "Meta Ads" },
+  { icon: Share2, label: "Redes sociais" },
+  { icon: MessageCircle, label: "WhatsApp" },
+];
+
 export function Hero() {
+  const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -194,6 +237,54 @@ export function Hero() {
             />
           ))}
         </div>
+
+        <div className="mt-12 grid w-full max-w-4xl gap-4 sm:grid-cols-3">
+          {insights.map((item, i) => (
+            <motion.div
+              key={item.label}
+              animate={reduceMotion ? undefined : { y: [0, -8, 0] }}
+              transition={{
+                duration: 5 + i,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.6,
+              }}
+              className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-left shadow-xl shadow-violet-950/20 backdrop-blur-xl"
+            >
+              <span
+                className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl ${item.tone}`}
+              >
+                <item.icon className="h-5 w-5" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                  {item.label}
+                </span>
+                <span className="block text-sm font-semibold text-foreground">
+                  {item.text}
+                </span>
+              </span>
+            </motion.div>
+          ))}
+        </div>
+
+        <ul
+          aria-label="Canais de atuação"
+          className="mt-6 flex flex-wrap items-center justify-center gap-2.5"
+        >
+          {channels.map((channel) => (
+            <li
+              key={channel.label}
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-semibold text-white/75"
+            >
+              <channel.icon className="h-3.5 w-3.5 text-violet-300" />
+              {channel.label}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-white/30">
+          Ilustração dos canais e entregas do projeto
+        </p>
 
         <a
           href="#trabalhos"
