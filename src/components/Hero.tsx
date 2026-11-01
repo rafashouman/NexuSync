@@ -207,12 +207,12 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.08 }}
-            className="min-w-0 max-w-3xl text-balance font-display text-[clamp(1.75rem,8.8vw,3.6rem)] font-semibold uppercase leading-[1.1] tracking-[-.050em]"
+            className="min-w-0 max-w-3xl text-balance font-display text-[clamp(1.4rem,6.6vw,2.75rem)] font-semibold uppercase leading-[1.12] tracking-[-.045em]"
           >
             <span className="text-violet-gradient">Sua empresa mais visível.</span>
             <br />
             Mais oportunidades{" "}
-            <span className="text-fuchsia-gradient">de conquistar clientes.</span>.
+            <span className="text-fuchsia-gradient">de conquistar clientes</span>.
           </motion.h1>
 
           <motion.div
@@ -221,7 +221,7 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mt-8 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between"
           >
-            <p className="max-w-lg text-base leading-7 text-muted-foreground sm:text-lg">
+            <p className="max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
               Seu negócio merece ser visto pelas pessoas certas. Conectamos sites, anúncios online, redes sociais e automações em uma estratégia de marketing digital que ajuda a atrair potenciais clientes, organizar oportunidades e tornar o atendimento mais simples e eficiente.
             </p>
             <div className="flex shrink-0 flex-col items-start gap-5 sm:items-end">
