@@ -40,11 +40,11 @@ const faqs = [
   },
   {
     q: "Quanto tempo demora para a plataforma ficar pronta?",
-    a: "Os projetos Starter são entregues de forma acelerada. Os planos Profissional e Premium levam em média de 1 a 2 semanas, dependendo da complexidade das integrações e da agilidade nas aprovações de design. Nosso foco é colocar sua empresa no ar rapidamente, sem sacrificar a qualidade estrutural."
+    a: "O plano Presence tem entrega estimada de 3 a 5 dias úteis e o Pulse, de 5 a 10 dias úteis. No Premium (lojas virtuais e projetos completos), o prazo é definido após a análise do escopo. Os prazos dependem também da agilidade no envio de materiais e nas aprovações."
   },
   {
     q: "Posso utilizar o meu próprio domínio (ex: minhaempresa.com.br)?",
-    a: "Com certeza. Nos planos Profissional e Premium, cuidamos de todo o apontamento de DNS e configuração do seu domínio próprio, garantindo que o seu negócio transmita o máximo de profissionalismo e credibilidade."
+    a: "Sim. Nos planos Pulse e Premium, incluímos a configuração do domínio próprio. No Presence, domínio e hospedagem são orçados à parte quando aplicável."
   },
   {
     q: "A plataforma funciona bem em dispositivos móveis?",
@@ -60,7 +60,7 @@ const faqs = [
   },
   {
     q: "Vocês também desenvolvem lojas virtuais?",
-    a: "Sim. Construímos estruturas de e-commerce e catálogos dinâmicos com foco absoluto na fluidez da experiência do usuário (UX) e em conversões rápidas, ideais para projetos no plano Premium."
+    a: "Sim. O plano Premium cobre pequenos e-commerces, com configuração inicial da loja. Projetos com integrações especiais, grande volume de produtos ou funções personalizadas recebem orçamento próprio. Já o catálogo do plano Pulse não inclui checkout, pagamentos online nem gestão de pedidos."
   },
   {
     q: "Como funciona a estrutura de pagamentos?",
