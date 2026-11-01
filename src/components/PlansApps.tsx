@@ -12,7 +12,6 @@ import {
   Database,
   Gamepad2,
   Terminal,
-  ShieldCheck,
   Sparkles,
 } from "lucide-react";
 
@@ -243,24 +242,6 @@ export function PlansApps() {
                   </button>
                 );
               })}
-            </div>
-
-            {/* Box Técnico de Infraestrutura na Base da Coluna Esquerda */}
-            <div className="rounded-3xl border border-white/[0.08] bg-[#090c12]/90 p-5">
-              <div className="flex items-center gap-3">
-                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-cyan-400/20 bg-cyan-400/10 text-cyan-300">
-                  <ShieldCheck className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-white">
-                    Infraestrutura Cloud Serverless
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    Sistemas construídos em Next.js + Firebase sem necessidade de
-                    instalar nada no celular ou computador.
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
 

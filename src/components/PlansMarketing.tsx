@@ -219,56 +219,51 @@ export function PlansMarketing() {
           {marketingMicrocopy}
         </p>
 
-        <div className="mx-auto mt-16 max-w-5xl rounded-[2rem] border border-white/[0.09] bg-[#0c0e14]/80 p-6 sm:p-8">
-          <h3 className="font-display text-xl font-semibold sm:text-2xl">
-            Contratações avulsas e adicionais
-          </h3>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Não duplicam entregas já incluídas no Crescimento Integrado. Os
-            serviços de captação e automação não incluem campanhas de tráfego.
-          </p>
-          <dl className="mt-6 grid gap-4 md:grid-cols-2">
+        <div className="relative mx-auto mt-16 max-w-5xl overflow-hidden rounded-[2rem] border border-violet-300/15 bg-gradient-to-b from-[#12101c]/90 to-[#0b0d13]/95 p-6 sm:p-10">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-violet-500/15 blur-[90px]"
+          />
+          <div className="relative mb-8 max-w-2xl">
+            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-violet-300">
+              Serviços adicionais
+            </span>
+            <h3 className="mt-2 font-display text-2xl font-semibold sm:text-3xl">
+              Contratações avulsas e adicionais
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              Não duplicam entregas já incluídas no Crescimento Integrado. Os
+              serviços de captação e automação não incluem campanhas de tráfego.
+            </p>
+          </div>
+          <ul className="relative grid gap-4 md:grid-cols-2">
             {marketingAddons.map((a) => (
-              <div
+              <li
                 key={a.name}
-                className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-4"
+                className="group flex flex-col rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-300/30 hover:bg-white/[0.05]"
               >
-                <dt className="font-semibold text-foreground">{a.name}</dt>
-                <dd className="mt-1 text-sm font-medium text-violet-200">
-                  {a.price}
-                </dd>
-                <dd className="mt-1 text-sm text-muted-foreground">{a.scope}</dd>
-              </div>
+                <div className="flex items-start justify-between gap-4">
+                  <h4 className="font-display text-lg font-semibold text-foreground">
+                    {a.name}
+                  </h4>
+                  <span className="shrink-0 rounded-full border border-violet-300/25 bg-violet-500/15 px-3 py-1 text-sm font-semibold text-violet-100">
+                    {a.price}
+                  </span>
+                </div>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {a.scope}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => selectInterest("nao-sei")}
+                  className="mt-4 inline-flex items-center gap-1.5 self-start text-sm font-semibold text-violet-200 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-300"
+                >
+                  Solicitar orçamento
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </button>
+              </li>
             ))}
-          </dl>
-        </div>
-
-        <div className="mx-auto mt-10 max-w-3xl text-center">
-          <h3 className="font-display text-xl font-semibold sm:text-2xl">
-            Mais unidades, canais ou integrações? Seu plano acompanha a operação.
-          </h3>
-          <p className="mt-3 text-sm text-muted-foreground">
-            Para empresas com múltiplas unidades, maior volume de conteúdo ou
-            processos comerciais específicos, desenhamos um escopo próprio.
-          </p>
-          <a
-            href={waLink(
-              "Olá! Minha empresa tem uma operação maior e quero um escopo sob medida com a NexuSync."
-            )}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() =>
-              trackAnalyticsEvent({
-                eventName: "marketing_plan_click",
-                plan_id: "sob-medida",
-                section: "planos-marketing",
-                destination: "whatsapp",
-              })
-            }
-            className="mt-5 inline-flex items-center gap-2 rounded-full border border-violet-300/30 px-5 py-2.5 text-sm font-semibold text-violet-100 hover:bg-violet-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-300"
-          >
-            Sob medida <ArrowRight className="h-4 w-4" />
-          </a>
+          </ul>
         </div>
       </div>
     </section>
