@@ -28,9 +28,10 @@ services:
       AUTH_SECRET: ${AUTH_SECRET:-}
       # "true" quando o site é servido por HTTPS (recomendado em produção)
       COOKIE_SECURE: ${COOKIE_SECURE:-true}
-    ports:
-      # Só local; exponha publicamente via Nginx/Traefik/Caddy com HTTPS
-      - "127.0.0.1:3000:3000"
+    # Sem porta publicada: o Traefik (Dokploy) acessa pela rede interna.
+    # Para rodar localmente, use um docker-compose.override.yml com ports.
+    expose:
+      - "3000"
 
 volumes:
   mongo_data:
