@@ -1,6 +1,13 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, MoveUpRight } from "lucide-react";
-import { Reveal } from "@/components/ui/MotionKit";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 
 const projects = [
   {
@@ -35,13 +42,66 @@ const projects = [
     category: "Automotivo & Seminovos",
     title: "Prime Motors",
     description:
-      "Portal de concessionária em tema claro com comparativo FIPE, simulador CDC e agendamento de visita.",
+      "Portal automotivo em tema claro com comparativo FIPE, simulador CDC e reserva de visita online.",
     href: "/templates/carros",
     theme: "from-blue-500/20 via-[#101726] to-[#0c0d0f]",
   },
+  {
+    number: "05",
+    category: "Arte 3D & Colecionáveis",
+    title: "Alchemist Voxel",
+    description:
+      "Estúdio de impressão em resina 12K e pintura de miniaturas, com Raio-X de 3 estágios e calculadora de encomendas.",
+    href: "/templates/miniaturas",
+    theme: "from-fuchsia-500/25 via-[#140d1f] to-[#08060c]",
+  },
+  {
+    number: "06",
+    category: "Bem-estar & Experiência",
+    title: "Oráculo Connection",
+    description:
+      "Jornada interativa em 3 etapas: escolha do monte, intenção e revelação, desenhada para reter e converter.",
+    href: "/templates/connection",
+    theme: "from-amber-500/20 via-[#14110a] to-[#070709]",
+  },
+  {
+    number: "07",
+    category: "Restaurantes & Reservas",
+    title: "Kobra Fire Reservas",
+    description:
+      "Reserva de mesas VIP, comanda digital e pedidos em um único painel para a operação do restaurante.",
+    href: "/templates/reservas",
+    theme: "from-red-500/20 via-[#1c0f0e] to-[#0c0807]",
+  },
 ];
 
+const AUTOPLAY_TIME = 8000;
+
+// A tela do celular é 280x580; o iframe renderiza em 390px de largura (viewport mobile) e é reduzido.
+const PHONE_W = 280;
+const PHONE_H = 580;
+const PHONE_VIEWPORT_W = 390;
+const PHONE_SCALE = PHONE_W / PHONE_VIEWPORT_W;
+
 export function SelectedWork() {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return;
+    const timer = setInterval(
+      () => setActive((prev) => (prev + 1) % projects.length),
+      AUTOPLAY_TIME
+    );
+    return () => clearInterval(timer);
+  }, [paused, active]);
+
+  const next = () => setActive((prev) => (prev + 1) % projects.length);
+  const prev = () =>
+    setActive((p) => (p - 1 + projects.length) % projects.length);
+
+  const project = projects[active];
+
   return (
     <section
       id="trabalhos"
@@ -71,69 +131,127 @@ export function SelectedWork() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {projects.map((project, i) => (
-            <Reveal key={project.number} delay={(i % 2) * 0.1}>
-            <article
-              className="group h-full min-w-0 overflow-hidden rounded-[1.6rem] border border-white/[0.1] bg-white/[0.035] shadow-xl shadow-black/10 backdrop-blur-xl transition-transform duration-300 hover:-translate-y-1 hover:border-violet-200/20"
+        <div
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocusCapture={() => setPaused(true)}
+          onBlurCapture={() => setPaused(false)}
+        >
+          <div
+            className={`relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br ${project.theme} p-4 sm:p-8 transition-colors duration-700`}
+          >
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_20%,rgba(255,255,255,.1),transparent_60%)]" />
+
+            {/* key remonta os iframes: só o template ativo é carregado */}
+            <div
+              key={project.number}
+              className="relative flex items-center justify-center gap-8 lg:gap-12"
             >
-              <Link
-                href={project.href}
-                className="block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-300"
-                aria-label={`Explorar o template demonstrativo ${project.title}`}
-              >
-                <div
-                  className={`relative h-[270px] overflow-hidden bg-gradient-to-br ${project.theme} sm:h-[310px]`}
-                >
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_30%,rgba(255,255,255,.09),transparent_55%)]" />
-                  <div className="absolute inset-x-4 top-4 overflow-hidden rounded-xl border border-white/15 bg-[#100d15]/70 shadow-2xl shadow-violet-950/20 backdrop-blur-xl transition-transform duration-500 group-hover:scale-[1.025] sm:inset-x-6 sm:top-6">
-                    <div className="flex h-8 items-center gap-1.5 border-b border-white/[0.08] px-3">
-                      <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
-                      <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
-                      <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
-                      <span className="ml-auto min-w-0 max-w-[75%] truncate text-right font-mono text-[8px] text-white/35">
-                        nexusync.online{project.href}
-                      </span>
-                    </div>
-                    <iframe
-                      src={project.href}
-                      title={`Prévia do template ${project.title}`}
-                      loading="lazy"
-                      scrolling="no"
-                      tabIndex={-1}
-                      className="pointer-events-none block h-[260px] w-full border-0 bg-[#0b0d10]/80 sm:h-[300px]"
-                    />
-                  </div>
-                  <span className="absolute bottom-4 right-4 grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur transition-colors group-hover:border-white/50 group-hover:bg-white group-hover:text-black">
-                    <MoveUpRight className="h-4 w-4" />
+              <div className="hidden min-w-0 flex-1 overflow-hidden rounded-2xl border border-white/15 bg-[#0b0d10] shadow-2xl md:block">
+                <div className="flex h-9 items-center gap-1.5 border-b border-white/[0.08] bg-[#0b0e13] px-4">
+                  <span className="h-2 w-2 rounded-full bg-[#ff6b61]" />
+                  <span className="h-2 w-2 rounded-full bg-[#ffc14f]" />
+                  <span className="h-2 w-2 rounded-full bg-[#49c781]" />
+                  <span className="ml-3 min-w-0 truncate rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-0.5 font-mono text-[10px] text-white/50">
+                    nexusync.online{project.href}
                   </span>
                 </div>
-
-                <div className="p-6 sm:p-7">
-                  <div className="mb-4 flex items-center justify-between gap-4">
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-violet-100/60">
-                      {project.category}
-                    </span>
-                    <span className="font-mono text-xs text-white/35">
-                      {project.number}
-                    </span>
-                  </div>
-                  <div className="flex items-start justify-between gap-5">
-                    <div>
-                      <h3 className="font-display text-2xl font-semibold tracking-tight text-foreground">
-                        {project.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                        {project.description}
-                      </p>
-                    </div>
-                    <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-white/40 transition-colors group-hover:text-violet-200" />
-                  </div>
+                <div className="relative aspect-[16/10] w-full overflow-hidden">
+                  <iframe
+                    src={project.href}
+                    title={`Prévia desktop do template ${project.title}`}
+                    scrolling="no"
+                    tabIndex={-1}
+                    className="pointer-events-none h-[200%] w-[200%] origin-top-left scale-50 border-0 bg-[#0b0d10]"
+                  />
                 </div>
+              </div>
+
+              <div
+                className="relative shrink-0 rounded-[2.4rem] border border-white/20 bg-[#0b0d10] p-2 shadow-2xl"
+                style={{ width: PHONE_W + 16 }}
+              >
+                <div
+                  className="relative overflow-hidden rounded-[2rem] bg-[#0b0d10]"
+                  style={{ width: PHONE_W, height: PHONE_H }}
+                >
+                  <iframe
+                    src={project.href}
+                    title={`Prévia mobile do template ${project.title}`}
+                    scrolling="no"
+                    tabIndex={-1}
+                    className="pointer-events-none origin-top-left border-0 bg-[#0b0d10]"
+                    style={{
+                      width: PHONE_VIEWPORT_W,
+                      height: PHONE_H / PHONE_SCALE,
+                      transform: `scale(${PHONE_SCALE})`,
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+            <div className="min-w-0">
+              <div className="mb-2 flex items-center gap-3">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-violet-100/60">
+                  {project.category}
+                </span>
+                <span className="font-mono text-xs text-white/35">
+                  {project.number}/{String(projects.length).padStart(2, "0")}
+                </span>
+              </div>
+              <h3 className="font-display text-2xl font-semibold tracking-tight text-foreground">
+                {project.title}
+              </h3>
+              <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
+                {project.description}
+              </p>
+              <Link
+                href={project.href}
+                className="group mt-4 inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-violet-200"
+              >
+                Explorar este template
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Link>
-            </article>
-            </Reveal>
-          ))}
+            </div>
+
+            <div className="flex shrink-0 items-center gap-4">
+              <div className="flex items-center gap-2">
+                {projects.map((p, index) => (
+                  <button
+                    key={p.number}
+                    type="button"
+                    onClick={() => setActive(index)}
+                    aria-label={`Ver ${p.title}`}
+                    aria-current={index === active}
+                    className={`h-1.5 rounded-full transition-all ${
+                      index === active
+                        ? "w-8 bg-violet-400"
+                        : "w-3 bg-white/20 hover:bg-white/40"
+                    }`}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={prev}
+                aria-label="Template anterior"
+                className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-colors hover:border-violet-400/40 hover:bg-violet-500/20 hover:text-white"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={next}
+                aria-label="Próximo template"
+                className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-colors hover:border-violet-400/40 hover:bg-violet-500/20 hover:text-white"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className="mt-10 flex flex-col items-start justify-between gap-5 border-t border-white/10 pt-7 sm:flex-row sm:items-center">
