@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { bookAppointment } from "@/app/actions/bookAppointment";
 import { onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase/client";
+import { getClientAuth, googleProvider } from "@/lib/firebase/client";
 
 // ==========================================
 // WEB AUDIO SYNTHESIZER (PRECISION UI SOUNDS)
@@ -191,7 +191,7 @@ export default function ChronosBooking() {
 
   useEffect(() => {
     soundRef.current = new ChronosSoundEngine();
-    const unsubscribe = onAuthStateChanged(auth, setUser);
+    const unsubscribe = onAuthStateChanged(getClientAuth(), setUser);
     const frameId = requestAnimationFrame(() => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
@@ -223,7 +223,7 @@ export default function ChronosBooking() {
     soundRef.current?.playTick();
     setStatus("LOADING");
     try {
-      await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(getClientAuth(), googleProvider);
       soundRef.current?.playLockSuccess();
       setStatus("IDLE");
       setFeedbackMsg("");

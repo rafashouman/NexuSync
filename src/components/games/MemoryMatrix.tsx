@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase/client";
+import { getClientAuth, googleProvider } from "@/lib/firebase/client";
 import { saveMatchResult } from "@/app/actions/saveMatchResult";
 import { trackMetaEvent } from "@/components/MetaPixel";
 import {
@@ -161,7 +161,7 @@ export default function MemoryMatrix() {
 
   useEffect(() => {
     soundRef.current = new MatrixSoundEngine();
-    return onAuthStateChanged(auth, setUser, (error) => {
+    return onAuthStateChanged(getClientAuth(), setUser, (error) => {
       console.error("Unable to observe Firebase Auth state.", error);
       setAuthError("Não foi possível verificar sua sessão.");
     });
@@ -190,7 +190,7 @@ export default function MemoryMatrix() {
   const handleLogin = async () => {
     setAuthError("");
     try {
-      await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(getClientAuth(), googleProvider);
       soundRef.current?.playMatch(2);
     } catch (error) {
       console.error("Unable to sign in with Google.", error);

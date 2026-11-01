@@ -24,7 +24,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase/client";
+import { getClientAuth, googleProvider } from "@/lib/firebase/client";
 import { META_PIXEL_ID, trackMetaEvent } from "@/components/MetaPixel";
 
 // ==========================================
@@ -278,7 +278,7 @@ export default function PulseMetricsDashboard() {
 
   useEffect(() => {
     soundRef.current = new MetricsSoundEngine();
-    const unsub = onAuthStateChanged(auth, setUser);
+    const unsub = onAuthStateChanged(getClientAuth(), setUser);
     return () => unsub();
   }, []);
 
@@ -321,7 +321,7 @@ export default function PulseMetricsDashboard() {
   const handleGoogleSync = async () => {
     soundRef.current?.playBlip(640);
     try {
-      await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(getClientAuth(), googleProvider);
       soundRef.current?.playPulseSuccess();
       showToast("Telemetria sincronizada com sua conta Google!");
     } catch {

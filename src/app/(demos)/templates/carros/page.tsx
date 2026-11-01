@@ -28,7 +28,7 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 import { onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase/client";
+import { getClientAuth, googleProvider } from "@/lib/firebase/client";
 import { bookAppointment } from "@/app/actions/bookAppointment";
 import { trackMetaEvent } from "@/components/MetaPixel";
 import { ScrollProgress } from "@/components/ui/MotionKit";
@@ -273,7 +273,7 @@ export default function CarDealershipPage() {
   const [tdProtocol, setTdProtocol] = useState<string | null>(null);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, setUser);
+    const unsub = onAuthStateChanged(getClientAuth(), setUser);
     const frameId = requestAnimationFrame(() => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
@@ -361,7 +361,7 @@ export default function CarDealershipPage() {
   const handleGoogleLogin = async () => {
     setTdStatus("LOADING");
     try {
-      await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(getClientAuth(), googleProvider);
       setTdStatus("IDLE");
       setTdFeedback("");
     } catch {

@@ -35,7 +35,7 @@ import {
   BellRing,
 } from "lucide-react";
 import { onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase/client";
+import { getClientAuth, googleProvider } from "@/lib/firebase/client";
 import { bookAppointment } from "@/app/actions/bookAppointment";
 import { trackMetaEvent } from "@/components/MetaPixel";
 
@@ -430,7 +430,7 @@ export default function KobraTableBooking({
 
   useEffect(() => {
     soundRef.current = new KobraSoundEngine();
-    const unsubscribe = onAuthStateChanged(auth, setUser);
+    const unsubscribe = onAuthStateChanged(getClientAuth(), setUser);
     const frameId = requestAnimationFrame(() => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
@@ -607,7 +607,7 @@ export default function KobraTableBooking({
     soundRef.current?.playClick();
     setStatus("LOADING");
     try {
-      await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(getClientAuth(), googleProvider);
       soundRef.current?.playSuccessBell();
       setStatus("IDLE");
       setFeedbackMsg("");

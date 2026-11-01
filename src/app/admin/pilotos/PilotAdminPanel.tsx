@@ -23,7 +23,7 @@ import {
   type DocumentData,
 } from "firebase/firestore";
 import { Lock, LogOut, MessageCircle, Trash2 } from "lucide-react";
-import { auth } from "@/lib/firebase/client";
+import { getClientAuth } from "@/lib/firebase/client";
 import { getDatabase } from "@/lib/firebase";
 
 const ADMIN_EMAIL = "contato@focuspulse.site";
@@ -112,10 +112,10 @@ export default function PilotAdminPanel() {
   useEffect(
     () =>
       onAuthStateChanged(
-        auth,
+        getClientAuth(),
         (nextUser) => {
           if (nextUser && nextUser.email !== ADMIN_EMAIL) {
-            void signOut(auth).catch((authError) => {
+            void signOut(getClientAuth()).catch((authError) => {
               console.error("Could not end an unauthorized Costi session.", authError);
             });
             setUser(null);
@@ -189,7 +189,7 @@ export default function PilotAdminPanel() {
     setError("");
     startTransition(async () => {
       try {
-        await signInWithEmailAndPassword(auth, ADMIN_EMAIL, password);
+        await signInWithEmailAndPassword(getClientAuth(), ADMIN_EMAIL, password);
         setPassword("");
       } catch (loginError) {
         console.error("Could not sign into the Costi lead panel.", loginError);
@@ -320,7 +320,7 @@ export default function PilotAdminPanel() {
             <button
               type="button"
               disabled={pending}
-              onClick={() => run(() => signOut(auth))}
+              onClick={() => run(() => signOut(getClientAuth()))}
               className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm hover:bg-white/5"
             >
               <LogOut size={14} /> Sair
