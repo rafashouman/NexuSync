@@ -5,14 +5,14 @@ import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowDown,
   ArrowRight,
-  BellRing,
+  ArrowUpRight,
   Globe,
   Megaphone,
   MessageCircle,
-  MousePointerClick,
   Search,
   Share2,
   Sparkles,
+  TrendingUp,
   Users,
 } from "lucide-react";
 
@@ -91,38 +91,174 @@ const copies: HeroCopy[] = [
 ];
 
 const ROTATE_TIME = 10000;
+const ORBIT_TIME = 48;
 
-const insights = [
-  {
-    icon: MousePointerClick,
-    label: "Anúncios",
-    text: "Campanhas atraindo visitantes",
-    tone: "bg-fuchsia-500/15 text-fuchsia-300",
-  },
-  {
-    icon: Users,
-    label: "Site",
-    text: "Visitantes viram contatos",
-    tone: "bg-violet-500/15 text-violet-300",
-  },
-  {
-    icon: BellRing,
-    label: "WhatsApp",
-    text: "Novo pedido de orçamento",
-    tone: "bg-emerald-500/15 text-emerald-300",
-  },
+const orbitIcons = [
+  { icon: Globe, label: "Site", angle: -90 },
+  { icon: Search, label: "Google", angle: -18 },
+  { icon: Megaphone, label: "Anúncios", angle: 54 },
+  { icon: Share2, label: "Redes sociais", angle: 126 },
+  { icon: MessageCircle, label: "WhatsApp", angle: 198 },
 ];
 
-const channels = [
-  { icon: Globe, label: "Site profissional" },
-  { icon: Search, label: "Google Ads" },
-  { icon: Megaphone, label: "Meta Ads" },
-  { icon: Share2, label: "Redes sociais" },
-  { icon: MessageCircle, label: "WhatsApp" },
+const metrics = [
+  { icon: Users, label: "Visitantes", width: "82%", bar: "from-violet-500 to-fuchsia-400" },
+  { icon: MessageCircle, label: "Contatos", width: "64%", bar: "from-fuchsia-500 to-pink-400" },
+  { icon: TrendingUp, label: "Vendas", width: "48%", bar: "from-emerald-500 to-teal-300" },
 ];
+
+const LINE = "M0 118 C 40 112, 62 98, 92 92 S 142 68, 172 60 S 232 34, 300 10";
+
+function GrowthVisual() {
+  const reduceMotion = useReducedMotion();
+  const spin = (reverse: boolean) =>
+    reduceMotion
+      ? undefined
+      : {
+          animate: { rotate: reverse ? -360 : 360 },
+          transition: { duration: ORBIT_TIME, repeat: Infinity, ease: "linear" as const },
+        };
+  const float = (delay: number) =>
+    reduceMotion
+      ? {}
+      : {
+          animate: { y: [0, -10, 0] },
+          transition: { duration: 5.5, repeat: Infinity, ease: "easeInOut" as const, delay },
+        };
+
+  return (
+    <div
+      aria-hidden
+      className="relative mx-auto aspect-square w-full max-w-[300px] sm:max-w-[440px] lg:max-w-[520px]"
+    >
+      <div className="absolute inset-[8%] rounded-full bg-violet-500/25 blur-[90px]" />
+      <div className="absolute inset-[28%] rounded-full bg-fuchsia-500/20 blur-[70px]" />
+
+      <div className="absolute inset-0 rounded-full border border-dashed border-violet-300/20" />
+      <div className="absolute inset-[15%] rounded-full border border-white/10" />
+
+      <motion.div className="absolute inset-0" {...spin(false)}>
+        {orbitIcons.map(({ icon: Icon, label, angle }) => {
+          const rad = (angle * Math.PI) / 180;
+          return (
+            <div
+              key={label}
+              className="absolute"
+              style={{
+                left: `${50 + 50 * Math.cos(rad)}%`,
+                top: `${50 + 50 * Math.sin(rad)}%`,
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <motion.div
+                {...spin(true)}
+                className="grid h-11 w-11 place-items-center rounded-2xl border border-white/15 bg-[#17111f]/90 text-violet-200 shadow-lg shadow-violet-950/40 backdrop-blur-md sm:h-14 sm:w-14"
+              >
+                <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+              </motion.div>
+            </div>
+          );
+        })}
+      </motion.div>
+
+      <div className="absolute left-1/2 top-1/2 w-[66%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-white/15 bg-[#0d0a14]/90 shadow-[0_30px_90px_-30px_rgba(124,58,237,.7)] backdrop-blur-xl">
+        <div className="flex items-center justify-between border-b border-white/[0.08] px-3 py-2 sm:px-4 sm:py-2.5">
+          <div className="flex gap-1.5">
+            <span className="h-2 w-2 rounded-full bg-[#ff6b61]" />
+            <span className="h-2 w-2 rounded-full bg-[#ffc14f]" />
+            <span className="h-2 w-2 rounded-full bg-[#49c781]" />
+          </div>
+          <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-white/40 sm:text-[9px]">
+            Crescimento
+          </span>
+        </div>
+
+        <div className="p-3 sm:p-4">
+          <svg viewBox="0 0 300 130" className="h-auto w-full">
+            <defs>
+              <linearGradient id="hero-area" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#a78bfa" stopOpacity="0.45" />
+                <stop offset="100%" stopColor="#a78bfa" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="hero-line" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#8b5cf6" />
+                <stop offset="100%" stopColor="#e879f9" />
+              </linearGradient>
+            </defs>
+            {[30, 60, 90].map((y) => (
+              <line key={y} x1="0" x2="300" y1={y} y2={y} stroke="rgba(255,255,255,.06)" />
+            ))}
+            <path d={`${LINE} L300 130 L0 130 Z`} fill="url(#hero-area)" />
+            <motion.path
+              d={LINE}
+              fill="none"
+              stroke="url(#hero-line)"
+              strokeWidth="3"
+              strokeLinecap="round"
+              initial={{ pathLength: reduceMotion ? 1 : 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 2.2, ease: "easeOut", delay: 0.4 }}
+            />
+            <circle cx="300" cy="10" r="4.5" fill="#e879f9" />
+          </svg>
+
+          <div className="mt-3 space-y-2">
+            {metrics.map(({ icon: Icon, label, width, bar }, i) => (
+              <div key={label} className="flex items-center gap-2">
+                <Icon className="h-3 w-3 shrink-0 text-white/50" />
+                <span className="w-14 shrink-0 text-[9px] text-white/55 sm:text-[10px]">
+                  {label}
+                </span>
+                <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.07]">
+                  <motion.span
+                    className={`block h-full rounded-full bg-gradient-to-r ${bar}`}
+                    initial={{ width: reduceMotion ? width : 0 }}
+                    animate={{ width }}
+                    transition={{ duration: 1.4, ease: "easeOut", delay: 0.8 + i * 0.2 }}
+                  />
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <motion.div
+        {...float(0)}
+        className="absolute -right-1 top-[10%] hidden items-center gap-3 rounded-2xl border border-white/15 bg-[#17111f]/90 px-4 py-3 shadow-xl shadow-violet-950/40 backdrop-blur-xl sm:flex"
+      >
+        <span className="relative grid h-9 w-9 place-items-center rounded-xl bg-fuchsia-500/20 text-fuchsia-300">
+          <Megaphone className="h-4 w-4" />
+          <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 animate-pulse rounded-full bg-emerald-400" />
+        </span>
+        <span className="text-left">
+          <span className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-white/45">
+            Campanha
+          </span>
+          <span className="block text-xs font-semibold text-white">Anúncio ativo</span>
+        </span>
+      </motion.div>
+
+      <motion.div
+        {...float(1.2)}
+        className="absolute -left-2 bottom-[8%] hidden items-center gap-3 rounded-2xl border border-white/15 bg-[#17111f]/90 px-4 py-3 shadow-xl shadow-violet-950/40 backdrop-blur-xl sm:flex"
+      >
+        <span className="grid h-9 w-9 place-items-center rounded-xl bg-emerald-500/20 text-emerald-300">
+          <MessageCircle className="h-4 w-4" />
+        </span>
+        <span className="text-left">
+          <span className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-white/45">
+            WhatsApp
+          </span>
+          <span className="block text-xs font-semibold text-white">Novo orçamento</span>
+        </span>
+        <ArrowUpRight className="h-4 w-4 text-emerald-300" />
+      </motion.div>
+    </div>
+  );
+}
 
 export function Hero() {
-  const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -138,7 +274,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative isolate flex min-h-[min(820px,100svh)] items-center overflow-hidden pb-20 pt-32"
+      className="relative isolate flex items-center overflow-hidden pb-16 pt-28 lg:min-h-[min(760px,100svh)] lg:pt-32"
     >
       <div
         aria-hidden
@@ -152,147 +288,111 @@ export function Hero() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-10 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-violet-500/15 blur-[120px]"
+        className="pointer-events-none absolute -right-32 top-10 -z-10 h-[34rem] w-[34rem] rounded-full bg-violet-500/15 blur-[120px]"
       />
       <div
         aria-hidden
         className="pointer-events-none absolute -bottom-40 left-0 -z-10 h-96 w-96 rounded-full bg-purple-500/10 blur-[100px]"
       />
 
-      <div
-        className="mx-auto flex w-full max-w-5xl flex-col items-center px-6 text-center sm:px-10"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        onFocusCapture={() => setPaused(true)}
-        onBlurCapture={() => setPaused(false)}
-      >
-        <div className="mb-8 inline-flex max-w-full items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-          <span className="grid h-8 w-8 place-items-center rounded-full border border-violet-300/25 bg-violet-400/10 text-violet-200">
-            <Sparkles className="h-4 w-4" />
-          </span>
-          <span className="min-w-0">Marketing digital, sites e automações</span>
-        </div>
+      <div className="mx-auto grid w-full max-w-[1440px] items-center gap-12 px-6 sm:px-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-8 lg:px-16">
+        <div
+          className="relative z-10 min-w-0"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocusCapture={() => setPaused(true)}
+          onBlurCapture={() => setPaused(false)}
+        >
+          <div className="mb-6 inline-flex max-w-full items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            <span className="grid h-8 w-8 place-items-center rounded-full border border-violet-300/25 bg-violet-400/10 text-violet-200">
+              <Sparkles className="h-4 w-4" />
+            </span>
+            <span className="min-w-0">Marketing digital, sites e automações</span>
+          </div>
 
-        {/* Todas as versões ocupam a mesma célula: a altura é a da maior, sem salto de layout. */}
-        <div className="grid w-full">
-          {copies.map((copy, index) => {
-            const isActive = index === active;
-            const Title = index === 0 ? "h1" : "p";
-            return (
-              <div
-                key={copy.title}
-                aria-hidden={!isActive}
-                className={`col-start-1 row-start-1 flex flex-col items-center transition-all duration-700 ${
-                  isActive
-                    ? "translate-y-0 opacity-100"
-                    : "pointer-events-none translate-y-3 opacity-0"
-                }`}
-              >
-                <Title className="max-w-4xl text-balance font-display text-[clamp(1.75rem,5.2vw,3.5rem)] font-semibold leading-[1.1] tracking-[-.04em]">
-                  <span className="text-violet-gradient">{copy.title}</span>
-                </Title>
-                <h2 className="mt-5 max-w-3xl text-balance font-display text-base font-medium text-foreground/90 sm:text-xl">
-                  {copy.subtitle}
-                </h2>
-                <div className="mt-6 max-w-3xl space-y-4 text-sm leading-7 text-muted-foreground sm:text-base">
-                  {copy.paragraphs.map((text) => (
-                    <p key={text}>{text}</p>
-                  ))}
-                </div>
-                {copy.highlight && (
-                  <p className="mt-5 max-w-3xl text-sm font-semibold leading-7 text-violet-100 sm:text-base">
-                    {copy.highlight}
-                  </p>
-                )}
-                <a
-                  href={copy.href}
-                  tabIndex={isActive ? 0 : -1}
-                  {...(copy.external
-                    ? { target: "_blank", rel: "noopener noreferrer" }
-                    : {})}
-                  className="group mt-8 inline-flex items-center gap-3 rounded-full bg-violet-gradient px-7 py-4 text-sm font-bold text-white shadow-violet-glow transition-transform hover:scale-[1.03]"
+          {/* Todas as versões ocupam a mesma célula: a altura é a da maior, sem salto de layout. */}
+          <div className="grid">
+            {copies.map((copy, index) => {
+              const isActive = index === active;
+              const Title = index === 0 ? "h1" : "p";
+              return (
+                <div
+                  key={copy.title}
+                  aria-hidden={!isActive}
+                  className={`col-start-1 row-start-1 flex flex-col items-start transition-all duration-700 ${
+                    isActive
+                      ? "translate-y-0 opacity-100"
+                      : "pointer-events-none translate-y-3 opacity-0"
+                  }`}
                 >
-                  {copy.cta}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
-              </div>
-            );
-          })}
-        </div>
+                  <Title className="max-w-3xl text-balance font-display text-[clamp(1.75rem,4.6vw,3.4rem)] font-semibold leading-[1.08] tracking-[-.04em]">
+                    <span className="text-violet-gradient">{copy.title}</span>
+                  </Title>
+                  <h2 className="mt-4 max-w-2xl text-balance font-display text-base font-medium text-foreground/90 sm:text-lg">
+                    {copy.subtitle}
+                  </h2>
+                  <div className="mt-4 max-w-2xl space-y-3 text-sm leading-6 text-muted-foreground">
+                    {copy.paragraphs.map((text) => (
+                      <p key={text}>{text}</p>
+                    ))}
+                  </div>
+                  {copy.highlight && (
+                    <p className="mt-4 max-w-2xl text-sm font-semibold leading-6 text-violet-100">
+                      {copy.highlight}
+                    </p>
+                  )}
+                  <a
+                    href={copy.href}
+                    tabIndex={isActive ? 0 : -1}
+                    {...(copy.external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                    className="group mt-7 inline-flex items-center gap-3 rounded-full bg-violet-gradient px-7 py-4 text-sm font-bold text-white shadow-violet-glow transition-transform hover:scale-[1.03]"
+                  >
+                    {copy.cta}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                </div>
+              );
+            })}
+          </div>
 
-        <div className="mt-10 flex items-center gap-2" role="tablist" aria-label="Mensagens">
-          {copies.map((copy, index) => (
-            <button
-              key={copy.title}
-              type="button"
-              role="tab"
-              aria-selected={index === active}
-              aria-label={`Mensagem ${index + 1}`}
-              onClick={() => setActive(index)}
-              className={`h-1.5 rounded-full transition-all ${
-                index === active
-                  ? "w-8 bg-violet-400"
-                  : "w-3 bg-white/20 hover:bg-white/40"
-              }`}
-            />
-          ))}
-        </div>
-
-        <div className="mt-12 grid w-full max-w-4xl gap-4 sm:grid-cols-3">
-          {insights.map((item, i) => (
-            <motion.div
-              key={item.label}
-              animate={reduceMotion ? undefined : { y: [0, -8, 0] }}
-              transition={{
-                duration: 5 + i,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: i * 0.6,
-              }}
-              className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-left shadow-xl shadow-violet-950/20 backdrop-blur-xl"
+          <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <div className="flex items-center gap-2" role="tablist" aria-label="Mensagens">
+              {copies.map((copy, index) => (
+                <button
+                  key={copy.title}
+                  type="button"
+                  role="tab"
+                  aria-selected={index === active}
+                  aria-label={`Mensagem ${index + 1}`}
+                  onClick={() => setActive(index)}
+                  className={`h-1.5 rounded-full transition-all ${
+                    index === active
+                      ? "w-8 bg-violet-400"
+                      : "w-3 bg-white/20 hover:bg-white/40"
+                  }`}
+                />
+              ))}
+            </div>
+            <a
+              href="#trabalhos"
+              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-foreground"
             >
-              <span
-                className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl ${item.tone}`}
-              >
-                <item.icon className="h-5 w-5" />
-              </span>
-              <span className="min-w-0">
-                <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                  {item.label}
-                </span>
-                <span className="block text-sm font-semibold text-foreground">
-                  {item.text}
-                </span>
-              </span>
-            </motion.div>
-          ))}
+              Ver exemplos de sites
+              <ArrowDown className="h-3.5 w-3.5" />
+            </a>
+          </div>
         </div>
 
-        <ul
-          aria-label="Canais de atuação"
-          className="mt-6 flex flex-wrap items-center justify-center gap-2.5"
+        <motion.div
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-0"
         >
-          {channels.map((channel) => (
-            <li
-              key={channel.label}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-semibold text-white/75"
-            >
-              <channel.icon className="h-3.5 w-3.5 text-violet-300" />
-              {channel.label}
-            </li>
-          ))}
-        </ul>
-        <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-white/30">
-          Ilustração dos canais e entregas do projeto
-        </p>
-
-        <a
-          href="#trabalhos"
-          className="mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-foreground"
-        >
-          Ver exemplos de sites
-          <ArrowDown className="h-3.5 w-3.5" />
-        </a>
+          <GrowthVisual />
+        </motion.div>
       </div>
 
       <div
