@@ -27,8 +27,7 @@ import {
   Sparkles,
   SlidersHorizontal,
 } from "lucide-react";
-import { onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
-import { getClientAuth, googleProvider } from "@/lib/firebase/client";
+import { onPlayerChange, signInPlayer, type Player } from "@/lib/player";
 import { bookAppointment } from "@/app/actions/bookAppointment";
 import { trackMetaEvent } from "@/components/MetaPixel";
 import { ScrollProgress } from "@/components/ui/MotionKit";
@@ -262,7 +261,7 @@ export default function CarDealershipPage() {
   const [tradeInValue, setTradeInValue] = useState<number>(0);
 
   // Agendamento de Visita / Test Drive (Firebase Atomic Lock)
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Player | null>(null);
   const [tdVehicle, setTdVehicle] = useState<Vehicle>(INVENTORY[0]);
   const [tdDate, setTdDate] = useState("");
   const [tdMinDate, setTdMinDate] = useState("");
@@ -273,7 +272,7 @@ export default function CarDealershipPage() {
   const [tdProtocol, setTdProtocol] = useState<string | null>(null);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(getClientAuth(), setUser);
+    const unsub = onPlayerChange(setUser);
     const frameId = requestAnimationFrame(() => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
@@ -361,7 +360,7 @@ export default function CarDealershipPage() {
   const handleGoogleLogin = async () => {
     setTdStatus("LOADING");
     try {
-      await signInWithPopup(getClientAuth(), googleProvider);
+      await signInPlayer();
       setTdStatus("IDLE");
       setTdFeedback("");
     } catch {
@@ -1441,7 +1440,7 @@ export default function CarDealershipPage() {
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
             <p>© {CURRENT_YEAR} Prime Motors Seminovos. Todos os direitos reservados.</p>
             <p>
-              Tecnologia & Design por <strong className="text-white">FocusPulse</strong>
+              Tecnologia & Design por <strong className="text-white">NexuSync</strong>
             </p>
           </div>
         </div>

@@ -28,11 +28,9 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import {
-  PILOT_MODALITIES,
-  savePilotLead,
-  trackAnalyticsEvent,
-} from "@/lib/firebase";
+import { PILOT_MODALITIES } from "@/lib/pilot";
+import { savePilotLead } from "@/app/actions/leads";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 import {
   AnimatedValue,
   Confetti,
@@ -324,9 +322,7 @@ export default function PilotosLanding() {
       whatsappWindow?.close();
       console.error("Could not save the pilot lead.", saveError);
       setError(
-        saveError instanceof Error && saveError.message === "firestore/timeout"
-          ? "A conexão demorou demais e não conseguimos confirmar o envio. Use o botão do WhatsApp abaixo."
-          : "Não foi possível salvar seu pedido. Tente novamente ou chame no WhatsApp."
+        "Não foi possível salvar seu pedido. Tente novamente ou chame no WhatsApp."
       );
       setSaveFailed(true);
       try {

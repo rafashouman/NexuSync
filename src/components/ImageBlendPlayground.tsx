@@ -11,7 +11,7 @@ import {
   Check,
   Layers,
 } from "lucide-react";
-import { trackAnalyticsEvent } from "@/lib/firebase";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 type BlendMode =
   | "screen"
@@ -296,7 +296,7 @@ export function ImageBlendPlayground() {
                 className="absolute inset-0 bg-cover bg-center transition-opacity duration-500"
                 style={{
                   backgroundImage:
-                    "url(https://picsum.photos/seed/focuspulse-blend-base/1400/900)",
+                    "url(https://picsum.photos/seed/nexusync-blend-base/1400/900)",
                 }}
               />
             )}
@@ -307,7 +307,7 @@ export function ImageBlendPlayground() {
                 className="absolute inset-0 bg-cover bg-center transition-all duration-300"
                 style={{
                   backgroundImage:
-                    "url(https://picsum.photos/seed/focuspulse-blend-overlay/1400/900)",
+                    "url(https://picsum.photos/seed/nexusync-blend-overlay/1400/900)",
                   mixBlendMode: blendMode,
                   opacity: overlayOpacity / 100,
                 }}

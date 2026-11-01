@@ -3,8 +3,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import * as THREE from "three";
 import { motion, AnimatePresence } from "framer-motion";
-import { onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
-import { getClientAuth, googleProvider } from "@/lib/firebase/client";
+import { onPlayerChange, signInPlayer, type Player } from "@/lib/player";
 import { saveMatchResult } from "@/app/actions/saveMatchResult";
 import { arcadeSynth } from "@/lib/audio/arcadeSynth";
 import {
@@ -56,7 +55,7 @@ export default function VoxelVadersGame({
   const [gameState, setGameState] = useState<"START" | "PLAYING" | "GAMEOVER">(
     "START"
   );
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Player | null>(null);
   const [isSavingScore, setIsSavingScore] = useState(false);
   const [scoreSaved, setScoreSaved] = useState(false);
   const [leaderboardError, setLeaderboardError] = useState("");
@@ -78,10 +77,7 @@ export default function VoxelVadersGame({
   }, [autoFire]);
 
   useEffect(() => {
-    return onAuthStateChanged(getClientAuth(), setUser, (error) => {
-      console.error("Unable to observe Firebase Auth state.", error);
-      setLeaderboardError("Não foi possível verificar sua sessão.");
-    });
+    return onPlayerChange(setUser);
   }, []);
 
   useEffect(() => {
@@ -616,7 +612,7 @@ export default function VoxelVadersGame({
   const handleLeaderboardLogin = async () => {
     setLeaderboardError("");
     try {
-      await signInWithPopup(getClientAuth(), googleProvider);
+      await signInPlayer();
     } catch (error) {
       console.error("Unable to sign in to submit Voxel Vaders score.", error);
       setLeaderboardError("Não foi possível entrar com o Google.");

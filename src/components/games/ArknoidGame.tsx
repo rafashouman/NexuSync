@@ -21,12 +21,12 @@ import {
   ChevronRight,
   GripHorizontal,
 } from "lucide-react";
-import { trackAnalyticsEvent } from "@/lib/firebase";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 import { arcadeSynth } from "@/lib/audio/arcadeSynth";
 
 const WIDTH = 900;
 const HEIGHT = 520;
-const HIGH_SCORE_KEY = "focuspulse_arknoid_highscore";
+const HIGH_SCORE_KEY = "nexusync_arknoid_highscore";
 
 const triggerHaptic = (ms = 12) => {
   if (typeof navigator !== "undefined" && "vibrate" in navigator) {
@@ -40,10 +40,10 @@ const triggerHaptic = (ms = 12) => {
 
 function subscribeToHighScore(callback: () => void) {
   window.addEventListener("storage", callback);
-  window.addEventListener("focuspulse:arknoid-high-score", callback);
+  window.addEventListener("nexusync:arknoid-high-score", callback);
   return () => {
     window.removeEventListener("storage", callback);
-    window.removeEventListener("focuspulse:arknoid-high-score", callback);
+    window.removeEventListener("nexusync:arknoid-high-score", callback);
   };
 }
 
@@ -108,7 +108,7 @@ export function ArknoidGame() {
   useEffect(() => {
     if (score > highScore) {
       localStorage.setItem(HIGH_SCORE_KEY, String(score));
-      window.dispatchEvent(new Event("focuspulse:arknoid-high-score"));
+      window.dispatchEvent(new Event("nexusync:arknoid-high-score"));
       trackAnalyticsEvent({
         eventName: "game_high_score",
         appId: "arknoid",

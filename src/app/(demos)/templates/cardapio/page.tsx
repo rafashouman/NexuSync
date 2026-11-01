@@ -999,7 +999,7 @@ export default function DeliveryMenuPage() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] font-mono uppercase text-zinc-600">
             <p>© {CURRENT_YEAR} KOBRA CRAFT BURGER. TODOS OS DIREITOS RESERVADOS.</p>
             <p className="flex items-center gap-1.5">
-              Powered by <span className="text-orange-500 font-bold">FocusPulse</span>
+              Powered by <span className="text-orange-500 font-bold">NexuSync</span>
             </p>
           </div>
         </div>

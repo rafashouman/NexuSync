@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { drawReadingCards, generateReadingForUser } from "@/lib/hotsites/tarot-site-engine";
 import { readLastDraw, rememberDraw } from "@/lib/hotsites/tarot-draw-history";
 import { downloadTarotReadingPdf } from "@/lib/hotsites/tarot-pdf";
-import { saveTarotLead } from "@/lib/firebase";
+import { saveTarotLead } from "@/app/actions/leads";
 import TarotCardVisual from "@/components/hotsites/TarotCardVisual";
 import { motion, AnimatePresence } from "framer-motion";
 import { 

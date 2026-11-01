@@ -1,8 +1,7 @@
 "use server";
 
-import { getAuth } from "firebase-admin/auth";
-import { Timestamp } from "firebase-admin/firestore";
-import { getAdminApp, getAdminDb } from "@/lib/firebase/admin";
+import { getDb } from "@/lib/mongodb";
+import { parsePlayerToken } from "@/lib/player-server";
 
 export interface BookingPayload {
   date: string; // Formato: YYYY-MM-DD
@@ -52,46 +51,33 @@ export async function bookAppointment(data: BookingPayload, idToken: string) {
     return { success: false, error: "Dados da reserva inválidos." };
   }
 
-  let decodedToken;
-  try {
-    decodedToken = await getAuth(getAdminApp()).verifyIdToken(idToken);
-  } catch (error) {
-    console.error("Unable to verify appointment authentication.", error);
-    return { success: false, error: "Faça login para confirmar a reserva." };
+  const player = parsePlayerToken(idToken);
+  if (!player) {
+    return { success: false, error: "Defina um apelido para confirmar a reserva." };
   }
 
-  const uid = decodedToken.uid;
-  const clientName =
-    decodedToken.name || decodedToken.email || "Cliente Autenticado";
   const sanitizedSlot = data.timeSlot.replace(":", "-");
   const slotDocId = `slot_${data.date}_${sanitizedSlot}`;
 
   try {
-    const db = getAdminDb();
-    const slotRef = db.collection("appointments").doc(slotDocId);
-    await db.runTransaction(async (transaction:any ) => {
-      const slotDoc = await transaction.get(slotRef);
-
-      if (slotDoc.exists) {
-        throw new Error("SLOT_ALREADY_TAKEN");
-      }
-
-      transaction.set(slotRef, {
-        uid,
-        clientName,
-        date: data.date,
-        timeSlot: data.timeSlot,
-        serviceName: data.serviceName,
-        guests: data.guests ?? 2,
-        seatingZone: data.seatingZone ?? "Salão Principal",
-        status: "CONFIRMED",
-        createdAt: Timestamp.now(),
-      });
+    const db = await getDb();
+    // _id único garante o lock atômico do horário.
+    await db.collection<{ _id: string } & Record<string, unknown>>("appointments").insertOne({
+      _id: slotDocId,
+      uid: player.id,
+      clientName: player.name,
+      date: data.date,
+      timeSlot: data.timeSlot,
+      serviceName: data.serviceName,
+      guests: data.guests ?? 2,
+      seatingZone: data.seatingZone ?? "Salão Principal",
+      status: "CONFIRMED",
+      createdAt: new Date(),
     });
 
     return { success: true, bookingId: slotDocId };
   } catch (error) {
-    if (error instanceof Error && error.message === "SLOT_ALREADY_TAKEN") {
+    if ((error as { code?: number })?.code === 11000) {
       return {
         success: false,
         error:

@@ -1,57 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useState, useTransition, type FormEvent } from "react";
-import {
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut,
-  type User,
-} from "firebase/auth";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  limit,
-  onSnapshot,
-  orderBy,
-  query,
-  Timestamp,
-  updateDoc,
-  where,
-  writeBatch,
-  type DocumentData,
-} from "firebase/firestore";
+import { useCallback, useEffect, useMemo, useState, useTransition, type FormEvent } from "react";
 import { Lock, LogOut, MessageCircle, Trash2 } from "lucide-react";
-import { getClientAuth } from "@/lib/firebase/client";
-import { getDatabase } from "@/lib/firebase";
+import {
+  adminLogin,
+  adminLogout,
+  adminSession,
+  deletePilotLead,
+  listPilotLeads,
+  updatePilotLeadStatus,
+  type PilotLeadRecord,
+} from "@/app/actions/pilotAdmin";
 
-const ADMIN_EMAIL = "contato@focuspulse.site";
-const db = getDatabase();
-
-function loginErrorMessage(code: string) {
-  switch (code) {
-    case "auth/invalid-credential":
-    case "auth/wrong-password":
-    case "auth/invalid-login-credentials":
-      return "E-mail ou senha incorretos.";
-    case "auth/user-not-found":
-      return "Usuário não encontrado neste projeto Firebase.";
-    case "auth/user-disabled":
-      return "Esta conta está desativada.";
-    case "auth/too-many-requests":
-      return "Muitas tentativas. Aguarde alguns minutos e tente de novo.";
-    case "auth/network-request-failed":
-      return "Falha de rede. Verifique a conexão ou bloqueadores de anúncios.";
-    case "auth/operation-not-allowed":
-      return "Login por e-mail e senha não está ativado no Firebase.";
-    case "auth/api-key-not-valid.-please-pass-a-valid-api-key.":
-    case "auth/invalid-api-key":
-      return "Chave do Firebase inválida neste ambiente (confira as variáveis NEXT_PUBLIC_FIREBASE_*).";
-    default:
-      return `Não foi possível entrar (${code || "erro desconhecido"}).`;
-  }
-}
 const STATUSES = ["novo", "contatado", "cotado", "fechado", "perdido"];
 const MODALITY_LABELS: Record<string, string> = {
   agricola: "Aviação Agrícola",
@@ -61,33 +21,7 @@ const MODALITY_LABELS: Record<string, string> = {
   instrucao: "Instrução / Geral",
 };
 
-interface PilotLeadRecord {
-  id: string;
-  name: string;
-  whatsapp: string;
-  modality: string;
-  capitalInsured: number;
-  status: string;
-  createdAt: number;
-  deleteAfter: number;
-}
-
 const EMPTY_LEADS: PilotLeadRecord[] = [];
-
-function toLeadRecord(id: string, data: DocumentData): PilotLeadRecord {
-  return {
-    id,
-    name: String(data.name ?? ""),
-    whatsapp: String(data.whatsapp ?? ""),
-    modality: String(data.modality ?? ""),
-    capitalInsured: Number(data.capitalInsured ?? 0),
-    status: String(data.status ?? "novo"),
-    createdAt:
-      data.createdAt instanceof Timestamp ? data.createdAt.toMillis() : 0,
-    deleteAfter:
-      data.deleteAfter instanceof Timestamp ? data.deleteAfter.toMillis() : 0,
-  };
-}
 
 const brl = (value: number) =>
   new Intl.NumberFormat("pt-BR", {
@@ -97,7 +31,7 @@ const brl = (value: number) =>
   }).format(value);
 
 export default function PilotAdminPanel() {
-  const [user, setUser] = useState<User | null>(null);
+  const [authenticated, setAuthenticated] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
   const [leads, setLeads] = useState<PilotLeadRecord[] | null>(null);
   const [password, setPassword] = useState("");
@@ -109,56 +43,41 @@ export default function PilotAdminPanel() {
   const [filter, setFilter] = useState("todos");
   const [pending, startTransition] = useTransition();
 
-  useEffect(
-    () =>
-      onAuthStateChanged(
-        getClientAuth(),
-        (nextUser) => {
-          if (nextUser && nextUser.email !== ADMIN_EMAIL) {
-            void signOut(getClientAuth()).catch((authError) => {
-              console.error("Could not end an unauthorized Costi session.", authError);
-            });
-            setUser(null);
-            setError("Esta conta não tem acesso ao painel Costi.");
-          } else {
-            setUser(nextUser);
-            if (!nextUser) setLeads(null);
-            setError("");
-          }
-          setAuthLoading(false);
-        },
-        (authError) => {
-          console.error("Could not verify the Costi panel session.", authError);
-          setError("Não foi possível verificar o acesso. Atualize a página.");
-          setAuthLoading(false);
-        }
-      ),
-    []
-  );
+  const loadLeads = useCallback(async () => {
+    try {
+      const records = await listPilotLeads();
+      if (records === null) {
+        setAuthenticated(false);
+        setLeads(null);
+      } else {
+        setLeads(records);
+      }
+    } catch (loadError) {
+      console.error("Could not load Costi leads.", loadError);
+      setNotice({ type: "error", message: "Não foi possível carregar os leads." });
+      setLeads([]);
+    }
+  }, []);
 
   useEffect(() => {
-    if (!user) return;
-    const leadsQuery = query(
-      collection(db, "pilot_leads"),
-      orderBy("createdAt", "desc"),
-      limit(500)
-    );
+    adminSession()
+      .then((session) => setAuthenticated(session.authenticated))
+      .catch((authError) => {
+        console.error("Could not verify the Costi panel session.", authError);
+        setError("Não foi possível verificar o acesso. Atualize a página.");
+      })
+      .finally(() => setAuthLoading(false));
+  }, []);
 
-    return onSnapshot(
-      leadsQuery,
-      (snapshot) => {
-        setLeads(snapshot.docs.map((lead) => toLeadRecord(lead.id, lead.data())));
-      },
-      (loadError) => {
-        console.error("Could not load Costi leads.", loadError);
-        setNotice({
-          type: "error",
-          message: "Não foi possível carregar os leads. Confira as regras do Firestore.",
-        });
-        setLeads([]);
-      }
-    );
-  }, [user]);
+  useEffect(() => {
+    if (!authenticated) return;
+    const first = setTimeout(() => void loadLeads(), 0);
+    const interval = setInterval(() => void loadLeads(), 15000);
+    return () => {
+      clearTimeout(first);
+      clearInterval(interval);
+    };
+  }, [authenticated, loadLeads]);
 
   const currentLeads = leads ?? EMPTY_LEADS;
   const visible = useMemo(
@@ -174,6 +93,7 @@ export default function PilotAdminPanel() {
     startTransition(async () => {
       try {
         await task();
+        await loadLeads();
       } catch (actionError) {
         console.error("Could not update Costi leads.", actionError);
         setNotice({
@@ -189,48 +109,25 @@ export default function PilotAdminPanel() {
     setError("");
     startTransition(async () => {
       try {
-        await signInWithEmailAndPassword(getClientAuth(), ADMIN_EMAIL, password);
-        setPassword("");
+        const result = await adminLogin(password);
+        if (result.ok) {
+          setPassword("");
+          setAuthenticated(true);
+        } else {
+          setError(result.error ?? "Não foi possível entrar.");
+        }
       } catch (loginError) {
         console.error("Could not sign into the Costi lead panel.", loginError);
-        const code =
-          typeof loginError === "object" && loginError !== null && "code" in loginError
-            ? String((loginError as { code: unknown }).code)
-            : "";
-        setError(loginErrorMessage(code));
+        setError("Não foi possível entrar. Tente novamente.");
       }
     });
   };
 
-  const removeExpiredLeads = () => {
-    if (!confirm("Excluir permanentemente os leads com prazo de retenção vencido?")) {
-      return;
-    }
-
-    run(async () => {
-      const cutoff = Timestamp.now();
-      let deletedCount = 0;
-
-      while (true) {
-        const expired = await getDocs(
-          query(
-            collection(db, "pilot_leads"),
-            where("deleteAfter", "<=", cutoff),
-            limit(450)
-          )
-        );
-        if (expired.empty) break;
-
-        const batch = writeBatch(db);
-        expired.docs.forEach((lead) => batch.delete(lead.ref));
-        await batch.commit();
-        deletedCount += expired.size;
-      }
-
-      setNotice({
-        type: "success",
-        message: `${deletedCount} lead(s) expirado(s) removido(s).`,
-      });
+  const handleLogout = () => {
+    startTransition(async () => {
+      await adminLogout();
+      setAuthenticated(false);
+      setLeads(null);
     });
   };
 
@@ -242,7 +139,7 @@ export default function PilotAdminPanel() {
     );
   }
 
-  if (!user) {
+  if (!authenticated) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-950 p-6 text-white">
         <form
@@ -253,15 +150,6 @@ export default function PilotAdminPanel() {
             <Lock size={20} />
             <h1 className="text-lg font-bold text-white">Leads Costi</h1>
           </div>
-          <input
-            type="email"
-            name="email"
-            autoComplete="username"
-            value={ADMIN_EMAIL}
-            readOnly
-            aria-label="E-mail do administrador"
-            className="w-full rounded-lg border border-white/10 bg-slate-800/60 px-4 py-3 text-sm text-slate-400 outline-none"
-          />
           <input
             type="password"
             name="password"
@@ -312,15 +200,7 @@ export default function PilotAdminPanel() {
             <button
               type="button"
               disabled={pending}
-              onClick={removeExpiredLeads}
-              className="flex items-center gap-2 rounded-lg border border-red-500/30 px-3 py-2 text-sm text-red-300 hover:bg-red-500/10 disabled:opacity-50"
-            >
-              <Trash2 size={14} /> Limpar expirados
-            </button>
-            <button
-              type="button"
-              disabled={pending}
-              onClick={() => run(() => signOut(getClientAuth()))}
+              onClick={handleLogout}
               className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm hover:bg-white/5"
             >
               <LogOut size={14} /> Sair
@@ -374,9 +254,7 @@ export default function PilotAdminPanel() {
                         disabled={pending}
                         onChange={(event) =>
                           run(() =>
-                            updateDoc(doc(db, "pilot_leads", lead.id), {
-                              status: event.target.value,
-                            })
+                            updatePilotLeadStatus(lead.id, event.target.value)
                           )
                         }
                         className="rounded-md border border-white/10 bg-slate-800 px-2 py-1"
@@ -405,7 +283,7 @@ export default function PilotAdminPanel() {
                         disabled={pending}
                         onClick={() => {
                           if (confirm(`Excluir o lead de ${lead.name}?`)) {
-                            run(() => deleteDoc(doc(db, "pilot_leads", lead.id)));
+                            run(() => deletePilotLead(lead.id));
                           }
                         }}
                         className="rounded-md bg-red-600/80 p-2 hover:bg-red-500"

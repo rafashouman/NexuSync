@@ -23,8 +23,7 @@ import {
   ShieldCheck,
   RefreshCw,
 } from "lucide-react";
-import { onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
-import { getClientAuth, googleProvider } from "@/lib/firebase/client";
+import { onPlayerChange, signInPlayer, type Player } from "@/lib/player";
 import { META_PIXEL_ID, trackMetaEvent } from "@/components/MetaPixel";
 
 // ==========================================
@@ -246,7 +245,7 @@ export default function PulseMetricsDashboard() {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [range, setRange] = useState<TimeRange>("7D");
   const [hoveredBar, setHoveredBar] = useState<number | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Player | null>(null);
   const [toast, setToast] = useState<string | null>(null);
 
   const [pixelLogs, setPixelLogs] = useState<PixelEventLog[]>([
@@ -278,7 +277,7 @@ export default function PulseMetricsDashboard() {
 
   useEffect(() => {
     soundRef.current = new MetricsSoundEngine();
-    const unsub = onAuthStateChanged(getClientAuth(), setUser);
+    const unsub = onPlayerChange(setUser);
     return () => unsub();
   }, []);
 
@@ -321,7 +320,7 @@ export default function PulseMetricsDashboard() {
   const handleGoogleSync = async () => {
     soundRef.current?.playBlip(640);
     try {
-      await signInWithPopup(getClientAuth(), googleProvider);
+      await signInPlayer();
       soundRef.current?.playPulseSuccess();
       showToast("Telemetria sincronizada com sua conta Google!");
     } catch {

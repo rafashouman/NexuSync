@@ -92,7 +92,7 @@ export function SelectedWork() {
                       <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
                       <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
                       <span className="ml-auto min-w-0 max-w-[75%] truncate text-right font-mono text-[8px] text-white/35">
-                        focuspulse.site{project.href}
+                        nexusync.online{project.href}
                       </span>
                     </div>
                     <iframe

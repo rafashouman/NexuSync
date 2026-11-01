@@ -1439,7 +1439,7 @@ export default function ResinAndMiniatureStudioPage() {
 
           <p className="text-[11px] font-mono text-zinc-500">
             © {CURRENT_YEAR} ALCHEMIST VOXEL STUDIO • POWERED BY{" "}
-            <strong className="text-fuchsia-400">FOCUSPULSE</strong>
+            <strong className="text-fuchsia-400">NexuSync</strong>
           </p>
         </div>
       </footer>

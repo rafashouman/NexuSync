@@ -1545,7 +1545,7 @@ export function TemplatesPageContent() {
               <div className="flex min-w-0 flex-1 max-w-md items-center justify-center gap-2 rounded-lg border border-white/[0.07] bg-black/40 px-3 py-1">
                 <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="truncate font-mono text-[11px] text-white/70">
-                  https://focuspulse.site{activeTemplate.href}
+                  https://nexusync.online{activeTemplate.href}
                 </span>
               </div>
 
@@ -1759,7 +1759,7 @@ export function TemplatesPageContent() {
                       <span className="h-2 w-2 rounded-full bg-[#ffc14f]/80" />
                       <span className="h-2 w-2 rounded-full bg-[#49c781]/80" />
                       <span className="ml-auto truncate font-mono text-[9px] text-white/45">
-                        focuspulse.site{template.href}
+                        nexusync.online{template.href}
                       </span>
                     </div>
 

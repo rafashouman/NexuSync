@@ -329,7 +329,7 @@ export function Hero() {
                     <div className="flex min-w-0 max-w-[60%] items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-1">
                       <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
                       <span className="min-w-0 truncate font-mono text-[9px] tracking-[0.16em] text-white/50 sm:text-[10px]">
-                        focuspulse.site{project.href}
+                        nexusync.online{project.href}
                       </span>
                     </div>
 

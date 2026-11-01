@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Sora, Plus_Jakarta_Sans } from "next/font/google";
-import { AnalyticsConsent } from "@/components/AnalyticsConsent";
 import MetaPixel from "@/components/MetaPixel";
 import "./globals.css"; // Ajuste o caminho se necessário
 
@@ -19,7 +18,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "FocusPulse | Soluções Digitais",
+  title: "NexuSync | Soluções Digitais",
   description: "Desenvolvimento de sites institucionais, plataformas digitais e e-commerces de alta performance.",
 };
 
@@ -36,7 +35,6 @@ export default function RootLayout({
         <MetaPixel />
         {/* O children aqui vai renderizar ou o SiteLayout ou a página do Template */}
         {children}
-        <AnalyticsConsent />
       </body>
     </html>
   );

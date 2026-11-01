@@ -6,7 +6,7 @@ export default function ArcadePage() {
     <section className="container-luxe py-32 sm:py-40">
       <div className="mb-10 max-w-3xl">
         <p className="mb-3 font-mono text-xs font-bold uppercase tracking-[0.2em] text-violet-200">
-          FocusPulse Labs
+          NexuSync Labs
         </p>
         <h1 className="mb-4 font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
           Arcade

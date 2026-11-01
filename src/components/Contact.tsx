@@ -13,7 +13,7 @@ import {
   Copy,
   MessageSquare,
 } from "lucide-react";
-import { saveContactRequest } from "@/lib/firebase";
+import { saveContactRequest } from "@/app/actions/leads";
 
 const WA_NUMBER = "5551993583936";
 
@@ -41,7 +41,7 @@ export function Contact() {
 
   const handleCopyEmail = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigator.clipboard.writeText("contato@focuspulse.site");
+    navigator.clipboard.writeText("contato@nexusync.online");
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2500);
   };
@@ -322,7 +322,7 @@ export function Contact() {
 
                 <div className="group flex flex-col gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-3 transition-all hover:border-violet-300/30 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:p-4">
                   <a
-                    href="mailto:contato@focuspulse.site"
+                    href="mailto:contato@nexusync.online"
                     className="flex min-w-0 items-center gap-3 sm:flex-1 sm:gap-4"
                   >
                     <div className="rounded-xl bg-violet-300/10 p-3 text-violet-200 transition-colors group-hover:bg-violet-500 group-hover:text-white">
@@ -333,7 +333,7 @@ export function Contact() {
                         E-mail Oficial
                       </p>
                       <p className="break-words font-medium text-foreground">
-                        contato@focuspulse.site
+                        contato@nexusync.online
                       </p>
                     </div>
                   </a>

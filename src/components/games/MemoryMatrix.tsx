@@ -2,8 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
-import { getClientAuth, googleProvider } from "@/lib/firebase/client";
+import { onPlayerChange, signInPlayer, type Player } from "@/lib/player";
 import { saveMatchResult } from "@/app/actions/saveMatchResult";
 import { trackMetaEvent } from "@/components/MetaPixel";
 import {
@@ -143,7 +142,7 @@ export default function MemoryMatrix() {
   const soundRef = useRef<MatrixSoundEngine | null>(null);
   const [soundEnabled, setSoundEnabled] = useState(true);
 
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Player | null>(null);
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedIndices, setFlippedIndices] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
@@ -161,10 +160,7 @@ export default function MemoryMatrix() {
 
   useEffect(() => {
     soundRef.current = new MatrixSoundEngine();
-    return onAuthStateChanged(getClientAuth(), setUser, (error) => {
-      console.error("Unable to observe Firebase Auth state.", error);
-      setAuthError("Não foi possível verificar sua sessão.");
-    });
+    return onPlayerChange(setUser);
   }, []);
 
   const isVictory = matches === CARD_MODULES.length;
@@ -190,7 +186,7 @@ export default function MemoryMatrix() {
   const handleLogin = async () => {
     setAuthError("");
     try {
-      await signInWithPopup(getClientAuth(), googleProvider);
+      await signInPlayer();
       soundRef.current?.playMatch(2);
     } catch (error) {
       console.error("Unable to sign in with Google.", error);

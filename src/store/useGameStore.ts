@@ -11,7 +11,7 @@ import {
   CardScoreStep,
 } from '@/lib/games/tarot-engine';
 import { soundFX } from '@/lib/audio/sound-fx';
-import { saveDaemonRunLog } from '@/lib/firebase';
+import { saveDaemonRunLog } from '@/app/actions/leads';
 
 export type SpreadStage = 'PAST' | 'PRESENT' | 'FUTURE';
 

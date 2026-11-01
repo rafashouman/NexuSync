@@ -1,8 +1,7 @@
 "use server";
 
-import { getAuth } from "firebase-admin/auth";
-import { Timestamp } from "firebase-admin/firestore";
-import { getAdminApp, getAdminDb } from "@/lib/firebase/admin";
+import { getDb } from "@/lib/mongodb";
+import { parsePlayerToken } from "@/lib/player-server";
 
 type MatchPayload =
   | {
@@ -53,12 +52,9 @@ export async function saveMatchResult(
     return { success: false, error: "Dados da partida inválidos." };
   }
 
-  let decodedToken;
-  try {
-    decodedToken = await getAuth(getAdminApp()).verifyIdToken(idToken);
-  } catch (error) {
-    console.error("Unable to verify game result authentication.", error);
-    return { success: false, error: "Acesso não autorizado." };
+  const player = parsePlayerToken(idToken);
+  if (!player) {
+    return { success: false, error: "Defina um apelido para salvar a pontuação." };
   }
 
   const calculatedScore =
@@ -72,21 +68,24 @@ export async function saveMatchResult(
         ? { moves: data.moves, timeInSeconds: data.timeInSeconds }
         : { wave: data.wave };
 
-    const docRef = await getAdminDb()
-      .collection("leaderboard")
-      .add({
-        gameId: data.gameId,
-        uid: decodedToken.uid,
-        playerName: decodedToken.name || "Operador Anônimo",
-        ...gameDetails,
-        score: calculatedScore,
-        scoreVerification: "client-reported",
-        playedAt: Timestamp.now(),
-      });
+    const db = await getDb();
+    const result = await db.collection("leaderboard").insertOne({
+      gameId: data.gameId,
+      uid: player.id,
+      playerName: player.name,
+      ...gameDetails,
+      score: calculatedScore,
+      scoreVerification: "client-reported",
+      playedAt: new Date(),
+    });
 
-    return { success: true, score: calculatedScore, id: docRef.id };
+    return {
+      success: true,
+      score: calculatedScore,
+      id: result.insertedId.toString(),
+    };
   } catch (error) {
-    console.error("Unable to save game result to Firestore.", error);
+    console.error("Unable to save game result to MongoDB.", error);
     return {
       success: false,
       error: "Falha ao salvar a pontuação. Tente novamente.",

@@ -34,8 +34,7 @@ import {
   ArrowRight,
   BellRing,
 } from "lucide-react";
-import { onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
-import { getClientAuth, googleProvider } from "@/lib/firebase/client";
+import { onPlayerChange, signInPlayer, type Player } from "@/lib/player";
 import { bookAppointment } from "@/app/actions/bookAppointment";
 import { trackMetaEvent } from "@/components/MetaPixel";
 
@@ -426,11 +425,11 @@ export default function KobraTableBooking({
   const [status, setStatus] = useState<"IDLE" | "LOADING" | "SUCCESS" | "ERROR">("IDLE");
   const [feedbackMsg, setFeedbackMsg] = useState("");
   const [protocolCode, setProtocolCode] = useState<string | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Player | null>(null);
 
   useEffect(() => {
     soundRef.current = new KobraSoundEngine();
-    const unsubscribe = onAuthStateChanged(getClientAuth(), setUser);
+    const unsubscribe = onPlayerChange(setUser);
     const frameId = requestAnimationFrame(() => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
@@ -607,7 +606,7 @@ export default function KobraTableBooking({
     soundRef.current?.playClick();
     setStatus("LOADING");
     try {
-      await signInWithPopup(getClientAuth(), googleProvider);
+      await signInPlayer();
       soundRef.current?.playSuccessBell();
       setStatus("IDLE");
       setFeedbackMsg("");
