@@ -164,7 +164,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative isolate flex min-h-[min(920px,100svh)] items-center overflow-hidden px-4 pb-20 pt-32 sm:px-10 lg:px-16"
+      className="relative isolate flex min-h-[min(920px,100svh)] items-center overflow-hidden pb-20 pt-32"
     >
       {/* Grid Background */}
       <div
@@ -186,7 +186,7 @@ export function Hero() {
         className="pointer-events-none absolute -bottom-40 left-0 -z-10 h-96 w-96 rounded-full bg-purple-500/10 blur-[100px]"
       />
 
-      <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_.95fr] lg:gap-10">
+      <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 px-6 sm:px-10 lg:px-16 items-center gap-14 lg:grid-cols-[1.05fr_.95fr] lg:gap-10">
         {/* COLUNA ESQUERDA */}
         <div className="relative z-10 w-full min-w-0 max-w-3xl">
           <motion.div
