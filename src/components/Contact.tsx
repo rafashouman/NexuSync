@@ -14,6 +14,7 @@ import {
   MessageSquare,
 } from "lucide-react";
 import { saveQuoteRequest } from "@/app/actions/quotes";
+import { trackMetaEvent } from "@/components/MetaPixel";
 import {
   INTEREST_EVENT,
   QUOTE_BUDGETS,
@@ -79,6 +80,7 @@ export function Contact() {
         website: field("website"),
       });
       if (result.ok) {
+        trackMetaEvent("Lead", { content_name: interest });
         setSent(
           `Olá! Sou ${name} e acabei de enviar um pedido de orçamento (${interestLabel}) pelo site da NexuSync.`
         );

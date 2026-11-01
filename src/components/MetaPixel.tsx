@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, Suspense } from "react";
+import { useEffect, useRef, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 
@@ -41,11 +41,31 @@ function MetaPixelRouteTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const isFirstRender = useRef(true);
+
+  // A primeira visualiza??o j? ? registrada pelo script base.
   useEffect(() => {
-    if (typeof window !== "undefined" && typeof window.fbq === "function") {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    if (typeof window.fbq === "function") {
       window.fbq("track", "PageView");
     }
   }, [pathname, searchParams]);
+
+  // Qualquer clique em link do WhatsApp conta como evento Contact.
+  useEffect(() => {
+    const onClick = (event: MouseEvent) => {
+      const link = (event.target as Element | null)?.closest?.("a[href]");
+      const href = link?.getAttribute("href") ?? "";
+      if (/^https:\/\/(wa\.me|api\.whatsapp\.com)\//.test(href)) {
+        trackMetaEvent("Contact", { content_name: "whatsapp" });
+      }
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
 
   return null;
 }
