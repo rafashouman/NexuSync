@@ -17,43 +17,6 @@ function retentionDate() {
 const isString = (value: unknown, max: number) =>
   typeof value === "string" && value.trim().length > 0 && value.length <= max;
 
-export async function saveContactRequest(input: {
-  name: string;
-  company: string;
-  message: string;
-  projectType: string;
-  plan: string;
-  route: string;
-}) {
-  if (
-    !input ||
-    !isString(input.name, 100) ||
-    typeof input.company !== "string" ||
-    input.company.length > 150 ||
-    !isString(input.message, 2000) ||
-    !isString(input.projectType, 120) ||
-    typeof input.plan !== "string" ||
-    input.plan.length > 120 ||
-    typeof input.route !== "string" ||
-    input.route.length > 200
-  ) {
-    throw new Error("Os dados do contato estão incompletos ou inválidos.");
-  }
-
-  const db = await getDb();
-  await db.collection("leads").insertOne({
-    name: input.name.trim(),
-    company: input.company.trim(),
-    message: input.message.trim(),
-    projectType: input.projectType,
-    plan: input.plan,
-    route: input.route,
-    consent: true,
-    createdAt: new Date(),
-    deleteAfter: retentionDate(),
-  });
-}
-
 export async function saveTarotLead(input: TarotLeadData) {
   const name = String(input?.name ?? "").trim();
   const whatsapp = String(input?.whatsapp ?? "").trim();

@@ -11,6 +11,7 @@ import {
   Layers,
 } from "lucide-react";
 
+import { usePromoSlots, promoView } from "@/components/usePromoSlots";
 import { waLink } from "@/lib/site-config";
 
 
@@ -20,7 +21,7 @@ const plans = [
     name: "Presence",
     price: "297,00",
     originalPrice: "399,00",
-    promoLabel: "Lançamento · 5 primeiros projetos",
+    promoKey: "sites-presence" as const,
     deliveryTime: "Entrega estimada: 3 a 5 dias úteis",
     idealFor: "Comece sua presença digital",
     description:
@@ -50,7 +51,7 @@ const plans = [
     name: "Pulse",
     price: "499,00",
     originalPrice: "599,00",
-    promoLabel: "Lançamento · 5 primeiros projetos",
+    promoKey: "sites-pulse" as const,
     deliveryTime: "Entrega estimada: 5 a 10 dias úteis",
     idealFor: "Mais estrutura para seu negócio",
     description:
@@ -84,7 +85,7 @@ const plans = [
     name: "Premium",
     price: "1.599,00",
     originalPrice: "1.999,00",
-    promoLabel: "Lançamento · 3 primeiros projetos",
+    promoKey: "sites-premium" as const,
     deliveryTime: "Prazo definido após análise do projeto",
     idealFor: "E-commerce e projetos completos",
     description:
@@ -132,6 +133,7 @@ const itemVariants = {
 };
 
 export function Plans() {
+  const slots = usePromoSlots();
   return (
     <section
       id="planos"
@@ -239,9 +241,9 @@ export function Plans() {
 
                 {/* Box de Preço */}
                 <div className="mb-6 rounded-2xl border border-white/[0.07] bg-black/25 p-5">
-                  {plan.promoLabel && (
+                  {promoView(slots, plan.promoKey, plan).label && (
                     <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-fuchsia-200">
-                      {plan.promoLabel}
+                      {promoView(slots, plan.promoKey, plan).label}
                     </p>
                   )}
                   <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
@@ -255,12 +257,12 @@ export function Plans() {
                             : "text-foreground group-hover:text-violet-100"
                           }`}
                       >
-                        {plan.price}
+                        {promoView(slots, plan.promoKey, plan).price}
                       </span>
                     </div>
-                    {plan.originalPrice && (
+                    {promoView(slots, plan.promoKey, plan).originalPrice && (
                       <del className="text-sm text-muted-foreground/70 decoration-white/50">
-                        De R$ {plan.originalPrice}
+                        De R$ {promoView(slots, plan.promoKey, plan).originalPrice}
                       </del>
                     )}
                   </div>

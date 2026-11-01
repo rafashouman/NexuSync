@@ -2,7 +2,7 @@ import "server-only";
 
 import { MongoClient, type Db } from "mongodb";
 
-const LEAD_COLLECTIONS = ["leads", "pilot_leads", "tarot_leads", "daemon_runs"];
+const LEAD_COLLECTIONS = ["leads", "pilot_leads", "tarot_leads", "daemon_runs", "quote_requests"];
 
 type MongoGlobal = typeof globalThis & {
   __nexusyncMongo?: Promise<Db>;
@@ -26,6 +26,7 @@ async function connect(): Promise<Db> {
         .createIndex({ deleteAfter: 1 }, { expireAfterSeconds: 0 })
     ),
     db.collection("pilot_leads").createIndex({ createdAt: -1 }),
+    db.collection("quote_requests").createIndex({ createdAt: -1 }),
     db.collection("leaderboard").createIndex({ gameId: 1, score: -1 }),
   ]);
 

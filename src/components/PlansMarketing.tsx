@@ -9,6 +9,7 @@ import {
 } from "@/data/marketingPlans";
 import { formatBRL, waLink } from "@/lib/site-config";
 import { trackAnalyticsEvent } from "@/lib/analytics";
+import { selectInterest } from "@/lib/quote";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -173,6 +174,23 @@ export function PlansMarketing() {
                 </ul>
               </details>
 
+              <button
+                type="button"
+                onClick={() => {
+                  trackAnalyticsEvent({
+                    eventName: "marketing_plan_click",
+                    plan_id: plan.id,
+                    section: "planos-marketing",
+                    destination: "form",
+                  });
+                  selectInterest(plan.id);
+                }}
+                className="mb-3 flex w-full items-center justify-center gap-2 rounded-xl bg-violet-gradient py-4 text-sm font-bold text-white shadow-violet-glow transition-all duration-300 hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300"
+              >
+                Pedir proposta
+                <ArrowRight className="h-4 w-4" />
+              </button>
+
               <a
                 href={waLink(plan.waMessage)}
                 target="_blank"
@@ -187,9 +205,7 @@ export function PlansMarketing() {
                   trackAnalyticsEvent({ eventName: "whatsapp_click", ...base });
                 }}
                 className={`flex w-full items-center justify-center gap-2 rounded-xl py-4 text-sm font-bold transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300 ${
-                  plan.highlight
-                    ? "bg-violet-gradient text-white shadow-violet-glow hover:scale-[1.02]"
-                    : "border border-violet-300/30 bg-white/[0.03] text-violet-100 hover:bg-violet-500/20"
+                  "border border-violet-300/30 bg-white/[0.03] text-violet-100 hover:bg-violet-500/20"
                 }`}
               >
                 {plan.buttonText}

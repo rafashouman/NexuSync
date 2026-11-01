@@ -1,6 +1,7 @@
-﻿"use client";
+"use client";
 
 import { motion } from "framer-motion";
+import { usePromoSlots, promoView } from "@/components/usePromoSlots";
 import {
   Check,
   ArrowRight,
@@ -21,7 +22,7 @@ const designPlans = [
     name: "Design Starter",
     price: "199,00",
     originalPrice: "249,00",
-    promoLabel: "Lançamento · 5 primeiros pacotes",
+    promoKey: "design-starter" as const,
     deliveryTime: "3 a 5 dias úteis",
     idealFor: "Pequenos negócios e profissionais autônomos",
     description:
@@ -50,7 +51,7 @@ const designPlans = [
     name: "Design Profissional",
     price: "650,00",
     originalPrice: "799,00",
-    promoLabel: "Recomendado · 5 primeiros projetos",
+    promoKey: "design-profissional" as const,
     deliveryTime: "5 a 8 dias úteis",
     idealFor: "Marcas em estruturação ou reposicionamento",
     description:
@@ -84,7 +85,7 @@ const designPlans = [
     name: "Design UI/UX Premium",
     price: "1.490,00",
     originalPrice: "1.990,00",
-    promoLabel: "Lançamento · 3 primeiros projetos",
+    promoKey: "design-premium" as const,
     deliveryTime: "Definido conforme o projeto",
     idealFor: "SaaS, Startups, E-commerces e Aplicativos",
     description:
@@ -114,6 +115,7 @@ const designPlans = [
 ];
 
 export function PlansDG() {
+  const slots = usePromoSlots();
   return (
     <section
       id="planosdg"
@@ -251,20 +253,20 @@ export function PlansDG() {
                   {/* Coluna 3: Investimento & Contratação (3 Cols) */}
                   <div className="lg:col-span-3 flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-black/30 p-5">
                     <div>
-                      <span className="block font-mono text-[10px] font-bold uppercase tracking-wider text-amber-300">
-                        {plan.promoLabel}
-                      </span>
+                      {promoView(slots, plan.promoKey, plan).label && (<span className="block font-mono text-[10px] font-bold uppercase tracking-wider text-amber-300">
+                        {promoView(slots, plan.promoKey, plan).label}
+                      </span>)}
 
                       <div className="mt-2 flex items-baseline gap-2">
                         <span className="text-sm font-bold text-muted-foreground">
                           R$
                         </span>
                         <span className="font-display text-4xl font-black tracking-tight text-white">
-                          {plan.price}
+                          {promoView(slots, plan.promoKey, plan).price}
                         </span>
-                        {plan.originalPrice && (
+                        {promoView(slots, plan.promoKey, plan).originalPrice && (
                           <del className="text-xs text-muted-foreground/70">
-                            R$ {plan.originalPrice}
+                            R$ {promoView(slots, plan.promoKey, plan).originalPrice}
                           </del>
                         )}
                       </div>

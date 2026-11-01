@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePromoSlots, promoView } from "@/components/usePromoSlots";
 import {
   Check,
   ArrowRight,
@@ -25,7 +26,7 @@ const appPlans = [
     category: "Reservas & Gestão de Horários",
     price: "499,00",
     originalPrice: "699,00",
-    promoLabel: "Recomendado · 5 vagas promocionais",
+    promoKey: "apps-agendamentos" as const,
     deliveryTime: "7 a 15 dias úteis",
     idealFor: "Clínicas, Barbearias, Estúdios e Consultorias",
     description:
@@ -59,7 +60,7 @@ const appPlans = [
     category: "Painéis, PDV & Sistemas Sob Medida",
     price: "1.599,00",
     originalPrice: "1.999,00",
-    promoLabel: "Lançamento · 3 primeiros projetos",
+    promoKey: "apps-gestao" as const,
     deliveryTime: "Definido conforme escopo",
     idealFor: "Pequenas empresas, Delivery e Operações",
     description:
@@ -93,7 +94,7 @@ const appPlans = [
     category: "Jogos Promocionais & Engajamento",
     price: "349,00",
     originalPrice: "499,00",
-    promoLabel: "Lançamento · 5 primeiros projetos",
+    promoKey: "apps-miniapps" as const,
     deliveryTime: "5 a 10 dias úteis",
     idealFor: "Campanhas de marketing, eventos e captura de leads",
     description:
@@ -122,6 +123,7 @@ const appPlans = [
 ];
 
 export function PlansApps() {
+  const slots = usePromoSlots();
   const [selectedId, setSelectedId] = useState<string>(appPlans[0].id);
   const activePlan =
     appPlans.find((p) => p.id === selectedId) || appPlans[0];
@@ -234,7 +236,7 @@ export function PlansApps() {
                             isSelected ? "text-cyan-300" : "text-white"
                           }`}
                         >
-                          R$ {plan.price}
+                          R$ {promoView(slots, plan.promoKey, plan).price}
                         </span>
                       </div>
                     </div>
@@ -282,10 +284,10 @@ export function PlansApps() {
                         ESPECIFICAÇÃO DE SISTEMA // {activePlan.code}
                       </span>
                     </div>
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 font-mono text-[11px] font-semibold text-cyan-200">
+                    {promoView(slots, activePlan.promoKey, activePlan).label && (<span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 font-mono text-[11px] font-semibold text-cyan-200">
                       <Sparkles className="h-3 w-3" />
-                      {activePlan.promoLabel}
-                    </span>
+                      {promoView(slots, activePlan.promoKey, activePlan).label}
+                    </span>)}
                   </div>
 
                   {/* Cabeçalho e Preço em Linha */}
@@ -303,9 +305,9 @@ export function PlansApps() {
                     </div>
 
                     <div className="shrink-0 border-t border-white/10 pt-4 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0 sm:text-right">
-                      {activePlan.originalPrice && (
+                      {promoView(slots, activePlan.promoKey, activePlan).originalPrice && (
                         <del className="block text-xs text-muted-foreground/70">
-                          De R$ {activePlan.originalPrice}
+                          De R$ {promoView(slots, activePlan.promoKey, activePlan).originalPrice}
                         </del>
                       )}
                       <div className="flex items-baseline gap-1 sm:justify-end">
@@ -313,7 +315,7 @@ export function PlansApps() {
                           R$
                         </span>
                         <span className="font-display text-4xl font-black tracking-tight text-white sm:text-5xl">
-                          {activePlan.price}
+                          {promoView(slots, activePlan.promoKey, activePlan).price}
                         </span>
                       </div>
                       <div className="mt-2 inline-flex items-center gap-1.5 text-xs text-white/65">

@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -13,31 +13,37 @@ import {
   Copy,
   MessageSquare,
 } from "lucide-react";
-import { saveContactRequest } from "@/app/actions/leads";
+import { saveQuoteRequest } from "@/app/actions/quotes";
+import {
+  INTEREST_EVENT,
+  QUOTE_BUDGETS,
+  QUOTE_GOALS,
+  QUOTE_INTERESTS,
+} from "@/lib/quote";
+import { WA_NUMBER, waLink } from "@/lib/site-config";
 
-const WA_NUMBER = "5551993583936";
-
-const PROJECT_TYPES = [
-  "Landing Page",
-  "Site Institucional",
-  "E-commerce / Catálogo",
-  "Redesign UX/UI",
-  "Projeto Sob Medida",
-];
-
-const PLAN_OPTIONS = [
-  "Starter (R$ 297)",
-  "Profissional (R$ 499)",
-  "Premium (R$ 1.999)",
-  "Ainda não sei",
-];
+const FIELD =
+  "w-full rounded-xl border border-white/10 bg-white/[0.035] px-4 py-3.5 text-foreground backdrop-blur-xl transition-all focus:border-violet-300/50 focus:outline-none focus:ring-1 focus:ring-violet-300/30";
+const LABEL = "text-xs font-bold uppercase tracking-widest text-muted-foreground";
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedType, setSelectedType] = useState<string>("Landing Page");
-  const [selectedPlan, setSelectedPlan] = useState<string>("Profissional (R$ 499)");
+  const [interest, setInterest] = useState<string>("nao-sei");
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [submitMessage, setSubmitMessage] = useState("");
+  const [error, setError] = useState("");
+  const [sent, setSent] = useState<string | null>(null);
+
+  useEffect(() => {
+    const onInterest = (event: Event) => {
+      const id = (event as CustomEvent<{ id: string }>).detail?.id;
+      if (QUOTE_INTERESTS.some((i) => i.id === id)) {
+        setInterest(id);
+        setSent(null);
+      }
+    };
+    window.addEventListener(INTEREST_EVENT, onInterest);
+    return () => window.removeEventListener(INTEREST_EVENT, onInterest);
+  }, []);
 
   const handleCopyEmail = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -49,40 +55,40 @@ export function Contact() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitMessage("");
+    setError("");
 
-    const formData = new FormData(e.currentTarget);
-    const name = String(formData.get("nome") ?? "").trim();
-    const company = String(formData.get("empresa") ?? "").trim();
-    const message = String(formData.get("mensagem") ?? "").trim();
-
-    const text = [
-      `Olá! Sou *${name}*, da empresa *${company}*.`,
-      `• *Interesse:* ${selectedType}`,
-      `• *Plano de referência:* ${selectedPlan}`,
-      `• *Detalhes:* ${message}`,
-    ].join("\n");
-
-    const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
-    window.open(waUrl, "_blank");
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const field = (key: string) => String(data.get(key) ?? "").trim();
+    const name = field("nome");
+    const interestLabel =
+      QUOTE_INTERESTS.find((i) => i.id === interest)?.label ?? interest;
 
     try {
-      await saveContactRequest({
+      const result = await saveQuoteRequest({
         name,
-        company,
-        message,
-        projectType: selectedType,
-        plan: selectedPlan,
-        route: window.location.pathname,
+        company: field("empresa"),
+        segment: field("segmento"),
+        contact: field("contato"),
+        goal: field("objetivo"),
+        interest,
+        budget: field("orcamento"),
+        message: field("mensagem"),
+        consentContact: data.get("consentContact") === "on",
+        consentPromo: data.get("consentPromo") === "on",
+        website: field("website"),
       });
-      setSubmitMessage(
-        "Solicitação registrada. O WhatsApp foi aberto para você enviar o briefing."
-      );
-    } catch (error) {
-      console.error("Unable to save the contact request in Firebase.", error);
-      setSubmitMessage(
-        "O WhatsApp foi aberto, mas não conseguimos registrar a solicitação. Envie sua mensagem por lá ou tente novamente."
-      );
+      if (result.ok) {
+        setSent(
+          `Olá! Sou ${name} e acabei de enviar um pedido de orçamento (${interestLabel}) pelo site da Nexusync.`
+        );
+        form.reset();
+      } else {
+        setError(result.error);
+      }
+    } catch (err) {
+      console.error("Unable to send the quote request.", err);
+      setError("Não foi possível enviar agora. Tente novamente ou chame no WhatsApp.");
     } finally {
       setIsSubmitting(false);
     }
@@ -119,162 +125,145 @@ export function Contact() {
               <span className="text-violet-gradient">Resultados?</span>
             </h2>
             <p className="mb-8 text-base text-muted-foreground sm:text-lg">
-              Personalize seu briefing em segundos e fale diretamente com nossa
-              equipe no WhatsApp.{" "}
+              Escolha o que precisa, conte um pouco sobre o negócio e receba
+              uma proposta da nossa equipe.{" "}
               <span className="font-medium text-violet-100">
                 Retornaremos rapidamente
               </span>{" "}
               com a melhor solução.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Seletor Interativo 1: Tipo de Projeto */}
+            {sent ? (
+              <div role="status" className="space-y-5 rounded-2xl border border-emerald-400/25 bg-emerald-500/10 p-6">
+                <p className="flex items-center gap-2 font-display text-xl font-bold text-emerald-200">
+                  <Check className="h-5 w-5" /> Pedido recebido
+                </p>
+                <p className="text-sm leading-relaxed text-white/75">
+                  Recebemos seu pedido de orçamento e retornaremos em breve. Se
+                  preferir agilizar, chame também no WhatsApp.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href={waLink(sent)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-xl bg-violet-gradient px-5 py-3 text-sm font-bold text-white"
+                  >
+                    <MessageSquare className="h-4 w-4" /> Chamar no WhatsApp
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => setSent(null)}
+                    className="rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold text-white/80 hover:text-white"
+                  >
+                    Enviar outro pedido
+                  </button>
+                </div>
+              </div>
+            ) : (
+            <form id="orcamento" onSubmit={handleSubmit} className="scroll-mt-28 space-y-6">
               <div className="space-y-2.5">
-                <label className="block text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                  1. O que vamos construir?
-                </label>
+                <p className={LABEL}>1. O que você precisa?</p>
                 <div className="flex flex-wrap gap-2">
-                  {PROJECT_TYPES.map((type) => {
-                    const active = selectedType === type;
+                  {QUOTE_INTERESTS.map((item) => {
+                    const active = interest === item.id;
                     return (
                       <button
-                        key={type}
+                        key={item.id}
                         type="button"
-                        onClick={() => setSelectedType(type)}
+                        aria-pressed={active}
+                        onClick={() => setInterest(item.id)}
                         className={`rounded-xl border px-3.5 py-2 text-xs font-semibold transition-all ${
                           active
                             ? "border-violet-300/50 bg-violet-500/25 text-white shadow-sm shadow-violet-500/20"
                             : "border-white/10 bg-white/[0.03] text-white/60 hover:border-white/25 hover:text-white"
                         }`}
                       >
-                        {type}
+                        {item.label}
                       </button>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Seletor Interativo 2: Plano de Referência */}
-              <div className="space-y-2.5">
-                <label className="block text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                  2. Plano de referência
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {PLAN_OPTIONS.map((plan) => {
-                    const active = selectedPlan === plan;
-                    return (
-                      <button
-                        key={plan}
-                        type="button"
-                        onClick={() => setSelectedPlan(plan)}
-                        className={`rounded-xl border px-3.5 py-2 text-xs font-semibold transition-all ${
-                          active
-                            ? "border-fuchsia-300/50 bg-fuchsia-500/20 text-white"
-                            : "border-white/10 bg-white/[0.03] text-white/60 hover:border-white/25 hover:text-white"
-                        }`}
-                      >
-                        {plan}
-                      </button>
-                    );
-                  })}
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <label htmlFor="nome" className={LABEL}>Seu nome</label>
+                  <input id="nome" name="nome" type="text" required maxLength={100} className={FIELD} placeholder="Como podemos te chamar?" />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="empresa" className={LABEL}>Empresa ou marca</label>
+                  <input id="empresa" name="empresa" type="text" required maxLength={150} className={FIELD} placeholder="Nome do seu negócio" />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="segmento" className={LABEL}>Segmento</label>
+                  <input id="segmento" name="segmento" type="text" required maxLength={100} className={FIELD} placeholder="Ex.: clínica, restaurante, loja" />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="contato-info" className={LABEL}>WhatsApp ou e-mail</label>
+                  <input id="contato-info" name="contato" type="text" required maxLength={150} className={FIELD} placeholder="(51) 90000-0000 ou voce@email.com" />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="objetivo" className={LABEL}>Objetivo principal</label>
+                  <select id="objetivo" name="objetivo" required defaultValue="" className={FIELD}>
+                    <option value="" disabled>Selecione</option>
+                    {QUOTE_GOALS.map((g) => (
+                      <option key={g.id} value={g.id} className="bg-[#0c0e14]">{g.label}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="orcamento-faixa" className={LABEL}>Orçamento (opcional)</label>
+                  <select id="orcamento-faixa" name="orcamento" defaultValue="" className={FIELD}>
+                    <option value="">Prefiro não informar</option>
+                    {QUOTE_BUDGETS.map((b) => (
+                      <option key={b} value={b} className="bg-[#0c0e14]">{b}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
-              {/* Campos Nome & Empresa */}
-              <div className="grid gap-5 pt-2 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <label
-                    htmlFor="nome"
-                    className="text-xs font-bold uppercase tracking-widest text-muted-foreground"
-                  >
-                    Seu Nome
-                  </label>
-                  <input
-                    id="nome"
-                    name="nome"
-                    type="text"
-                    required
-                    maxLength={100}
-                    className="w-full rounded-xl border border-white/10 bg-white/[0.035] px-4 py-3.5 text-foreground backdrop-blur-xl transition-all focus:border-violet-300/50 focus:outline-none focus:ring-1 focus:ring-violet-300/30"
-                    placeholder="Como podemos te chamar?"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label
-                    htmlFor="empresa"
-                    className="text-xs font-bold uppercase tracking-widest text-muted-foreground"
-                  >
-                    Empresa ou Marca
-                  </label>
-                  <input
-                    id="empresa"
-                    name="empresa"
-                    type="text"
-                    required
-                    maxLength={120}
-                    className="w-full rounded-xl border border-white/10 bg-white/[0.035] px-4 py-3.5 text-foreground backdrop-blur-xl transition-all focus:border-violet-300/50 focus:outline-none focus:ring-1 focus:ring-violet-300/30"
-                    placeholder="Nome do seu negócio"
-                  />
-                </div>
-              </div>
-
-              {/* Campo Mensagem */}
               <div className="space-y-2">
-                <label
-                  htmlFor="mensagem"
-                  className="text-xs font-bold uppercase tracking-widest text-muted-foreground"
-                >
-                  Objetivos do Projeto
-                </label>
-                <textarea
-                  id="mensagem"
-                  name="mensagem"
-                  required
-                  maxLength={1500}
-                  rows={3}
-                  className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.035] px-4 py-3.5 text-foreground backdrop-blur-xl transition-all focus:border-violet-300/50 focus:outline-none focus:ring-1 focus:ring-violet-300/30"
-                  placeholder="Conte-nos brevemente sobre seu público, prazos ou referências..."
-                />
+                <label htmlFor="mensagem" className={LABEL}>Mensagem (opcional)</label>
+                <textarea id="mensagem" name="mensagem" maxLength={1000} rows={3} className={`${FIELD} resize-none`} placeholder="Conte brevemente sobre seu público, prazos ou referências..." />
+              </div>
+
+              <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+                <label htmlFor="website">Não preencha este campo</label>
+                <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
               </div>
 
               <label className="flex items-start gap-3 text-xs leading-relaxed text-muted-foreground">
-                <input
-                  type="checkbox"
-                  name="consentimento"
-                  required
-                  className="mt-0.5 h-4 w-4 shrink-0 accent-violet-400"
-                />
+                <input type="checkbox" name="consentContact" required className="mt-0.5 h-4 w-4 shrink-0 accent-violet-400" />
                 <span>
-                  Autorizo o uso destes dados para responder ao meu pedido,
-                  conforme o{" "}
-                  <Link
-                    href="/privacidade"
-                    className="font-semibold text-violet-200 underline-offset-4 hover:underline"
-                  >
+                  Autorizo a Nexusync a usar estes dados para entrar em contato
+                  sobre este orçamento, conforme o{" "}
+                  <Link href="/privacidade" className="font-semibold text-violet-200 underline-offset-4 hover:underline">
                     Aviso de Privacidade
                   </Link>
                   .
                 </span>
               </label>
+              <label className="flex items-start gap-3 text-xs leading-relaxed text-muted-foreground">
+                <input type="checkbox" name="consentPromo" className="mt-0.5 h-4 w-4 shrink-0 accent-violet-400" />
+                <span>(Opcional) Aceito receber novidades e ofertas da Nexusync.</span>
+              </label>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="group inline-flex w-full items-center justify-center gap-3 rounded-xl bg-violet-gradient px-8 py-4 font-bold text-white shadow-violet-glow transition-transform hover:scale-[1.015] sm:w-auto"
+                className="group inline-flex w-full items-center justify-center gap-3 rounded-xl bg-violet-gradient px-8 py-4 font-bold text-white shadow-violet-glow transition-transform hover:scale-[1.015] disabled:opacity-60 sm:w-auto"
               >
-                <MessageSquare className="h-4 w-4" />
-                Enviar Briefing para o WhatsApp
+                {isSubmitting ? "Enviando..." : "Solicitar orçamento"}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </button>
-              {submitMessage && (
-                <p
-                  role="status"
-                  className="text-sm leading-relaxed text-violet-100"
-                >
-                  {submitMessage}
+              {error && (
+                <p role="alert" className="text-sm leading-relaxed text-rose-300">
+                  {error}
                 </p>
               )}
             </form>
+            )}
           </motion.div>
 
           {/* Coluna da Direita: Painel de Atendimento & Etapas */}

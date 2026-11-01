@@ -16,7 +16,7 @@ export type AnalyticsEvent =
       eventName: "marketing_plan_click" | "whatsapp_click";
       plan_id: string;
       section: string;
-      destination: "whatsapp";
+      destination: "whatsapp" | "form";
     }
   | { eventName: "pilot_form_start" | "pilot_lead_save_error" }
   | {
