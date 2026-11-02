@@ -115,10 +115,10 @@ export function SelectedWork() {
               Feito para ser lembrado
             </p>
             <h2 className="text-balance font-display text-4xl font-semibold leading-[1.02] tracking-[-0.055em] sm:text-5xl md:text-6xl">
-              Não é só um site.
+              Veja como seu negócio
               <br />
               <span className="text-violet-gradient">
-                É a sua próxima impressão.
+                pode se apresentar na internet.
               </span>
             </h2>
           </div>
@@ -212,7 +212,7 @@ export function SelectedWork() {
                 href={project.href}
                 className="group mt-4 inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-violet-200"
               >
-                Explorar este template
+                Explorar demonstração
                 <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Link>
             </div>
@@ -262,7 +262,7 @@ export function SelectedWork() {
             href="/templates"
             className="group inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-violet-200"
           >
-            Ver todos os templates
+            Ver todos os exemplos
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
