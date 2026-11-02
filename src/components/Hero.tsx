@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowDown,
   ArrowRight,
@@ -109,7 +109,132 @@ const metrics = [
 
 const LINE = "M0 118 C 40 112, 62 98, 92 92 S 142 68, 172 60 S 232 34, 300 10";
 
-function GrowthVisual() {
+const panelLabels = ["Crescimento", "Presença digital", "Tudo integrado", "Anúncios"];
+
+const posts = [
+  "from-violet-500 to-fuchsia-400",
+  "from-fuchsia-500 to-orange-300",
+  "from-sky-500 to-violet-400",
+  "from-emerald-400 to-teal-600",
+  "from-pink-500 to-violet-500",
+  "from-amber-400 to-rose-500",
+];
+
+function SocialPanel({ reduceMotion }: { reduceMotion: boolean }) {
+  return (
+    <div className="flex h-full flex-col gap-3">
+      <div className="flex items-center gap-3">
+        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-400 p-[2px]">
+          <span className="grid h-full w-full place-items-center rounded-full bg-[#0d0a14] text-violet-200">
+            <Sparkles className="h-4 w-4" />
+          </span>
+        </span>
+        <span className="min-w-0 flex-1 space-y-1.5">
+          <span className="block h-2 w-2/3 rounded-full bg-white/70" />
+          <span className="block h-1.5 w-1/2 rounded-full bg-white/25" />
+        </span>
+        <span className="rounded-full bg-violet-500 px-3 py-1 text-[9px] font-bold text-white">
+          Seguir
+        </span>
+      </div>
+      <div className="grid flex-1 grid-cols-3 gap-1.5">
+        {posts.map((tone, i) => (
+          <motion.span
+            key={tone}
+            initial={{ opacity: reduceMotion ? 1 : 0, scale: reduceMotion ? 1 : 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
+            className={`rounded-lg bg-gradient-to-br ${tone} opacity-90`}
+          />
+        ))}
+      </div>
+      <div className="flex items-center gap-2 text-[9px] text-white/55 sm:text-[10px]">
+        <Users className="h-3 w-3" />
+        <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.07]">
+          <motion.span
+            className="block h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-400"
+            initial={{ width: reduceMotion ? "75%" : 0 }}
+            animate={{ width: "75%" }}
+            transition={{ duration: 1.2, delay: 0.5 }}
+          />
+        </span>
+        Comunidade
+      </div>
+    </div>
+  );
+}
+
+const stack = [
+  { icon: Globe, label: "Site profissional", tone: "bg-violet-500/20 text-violet-300" },
+  { icon: Megaphone, label: "Campanhas de anúncios", tone: "bg-fuchsia-500/20 text-fuchsia-300" },
+  { icon: Share2, label: "Redes sociais", tone: "bg-sky-500/20 text-sky-300" },
+];
+
+function IntegratedPanel({ reduceMotion }: { reduceMotion: boolean }) {
+  return (
+    <div className="flex h-full flex-col justify-between gap-2">
+      {stack.map(({ icon: Icon, label, tone }, i) => (
+        <motion.div
+          key={label}
+          initial={{ opacity: reduceMotion ? 1 : 0, x: reduceMotion ? 0 : -14 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.1 + i * 0.18, duration: 0.45 }}
+          className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2"
+        >
+          <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ${tone}`}>
+            <Icon className="h-4 w-4" />
+          </span>
+          <span className="flex-1 text-[10px] font-semibold text-white/85 sm:text-xs">{label}</span>
+          <span className="grid h-4 w-4 place-items-center rounded-full bg-emerald-400/20 text-[9px] text-emerald-300">
+            ✓
+          </span>
+        </motion.div>
+      ))}
+      <motion.div
+        initial={{ opacity: reduceMotion ? 1 : 0, scale: reduceMotion ? 1 : 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.8, duration: 0.4 }}
+        className="flex items-center justify-between rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 px-3 py-2 text-[10px] font-bold text-white sm:text-xs"
+      >
+        Mais clientes
+        <TrendingUp className="h-4 w-4" />
+      </motion.div>
+    </div>
+  );
+}
+
+const funnel = [
+  { label: "Pessoas alcançadas", width: "100%", tone: "from-violet-500 to-violet-400" },
+  { label: "Interessados", width: "72%", tone: "from-fuchsia-500 to-fuchsia-400" },
+  { label: "Contatos", width: "46%", tone: "from-pink-500 to-rose-400" },
+  { label: "Vendas", width: "28%", tone: "from-emerald-500 to-teal-300" },
+];
+
+function FunnelPanel({ reduceMotion }: { reduceMotion: boolean }) {
+  return (
+    <div className="flex h-full flex-col justify-between">
+      <div className="flex items-center gap-2 text-[9px] font-semibold uppercase tracking-[0.14em] text-white/45 sm:text-[10px]">
+        <Search className="h-3 w-3" />
+        Público certo
+      </div>
+      <div className="flex flex-1 flex-col items-center justify-evenly">
+        {funnel.map(({ label, width, tone }, i) => (
+          <motion.div
+            key={label}
+            initial={{ width: reduceMotion ? width : "0%" }}
+            animate={{ width }}
+            transition={{ delay: 0.15 + i * 0.18, duration: 0.7, ease: "easeOut" }}
+            className={`flex h-7 items-center justify-center overflow-hidden whitespace-nowrap rounded-lg bg-gradient-to-r ${tone} text-[9px] font-bold text-white sm:h-9 sm:text-[11px]`}
+          >
+            {label}
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function GrowthVisual({ active }: { active: number }) {
   const reduceMotion = useReducedMotion();
   const spin = (reverse: boolean) =>
     reduceMotion
@@ -169,11 +294,25 @@ function GrowthVisual() {
             <span className="h-2 w-2 rounded-full bg-[#49c781]" />
           </div>
           <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-white/40 sm:text-[9px]">
-            Crescimento
+            {panelLabels[active]}
           </span>
         </div>
 
-        <div className="p-3 sm:p-4">
+        <div className="relative h-[190px] sm:h-[250px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.35 }}
+              className="absolute inset-0 p-3 sm:p-4"
+            >
+              {active === 1 && <SocialPanel reduceMotion={!!reduceMotion} />}
+              {active === 2 && <IntegratedPanel reduceMotion={!!reduceMotion} />}
+              {active === 3 && <FunnelPanel reduceMotion={!!reduceMotion} />}
+              {active === 0 && (
+                <>
           <svg viewBox="0 0 300 130" className="h-auto w-full">
             <defs>
               <linearGradient id="hero-area" x1="0" y1="0" x2="0" y2="1">
@@ -220,6 +359,10 @@ function GrowthVisual() {
               </div>
             ))}
           </div>
+                </>
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
 
@@ -391,7 +534,7 @@ export function Hero() {
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-0"
         >
-          <GrowthVisual />
+          <GrowthVisual active={active} />
         </motion.div>
       </div>
 
