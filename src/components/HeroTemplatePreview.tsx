@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 
 const templates = [
@@ -24,12 +24,51 @@ const templates = [
   },
 ] as const;
 
+const ROTATION_MS = 9000;
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
+
+function subscribeReducedMotion(callback: () => void) {
+  const query = window.matchMedia(reducedMotionQuery);
+  query.addEventListener("change", callback);
+  return () => query.removeEventListener("change", callback);
+}
+
 export function HeroTemplatePreview() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [userPaused, setUserPaused] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const [tabHidden, setTabHidden] = useState(false);
+  const reducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    () => window.matchMedia(reducedMotionQuery).matches,
+    () => true,
+  );
   const template = templates[activeIndex];
+  const rotating = !userPaused && !hovering && !tabHidden && !reducedMotion;
+
+  useEffect(() => {
+    const onVisibility = () => setTabHidden(document.hidden);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+
+  // Depending on activeIndex restarts the 9s timer after manual selection.
+  useEffect(() => {
+    if (!rotating) return;
+    const timer = setTimeout(
+      () => setActiveIndex((current) => (current + 1) % templates.length),
+      ROTATION_MS,
+    );
+    return () => clearTimeout(timer);
+  }, [rotating, activeIndex]);
 
   return (
-    <div className="rounded-3xl border border-violet-300/20 bg-white/[0.03] p-4 shadow-violet-glow sm:p-6">
+    <div
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+      onFocus={() => setHovering(true)}
+      onBlur={() => setHovering(false)}
+      className="rounded-3xl border border-violet-300/20 bg-white/[0.03] p-4 shadow-violet-glow sm:p-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <p className="text-xs font-semibold uppercase tracking-widest text-violet-200">
           Prévia de sites demonstrativos
@@ -81,6 +120,20 @@ export function HeroTemplatePreview() {
               {item.name}
             </button>
           ))}
+          {!reducedMotion && (
+            <button
+              type="button"
+              onClick={() => setUserPaused((value) => !value)}
+              aria-label={
+                userPaused
+                  ? "Retomar alternância automática"
+                  : "Pausar alternância automática"
+              }
+              className="rounded-full border border-white/10 px-3 py-1.5 text-xs font-semibold text-white/60 transition-colors hover:border-white/25 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300"
+            >
+              {userPaused ? "▶ Retomar" : "⏸ Pausar"}
+            </button>
+          )}
         </div>
         <Link
           href={template.href}
