@@ -1,6 +1,8 @@
 # NexuSync — Plano de desenvolvimento comercial e do site
 Versão 1.0 • 1 de novembro de 2026 • Documento para implementação
 
+> **Documento histórico — substituído pelo reposicionamento site-first de 2 de novembro de 2026.** A home deve priorizar criação de sites; aplicações web e pacotes de mídias digitais aparecem depois do investimento em sites; marketing recorrente permanece em `/marketing`. Não use a ordem de seções nem os novos preços propostos abaixo como orientação atual. Preserve apenas valores e condições já confirmados no projeto.
+
 ## 1. Objetivo e decisões propostas
 
 Ampliar o posicionamento da NexuSync para desenvolvimento web, marketing digital e automação, atendendo pequenos e médios negócios. O site deverá explicar como contratar cada serviço isoladamente e apresentar três pacotes recorrentes com escopo comparável.

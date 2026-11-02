@@ -5,16 +5,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { QuoteLink } from "@/components/QuoteLink";
 
 const links = [
-  { label: "Soluções", href: "/#servicos" },
-  { label: "Exemplos de sites", href: "/#trabalhos" },
-  { label: "Como funciona", href: "/#como-funciona" },
+  { label: "Sites", href: "/#servicos" },
+  { label: "Exemplos", href: "/#trabalhos" },
+  { label: "Apps", href: "/#aplicacoes" },
+  { label: "Mídias digitais", href: "/#midias-digitais" },
   { label: "Investimento", href: "/#planos" },
-  { label: "Dúvidas", href: "/#faq" },
 ];
-
-const WA = "https://wa.me/5551993583936?text=" + encodeURIComponent("Olá! Gostaria de solicitar um orçamento para o meu site.");
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -60,14 +59,12 @@ export function Navbar() {
           ))}
         </nav>
 
-        <a
-          href={WA}
-          target="_blank"
-          rel="noopener noreferrer"
+        <QuoteLink
+          section="header"
           className="hidden xl:inline-flex items-center gap-2 rounded-full border border-violet-300/30 bg-white/[0.025] px-5 py-2.5 text-sm font-semibold text-violet-200 hover:bg-violet-gradient hover:text-white hover:border-transparent hover:shadow-violet-glow transition-all duration-300"
         >
           Pedir orçamento
-        </a>
+        </QuoteLink>
 
         <button
           type="button"
@@ -102,14 +99,13 @@ export function Navbar() {
                   {l.label}
                 </a>
               ))}
-              <a
-                href={WA}
-                target="_blank"
-                rel="noopener noreferrer"
+              <QuoteLink
+                section="header"
+                onClick={() => setOpen(false)}
                 className="mt-4 inline-flex justify-center rounded-full bg-violet-gradient px-6 py-3 text-white text-sm font-bold shadow-violet-glow"
               >
-                Solicitar orçamento
-              </a>
+                Pedir orçamento
+              </QuoteLink>
             </nav>
           </motion.div>
         )}

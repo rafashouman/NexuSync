@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -15,7 +15,8 @@ const projects = [
     category: "Fitness & bem-estar",
     title: "PulseFit",
     description:
-      "Uma experiência de marca enérgica para transformar interesse em novas matrículas.",
+      "Uma apresentação para academias, com informações sobre modalidades e formas de contato.",
+    objective: "Apresentar serviços e facilitar pedidos de aula experimental.",
     href: "/templates/academias",
     theme: "from-orange-500/20 via-[#181512] to-[#0c0d0f]",
   },
@@ -24,7 +25,8 @@ const projects = [
     category: "Gastronomia",
     title: "Kobra Burger Lab",
     description:
-      "Cardápio digital com personalidade, pensado para abrir o apetite e facilitar pedidos.",
+      "Cardápio digital com personalidade para apresentar opções de uma hamburgueria.",
+    objective: "Apresentar o cardápio e direcionar o visitante para fazer um pedido.",
     href: "/templates/cardapio",
     theme: "from-amber-200/15 via-[#1c1713] to-[#0c0d0f]",
   },
@@ -33,7 +35,8 @@ const projects = [
     category: "E-commerce & moda",
     title: "Vortex Atelier",
     description:
-      "Uma vitrine editorial para uma marca que tem atitude em cada detalhe.",
+      "Uma vitrine editorial para destacar uma coleção de moda.",
+    objective: "Apresentar produtos e facilitar a exploração da coleção.",
     href: "/templates/streetwear",
     theme: "from-violet-300/20 via-[#17111f] to-[#0c0d0f]",
   },
@@ -43,6 +46,7 @@ const projects = [
     title: "Prime Motors",
     description:
       "Portal automotivo em tema claro com comparativo FIPE, simulador CDC e reserva de visita online.",
+    objective: "Apresentar veículos e facilitar pedidos de informação ou visita.",
     href: "/templates/carros",
     theme: "from-blue-500/20 via-[#101726] to-[#0c0d0f]",
   },
@@ -52,6 +56,7 @@ const projects = [
     title: "Alchemist Voxel",
     description:
       "Estúdio de impressão em resina 12K e pintura de miniaturas, com Raio-X de 3 estágios e calculadora de encomendas.",
+    objective: "Apresentar serviços e receber solicitações de encomenda.",
     href: "/templates/miniaturas",
     theme: "from-fuchsia-500/25 via-[#140d1f] to-[#08060c]",
   },
@@ -60,7 +65,8 @@ const projects = [
     category: "Bem-estar & Experiência",
     title: "Oráculo Connection",
     description:
-      "Jornada interativa em 3 etapas: escolha do monte, intenção e revelação, desenhada para reter e converter.",
+      "Jornada interativa em 3 etapas: escolha do monte, intenção e revelação.",
+    objective: "Conduzir o visitante por uma experiência interativa e apresentar o próximo passo.",
     href: "/templates/connection",
     theme: "from-amber-500/20 via-[#14110a] to-[#070709]",
   },
@@ -70,31 +76,14 @@ const projects = [
     title: "Kobra Fire Reservas",
     description:
       "Reserva de mesas VIP, comanda digital e pedidos em um único painel para a operação do restaurante.",
+    objective: "Apresentar opções de reserva e receber solicitações de atendimento.",
     href: "/templates/reservas",
     theme: "from-red-500/20 via-[#1c0f0e] to-[#0c0807]",
   },
 ];
 
-const AUTOPLAY_TIME = 8000;
-
-// A tela do celular é 280x580; o iframe renderiza em 390px de largura (viewport mobile) e é reduzido.
-const PHONE_W = 280;
-const PHONE_H = 580;
-const PHONE_VIEWPORT_W = 390;
-const PHONE_SCALE = PHONE_W / PHONE_VIEWPORT_W;
-
 export function SelectedWork() {
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-
-  useEffect(() => {
-    if (paused) return;
-    const timer = setInterval(
-      () => setActive((prev) => (prev + 1) % projects.length),
-      AUTOPLAY_TIME
-    );
-    return () => clearInterval(timer);
-  }, [paused, active]);
 
   const next = () => setActive((prev) => (prev + 1) % projects.length);
   const prev = () =>
@@ -123,71 +112,37 @@ export function SelectedWork() {
             </h2>
           </div>
           <p className="max-w-sm text-base leading-7 text-muted-foreground">
-            Explore alguns conceitos demonstrativos e descubra como{" "}
-            <span className="font-medium text-violet-100">
-              estratégia, conteúdo e identidade visual
-            </span>{" "}
-            podem trabalhar juntos.
+            Explore exemplos de páginas para diferentes segmentos. Conheça o
+            visual, navegue pelas seções e veja como cada projeto conduz o
+            visitante até o contato.
           </p>
         </div>
 
-        <div
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={() => setPaused(false)}
-        >
+        <div>
           <div
             className={`relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br ${project.theme} p-4 sm:p-8 transition-colors duration-700`}
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_20%,rgba(255,255,255,.1),transparent_60%)]" />
 
-            {/* key remonta os iframes: só o template ativo é carregado */}
-            <div
-              key={project.number}
-              className="relative flex items-center justify-center gap-8 lg:gap-12"
-            >
-              <div className="hidden min-w-0 flex-1 overflow-hidden rounded-2xl border border-white/15 bg-[#0b0d10] shadow-2xl md:block">
-                <div className="flex h-9 items-center gap-1.5 border-b border-white/[0.08] bg-[#0b0e13] px-4">
-                  <span className="h-2 w-2 rounded-full bg-[#ff6b61]" />
-                  <span className="h-2 w-2 rounded-full bg-[#ffc14f]" />
-                  <span className="h-2 w-2 rounded-full bg-[#49c781]" />
-                  <span className="ml-3 min-w-0 truncate rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-0.5 font-mono text-[10px] text-white/50">
-                    nexusync.online{project.href}
-                  </span>
-                </div>
-                <div className="relative aspect-[16/10] w-full overflow-hidden">
-                  <iframe
-                    src={project.href}
-                    title={`Prévia desktop do template ${project.title}`}
-                    scrolling="no"
-                    tabIndex={-1}
-                    className="pointer-events-none h-[200%] w-[200%] origin-top-left scale-50 border-0 bg-[#0b0d10]"
-                  />
-                </div>
+            <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-[#0b0d10] shadow-2xl">
+              <div className="flex h-9 items-center gap-1.5 border-b border-white/[0.08] bg-[#0b0e13] px-4">
+                <span className="h-2 w-2 rounded-full bg-[#ff6b61]" />
+                <span className="h-2 w-2 rounded-full bg-[#ffc14f]" />
+                <span className="h-2 w-2 rounded-full bg-[#49c781]" />
+                <span className="ml-3 min-w-0 truncate rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-0.5 font-mono text-[10px] text-white/50">
+                  nexusync.online{project.href}
+                </span>
               </div>
-
-              <div
-                className="relative shrink-0 rounded-[2.4rem] border border-white/20 bg-[#0b0d10] p-2 shadow-2xl"
-                style={{ width: PHONE_W + 16 }}
-              >
-                <div
-                  className="relative overflow-hidden rounded-[2rem] bg-[#0b0d10]"
-                  style={{ width: PHONE_W, height: PHONE_H }}
-                >
-                  <iframe
-                    src={project.href}
-                    title={`Prévia mobile do template ${project.title}`}
-                    scrolling="no"
-                    tabIndex={-1}
-                    className="pointer-events-none origin-top-left border-0 bg-[#0b0d10]"
-                    style={{
-                      width: PHONE_VIEWPORT_W,
-                      height: PHONE_H / PHONE_SCALE,
-                      transform: `scale(${PHONE_SCALE})`,
-                    }}
-                  />
-                </div>
+              <div className="relative aspect-[16/10] w-full overflow-hidden">
+                <iframe
+                  key={project.number}
+                  src={project.href}
+                  title={`Demonstração de ${project.title}, ${project.category}`}
+                  loading="lazy"
+                  scrolling="no"
+                  tabIndex={-1}
+                  className="pointer-events-none absolute inset-0 h-full w-full border-0 bg-[#0b0d10]"
+                />
               </div>
             </div>
           </div>
@@ -207,6 +162,9 @@ export function SelectedWork() {
               </h3>
               <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
                 {project.description}
+              </p>
+              <p className="mt-3 text-xs leading-5 text-violet-100/80">
+                <span className="font-semibold">Objetivo:</span> {project.objective}
               </p>
               <Link
                 href={project.href}
@@ -256,7 +214,8 @@ export function SelectedWork() {
 
         <div className="mt-10 flex flex-col items-start justify-between gap-5 border-t border-white/10 pt-7 sm:flex-row sm:items-center">
           <p className="text-sm text-muted-foreground">
-            Os exemplos são demonstrativos e podem ser adaptados à sua marca.
+            Os exemplos são demonstrativos e podem ser adaptados à sua marca e
+            aos objetivos do projeto.
           </p>
           <Link
             href="/templates"

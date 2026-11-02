@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import { Reveal, CountUp } from "@/components/ui/MotionKit";
 import { useFocusTrap } from "@/components/ui/useFocusTrap";
+import { QuoteLink } from "@/components/QuoteLink";
 import ChronosBooking from "@/components/ChronosBooking";
 import MemoryMatrix from "@/components/games/MemoryMatrix";
 import PulseSpinRoulette from "@/components/games/SpinToWin";
@@ -207,9 +208,9 @@ export function AppsPageContent() {
           </div>
 
           <h1 className="mb-6 font-display text-4xl font-black uppercase tracking-tight text-white sm:text-6xl lg:leading-[1.02]">
-            Aplicações reais que{" "}
+            Demonstrações de aplicações{" "}
             <span className="text-violet-gradient italic">
-              operam o seu negócio.
+              para a rotina do seu negócio.
             </span>
           </h1>
           <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
@@ -220,6 +221,10 @@ export function AppsPageContent() {
             </strong>
             . Logo abaixo, explore também nossas ferramentas lúdicas de
             gamificação e o fliperama interativo.
+          </p>
+          <p className="mt-4 max-w-3xl rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-muted-foreground">
+            As demonstrações e os dados exibidos são ilustrativos. Recursos,
+            integrações e condições de cada aplicação são definidos na proposta.
           </p>
         </div>
 
@@ -232,13 +237,14 @@ export function AppsPageContent() {
             <CalendarClock className="h-4 w-4" />
             Testar Apps de Negócios
           </a>
-          <Link
-            href="/#contato"
+          <QuoteLink
+            interest="aplicacao-web"
+            section="apps"
             className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3.5 text-xs font-bold uppercase tracking-wider text-white transition-all hover:border-violet-300/50 hover:bg-violet-600"
           >
             <MessageSquare className="h-4 w-4" />
             Orçar Meu Sistema
-          </Link>
+          </QuoteLink>
         </div>
       </div>
 

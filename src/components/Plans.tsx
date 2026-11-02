@@ -297,6 +297,8 @@ export function Plans({ sitesOnly = false }: { sitesOnly?: boolean }) {
                 {/* Botão de Ação */}
                 <a
                   href={waLink(plan.waMessage)}
+                  data-analytics-section="sites"
+                  data-analytics-interest="site"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`group/btn flex w-full items-center justify-center gap-2 rounded-xl py-4 text-sm font-bold transition-all duration-300 ${plan.highlight
@@ -315,7 +317,7 @@ export function Plans({ sitesOnly = false }: { sitesOnly?: boolean }) {
         {sitesOnly && <div className="mt-8 rounded-2xl border border-violet-300/20 bg-violet-500/5 p-7">
           <h3 className="font-display text-2xl">Hotsite dinâmico sob medida</h3>
           <p className="mt-3 leading-7 text-muted-foreground">Para campanhas, eventos e lançamentos que precisam de uma experiência própria. Recursos interativos, investimento e prazo são definidos após entender seu projeto.</p>
-          <a href={waLink("Olá! Quero um orçamento para um hotsite dinâmico.")} target="_blank" rel="noopener noreferrer" className="mt-5 inline-block font-semibold text-violet-200 underline underline-offset-4">Pedir orçamento de hotsite</a>
+          <a href={waLink("Olá! Quero um orçamento para um hotsite dinâmico.")} data-analytics-section="sites" data-analytics-interest="hotsite" target="_blank" rel="noopener noreferrer" className="mt-5 inline-block font-semibold text-violet-200 underline underline-offset-4">Pedir orçamento de hotsite</a>
           <p className="mt-5 text-sm text-muted-foreground">Precisa vender com carrinho e pagamento online? <a href="/lojas-virtuais" className="text-violet-200 underline">Conheça a opção de loja virtual.</a></p>
         </div>}
         {/* Barra Inferior de Garantias Técnicas */}

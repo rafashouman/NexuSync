@@ -9,6 +9,8 @@ export function FloatingWA() {
   return (
     <a
       href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(MESSAGE)}`}
+      data-analytics-section="floating"
+      data-analytics-interest="unspecified"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-[100] group flex items-center gap-3"

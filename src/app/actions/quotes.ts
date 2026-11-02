@@ -49,13 +49,13 @@ export interface QuoteInput {
 
 export async function saveQuoteRequest(
   input: QuoteInput
-): Promise<{ ok: true } | { ok: false; error: string }> {
+): Promise<{ ok: true; recorded: boolean } | { ok: false; error: string }> {
   const invalid = { ok: false as const, error: "Confira os campos e tente novamente." };
   if (!input || typeof input !== "object") return invalid;
 
   // Campo oculto: robôs preenchem, pessoas não. Fingimos sucesso sem gravar.
   if (typeof input.website === "string" && input.website.length > 0) {
-    return { ok: true };
+    return { ok: true, recorded: false };
   }
 
   const name = text(input.name, 100);
@@ -114,7 +114,7 @@ export async function saveQuoteRequest(
       createdAt: new Date(),
       deleteAfter: new Date(Date.now() + RETENTION_DAYS * DAY_IN_MS),
     });
-    return { ok: true };
+    return { ok: true, recorded: true };
   } catch (error) {
     console.error("Could not save the quote request.", error);
     return { ok: false, error: "Não foi possível enviar agora. Tente novamente ou chame no WhatsApp." };
