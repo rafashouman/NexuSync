@@ -118,7 +118,7 @@ export function PlansDG() {
   const slots = usePromoSlots();
   return (
     <section
-      id="planosdg"
+      id="midias-digitais"
       className="relative isolate overflow-hidden py-24 sm:py-32 border-t border-white/[0.06]"
     >
       {/* Glow Editorial Rose/Amber exclusivo para Design */}

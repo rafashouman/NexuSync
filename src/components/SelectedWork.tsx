@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -82,6 +82,134 @@ const projects = [
   },
 ];
 
+type Device = "phone" | "tablet" | "laptop";
+
+const deviceQueries = ["(min-width: 1024px)", "(min-width: 768px)"];
+
+function subscribeDevice(callback: () => void) {
+  const lists = deviceQueries.map((query) => window.matchMedia(query));
+  lists.forEach((list) => list.addEventListener("change", callback));
+  return () =>
+    lists.forEach((list) => list.removeEventListener("change", callback));
+}
+
+function getDevice(): Device {
+  if (window.matchMedia(deviceQueries[0]).matches) return "laptop";
+  if (window.matchMedia(deviceQueries[1]).matches) return "tablet";
+  return "phone";
+}
+
+// Renders the page at a virtual viewport and scales it to the frame width.
+function ScaledFrame({
+  href,
+  title,
+  width,
+  height,
+}: {
+  href: string;
+  title: string;
+  width: number;
+  height: number;
+}) {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0);
+
+  useEffect(() => {
+    const box = boxRef.current;
+    if (!box) return;
+    const observer = new ResizeObserver(([entry]) =>
+      setScale(entry.contentRect.width / width),
+    );
+    observer.observe(box);
+    return () => observer.disconnect();
+  }, [width]);
+
+  return (
+    <div
+      ref={boxRef}
+      className="relative w-full overflow-hidden bg-[#0b0d10]"
+      style={{ aspectRatio: `${width} / ${height}` }}
+    >
+      {scale > 0 && (
+        <iframe
+          src={href}
+          title={title}
+          loading="lazy"
+          scrolling="no"
+          tabIndex={-1}
+          className="pointer-events-none absolute left-0 top-0 origin-top-left border-0"
+          style={{ width, height, transform: `scale(${scale})` }}
+        />
+      )}
+      <Link
+        href={href}
+        className="absolute bottom-3 right-3 z-20 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/75 px-3 py-2 text-xs font-semibold text-white shadow-lg backdrop-blur transition-colors hover:border-violet-300/60 hover:bg-violet-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300"
+      >
+        Abrir layout
+        <ArrowUpRight aria-hidden className="h-3.5 w-3.5" />
+      </Link>
+    </div>
+  );
+}
+
+function DeviceMockup({ href, title }: { href: string; title: string }) {
+  const device = useSyncExternalStore<Device | null>(
+    subscribeDevice,
+    getDevice,
+    () => null,
+  );
+
+  if (device === "phone") {
+    return (
+      <div className="relative mx-auto w-[min(100%,260px)] rounded-[2.5rem] border border-white/15 bg-[#05060a] p-2.5 shadow-2xl">
+        <div className="relative overflow-hidden rounded-[2rem]">
+          <span
+            aria-hidden
+            className="absolute left-1/2 top-2 z-10 h-4 w-16 -translate-x-1/2 rounded-full bg-black"
+          />
+          <ScaledFrame href={href} title={title} width={390} height={844} />
+        </div>
+      </div>
+    );
+  }
+
+  if (device === "tablet") {
+    return (
+      <div className="mx-auto w-full max-w-[440px] rounded-[2rem] border border-white/15 bg-[#05060a] p-3.5 shadow-2xl">
+        <div className="relative overflow-hidden rounded-xl">
+          <ScaledFrame href={href} title={title} width={820} height={1100} />
+        </div>
+      </div>
+    );
+  }
+
+  if (device === "laptop") {
+    return (
+      <div className="mx-auto w-full max-w-[860px]">
+        <div className="rounded-t-2xl border border-white/15 bg-[#05060a] p-2.5 pb-2 shadow-2xl">
+          <div className="overflow-hidden rounded-lg">
+            <div className="flex h-8 items-center gap-1.5 border-b border-white/[0.08] bg-[#0b0e13] px-4">
+              <span aria-hidden className="h-2 w-2 rounded-full bg-[#ff6b61]" />
+              <span aria-hidden className="h-2 w-2 rounded-full bg-[#ffc14f]" />
+              <span aria-hidden className="h-2 w-2 rounded-full bg-[#49c781]" />
+              <span className="ml-3 min-w-0 truncate rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-0.5 font-mono text-[10px] text-white/50">
+                nexusync.online{href}
+              </span>
+            </div>
+            <ScaledFrame href={href} title={title} width={1280} height={760} />
+          </div>
+        </div>
+        <div
+          aria-hidden
+          className="mx-auto h-3 w-[108%] -translate-x-[3.7%] rounded-b-[1.2rem] border border-t-0 border-white/15 bg-gradient-to-b from-[#2a2b33] to-[#14151a]"
+        />
+      </div>
+    );
+  }
+
+  return <div className="aspect-[16/10] w-full" />;
+}
+
 export function SelectedWork() {
   const [active, setActive] = useState(0);
 
@@ -124,27 +252,46 @@ export function SelectedWork() {
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_20%,rgba(255,255,255,.1),transparent_60%)]" />
 
-            <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-[#0b0d10] shadow-2xl">
-              <div className="flex h-9 items-center gap-1.5 border-b border-white/[0.08] bg-[#0b0e13] px-4">
-                <span className="h-2 w-2 rounded-full bg-[#ff6b61]" />
-                <span className="h-2 w-2 rounded-full bg-[#ffc14f]" />
-                <span className="h-2 w-2 rounded-full bg-[#49c781]" />
-                <span className="ml-3 min-w-0 truncate rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-0.5 font-mono text-[10px] text-white/50">
-                  nexusync.online{project.href}
-                </span>
-              </div>
-              <div className="relative aspect-[16/10] w-full overflow-hidden">
-                <iframe
-                  key={project.number}
-                  src={project.href}
-                  title={`Demonstração de ${project.title}, ${project.category}`}
-                  loading="lazy"
-                  scrolling="no"
-                  tabIndex={-1}
-                  className="pointer-events-none absolute inset-0 h-full w-full border-0 bg-[#0b0d10]"
+            <DeviceMockup
+              key={project.number}
+              href={project.href}
+              title={`Demonstração de ${project.title}, ${project.category}`}
+            />
+          </div>
+
+          <div className="mt-5 flex items-center justify-center gap-4">
+            <button
+              type="button"
+              onClick={prev}
+              aria-label="Template anterior"
+              className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-colors hover:border-violet-400/40 hover:bg-violet-500/20 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <div className="flex items-center gap-2">
+              {projects.map((p, index) => (
+                <button
+                  key={p.number}
+                  type="button"
+                  onClick={() => setActive(index)}
+                  aria-label={`Ver ${p.title}`}
+                  aria-current={index === active}
+                  className={`h-1.5 rounded-full transition-all ${
+                    index === active
+                      ? "w-8 bg-violet-400"
+                      : "w-3 bg-white/20 hover:bg-white/40"
+                  }`}
                 />
-              </div>
+              ))}
             </div>
+            <button
+              type="button"
+              onClick={next}
+              aria-label="Próximo template"
+              className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-colors hover:border-violet-400/40 hover:bg-violet-500/20 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
           </div>
 
           <div className="mt-6 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
@@ -166,48 +313,6 @@ export function SelectedWork() {
               <p className="mt-3 text-xs leading-5 text-violet-100/80">
                 <span className="font-semibold">Objetivo:</span> {project.objective}
               </p>
-              <Link
-                href={project.href}
-                className="group mt-4 inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-violet-200"
-              >
-                Explorar demonstração
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </Link>
-            </div>
-
-            <div className="flex shrink-0 items-center gap-4">
-              <div className="flex items-center gap-2">
-                {projects.map((p, index) => (
-                  <button
-                    key={p.number}
-                    type="button"
-                    onClick={() => setActive(index)}
-                    aria-label={`Ver ${p.title}`}
-                    aria-current={index === active}
-                    className={`h-1.5 rounded-full transition-all ${
-                      index === active
-                        ? "w-8 bg-violet-400"
-                        : "w-3 bg-white/20 hover:bg-white/40"
-                    }`}
-                  />
-                ))}
-              </div>
-              <button
-                type="button"
-                onClick={prev}
-                aria-label="Template anterior"
-                className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-colors hover:border-violet-400/40 hover:bg-violet-500/20 hover:text-white"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-              <button
-                type="button"
-                onClick={next}
-                aria-label="Próximo template"
-                className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-colors hover:border-violet-400/40 hover:bg-violet-500/20 hover:text-white"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
             </div>
           </div>
         </div>

@@ -33,6 +33,7 @@ import {
 import { Reveal, CountUp } from "@/components/ui/MotionKit";
 import { useFocusTrap } from "@/components/ui/useFocusTrap";
 import { QuoteLink } from "@/components/QuoteLink";
+import { DeviceStage } from "@/components/DeviceStage";
 import ChronosBooking from "@/components/ChronosBooking";
 import MemoryMatrix from "@/components/games/MemoryMatrix";
 import PulseSpinRoulette from "@/components/games/SpinToWin";
@@ -1396,8 +1397,6 @@ export function TemplatesPageContent() {
   ];
 
   const [selectedIndex, setSelectedIndex] = useState<number>(3); // Inicia destacando o novo Prime Motors (ou altere para 0)
-  const [viewportMode, setViewportMode] = useState<"desktop" | "tablet" | "mobile">("desktop");
-  const [interactiveIframe, setInteractiveIframe] = useState<boolean>(true);
   const [fullscreenTemplate, setFullscreenTemplate] = useState<(typeof templates)[0] | null>(null);
 
   const activeTemplate = templates[selectedIndex];
@@ -1501,106 +1500,17 @@ export function TemplatesPageContent() {
             })}
           </div>
 
-          {/* Controles de Viewport (Desktop / Tablet / Mobile) + Interatividade */}
-          <div className="flex flex-wrap items-center justify-between gap-2.5 sm:justify-end">
-            <div className="inline-flex items-center rounded-xl border border-white/10 bg-black/50 p-1">
-              {[
-                { id: "desktop", label: "Desktop (100%)" },
-                { id: "tablet", label: "Tablet (768px)" },
-                { id: "mobile", label: "Mobile (390px)" },
-              ].map((vp) => (
-                <button
-                  key={vp.id}
-                  type="button"
-                  onClick={() =>
-                    setViewportMode(vp.id as "desktop" | "tablet" | "mobile")
-                  }
-                  className={`rounded-lg px-3 py-1.5 font-mono text-[10px] font-bold uppercase transition-all ${viewportMode === vp.id
-                      ? "bg-violet-600 text-white shadow"
-                      : "text-white/45 hover:text-white"
-                    }`}
-                >
-                  {vp.label}
-                </button>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setFullscreenTemplate(activeTemplate)}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-3.5 py-2 font-mono text-[10px] font-bold uppercase tracking-wider text-white transition-colors hover:border-violet-400 hover:text-violet-200"
-            >
-              <Maximize2 className="h-3.5 w-3.5" />
-              <span>Tela Cheia</span>
-            </button>
-          </div>
         </div>
 
         {/* Corpo do Console: Viewport Interativo (8 Cols) + Blueprint Técnico (4 Cols) */}
         <div className="grid grid-cols-1 gap-7 lg:grid-cols-12 lg:items-stretch">
           {/* COLUNA ESQUERDA: Simulador de Navegador Interativo (8 Cols) */}
           <div className="lg:col-span-8 flex flex-col justify-between rounded-3xl border border-white/15 bg-gradient-to-br from-[#121521] via-[#090b10] to-[#050609] p-3 sm:p-5 shadow-inner">
-            {/* Barra de Endereço do Browser Simulado */}
-            <div className="mb-3 flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-[#0b0d14] px-4 py-2.5">
-              <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#ff6b61]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#ffc14f]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#49c781]" />
-              </div>
-
-              <div className="flex min-w-0 flex-1 max-w-md items-center justify-center gap-2 rounded-lg border border-white/[0.07] bg-black/40 px-3 py-1">
-                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="truncate font-mono text-[11px] text-white/70">
-                  https://nexusync.online{activeTemplate.href}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setInteractiveIframe(!interactiveIframe)}
-                  className={`rounded-lg border px-2.5 py-1 font-mono text-[10px] font-bold uppercase transition-colors ${interactiveIframe
-                      ? "border-emerald-400/40 bg-emerald-500/15 text-emerald-300"
-                      : "border-white/10 bg-white/5 text-white/50"
-                    }`}
-                  title="Ativar ou pausar rolagem interna do site"
-                >
-                  {interactiveIframe ? "● Navegação Ativa" : "Scroll Bloqueado"}
-                </button>
-
-                <Link
-                  href={activeTemplate.href}
-                  target="_blank"
-                  className="inline-flex items-center gap-1 rounded-lg bg-white px-2.5 py-1 font-mono text-[10px] font-black uppercase text-slate-950 hover:bg-violet-300 transition-colors"
-                >
-                  <span>Nova Guia</span>
-                  <ArrowUpRight className="h-3 w-3" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Palco Responsivo do Iframe */}
-            <div className="relative flex h-[500px] sm:h-[600px] w-full items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[#06070b]">
-              <motion.div
-                key={`${activeTemplate.href}-${viewportMode}`}
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3 }}
-                className={`relative h-full overflow-hidden rounded-xl border border-white/15 bg-white shadow-2xl transition-all duration-500 ${viewportMode === "mobile"
-                    ? "w-[375px] max-w-full my-auto h-[94%] rounded-[2rem] border-4 border-zinc-800"
-                    : viewportMode === "tablet"
-                      ? "w-[768px] max-w-full my-auto h-[96%] rounded-2xl border-2 border-zinc-700"
-                      : "w-full h-full"
-                  }`}
-              >
-                <iframe
-                  src={activeTemplate.href}
-                  title={`Console interativo ${activeTemplate.title}`}
-                  className={`h-full w-full border-0 ${interactiveIframe ? "" : "pointer-events-none"
-                    }`}
-                />
-              </motion.div>
-            </div>
+            <DeviceStage
+              href={activeTemplate.href}
+              title={`Console interativo ${activeTemplate.title}`}
+              onFullscreen={() => setFullscreenTemplate(activeTemplate)}
+            />
           </div>
 
           {/* COLUNA DIREITA: Ficha de Engenharia & Conversão do Template (4 Cols) */}

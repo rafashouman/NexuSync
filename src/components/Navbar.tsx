@@ -9,10 +9,10 @@ import { QuoteLink } from "@/components/QuoteLink";
 
 const links = [
   { label: "Sites", href: "/#servicos" },
-  { label: "Exemplos", href: "/#trabalhos" },
+  { label: "Templates", href: "/#trabalhos" },
   { label: "Apps", href: "/#aplicacoes" },
   { label: "Mídias digitais", href: "/#midias-digitais" },
-  { label: "Investimento", href: "/#planos" },
+  { label: "Planos e Pacotes", href: "/#planos" },
 ];
 
 export function Navbar() {

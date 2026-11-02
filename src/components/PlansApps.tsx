@@ -130,7 +130,7 @@ export function PlansApps() {
 
   return (
     <section
-      id="planosapp"
+      id="aplicacoes"
       className="relative isolate overflow-hidden py-24 sm:py-32 border-t border-white/[0.06]"
     >
       {/* Ambient Cyan/Indigo Glow exclusivo para Sistemas */}

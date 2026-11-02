@@ -3,7 +3,8 @@ import { Hero } from "@/components/Hero";
 import { SelectedWork } from "@/components/SelectedWork";
 import { SiteSolutions, SiteBenefits, SiteProcess } from "@/components/SiteSections";
 import { Plans } from "@/components/Plans";
-import { ComplementaryOffers } from "@/components/ComplementaryOffers";
+import { PlansApps } from "@/components/PlansApps";
+import { PlansDG } from "@/components/PlansDG";
 import { FAQ } from "@/components/FAQ";
 import { Contact } from "@/components/Contact";
 
@@ -20,12 +21,13 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <SelectedWork />
       <SiteSolutions />
+      <SelectedWork />
       <SiteBenefits />
       <SiteProcess />
       <Plans sitesOnly />
-      <ComplementaryOffers />
+      <PlansApps />
+      <PlansDG />
       <FAQ />
       <Contact homeOffersOnly />
     </>
