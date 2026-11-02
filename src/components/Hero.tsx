@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { QuoteLink } from "@/components/QuoteLink";
+import { HeroTemplatePreview } from "@/components/HeroTemplatePreview";
 
 export function Hero() {
   return <section id="hero" className="relative overflow-hidden pb-16 pt-32 sm:pb-24 sm:pt-40">
@@ -22,13 +22,7 @@ export function Hero() {
         </div>
         <p className="mt-6 text-xs leading-6 text-muted-foreground">Design adaptado ao celular · Contato facilitado · Atendimento em todo o Brasil</p>
       </div>
-      <div className="rounded-3xl border border-violet-300/20 bg-white/[0.03] p-5 shadow-violet-glow sm:p-7">
-        <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-violet-200">Explore uma demonstração</p>
-        <a href="/templates/academias" className="block overflow-hidden rounded-2xl border border-white/10"><Image src="/images/site-preview-desktop.webp" width={1440} height={1000} preload sizes="(max-width: 1023px) 90vw, 40vw" alt="Demonstração PulseFit: site de academia com apresentação dos serviços e chamada para sessão experimental" className="aspect-[1.44] w-full object-cover object-top" /></a>
-        <p className="mt-4 text-sm leading-6 text-muted-foreground">Veja o design em ação: apresentação do negócio, serviços e um caminho claro até o contato.</p>
-        <a href="/templates/academias" className="mt-4 inline-block text-sm font-semibold text-violet-200 underline underline-offset-4">Explorar exemplo PulseFit</a>
-        <p className="mt-3 text-xs text-muted-foreground">Projeto demonstrativo. Conteúdo e números ilustrativos.</p>
-      </div>
+      <HeroTemplatePreview />
     </div>
   </section>;
 }
