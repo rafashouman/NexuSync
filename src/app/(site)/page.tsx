@@ -3,6 +3,7 @@ import { Hero } from "@/components/Hero";
 import { SelectedWork } from "@/components/SelectedWork";
 import { SiteSolutions, SiteBenefits, SiteProcess } from "@/components/SiteSections";
 import { Plans } from "@/components/Plans";
+import { ComplementaryOffers } from "@/components/ComplementaryOffers";
 import { FAQ } from "@/components/FAQ";
 import { Contact } from "@/components/Contact";
 
@@ -16,5 +17,17 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  return <><Hero /><SelectedWork /><SiteSolutions /><SiteBenefits /><SiteProcess /><Plans sitesOnly /><FAQ /><Contact sitesOnly /></>;
+  return (
+    <>
+      <Hero />
+      <SelectedWork />
+      <SiteSolutions />
+      <SiteBenefits />
+      <SiteProcess />
+      <Plans sitesOnly />
+      <ComplementaryOffers />
+      <FAQ />
+      <Contact homeOffersOnly />
+    </>
+  );
 }

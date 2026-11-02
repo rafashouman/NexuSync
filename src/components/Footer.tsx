@@ -22,6 +22,12 @@ export function Footer() {
             <p className="text-muted-foreground max-w-sm leading-relaxed text-sm">
               Criamos sites, landing pages e hotsites para profissionais e empresas que querem apresentar melhor seus serviços e facilitar novos contatos. Atendimento remoto para todo o Brasil.
             </p>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              Também precisa de divulgação?{" "}
+              <Link href="/marketing" className="font-semibold text-violet-200 underline-offset-4 hover:underline">
+                Conheça nossos serviços de marketing digital.
+              </Link>
+            </p>
           </div>
 
           <div>

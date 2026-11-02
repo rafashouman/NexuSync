@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { waLink } from "@/lib/site-config";
+import { QuoteLink } from "@/components/QuoteLink";
 
 export function Hero() {
   return <section id="hero" className="relative overflow-hidden pb-16 pt-32 sm:pb-24 sm:pt-40">
@@ -10,7 +10,16 @@ export function Hero() {
         <h1 className="max-w-3xl font-display text-[clamp(2.2rem,4.5vw,4.5rem)] leading-[1.12] tracking-tight">Seu próximo cliente precisa entender <span className="text-violet-gradient">por que escolher você.</span></h1>
         <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">Criamos sites profissionais para apresentar seu negócio com clareza, valorizar seus serviços e facilitar pedidos de orçamento pelo WhatsApp ou formulário.</p>
         <p className="mt-4 max-w-xl text-sm leading-6 text-violet-100">Landing pages e hotsites para profissionais liberais, comércios e pequenas e médias empresas.</p>
-        <div className="mt-8 flex flex-wrap items-center gap-5"><a href={waLink("Olá! Quero pedir um orçamento para criar o site do meu negócio.")} target="_blank" rel="noopener noreferrer" className="rounded-full bg-violet-gradient px-7 py-4 font-bold text-white shadow-violet-glow">Pedir orçamento do meu site</a><a href="#trabalhos" className="text-sm font-semibold text-violet-200">Ver exemplos de sites ↓</a></div>
+        <div className="mt-8 flex flex-wrap items-center gap-5">
+          <QuoteLink
+            interest="nao-sei"
+            section="hero"
+            className="rounded-full bg-violet-gradient px-7 py-4 font-bold text-white shadow-violet-glow"
+          >
+            Pedir orçamento do meu site
+          </QuoteLink>
+          <a href="#trabalhos" className="text-sm font-semibold text-violet-200">Ver exemplos de sites ↓</a>
+        </div>
         <p className="mt-6 text-xs leading-6 text-muted-foreground">Design adaptado ao celular · Contato facilitado · Atendimento em todo o Brasil</p>
       </div>
       <div className="rounded-3xl border border-violet-300/20 bg-white/[0.03] p-5 shadow-violet-glow sm:p-7">

@@ -1,7 +1,22 @@
 import type { PILOT_MODALITIES } from "@/lib/pilot";
+import type { QuoteSection } from "@/lib/quote";
 
 export type AnalyticsEvent =
   | { eventName: "page_view" }
+  | {
+      eventName: "quote_whatsapp_click" | "quote_interest_select";
+      interest: string;
+      section: QuoteSection;
+    }
+  | {
+      eventName: "quote_form_start";
+      section: QuoteSection;
+    }
+  | {
+      eventName: "contact_submit_success";
+      interest: string;
+      section: QuoteSection;
+    }
   | {
       eventName: "pilot_cta_click" | "pilot_whatsapp_click";
       placement:

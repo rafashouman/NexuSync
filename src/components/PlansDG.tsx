@@ -285,6 +285,8 @@ export function PlansDG() {
                       href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
                         plan.waMessage
                       )}`}
+                      data-analytics-section="media"
+                      data-analytics-interest="design"
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`mt-5 group/btn flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-xs font-black uppercase tracking-wider transition-all ${

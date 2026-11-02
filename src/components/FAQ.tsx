@@ -45,6 +45,14 @@ const faqs = [
   {
     "q": "Como funciona o pagamento?",
     "a": "Trabalhamos com um sinal para iniciar o projeto e saldo na aprovação e publicação final. Os valores, as etapas e as condições são apresentados na proposta."
+  },
+  {
+    "q": "Posso contratar um aplicativo ou peças digitais junto com o site?",
+    "a": "Sim. A proposta pode combinar serviços conforme o objetivo do projeto, com entregas, valores e prazos definidos para cada parte."
+  },
+  {
+    "q": "O pacote de mídias digitais inclui gerenciamento das redes sociais?",
+    "a": "O pacote contempla a criação das peças descritas na proposta. Publicação, gestão das redes sociais e anúncios são avaliados e contratados separadamente."
   }
 ];
 
