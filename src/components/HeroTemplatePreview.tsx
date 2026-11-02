@@ -78,24 +78,21 @@ export function HeroTemplatePreview() {
         </span>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0b0d10] shadow-2xl">
-        <div className="flex h-9 items-center gap-1.5 border-b border-white/[0.08] bg-[#0b0e13] px-3 sm:px-4">
-          <span aria-hidden className="h-2 w-2 rounded-full bg-[#ff6b61]" />
-          <span aria-hidden className="h-2 w-2 rounded-full bg-[#ffc14f]" />
-          <span aria-hidden className="h-2 w-2 rounded-full bg-[#49c781]" />
-          <span className="ml-2 min-w-0 truncate rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-0.5 font-mono text-[10px] text-white/50">
-            nexusync.online{template.href}
-          </span>
-        </div>
-        <div className="relative aspect-[1.44] w-full overflow-hidden bg-[#0b0d10]">
+      {/* Smartphone: tela de 390x844 renderizada em escala 0.72 (280px de largura) */}
+      <div className="mx-auto w-fit max-w-full rounded-[2.5rem] border border-white/15 bg-[#05060a] p-2.5 shadow-2xl sm:rounded-[2.75rem] sm:p-3">
+        <div className="relative h-[524px] w-[242px] overflow-hidden rounded-[2rem] bg-[#0b0d10] sm:h-[608px] sm:w-[280px] sm:rounded-[2.1rem]">
+          <span
+            aria-hidden
+            className="absolute left-1/2 top-2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-black"
+          />
           <iframe
             key={template.href}
             src={template.href}
-            title={`Prévia demonstrativa do site ${template.brand}, categoria ${template.category}`}
+            title={`Prévia mobile demonstrativa do site ${template.brand}, categoria ${template.category}`}
             loading="lazy"
             scrolling="no"
             tabIndex={-1}
-            className="pointer-events-none absolute inset-0 h-full w-full border-0"
+            className="pointer-events-none absolute left-0 top-0 h-[844px] w-[390px] origin-top-left scale-[0.62] border-0 sm:scale-[0.718]"
           />
         </div>
       </div>
