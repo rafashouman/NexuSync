@@ -54,6 +54,39 @@ const appPlans = [
   },
   {
     id: "app-02",
+    code: "EXP // GAMIFICATION",
+    name: "Mini Apps & Gamificação",
+    category: "Jogos Promocionais & Engajamento",
+    price: "349,00",
+    originalPrice: "499,00",
+    promoKey: "apps-miniapps" as const,
+    deliveryTime: "5 a 10 dias úteis",
+    idealFor: "Campanhas de marketing, eventos e captura de leads",
+    description:
+      "Experiências interativas que rodam no navegador para apresentar uma campanha, organizar a participação e divulgar ofertas ou cupons.",
+    highlight: false,
+    badge: "Ideal p/ Campanhas",
+    icon: Gamepad2,
+    stack: ["Framer Motion", "HTML5 Canvas", "Lead Capture", "60 FPS UI"],
+    features: [
+      "Desenvolvimento de 1 mini app ou jogo promocional",
+      "Roletas de descontos, quizzes ou desafios de memória",
+      "Sistema de pontuação ou resultado personalizado",
+      "Identidade visual 100% adaptada à sua campanha",
+      "Captura de contato antes ou após a dinâmica",
+      "Tela de início, regras claras e chamada para ação",
+      "Botão de resgate de prêmio direto no WhatsApp",
+      "Design responsivo para ações em redes sociais",
+      "Publicação inicial e 1 rodada de ajustes",
+    ],
+    scope:
+      "Inclui uma experiência interativa simples por projeto. Não inclui multiplayer em rede, apostas financeiras ou sorteios regulamentados.",
+    buttonText: "Criar meu Mini App interativo",
+    waMessage:
+      "Olá! Tenho interesse na oferta de lançamento de Mini Apps e Jogos Web. Quero apresentar minha ideia.",
+  },
+    {
+    id: "app-03",
     code: "SYS // ERP-LITE",
     name: "Gestão Web & Dashboards",
     category: "Painéis, PDV & Sistemas Sob Medida",
@@ -85,39 +118,6 @@ const appPlans = [
     buttonText: "Orçar sistema de gestão",
     waMessage:
       "Olá! Tenho interesse no plano Gestão Web. Quero explicar um processo do meu negócio que gostaria de simplificar com um sistema online.",
-  },
-  {
-    id: "app-03",
-    code: "EXP // GAMIFICATION",
-    name: "Mini Apps & Gamificação",
-    category: "Jogos Promocionais & Engajamento",
-    price: "349,00",
-    originalPrice: "499,00",
-    promoKey: "apps-miniapps" as const,
-    deliveryTime: "5 a 10 dias úteis",
-    idealFor: "Campanhas de marketing, eventos e captura de leads",
-    description:
-      "Experiências interativas que rodam no navegador para apresentar uma campanha, organizar a participação e divulgar ofertas ou cupons.",
-    highlight: false,
-    badge: "Ideal p/ Campanhas",
-    icon: Gamepad2,
-    stack: ["Framer Motion", "HTML5 Canvas", "Lead Capture", "60 FPS UI"],
-    features: [
-      "Desenvolvimento de 1 mini app ou jogo promocional",
-      "Roletas de descontos, quizzes ou desafios de memória",
-      "Sistema de pontuação ou resultado personalizado",
-      "Identidade visual 100% adaptada à sua campanha",
-      "Captura de contato antes ou após a dinâmica",
-      "Tela de início, regras claras e chamada para ação",
-      "Botão de resgate de prêmio direto no WhatsApp",
-      "Design responsivo para ações em redes sociais",
-      "Publicação inicial e 1 rodada de ajustes",
-    ],
-    scope:
-      "Inclui uma experiência interativa simples por projeto. Não inclui multiplayer em rede, apostas financeiras ou sorteios regulamentados.",
-    buttonText: "Criar meu Mini App interativo",
-    waMessage:
-      "Olá! Tenho interesse na oferta de lançamento de Mini Apps e Jogos Web. Quero apresentar minha ideia.",
   },
 ];
 
