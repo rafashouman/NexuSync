@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -15,11 +15,15 @@ import {
 } from "lucide-react";
 import { saveQuoteRequest } from "@/app/actions/quotes";
 import { trackMetaEvent } from "@/components/MetaPixel";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 import {
+  HOME_QUOTE_INTERESTS,
   INTEREST_EVENT,
+  isQuoteSection,
   QUOTE_BUDGETS,
   QUOTE_GOALS,
   QUOTE_INTERESTS,
+  type QuoteSection,
 } from "@/lib/quote";
 import { WA_NUMBER, waLink } from "@/lib/site-config";
 
@@ -27,24 +31,61 @@ const FIELD =
   "w-full rounded-xl border border-white/10 bg-white/[0.035] px-4 py-3.5 text-foreground backdrop-blur-xl transition-all focus:border-violet-300/50 focus:outline-none focus:ring-1 focus:ring-violet-300/30";
 const LABEL = "text-xs font-bold uppercase tracking-widest text-muted-foreground";
 
-export function Contact() {
+export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }) {
+  const visibleInterests = homeOffersOnly ? HOME_QUOTE_INTERESTS : QUOTE_INTERESTS;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [interest, setInterest] = useState<string>("nao-sei");
+  const [interestSource, setInterestSource] = useState<QuoteSection>("form");
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [error, setError] = useState("");
   const [sent, setSent] = useState<string | null>(null);
+  const formStarted = useRef(false);
 
   useEffect(() => {
     const onInterest = (event: Event) => {
-      const id = (event as CustomEvent<{ id: string }>).detail?.id;
-      if (QUOTE_INTERESTS.some((i) => i.id === id)) {
-        setInterest(id);
+      const detail = (event as CustomEvent<{ id?: string | null; source?: unknown }>).detail;
+      if (isQuoteSection(detail?.source)) setInterestSource(detail.source);
+      if (detail?.id && visibleInterests.some((item) => item.id === detail.id)) {
+        const source = isQuoteSection(detail.source) ? detail.source : "form";
+        setInterestSource(source);
+        trackAnalyticsEvent({
+          eventName: "quote_interest_select",
+          interest: detail.id,
+          section: source,
+        });
+        setInterest(detail.id);
         setSent(null);
       }
     };
     window.addEventListener(INTEREST_EVENT, onInterest);
+
+    const params = new URLSearchParams(window.location.search);
+    const initialInterest = params.get("interest");
+    const initialSource = params.get("source");
+    if (isQuoteSection(initialSource)) {
+      // Apply the cross-route quote intent after hydration.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setInterestSource(initialSource);
+    }
+    if (initialInterest && visibleInterests.some((item) => item.id === initialInterest)) {
+      const source = isQuoteSection(initialSource) ? initialSource : "form";
+      setInterest(initialInterest);
+      setInterestSource(source);
+      trackAnalyticsEvent({
+        eventName: "quote_interest_select",
+        interest: initialInterest,
+        section: source,
+      });
+    }
+
     return () => window.removeEventListener(INTEREST_EVENT, onInterest);
-  }, []);
+  }, [visibleInterests]);
+
+  const handleFormStart = () => {
+    if (formStarted.current) return;
+    formStarted.current = true;
+    trackAnalyticsEvent({ eventName: "quote_form_start", section: interestSource });
+  };
 
   const handleCopyEmail = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -71,7 +112,7 @@ export function Contact() {
         company: field("empresa"),
         segment: field("segmento"),
         contact: field("contato"),
-        goal: field("objetivo"),
+        goal: homeOffersOnly ? "projeto" : field("objetivo"),
         interest,
         budget: field("orcamento"),
         message: field("mensagem"),
@@ -80,7 +121,14 @@ export function Contact() {
         website: field("website"),
       });
       if (result.ok) {
-        trackMetaEvent("Lead", { content_name: interest });
+        if (result.recorded) {
+          trackMetaEvent("Lead", { content_name: interest });
+          trackAnalyticsEvent({
+            eventName: "contact_submit_success",
+            interest,
+            section: interestSource,
+          });
+        }
         setSent(
           `Olá! Sou ${name} e acabei de enviar um pedido de orçamento (${interestLabel}) pelo site da NexuSync.`
         );
@@ -123,16 +171,12 @@ export function Contact() {
             </div>
 
             <h2 className="mb-4 font-display text-[clamp(1.5rem,7.5vw,3rem)] uppercase tracking-tight sm:text-4xl md:text-5xl">
-              Pronto para acelerar os seus{" "}
-              <span className="text-violet-gradient">Resultados?</span>
+              {homeOffersOnly ? "Vamos tirar seu projeto do papel?" : "Vamos conversar sobre seu projeto?"}
             </h2>
             <p className="mb-8 text-base text-muted-foreground sm:text-lg">
-              Escolha o que precisa, conte um pouco sobre o negócio e receba
-              uma proposta da nossa equipe.{" "}
-              <span className="font-medium text-violet-100">
-                Retornaremos rapidamente
-              </span>{" "}
-              com a melhor solução.
+              {homeOffersOnly
+                ? "Conte o que seu negócio oferece e o que você precisa. Vamos ajudar a definir uma solução e preparar uma proposta."
+                : "Conte o que você oferece e o que deseja alcançar. Vamos ajudar a definir uma solução adequada à sua empresa e preparar uma proposta."}
             </p>
 
             {sent ? (
@@ -163,18 +207,25 @@ export function Contact() {
                 </div>
               </div>
             ) : (
-            <form id="orcamento" onSubmit={handleSubmit} className="scroll-mt-28 space-y-6">
+            <form id="orcamento" onSubmit={handleSubmit} onFocusCapture={handleFormStart} className="scroll-mt-28 space-y-6">
               <div className="space-y-2.5">
                 <p className={LABEL}>1. O que você precisa?</p>
                 <div className="flex flex-wrap gap-2">
-                  {QUOTE_INTERESTS.map((item) => {
+                  {visibleInterests.map((item) => {
                     const active = interest === item.id;
                     return (
                       <button
                         key={item.id}
                         type="button"
                         aria-pressed={active}
-                        onClick={() => setInterest(item.id)}
+                        onClick={() => {
+                          setInterest(item.id);
+                          trackAnalyticsEvent({
+                            eventName: "quote_interest_select",
+                            interest: item.id,
+                            section: "form",
+                          });
+                        }}
                         className={`rounded-xl border px-3.5 py-2 text-xs font-semibold transition-all ${
                           active
                             ? "border-violet-300/50 bg-violet-500/25 text-white shadow-sm shadow-violet-500/20"
@@ -193,19 +244,19 @@ export function Contact() {
                   <label htmlFor="nome" className={LABEL}>Seu nome</label>
                   <input id="nome" name="nome" type="text" required maxLength={100} className={FIELD} placeholder="Como podemos te chamar?" />
                 </div>
+                {!homeOffersOnly && <div className="space-y-2">
+                  <label htmlFor="empresa" className={LABEL}>Empresa ou marca (opcional)</label>
+                  <input id="empresa" name="empresa" type="text" maxLength={150} className={FIELD} placeholder="Nome do seu negócio" />
+                </div>}
                 <div className="space-y-2">
-                  <label htmlFor="empresa" className={LABEL}>Empresa ou marca</label>
-                  <input id="empresa" name="empresa" type="text" required maxLength={150} className={FIELD} placeholder="Nome do seu negócio" />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="segmento" className={LABEL}>Segmento</label>
-                  <input id="segmento" name="segmento" type="text" required maxLength={100} className={FIELD} placeholder="Ex.: clínica, restaurante, loja" />
+                  <label htmlFor="segmento" className={LABEL}>{homeOffersOnly ? "O que seu negócio oferece?" : "Segmento"}</label>
+                  <input id="segmento" name="segmento" type="text" required maxLength={100} className={FIELD} placeholder={homeOffersOnly ? "Descreva seus produtos ou serviços" : "Ex.: clínica, restaurante, loja"} />
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="contato-info" className={LABEL}>WhatsApp ou e-mail</label>
                   <input id="contato-info" name="contato" type="text" required maxLength={150} className={FIELD} placeholder="(51) 90000-0000 ou voce@email.com" />
                 </div>
-                <div className="space-y-2">
+                {!homeOffersOnly && <div className="space-y-2">
                   <label htmlFor="objetivo" className={LABEL}>Objetivo principal</label>
                   <select id="objetivo" name="objetivo" required defaultValue="" className={FIELD}>
                     <option value="" disabled>Selecione</option>
@@ -213,8 +264,8 @@ export function Contact() {
                       <option key={g.id} value={g.id} className="bg-[#0c0e14]">{g.label}</option>
                     ))}
                   </select>
-                </div>
-                <div className="space-y-2">
+                </div>}
+                {!homeOffersOnly && <div className="space-y-2">
                   <label htmlFor="orcamento-faixa" className={LABEL}>Orçamento (opcional)</label>
                   <select id="orcamento-faixa" name="orcamento" defaultValue="" className={FIELD}>
                     <option value="">Prefiro não informar</option>
@@ -222,11 +273,11 @@ export function Contact() {
                       <option key={b} value={b} className="bg-[#0c0e14]">{b}</option>
                     ))}
                   </select>
-                </div>
+                </div>}
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="mensagem" className={LABEL}>Mensagem (opcional)</label>
+                <label htmlFor="mensagem" className={LABEL}>{homeOffersOnly ? "Informações adicionais sobre o projeto (opcional)" : "Mensagem (opcional)"}</label>
                 <textarea id="mensagem" name="mensagem" maxLength={1000} rows={3} className={`${FIELD} resize-none`} placeholder="Conte brevemente sobre seu público, prazos ou referências..." />
               </div>
 
@@ -256,7 +307,7 @@ export function Contact() {
                 disabled={isSubmitting}
                 className="group inline-flex w-full items-center justify-center gap-3 rounded-xl bg-violet-gradient px-8 py-4 font-bold text-white shadow-violet-glow transition-transform hover:scale-[1.015] disabled:opacity-60 sm:w-auto"
               >
-                {isSubmitting ? "Enviando..." : "Solicitar orçamento"}
+                {isSubmitting ? "Enviando..." : (homeOffersOnly ? "Solicitar proposta" : "Solicitar orçamento")}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </button>
               {error && (
@@ -284,7 +335,7 @@ export function Contact() {
                 </h3>
                 <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-500/10 px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-emerald-300">
                   <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-                  Disponível agora
+                  Atendimento pelo WhatsApp
                 </span>
               </div>
 
@@ -380,7 +431,7 @@ export function Contact() {
                   <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-violet-300/30 bg-violet-400/10 font-mono text-[10px] text-violet-200">
                     02
                   </span>
-                  <span>Definição de arquitetura visual e cronograma</span>
+                  <span>Definição do conteúdo, visual e cronograma</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-violet-300/30 bg-violet-400/10 font-mono text-[10px] text-violet-200">

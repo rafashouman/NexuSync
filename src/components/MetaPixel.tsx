@@ -4,6 +4,8 @@ import { useEffect, useRef, useSyncExternalStore, Suspense } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
+import { trackAnalyticsEvent } from "@/lib/analytics";
+import { isQuoteSection } from "@/lib/quote";
 
 export const META_PIXEL_ID = "1587285682708459";
 export const GA_MEASUREMENT_ID = "G-S1X5J5VQXK";
@@ -67,10 +69,19 @@ function MetaPixelRouteTracker() {
   // Qualquer clique em link do WhatsApp conta como evento Contact.
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
-      const link = (event.target as Element | null)?.closest?.("a[href]");
+      const link = (event.target as Element | null)?.closest<HTMLAnchorElement>("a[href]");
       const href = link?.getAttribute("href") ?? "";
       if (/^https:\/\/(wa\.me|api\.whatsapp\.com)\//.test(href)) {
         trackMetaEvent("Contact", { content_name: "whatsapp" });
+        const section = link?.dataset.analyticsSection;
+        const interest = link?.dataset.analyticsInterest;
+        if (isQuoteSection(section) && interest) {
+          trackAnalyticsEvent({
+            eventName: "quote_whatsapp_click",
+            interest,
+            section,
+          });
+        }
       }
     };
     document.addEventListener("click", onClick);

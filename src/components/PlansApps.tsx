@@ -29,11 +29,11 @@ const appPlans = [
     deliveryTime: "7 a 15 dias úteis",
     idealFor: "Clínicas, Barbearias, Estúdios e Consultorias",
     description:
-      "Substitua a agenda de papel por uma aplicação web que apresenta seus serviços, recebe reservas 24h por dia e organiza a rotina da sua equipe.",
+      "Apresente seus serviços e receba solicitações de horários em uma aplicação web organizada para a rotina da sua equipe.",
     highlight: true,
     badge: "Recomendado p/ Serviços",
     icon: CalendarCheck2,
-    stack: ["Next.js App Router", "Painel Admin", "Notificação WhatsApp", "Mobile-First"],
+    stack: ["Aplicação web", "Painel de gestão", "Atalho de contato", "Adaptada ao celular"],
     features: [
       "Página de apresentação dos serviços e profissionais",
       "Fluxo de agendamento online passo a passo",
@@ -41,13 +41,13 @@ const appPlans = [
       "Cadastro rápido de clientes",
       "Painel administrativo para gestão da agenda",
       "Visualização e aprovação das solicitações recebidas",
-      "Disparo de confirmação rápida via WhatsApp",
+      "Contato da equipe com o cliente pelo WhatsApp, conforme o fluxo definido",
       "Interface 100% responsiva (Celular, Tablet e PC)",
       "Configuração inicial, publicação e treinamento",
       "2 rodadas completas de ajustes",
     ],
     scope:
-      "O plano básico utiliza solicitações de agendamento estruturadas. Trava atômica em tempo real no Firestore, login social de clientes e pagamentos online podem ser adicionados sob medida.",
+      "O plano básico registra solicitações, que precisam ser confirmadas pelo negócio. Sincronização em tempo real, notificações automáticas, pagamentos e integrações adicionais não estão incluídos sem previsão expressa na proposta.",
     buttonText: "Automatizar meus agendamentos",
     waMessage:
       "Olá! Tenho interesse na oferta de lançamento do sistema de Agendamentos Online. Gostaria de explicar como funciona meu negócio.",
@@ -97,7 +97,7 @@ const appPlans = [
     deliveryTime: "5 a 10 dias úteis",
     idealFor: "Campanhas de marketing, eventos e captura de leads",
     description:
-      "Experiências interativas que rodam direto no navegador para reter a atenção do visitante, distribuir cupons e multiplicar a conversão de campanhas.",
+      "Experiências interativas que rodam no navegador para apresentar uma campanha, organizar a participação e divulgar ofertas ou cupons.",
     highlight: false,
     badge: "Ideal p/ Campanhas",
     icon: Gamepad2,
@@ -350,6 +350,8 @@ export function PlansApps() {
                     href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
                       activePlan.waMessage
                     )}`}
+                    data-analytics-section="apps"
+                    data-analytics-interest="aplicacao-web"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group/btn shrink-0 inline-flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 px-7 py-4 text-sm font-black uppercase tracking-wider text-slate-950 shadow-[0_0_30px_rgba(6,182,212,0.35)] transition-all hover:scale-[1.02]"

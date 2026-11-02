@@ -20,8 +20,13 @@ export function Footer() {
               />
             </Link>
             <p className="text-muted-foreground max-w-sm leading-relaxed text-sm">
-              Desenvolvemos experiências digitais e plataformas de alta performance.
-              Foco absoluto em conversão, design e velocidade de carregamento.
+              Criamos sites, landing pages e hotsites para profissionais e empresas que querem apresentar melhor seus serviços e facilitar novos contatos. Atendimento remoto para todo o Brasil.
+            </p>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              Também precisa de divulgação?{" "}
+              <Link href="/marketing" className="font-semibold text-violet-200 underline-offset-4 hover:underline">
+                Conheça nossos serviços de marketing digital.
+              </Link>
             </p>
           </div>
 
@@ -31,7 +36,7 @@ export function Footer() {
               <li><Link href="/" className="hover:text-violet-200 transition-colors">Início</Link></li>
               <li><Link href="/apps" className="hover:text-violet-200 transition-colors">Aplicativos</Link></li>
               <li><Link href="/design" className="hover:text-violet-200 transition-colors">Design</Link></li>
-              <li><Link href="/templates" className="hover:text-violet-200 transition-colors">Templates</Link></li>
+              <li><Link href="/templates" className="hover:text-violet-200 transition-colors">Exemplos de sites</Link></li>
               <li><Link href="/#planos" className="hover:text-violet-200 transition-colors">Planos & Preços</Link></li>
               <li><Link href="/#faq" className="hover:text-violet-200 transition-colors">FAQ</Link></li>
               <li><Link href="/privacidade" className="hover:text-violet-200 transition-colors">Privacidade</Link></li>
@@ -39,11 +44,11 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-bold text-foreground mb-6 uppercase tracking-widest text-xs">Redes Sociais</h4>
+            <h4 className="font-bold text-foreground mb-6 uppercase tracking-widest text-xs">Outras soluções</h4>
             <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-violet-200 transition-colors">Facebook</a></li>
-              <li><a href="#" className="hover:text-violet-200 transition-colors">LinkedIn</a></li>
-              <li><a href="#" className="hover:text-violet-200 transition-colors">GitHub</a></li>
+              <li><Link href="/marketing" className="hover:text-violet-200 transition-colors">Marketing digital</Link></li>
+              <li><Link href="/lojas-virtuais" className="hover:text-violet-200 transition-colors">Lojas virtuais</Link></li>
+              <li><Link href="/arcade" className="hover:text-violet-200 transition-colors">Experiências interativas</Link></li>
             </ul>
           </div>
 

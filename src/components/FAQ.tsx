@@ -7,64 +7,52 @@ import { ChevronDown } from "lucide-react";
 // Perguntas baseadas no seu briefing, com foco em profissionalismo e transparência
 const faqs = [
   {
-    q: "O investimento nos anúncios está incluído?",
-    a: "Não. A mensalidade remunera planejamento, gestão e acompanhamento. A verba de mídia é definida com você e paga diretamente à plataforma."
+    "q": "Qual tipo de site é indicado para meu negócio?",
+    "a": "Uma landing page concentra uma oferta e facilita o contato. Um site institucional apresenta a empresa e seus serviços. Um hotsite atende uma campanha, evento ou lançamento. Ajudamos a escolher conforme seu objetivo."
   },
   {
-    q: "Posso contratar apenas um serviço?",
-    a: "Sim. Você pode contratar redes sociais, tráfego pago, captação de leads ou automações separadamente, conforme o escopo da proposta."
+    "q": "Quanto custa e o que está incluído?",
+    "a": "Os planos Presence e Pulse têm os valores e as entregas apresentados nesta página. Hotsites com recursos específicos recebem orçamento próprio. A proposta confirma páginas, funcionalidades, revisões e custos adicionais antes do início."
   },
   {
-    q: "Preciso ter um site para anunciar?",
-    a: "Depende do objetivo. Algumas campanhas levam a formulários ou canais de contato. Quando uma página for necessária, indicamos uma solução compatível."
+    "q": "Quanto tempo leva para ficar pronto?",
+    "a": "O Presence tem entrega estimada de 3 a 5 dias úteis e o Pulse, de 5 a 10 dias úteis. O prazo depende do escopo, do envio dos materiais e das aprovações. Hotsites sob medida têm cronograma definido na proposta."
   },
   {
-    q: "Vocês respondem meus clientes nas redes sociais?",
-    a: "Os pacotes apresentados incluem produção e publicação de conteúdo. Atendimento de mensagens e gestão diária da comunidade são avaliados separadamente."
+    "q": "Preciso fornecer textos, fotos e logotipo?",
+    "a": "Reunimos as informações e os materiais disponíveis no início do projeto. A proposta define o que você fornece e se será necessário contratar produção de textos, imagens ou identidade visual."
   },
   {
-    q: "O que é um lead?",
-    a: "É um contato de alguém que demonstrou interesse no seu negócio. Esse contato ainda precisa ser atendido e qualificado pela equipe comercial."
+    "q": "Domínio e hospedagem estão incluídos?",
+    "a": "O registro do domínio e a hospedagem precisam ser confirmados no orçamento. Configurar um domínio não inclui automaticamente pagar seu registro ou suas renovações. O Pulse inclui a configuração de domínio próprio."
   },
   {
-    q: "Vocês garantem vendas?",
-    a: "Trabalhamos com planejamento, testes e acompanhamento. As vendas dependem também da oferta, do mercado, do investimento e do atendimento."
+    "q": "O site funciona no celular?",
+    "a": "Sim. Os sites são adaptados para celular, tablet e computador, com atenção à leitura, à navegação e aos botões de contato."
   },
   {
-    q: "As ferramentas de automação estão incluídas?",
-    a: "Licenças e créditos de terceiros são apresentados separadamente. Você conhece esses custos antes de aprovar a solução."
+    "q": "Posso solicitar alterações?",
+    "a": "Sim. O Presence inclui uma rodada de ajustes e o Pulse inclui duas. A proposta define as etapas de revisão; mudanças além do escopo são avaliadas separadamente."
   },
   {
-    q: "Como começa o trabalho?",
-    a: "Após o aceite da proposta, reunimos informações, acessos e materiais. Em seguida, apresentamos o planejamento e iniciamos a configuração e as entregas."
+    "q": "Como funciona a manutenção depois da entrega?",
+    "a": "Oferecemos manutenção mensal contratada separadamente. A proposta informa o que está incluído no suporte, quais atualizações são cobertas e os custos recorrentes."
   },
   {
-    q: "Quanto tempo demora para a plataforma ficar pronta?",
-    a: "O plano Presence tem entrega estimada de 3 a 5 dias úteis e o Pulse, de 5 a 10 dias úteis. No Premium (lojas virtuais e projetos completos), o prazo é definido após a análise do escopo. Os prazos dependem também da agilidade no envio de materiais e nas aprovações."
+    "q": "O site garante novos clientes?",
+    "a": "O site ajuda a apresentar sua oferta e facilitar contatos. Os resultados também dependem de divulgação, mercado, preço e atendimento. Não há garantia de volume de contatos ou vendas."
   },
   {
-    q: "Posso utilizar o meu próprio domínio (ex: minhaempresa.com.br)?",
-    a: "Sim. Nos planos Pulse e Premium, incluímos a configuração do domínio próprio. No Presence, domínio e hospedagem são orçados à parte quando aplicável."
+    "q": "Como funciona o pagamento?",
+    "a": "Trabalhamos com um sinal para iniciar o projeto e saldo na aprovação e publicação final. Os valores, as etapas e as condições são apresentados na proposta."
   },
   {
-    q: "A plataforma funciona bem em dispositivos móveis?",
-    a: "Sim. Todo o nosso desenvolvimento segue a arquitetura 'Mobile-First'. A sua plataforma será altamente otimizada, responsiva e rápida, garantindo fluidez e velocidade de carregamento independentemente de ser acessada via smartphone, tablet ou desktop."
+    "q": "Posso contratar um aplicativo ou peças digitais junto com o site?",
+    "a": "Sim. A proposta pode combinar serviços conforme o objetivo do projeto, com entregas, valores e prazos definidos para cada parte."
   },
   {
-    q: "Oferecem suporte e manutenção pós-entrega?",
-    a: "Sim, criamos parcerias de longo prazo. Oferecemos pacotes de manutenção mensal para garantir que a sua plataforma permaneça segura, atualizada e operando sempre com performance máxima."
-  },
-  {
-    q: "Posso solicitar alterações durante o desenvolvimento?",
-    a: "Sim. O nosso processo é transparente. Estabelecemos etapas claras de validação para que você possa revisar e aprovar o layout antes de iniciarmos a fase final de engenharia e otimização de código."
-  },
-  {
-    q: "Vocês também desenvolvem lojas virtuais?",
-    a: "Sim. O plano Premium cobre pequenos e-commerces, com configuração inicial da loja. Projetos com integrações especiais, grande volume de produtos ou funções personalizadas recebem orçamento próprio. Já o catálogo do plano Pulse não inclui checkout, pagamentos online nem gestão de pedidos."
-  },
-  {
-    q: "Como funciona a estrutura de pagamentos?",
-    a: "Trabalhamos de forma transparente e estruturada: um sinal para reserva da vaga na nossa agenda de desenvolvimento e início do projeto, e o saldo restante liquidado apenas no momento da aprovação e publicação final da plataforma."
+    "q": "O pacote de mídias digitais inclui gerenciamento das redes sociais?",
+    "a": "O pacote contempla a criação das peças descritas na proposta. Publicação, gestão das redes sociais e anúncios são avaliados e contratados separadamente."
   }
 ];
 
@@ -89,11 +77,11 @@ export function FAQ() {
               Perguntas Frequentes
             </div>
             <h2 className="mb-6 font-display text-[clamp(1.5rem,7.5vw,3.125rem)] uppercase tracking-tight text-foreground sm:text-4xl md:text-5xl">
-              Transparência em<br />
-              <span className="text-violet-gradient">Cada Etapa.</span>
+              Dúvidas sobre a<br />
+              <span className="text-violet-gradient">criação do seu site.</span>
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              <span className="font-medium text-violet-100">Transparência do início ao fim.</span> Respostas diretas sobre prazos, tecnologias e o nosso processo de desenvolvimento. Garantimos alinhamento e previsibilidade antes mesmo de iniciar o seu projeto.
+              <span className="font-medium text-violet-100">Transparência do início ao fim.</span> Respostas diretas sobre prazos, investimento e o nosso processo de criação. Garantimos alinhamento e previsibilidade antes mesmo de iniciar o seu projeto.
             </p>
           </motion.div>
 

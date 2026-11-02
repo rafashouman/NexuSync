@@ -1,5 +1,14 @@
 import { marketingPlans } from "@/data/marketingPlans";
 
+export const HOME_QUOTE_INTERESTS = [
+  { id: "landing-page", label: "Landing page" },
+  { id: "hotsite", label: "Hotsite" },
+  { id: "institucional", label: "Site institucional" },
+  { id: "aplicacao-web", label: "Aplicação web" },
+  { id: "midias-digitais", label: "Pacote de mídias digitais" },
+  { id: "nao-sei", label: "Preciso de orientação" },
+] as const;
+
 export const QUOTE_INTERESTS = [
   ...marketingPlans.map((p) => ({ id: p.id, label: p.name })),
   { id: "trafego-pago", label: "Tráfego pago" },
@@ -7,10 +16,11 @@ export const QUOTE_INTERESTS = [
   { id: "leads", label: "Captação de leads" },
   { id: "automacoes", label: "Automações" },
   { id: "site", label: "Site ou landing page" },
+  ...HOME_QUOTE_INTERESTS.slice(0, 5),
   { id: "loja-virtual", label: "Loja virtual" },
   { id: "aplicacao", label: "Aplicação / Mini app" },
   { id: "design", label: "Design" },
-  { id: "nao-sei", label: "Ainda não sei" },
+  HOME_QUOTE_INTERESTS[5],
 ] as const;
 
 export const QUOTE_GOALS = [
@@ -19,6 +29,7 @@ export const QUOTE_GOALS = [
   { id: "leads", label: "Organizar leads" },
   { id: "automatizar", label: "Automatizar processos" },
   { id: "site", label: "Criar um site" },
+  { id: "projeto", label: "Definir a solução" },
 ] as const;
 
 export const QUOTE_BUDGETS = [
@@ -38,8 +49,26 @@ export const QUOTE_STATUSES = [
 
 export const INTEREST_EVENT = "nexusync:interest";
 
+export const QUOTE_SECTIONS = [
+  "header",
+  "hero",
+  "sites",
+  "apps",
+  "media",
+  "form",
+  "floating",
+  "other",
+] as const;
+
+export type QuoteSection = (typeof QUOTE_SECTIONS)[number];
+
+export function isQuoteSection(value: unknown): value is QuoteSection {
+  return typeof value === "string" &&
+    (QUOTE_SECTIONS as readonly string[]).includes(value);
+}
+
 // Pré-seleciona o interesse no formulário de orçamento e leva o visitante até ele.
-export function selectInterest(id: string) {
-  window.dispatchEvent(new CustomEvent(INTEREST_EVENT, { detail: { id } }));
+export function selectInterest(id: string | null, source: QuoteSection = "form") {
+  window.dispatchEvent(new CustomEvent(INTEREST_EVENT, { detail: { id, source } }));
   document.getElementById("orcamento")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
