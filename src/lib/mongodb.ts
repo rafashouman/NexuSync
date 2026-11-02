@@ -9,9 +9,18 @@ type MongoGlobal = typeof globalThis & {
 };
 
 async function connect(): Promise<Db> {
-  const uri = process.env.MONGODB_URI;
+  const uri =
+    process.env.MONGODB_URI ||
+    (process.env.NODE_ENV === "development"
+      ? "mongodb://127.0.0.1:27017"
+      : undefined);
   if (!uri) {
     throw new Error("MONGODB_URI is not configured.");
+  }
+  if (!process.env.MONGODB_URI) {
+    console.warn(
+      "MONGODB_URI is not configured; using local MongoDB at 127.0.0.1:27017 for development."
+    );
   }
 
   const client = new MongoClient(uri, { serverSelectionTimeoutMS: 8000 });
