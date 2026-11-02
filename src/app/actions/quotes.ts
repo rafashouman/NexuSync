@@ -59,7 +59,7 @@ export async function saveQuoteRequest(
   }
 
   const name = text(input.name, 100);
-  const company = text(input.company, 150);
+  const company = text(input.company, 150, false);
   const segment = text(input.segment, 100);
   const contact = text(input.contact, 150);
   const message = text(input.message, 1000, false);
@@ -75,7 +75,7 @@ export async function saveQuoteRequest(
 
   if (
     !name ||
-    !company ||
+    company === null ||
     !segment ||
     !contact ||
     !(isPhone || isEmail) ||

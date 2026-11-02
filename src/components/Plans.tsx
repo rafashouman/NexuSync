@@ -41,7 +41,7 @@ const plans = [
     ],
     scope:
       "Ideal para projetos compactos. Funcionalidades adicionais, domínio e hospedagem são orçados separadamente quando aplicável.",
-    buttonText: "Quero meu site",
+    buttonText: "Pedir orçamento do Presence",
     waMessage:
       "Olá! Tenho interesse na oferta de lançamento do plano Presence para criar meu site profissional.",
   },
@@ -75,7 +75,7 @@ const plans = [
     ],
     scope:
       "Catálogos e menus não incluem automaticamente estoque, checkout, pagamentos online ou gestão de pedidos. Essas funções são avaliadas à parte.",
-    buttonText: "Quero o Pulse",
+    buttonText: "Pedir orçamento do Pulse",
     waMessage:
       "Olá! Tenho interesse na oferta de lançamento do plano Pulse para minha empresa.",
   },
@@ -132,7 +132,7 @@ const itemVariants = {
   },
 };
 
-export function Plans() {
+export function Plans({ sitesOnly = false }: { sitesOnly?: boolean }) {
   const slots = usePromoSlots();
   return (
     <section
@@ -166,7 +166,7 @@ export function Plans() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="mb-6 font-display text-3xl uppercase tracking-tight sm:text-4xl md:text-5xl"
           >
-            Escolha a arquitetura ideal para o{" "}
+            Escolha a estrutura para o{" "}
             <span className="text-violet-gradient">seu negócio.</span>
           </motion.h2>
 
@@ -177,12 +177,7 @@ export function Plans() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg text-muted-foreground"
           >
-            Estruturas dimensionadas para cada fase da sua empresa. Sem taxas
-            ocultas, focadas em entregar{" "}
-            <span className="font-medium text-violet-100">
-              velocidade e performance
-            </span>{" "}
-            desde o primeiro dia.
+            Confira as opções e o que está incluído. O formato, a quantidade de páginas e os recursos do seu site são definidos na proposta antes do início.
           </motion.p>
         </div>
 
@@ -192,9 +187,9 @@ export function Plans() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 items-stretch gap-8 md:grid-cols-3"
+          className="grid grid-cols-1 items-stretch gap-8 md:grid-cols-2"
         >
-          {plans.map((plan) => (
+          {(sitesOnly ? plans.slice(0, 2) : plans).map((plan) => (
             <motion.div
               key={plan.name}
               variants={itemVariants}
@@ -317,6 +312,12 @@ export function Plans() {
           ))}
         </motion.div>
 
+        {sitesOnly && <div className="mt-8 rounded-2xl border border-violet-300/20 bg-violet-500/5 p-7">
+          <h3 className="font-display text-2xl">Hotsite dinâmico sob medida</h3>
+          <p className="mt-3 leading-7 text-muted-foreground">Para campanhas, eventos e lançamentos que precisam de uma experiência própria. Recursos interativos, investimento e prazo são definidos após entender seu projeto.</p>
+          <a href={waLink("Olá! Quero um orçamento para um hotsite dinâmico.")} target="_blank" rel="noopener noreferrer" className="mt-5 inline-block font-semibold text-violet-200 underline underline-offset-4">Pedir orçamento de hotsite</a>
+          <p className="mt-5 text-sm text-muted-foreground">Precisa vender com carrinho e pagamento online? <a href="/lojas-virtuais" className="text-violet-200 underline">Conheça a opção de loja virtual.</a></p>
+        </div>}
         {/* Barra Inferior de Garantias Técnicas */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -331,10 +332,10 @@ export function Plans() {
             </div>
             <div>
               <p className="text-sm font-semibold text-white">
-                Performance Extrema
+                Navegação ágil
               </p>
               <p className="text-xs text-muted-foreground">
-                Arquitetura Next.js otimizada para Core Web Vitals
+                Cuidado com carregamento e experiência de uso
               </p>
             </div>
           </div>

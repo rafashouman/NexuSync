@@ -7,14 +7,11 @@ import Link from "next/link";
 import Image from "next/image";
 
 const links = [
-  { label: "Contato", href: "/#contato" },
-  { label: "Projetos", href: "/#trabalhos" },
-  { label: "Serviços", href: "/#servicos" },
-  { label: "Planos", href: "/#planos-marketing" },
-  { label: "Sites", href: "/templates" },
-  { label: "Apps", href: "/apps" },
-  { label: "Web Design", href: "/design" },
-    { label: "Arcade Lab", href: "/arcade" },
+  { label: "Soluções", href: "/#servicos" },
+  { label: "Exemplos de sites", href: "/#trabalhos" },
+  { label: "Como funciona", href: "/#como-funciona" },
+  { label: "Investimento", href: "/#planos" },
+  { label: "Dúvidas", href: "/#faq" },
 ];
 
 const WA = "https://wa.me/5551993583936?text=" + encodeURIComponent("Olá! Gostaria de solicitar um orçamento para o meu site.");
@@ -47,7 +44,7 @@ export function Navbar() {
             alt="NexuSync"
             width={300}
             height={99}
-            className="h-6 h-auto transition-transform duration-300 group-hover:scale-105"
+            className="h-auto w-[180px] sm:w-[220px] transition-transform duration-300 group-hover:scale-105"
           />
         </Link>
 
@@ -69,7 +66,7 @@ export function Navbar() {
           rel="noopener noreferrer"
           className="hidden xl:inline-flex items-center gap-2 rounded-full border border-violet-300/30 bg-white/[0.025] px-5 py-2.5 text-sm font-semibold text-violet-200 hover:bg-violet-gradient hover:text-white hover:border-transparent hover:shadow-violet-glow transition-all duration-300"
         >
-          Iniciar meu projeto
+          Pedir orçamento
         </a>
 
         <button
