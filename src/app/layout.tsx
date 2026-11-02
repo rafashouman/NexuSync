@@ -20,6 +20,9 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "NexuSync | Soluções Digitais",
   description: "Desenvolvimento de sites institucionais, plataformas digitais e e-commerces de alta performance.",
+  other: {
+    "p:domain_verify": "3ea911eb961dc25477766381f746866b",
+  },
 };
 
 export default function RootLayout({
