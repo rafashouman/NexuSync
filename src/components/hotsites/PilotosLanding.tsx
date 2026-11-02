@@ -423,13 +423,13 @@ export default function PilotosLanding() {
         <div className="absolute inset-0">
           <motion.div
             style={reduceMotion ? undefined : { y: heroImageY }}
-            className="absolute inset-x-0 -top-[10%] h-[120%]"
+            className="absolute inset-x-0 top-0 h-[640px] [mask-image:linear-gradient(to_bottom,black_65%,transparent)] lg:-top-[10%] lg:h-[120%] lg:[mask-image:none]"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/images-jobs/bkg-seguro-piloto-agricola.jpg"
+              src="/images/images-jobs/air-tractor.jpg"
               alt=""
-              className="h-full w-full object-cover object-[0%_center] opacity-75"
+              className="h-full w-full object-cover object-[60%_center] opacity-80"
             />
           </motion.div>
           <div className="absolute inset-0 bg-gradient-to-r from-[#050B16] via-[#050B16]/70 to-[#050B16]/15 lg:via-[#050B16]/50" />
