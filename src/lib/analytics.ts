@@ -53,7 +53,11 @@ export type AnalyticsEvent =
         | "opacity";
     };
 
-// Analytics de terceiros foi removido; este ponto de extensão não envia nada.
 export function trackAnalyticsEvent(event: AnalyticsEvent): void {
-  void event;
+  if (typeof window === "undefined" || typeof window.gtag !== "function") {
+    return;
+  }
+
+  const { eventName, ...params } = event;
+  window.gtag("event", eventName, params);
 }

@@ -86,8 +86,11 @@ export default function PrivacyPage() {
               Estatísticas
             </h2>
             <p>
-              Não utilizamos serviços de estatísticas de terceiros para
-              acompanhar a navegação neste site.
+              Com sua permissão, usamos o Google Analytics para registrar
+              visualizações de páginas e interações de forma estatística. O
+              Google pode processar dados de navegação conforme a própria
+              política de privacidade. Você pode recusar o uso desses cookies
+              no aviso exibido no site.
             </p>
           </section>
 

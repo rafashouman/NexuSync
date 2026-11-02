@@ -6,11 +6,14 @@ import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 
 export const META_PIXEL_ID = "1587285682708459";
+export const GA_MEASUREMENT_ID = "G-S1X5J5VQXK";
 
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
     _fbq?: unknown;
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
   }
 }
 
@@ -50,6 +53,12 @@ function MetaPixelRouteTracker() {
       isFirstRender.current = false;
       return;
     }
+    if (typeof window.gtag === "function") {
+      const query = searchParams.toString();
+      window.gtag("event", "page_view", {
+        page_path: `${pathname}${query ? `?${query}` : ""}`,
+      });
+    }
     if (typeof window.fbq === "function") {
       window.fbq("track", "PageView");
     }
@@ -71,7 +80,7 @@ function MetaPixelRouteTracker() {
   return null;
 }
 
-const CONSENT_KEY = "nexusync-cookie-consent";
+const CONSENT_KEY = "nexusync-cookie-consent-v2";
 type Consent = "granted" | "denied";
 
 function ConsentBanner({ onChoose }: { onChoose: (value: Consent) => void }) {
@@ -82,8 +91,8 @@ function ConsentBanner({ onChoose }: { onChoose: (value: Consent) => void }) {
       className="fixed inset-x-3 bottom-3 z-[100] mx-auto max-w-xl rounded-2xl border border-white/10 bg-[#0b0614]/95 p-4 text-sm text-white/80 shadow-2xl backdrop-blur-md sm:p-5"
     >
       <p className="leading-6">
-        Usamos cookies e o Pixel da Meta para medir a audiência e melhorar nossos
-        anúncios. Só ativamos com a sua permissão. Saiba mais no{" "}
+        Usamos cookies, Google Analytics e o Pixel da Meta para medir audiência
+        e interações. Só ativamos com a sua permissão. Saiba mais no{" "}
         <Link
           href="/privacidade"
           className="font-semibold text-violet-200 underline-offset-4 hover:underline"
@@ -146,6 +155,23 @@ export default function MetaPixel() {
 
   return (
     <>
+      <Script
+        id="google-analytics-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){window.dataLayer.push(arguments);};
+            window.gtag('js', new Date());
+            window.gtag('config', '${GA_MEASUREMENT_ID}');
+          `,
+        }}
+      />
+      <Script
+        id="google-analytics"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        strategy="afterInteractive"
+      />
       <Script
         id="meta-pixel-base"
         strategy="afterInteractive"
