@@ -43,7 +43,22 @@ export function HeroTemplatePreview() {
     () => window.matchMedia(reducedMotionQuery).matches,
     () => true,
   );
+  const [iframeReady, setIframeReady] = useState(false);
   const template = templates[activeIndex];
+
+  // Defer the heavy demo iframe until the main page has loaded and hydrated.
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    const start = () => {
+      timer = setTimeout(() => setIframeReady(true), 300);
+    };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("load", start);
+    };
+  }, []);
   const rotating = !userPaused && !hovering && !tabHidden && !reducedMotion;
 
   useEffect(() => {
@@ -85,15 +100,20 @@ export function HeroTemplatePreview() {
             aria-hidden
             className="absolute left-1/2 top-2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-black"
           />
-          <iframe
+          <div
+            aria-hidden
+            className="absolute inset-0 grid place-items-center bg-gradient-to-b from-violet-950/60 to-[#0b0d10] text-xs font-semibold text-violet-200/70"
+          >
+            {template.brand}
+          </div>
+          {iframeReady && <iframe
             key={template.href}
             src={template.href}
             title={`Prévia mobile demonstrativa do site ${template.brand}, categoria ${template.category}`}
-            loading="lazy"
             scrolling="no"
             tabIndex={-1}
             className="pointer-events-none absolute left-0 top-0 h-[844px] w-[390px] origin-top-left scale-[0.62] border-0 sm:scale-[0.718]"
-          />
+                      />}
         </div>
       </div>
 
