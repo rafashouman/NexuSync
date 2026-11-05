@@ -22,9 +22,9 @@ import { waLink } from "@/lib/site-config";
 const solutions = [
   {
     title: "Landing pages",
-    subtitle: "Uma oferta. Um próximo passo.",
+    subtitle: "Do anúncio ao pedido de orçamento.",
     description:
-      "Uma página dedicada ao seu serviço, produto ou campanha. Apresente os benefícios, responda às principais dúvidas e facilite o pedido de orçamento.",
+      "Anunciar não basta se o visitante sai sem entender sua oferta. Reunimos benefícios, respostas e botões de contato em uma página focada no próximo passo.",
     interest: "landing-page",
     whatsapp: "Olá! Quero conversar sobre uma landing page para meu negócio.",
     cta: "Quero uma landing page",
@@ -34,9 +34,9 @@ const solutions = [
   },
   {
     title: "Hotsites dinâmicos",
-    subtitle: "Destaque para a sua próxima ação.",
+    subtitle: "Sua campanha com um destino claro.",
     description:
-      "Um espaço com identidade própria para uma ação do seu negócio. Inscrições, galerias e recursos interativos são definidos conforme o objetivo e o escopo do projeto.",
+      "Vai lançar um produto, divulgar um evento ou abrir inscrições? Dê à sua ação uma página própria, com informações e recursos definidos para o objetivo da campanha.",
     interest: "hotsite",
     whatsapp: "Olá! Quero um orçamento para um hotsite dinâmico.",
     cta: "Quero um hotsite",
@@ -46,9 +46,9 @@ const solutions = [
   },
   {
     title: "Sites institucionais",
-    subtitle: "Sua empresa apresentada por inteiro.",
+    subtitle: "Confiança antes da primeira conversa.",
     description:
-      "Organize as informações que ajudam o cliente a conhecer sua empresa, entender o que você oferece e entrar em contato com confiança.",
+      "Evite explicar tudo do zero a cada contato. Apresente sua empresa, seus serviços e diferenciais em um só lugar para o cliente chegar à conversa mais informado.",
     interest: "institucional",
     whatsapp: "Olá! Quero conversar sobre um site institucional para minha empresa.",
     cta: "Quero um site institucional",
@@ -60,23 +60,23 @@ const solutions = [
 
 const benefits = [
   {
-    title: "Explique sua oferta com clareza",
-    body: "Mostre o que você faz, para quem e quais problemas ajuda a resolver.",
+    title: "Mostre por que escolher você",
+    body: "Ajude o cliente a reconhecer o problema que você resolve e a entender o valor do seu serviço.",
     icon: Target,
   },
   {
-    title: "Apresente seu negócio com profissionalismo",
-    body: "Organize serviços, imagens e informações em uma experiência alinhada à sua marca.",
+    title: "Passe confiança desde o início",
+    body: "Uma apresentação organizada ajuda quem ainda não conhece sua empresa a avaliar seus serviços com segurança.",
     icon: Palette,
   },
   {
-    title: "Torne o contato simples",
-    body: "Ofereça chamadas visíveis para orçamento, WhatsApp ou formulário nos momentos certos.",
+    title: "Encurte o caminho até o orçamento",
+    body: "Botões visíveis de WhatsApp e formulário ajudam o visitante interessado a falar com você sem procurar.",
     icon: MessageCircle,
   },
   {
-    title: "Atenda bem quem acessa pelo celular",
-    body: "Tenha uma apresentação adaptada às diferentes telas usadas pelos seus clientes.",
+    title: "Facilite a decisão no celular",
+    body: "Textos legíveis e navegação simples para o cliente conhecer sua oferta e entrar em contato de onde estiver.",
     icon: MonitorSmartphone,
   },
 ] as const;
@@ -131,9 +131,9 @@ export function SiteSolutions() {
             <span className="text-violet-gradient">próximo objetivo.</span>
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-            Cada projeto começa pelo que você precisa comunicar. Escolha um
-            formato para conhecer as possibilidades e encontrar o melhor ponto
-            de partida.
+            Precisa divulgar uma oferta, receber inscrições ou apresentar sua
+            empresa? Conheça o formato que atende a cada necessidade. Se tiver
+            dúvida, ajudamos você a escolher.
           </p>
         </motion.div>
 

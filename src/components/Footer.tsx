@@ -20,7 +20,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-muted-foreground max-w-sm leading-relaxed text-sm">
-              Criamos sites, landing pages e hotsites para profissionais e empresas que querem apresentar melhor seus serviços e facilitar novos contatos. Atendimento remoto para todo o Brasil.
+              Ajudamos seu cliente a entender sua oferta e dar o próximo passo. Sites, landing pages e hotsites com caminhos claros para pedir orçamento. Atendimento em todo o Brasil.
             </p>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Também precisa de divulgação?{" "}

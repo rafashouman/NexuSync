@@ -232,7 +232,7 @@ export function Segments() {
                     href={waLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`Solicitar proposta para ${segment.title}`}
+                    aria-label={`Quero receber uma proposta para ${segment.title}`}
                     className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-white/15 bg-white/5 text-white/70 transition-colors hover:border-white hover:bg-white hover:text-black"
                   >
                     <ArrowUpRight className="h-3.5 w-3.5" />

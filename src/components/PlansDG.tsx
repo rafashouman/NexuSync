@@ -26,7 +26,7 @@ const designPlans = [
     deliveryTime: "3 a 5 dias úteis",
     idealFor: "Pequenos negócios e profissionais autônomos",
     description:
-      "Eleve o padrão visual do seu perfil e campanhas com peças digitais consistentes, modernas e alinhadas à sua marca.",
+      "Sua oferta precisa ser entendida em poucos segundos. Criamos peças que destacam produtos, serviços e campanhas com a identidade da sua marca.",
     highlight: false,
     icon: Palette,
     deliverablesSummary: ["3 Artes Feed/Stories", "1 Banner Digital", "Guia de Cores & Fontes"],
@@ -55,7 +55,7 @@ const designPlans = [
     deliveryTime: "5 a 8 dias úteis",
     idealFor: "Marcas em estruturação ou reposicionamento",
     description:
-      "Construa uma marca memorável do zero. Criamos seu logotipo vetorial, manual de identidade e kit completo de lançamento digital.",
+      "Cada material parece de uma empresa diferente? Criamos logotipo, manual de identidade e kit digital para sua marca ser reconhecida em todos os canais.",
     highlight: true,
     badge: "Direção de Arte Recomendada",
     icon: PenTool,
@@ -89,7 +89,7 @@ const designPlans = [
     deliveryTime: "Definido conforme o projeto",
     idealFor: "SaaS, Startups, E-commerces e Aplicativos",
     description:
-      "Projetamos interfaces de alta conversão com wireframes, protótipo navegável e guia de estilos pronto para implementação.",
+      "Facilite o caminho de quem navega até o contato ou a compra. Planejamos as telas, criamos um modelo navegável e entregamos um guia visual para o desenvolvimento.",
     highlight: false,
     icon: CalendarCheck2,
     deliverablesSummary: [
@@ -140,17 +140,17 @@ export function PlansDG() {
               Estúdio de Identidade & Direção de Arte
             </div>
             <h2 className="font-display text-3xl font-bold uppercase tracking-tight sm:text-5xl">
-              Packs de Design Gráfico{" "}
+              Design para valorizar{" "}
               <span className="bg-gradient-to-r from-rose-300 via-fuchsia-200 to-amber-200 bg-clip-text text-transparent">
-                & UI/UX Design
+                sua marca e sua oferta
               </span>
             </h2>
           </div>
 
           <p className="max-w-md text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Do primeiro logotipo ao protótipo de alta fidelidade: pacotes
-            fechados com entregáveis claros para marcas que buscam autoridade
-            visual imediata.
+            Seu cliente precisa reconhecer sua marca e entender sua oferta.
+            Escolha entre peças digitais, identidade visual e telas para sites
+            e aplicativos, com entregas definidas em cada pacote.
           </p>
         </div>
 
@@ -227,7 +227,7 @@ export function PlansDG() {
                   {/* Coluna 2: Checklist de Direção de Arte (5 Cols) */}
                   <div className="lg:col-span-5 lg:border-x lg:border-white/10 lg:px-8">
                     <p className="mb-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-white/45">
-                      Entregáveis do Pacote:
+                      O que você recebe:
                     </p>
                     <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
                       {plan.features.map((feat, i) => (

@@ -25,7 +25,7 @@ const plans = [
     deliveryTime: "Entrega estimada: 3 a 5 dias úteis",
     idealFor: "Comece sua presença digital",
     description:
-      "Uma solução enxuta e profissional para apresentar seu negócio, divulgar seu trabalho e facilitar o contato com novos clientes.",
+      "Para quem precisa de um endereço profissional para divulgar serviços e receber contatos, sem começar com uma estrutura maior do que precisa.",
     highlight: false,
     features: [
       "Landing pages para divulgação de serviços ou campanhas",
@@ -55,7 +55,7 @@ const plans = [
     deliveryTime: "Entrega estimada: 5 a 10 dias úteis",
     idealFor: "Mais estrutura para seu negócio",
     description:
-      "Uma presença digital mais completa para empresas que precisam apresentar seus serviços, organizar produtos e receber pedidos.",
+      "Para quem precisa explicar melhor seus serviços, organizar um catálogo e facilitar pedidos pelo WhatsApp em um só lugar.",
     highlight: true,
     badge: "Plano recomendado",
     features: [
@@ -89,7 +89,7 @@ const plans = [
     deliveryTime: "Prazo definido após análise do projeto",
     idealFor: "E-commerce e projetos completos",
     description:
-      "Uma solução mais completa para negócios que desejam vender pela internet ou precisam de funcionalidades específicas.",
+      "Para quem quer vender com pagamento online ou precisa de recursos sob medida. Definimos a estrutura conforme sua operação.",
     highlight: false,
     features: [
       "Tudo o que está incluído no Pulse, conforme o escopo",
@@ -108,7 +108,7 @@ const plans = [
     ],
     scope:
       "O valor promocional contempla lojas de escopo reduzido e plataforma compatível. Projetos com integrações especiais, grande volume de produtos ou funcionalidades personalizadas recebem orçamento próprio.",
-    buttonText: "Solicitar orçamento",
+    buttonText: "Quero meu orçamento",
     waMessage:
       "Olá! Quero avaliar o plano Premium para desenvolver meu e-commerce ou projeto web.",
   },

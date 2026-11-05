@@ -59,7 +59,7 @@ const realBusinessApps = [
     statusBadge: "FIRESTORE ATOMIC LOCK",
     metricsLabel: "Zero Conflito de Horários • Confirmação WhatsApp",
     description:
-      "Plataforma completa de agendamentos para clínicas, barbearias e consultorias com bloqueio transacional de horários em tempo real no Firestore e painel de gestão.",
+      "Veja como o cliente escolhe serviço, profissional e horário, e como a equipe acompanha a agenda em um painel de gestão.",
     highlights: [
       "Escolha de profissional, serviço, data e horário",
       "Trava automática contra agendamento duplicado",
@@ -369,12 +369,12 @@ export function AppsPageContent() {
               // 02. ENGAJAMENTO DE CAMPANHAS & EXPERIMENTOS VISUAIS
             </p>
             <h2 className="font-display text-2xl font-black uppercase tracking-tight text-white sm:text-4xl">
-              Mini-Apps Lúdicos & Sandbox Criativo
+              Jogos e experiências para suas campanhas
             </h2>
           </div>
           <p className="max-w-md text-xs sm:text-sm text-muted-foreground">
-            Dinâmicas promocionais para capturar leads, reter visitantes e
-            demonstrar física e shaders em tempo real.
+            Experimente jogos e ferramentas interativas que podem fazer parte
+            de campanhas para envolver seu público e captar contatos.
           </p>
         </div>
 
@@ -924,8 +924,8 @@ export function DesignPageContent() {
           Acervo Visual · Design
         </span>
         <h1 className="mb-6 font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
-          Design que conecta{" "}
-          <span className="text-violet-gradient">ideias e pessoas.</span>
+          Design que valoriza{" "}
+          <span className="text-violet-gradient">o que você vende.</span>
         </h1>
         <p className="text-lg leading-relaxed text-muted-foreground">
           Uma seleção com mais de 100 projetos de design gráfico, identidade
@@ -1374,7 +1374,7 @@ export function TemplatesPageContent() {
       title: "Reservas de Mesa & Comanda Digital",
       brandName: "Kobra Fire Reservas",
       description:
-        "Painel único de reservas VIP, comanda digital e pedidos com toasts de feedback, personalização de produto e modais acessíveis.",
+        "Veja como reunir reservas de mesa, comandas e pedidos em um painel que facilita o acompanhamento pela equipe.",
       href: "/templates/reservas",
       theme: "from-red-500/20 via-[#1c0f0e] to-[#0c0807]",
       badgeColor: "border-red-400/35 bg-red-500/10 text-red-200",
@@ -1444,7 +1444,7 @@ export function TemplatesPageContent() {
           </h1>
           <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
             Não mostramos apenas fotos estáticas. Use o{" "}
-            <strong className="text-white">Console de Inspeção abaixo</strong>{" "}
+            <strong className="text-white">painel de demonstração abaixo</strong>{" "}
             para navegar dentro de cada projeto em tempo real, testar a versão
             Mobile/Desktop e escolher a base ideal para o seu negócio.
           </p>
@@ -1645,7 +1645,7 @@ export function TemplatesPageContent() {
               // VISÃO COMPARATIVA DO CATÁLOGO
             </p>
             <h2 className="font-display text-2xl font-black uppercase tracking-tight text-white sm:text-4xl">
-              Todas as Arquiteturas Disponíveis ({templates.length})
+              Todos os modelos disponíveis ({templates.length})
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-muted-foreground">

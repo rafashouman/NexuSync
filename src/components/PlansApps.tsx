@@ -29,7 +29,7 @@ const appPlans = [
     deliveryTime: "7 a 15 dias úteis",
     idealFor: "Clínicas, Barbearias, Estúdios e Consultorias",
     description:
-      "Apresente seus serviços e receba solicitações de horários em uma aplicação web organizada para a rotina da sua equipe.",
+      "Sua equipe perde tempo trocando mensagens para marcar horários? Reúna serviços e solicitações em uma agenda online, com confirmação pelo seu negócio.",
     highlight: true,
     badge: "Recomendado p/ Serviços",
     icon: CalendarCheck2,
@@ -48,7 +48,7 @@ const appPlans = [
     ],
     scope:
       "O plano básico registra solicitações, que precisam ser confirmadas pelo negócio. Sincronização em tempo real, notificações automáticas, pagamentos e integrações adicionais não estão incluídos sem previsão expressa na proposta.",
-    buttonText: "Automatizar meus agendamentos",
+    buttonText: "Quero organizar minha agenda",
     waMessage:
       "Olá! Tenho interesse na oferta de lançamento do sistema de Agendamentos Online. Gostaria de explicar como funciona meu negócio.",
   },
@@ -67,7 +67,7 @@ const appPlans = [
     highlight: false,
     badge: "Ideal p/ Campanhas",
     icon: Gamepad2,
-    stack: ["Framer Motion", "HTML5 Canvas", "Lead Capture", "60 FPS UI"],
+    stack: ["Jogos no navegador", "Campanhas interativas", "Captação de contatos", "Uso no celular"],
     features: [
       "Desenvolvimento de 1 mini app ou jogo promocional",
       "Roletas de descontos, quizzes ou desafios de memória",
@@ -100,7 +100,7 @@ const appPlans = [
     highlight: false,
     badge: "Alta Performance",
     icon: Database,
-    stack: ["Firestore Database", "Firebase Auth", "CRUD Completo", "Filtros & Métricas"],
+    stack: ["Dados organizados", "Acesso com login", "Gestão de registros", "Filtros e indicadores"],
     features: [
       "Aplicação web desenhada para a regra do seu negócio",
       "Painel administrativo privado com login seguro",
@@ -149,7 +149,7 @@ export function PlansApps() {
           <div className="max-w-2xl">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-400/25 bg-cyan-400/[0.08] px-3.5 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-cyan-200">
               <Cpu className="h-3.5 w-3.5 text-cyan-400" />
-              Engenharia de Aplicações Web
+              Menos tarefas repetidas no dia a dia
             </div>
 
             <h2 className="font-display text-3xl font-bold uppercase tracking-tight sm:text-5xl">
@@ -161,9 +161,9 @@ export function PlansApps() {
           </div>
 
           <p className="max-w-md text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Selecione abaixo a arquitetura de software ideal para automatizar
-            reservas, controlar sua operação ou engajar clientes direto pelo
-            navegador.
+            Escolha o que precisa simplificar: receber solicitações de horário,
+            acompanhar pedidos ou captar contatos em uma campanha. Tudo pelo
+            navegador, sem instalar um programa.
           </p>
         </div>
 
@@ -262,7 +262,7 @@ export function PlansApps() {
                     <div className="flex items-center gap-2.5">
                       <Terminal className="h-4 w-4 text-cyan-400" />
                       <span className="font-mono text-xs font-bold uppercase tracking-widest text-cyan-300">
-                        ESPECIFICAÇÃO DE SISTEMA // {activePlan.code}
+                        O QUE A SOLUÇÃO OFERECE // {activePlan.code}
                       </span>
                     </div>
                     {promoView(slots, activePlan.promoKey, activePlan).label && (<span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 font-mono text-[11px] font-semibold text-cyan-200">

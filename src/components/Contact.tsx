@@ -171,12 +171,12 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
             </div>
 
             <h2 className="mb-4 font-display text-[clamp(1.5rem,7.5vw,3rem)] uppercase tracking-tight sm:text-4xl md:text-5xl">
-              {homeOffersOnly ? "Vamos tirar seu projeto do papel?" : "Vamos conversar sobre seu projeto?"}
+              {homeOffersOnly ? "O que falta para seu cliente chamar você?" : "Qual desafio está travando seu negócio?"}
             </h2>
             <p className="mb-8 text-base text-muted-foreground sm:text-lg">
               {homeOffersOnly
-                ? "Conte o que seu negócio oferece e o que você precisa. Vamos ajudar a definir uma solução e preparar uma proposta."
-                : "Conte o que você oferece e o que deseja alcançar. Vamos ajudar a definir uma solução adequada à sua empresa e preparar uma proposta."}
+                ? "Conte o que você vende e onde está a dificuldade: apresentar seus serviços, receber contatos ou organizar pedidos. Ajudamos a escolher o formato e enviamos uma proposta com escopo, valor e prazo."
+                : "Você não precisa saber qual tecnologia contratar. Conte seu objetivo e o que atrapalha hoje. Vamos avaliar a solução e preparar uma proposta com entregas, investimento e prazo."}
             </p>
 
             {sent ? (
@@ -278,7 +278,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
 
               <div className="space-y-2">
                 <label htmlFor="mensagem" className={LABEL}>{homeOffersOnly ? "Informações adicionais sobre o projeto (opcional)" : "Mensagem (opcional)"}</label>
-                <textarea id="mensagem" name="mensagem" maxLength={1000} rows={3} className={`${FIELD} resize-none`} placeholder="Conte brevemente sobre seu público, prazos ou referências..." />
+                <textarea id="mensagem" name="mensagem" maxLength={1000} rows={3} className={`${FIELD} resize-none`} placeholder="Ex.: recebo visitas, mas poucos orçamentos. Quero apresentar melhor meus serviços." />
               </div>
 
               <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
@@ -307,7 +307,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
                 disabled={isSubmitting}
                 className="group inline-flex w-full items-center justify-center gap-3 rounded-xl bg-violet-gradient px-8 py-4 font-bold text-white shadow-violet-glow transition-transform hover:scale-[1.015] disabled:opacity-60 sm:w-auto"
               >
-                {isSubmitting ? "Enviando..." : (homeOffersOnly ? "Solicitar proposta" : "Solicitar orçamento")}
+                {isSubmitting ? "Enviando..." : (homeOffersOnly ? "Quero receber uma proposta" : "Quero meu orçamento")}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </button>
               {error && (
@@ -425,19 +425,19 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
                   <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-violet-300/30 bg-violet-400/10 font-mono text-[10px] text-violet-200">
                     01
                   </span>
-                  <span>Alinhamento rápido de objetivos pelo WhatsApp</span>
+                  <span>Conversamos sobre seu negócio e sua dificuldade</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-violet-300/30 bg-violet-400/10 font-mono text-[10px] text-violet-200">
                     02
                   </span>
-                  <span>Definição do conteúdo, visual e cronograma</span>
+                  <span>Você recebe escopo, valor e prazo para avaliar</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-violet-300/30 bg-violet-400/10 font-mono text-[10px] text-violet-200">
                     03
                   </span>
-                  <span>Desenvolvimento ágil e publicação assistida</span>
+                  <span>Com a proposta aprovada, começamos a criação</span>
                 </li>
               </ol>
             </div>

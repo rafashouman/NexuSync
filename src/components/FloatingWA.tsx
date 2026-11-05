@@ -4,7 +4,7 @@ import { MessageCircle } from "lucide-react";
 
 export function FloatingWA() {
   const WA_NUMBER = "5551993583936";
-  const MESSAGE = "Olá! Vim através do site e gostaria de conversar sobre um projeto.";
+  const MESSAGE = "Olá! Vim pelo site da NexuSync. Quero explicar meu negócio e entender qual solução pode ajudar a receber mais contatos.";
 
   return (
     <a
@@ -18,7 +18,7 @@ export function FloatingWA() {
     >
       {/* Label visível apenas no Desktop (conforme README) */}
       <div className="hidden lg:flex px-4 py-2 bg-card border border-border rounded-full shadow-elegant opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-        <span className="text-xs font-bold text-foreground">Fale comigo</span>
+        <span className="text-xs font-bold text-foreground">Tire suas dúvidas</span>
       </div>
       
       {/* Ícone */}

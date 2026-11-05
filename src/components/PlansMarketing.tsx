@@ -258,7 +258,7 @@ export function PlansMarketing() {
                   onClick={() => selectInterest("nao-sei")}
                   className="mt-4 inline-flex items-center gap-1.5 self-start text-sm font-semibold text-violet-200 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-300"
                 >
-                  Solicitar orçamento
+                  Quero meu orçamento
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </button>
               </li>

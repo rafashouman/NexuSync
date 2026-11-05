@@ -9,7 +9,7 @@ import { FAQ } from "@/components/FAQ";
 import { Contact } from "@/components/Contact";
 
 const title = "Criação de Sites, Landing Pages e Hotsites | NexuSync";
-const description = "Sites profissionais, landing pages e hotsites para apresentar seu negócio e facilitar pedidos de orçamento. Conheça os projetos da NexuSync.";
+const description = "Seu cliente entende o que você vende? Criamos sites, landing pages e hotsites para valorizar sua oferta e facilitar pedidos de orçamento. Fale com a NexuSync.";
 export const metadata: Metadata = {
   title, description,
   alternates: { canonical: "https://nexusync.online/" },

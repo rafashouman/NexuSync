@@ -81,7 +81,7 @@ export function FAQ() {
               <span className="text-violet-gradient">criação do seu site.</span>
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              <span className="font-medium text-violet-100">Transparência do início ao fim.</span> Respostas diretas sobre prazos, investimento e o nosso processo de criação. Garantimos alinhamento e previsibilidade antes mesmo de iniciar o seu projeto.
+              <span className="font-medium text-violet-100">Saiba o que está contratando.</span> Confira prazos, investimento e o que cada serviço inclui. A proposta define as entregas e as condições antes de começarmos.
             </p>
           </motion.div>
 

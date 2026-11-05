@@ -20,7 +20,7 @@ export const marketingPlans: MarketingPlan[] = [
     id: "presenca-ativa",
     name: "Presença Ativa",
     description:
-      "Sua marca presente na rotina de quem pode virar cliente. Conteúdo planejado e comunicação consistente para seu negócio ser lembrado.",
+      "Falta tempo para manter as redes atualizadas? Organizamos conteúdo, legendas e publicações para apresentar sua oferta com frequência e clareza.",
     monthlyPriceCents: 69000,
     setupPriceCents: 29000,
     idealFor: "Empresa que precisa manter as redes organizadas",
@@ -52,7 +52,7 @@ export const marketingPlans: MarketingPlan[] = [
     id: "aquisicao-local",
     name: "Aquisição Local",
     description:
-      "Seu negócio diante de pessoas com potencial de compra. Campanhas acompanhadas e uma rota clara até o contato com sua equipe.",
+      "Quer divulgar além de quem já conhece sua empresa? Criamos e acompanhamos anúncios para alcançar pessoas com potencial de compra e facilitar o contato.",
     monthlyPriceCents: 89000,
     setupPriceCents: 49000,
     idealFor: "Negócio que busca contatos por campanhas",
@@ -81,7 +81,7 @@ export const marketingPlans: MarketingPlan[] = [
     id: "crescimento-integrado",
     name: "Crescimento Integrado",
     description:
-      "Conteúdo, anúncios e contatos trabalhando juntos. Uma estrutura conectada para sua equipe aproveitar melhor cada oportunidade.",
+      "Os contatos chegam, mas o acompanhamento se perde? Integramos conteúdo, anúncios e organização comercial para sua equipe saber quem precisa de retorno.",
     monthlyPriceCents: 179000,
     setupPriceCents: 99000,
     idealFor: "Empresa que quer combinar conteúdo, anúncios e acompanhamento de leads",
