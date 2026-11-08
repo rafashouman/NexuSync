@@ -356,7 +356,7 @@ function PulseArkanoidBuiltIn() {
                     ? `Muralha demolida! Pontuação: ${score} PTS.`
                     : `Game Over. Pontuação: ${score} PTS.`}
                 </p>
-                <button
+                <button data-tour="launch"
                   type="button"
                   onClick={() => restartRef.current()}
                   className="w-full py-3.5 sm:py-4 rounded-xl bg-[#FFB800] hover:bg-[#ffc633] text-zinc-950 font-black text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(255,184,0,0.4)]"
@@ -371,7 +371,7 @@ function PulseArkanoidBuiltIn() {
 
         {/* Barra Tátil Anti-Oclusão para Mobile */}
         <div className="w-full max-w-[760px] h-14 rounded-2xl border border-amber-400/30 bg-[#0e0d16] px-3 flex items-center gap-3 shadow-lg">
-          <button
+          <button data-tour="left"
             type="button"
             onPointerDown={() => (touchButtonsRef.current.left = true)}
             onPointerUp={() => (touchButtonsRef.current.left = false)}
@@ -598,7 +598,7 @@ export default function ArcadeCabinetHub({ initialGame = "voxelvaders" }: { init
               </div>
             </div>
 
-            <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:col-span-5">
+            <div data-tour="cartridges" className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:col-span-5">
               {CARTRIDGES.map((cart) => {
                 const isSelected = cart.id === selectedGame;
                 return (
@@ -733,7 +733,7 @@ export default function ArcadeCabinetHub({ initialGame = "voxelvaders" }: { init
           </div>
 
           <div className="flex items-center gap-2.5">
-            <button
+            <button data-tour="crt"
               type="button"
               onClick={() => setCrtScanlines((prev) => !prev)}
               className={`px-3 py-1.5 rounded-xl border text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors ${
@@ -745,7 +745,7 @@ export default function ArcadeCabinetHub({ initialGame = "voxelvaders" }: { init
               <Tv className="w-3.5 h-3.5" />
               CRT: {crtScanlines ? "ON" : "OFF"}
             </button>
-            <button
+            <button data-tour="sound"
               type="button"
               onClick={toggleAudio}
               aria-pressed={!isMuted}

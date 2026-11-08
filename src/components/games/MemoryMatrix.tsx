@@ -190,7 +190,7 @@ export default function MemoryMatrix() {
       soundRef.current?.playMatch(2);
     } catch (error) {
       console.error("Unable to sign in with Google.", error);
-      setAuthError("Não foi possível iniciar sessão com o Google.");
+      setAuthError("Não foi possível registrar seu apelido.");
     }
   };
 
@@ -389,7 +389,7 @@ export default function MemoryMatrix() {
                 onClick={handleLogin}
                 className="rounded-xl border border-[#00F0FF]/60 bg-[#00F0FF]/10 px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[#00F0FF] transition-all hover:bg-[#00F0FF] hover:text-[#050505]"
               >
-                Autenticar Google
+                Escolher apelido
               </button>
             )}
 
@@ -405,7 +405,7 @@ export default function MemoryMatrix() {
         </div>
 
         {/* 4 KPI Telemetry Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+        <div data-tour="score" className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           <div className="p-3 rounded-xl bg-[#0B132B]/70 border border-[#1C2541]">
             <span className="text-[9px] uppercase tracking-widest text-slate-400 flex items-center gap-1">
               <Timer className="w-3 h-3 text-[#00F0FF]" /> Tempo
@@ -428,7 +428,7 @@ export default function MemoryMatrix() {
 
           <div className="p-3 rounded-xl bg-[#0B132B]/70 border border-[#1C2541]">
             <span className="text-[9px] uppercase tracking-widest text-slate-400 flex items-center gap-1">
-              <Zap className="w-3 h-3 text-amber-400" /> Streak Atual
+              <Zap className="w-3 h-3 text-amber-400" /> Sequência atual
             </span>
             <span className="text-lg font-black text-amber-400">
               {streak}x <span className="text-[10px] text-slate-400">(Máx {maxStreak}x)</span>
@@ -437,7 +437,7 @@ export default function MemoryMatrix() {
 
           <div className="p-3 rounded-xl bg-[#0B132B]/70 border border-[#1C2541]">
             <span className="text-[9px] uppercase tracking-widest text-slate-400 flex items-center gap-1">
-              <Trophy className="w-3 h-3 text-emerald-400" /> Score Est.
+              <Trophy className="w-3 h-3 text-emerald-400" /> Pontuação
             </span>
             <span className="text-lg font-black text-emerald-400">{estimatedScore}</span>
           </div>
@@ -479,7 +479,7 @@ export default function MemoryMatrix() {
       ========================================== */}
       <div className="grid grid-cols-4 gap-3 sm:gap-4 w-full max-w-md aspect-square my-6 relative z-10">
         {cards.map((card, index) => (
-          <div
+          <div data-tour="card"
             key={card.id}
             className="relative w-full h-full aspect-square [perspective:1000px] cursor-pointer group"
             onClick={() => handleCardClick(index)}
@@ -538,7 +538,7 @@ export default function MemoryMatrix() {
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-bold"
                 >
                   <CheckCircle2 className="w-4 h-4" />
-                  Score Registrado no Firebase: {savedScore} PTS
+                  Pontuação registrada: {savedScore} PTS
                 </span>
               ) : (
                 <button
@@ -549,10 +549,10 @@ export default function MemoryMatrix() {
                 >
                   <Sparkles className="w-4 h-4" />
                   {isSaving
-                    ? "Gravando no Firestore..."
+                    ? "Salvando pontuação…"
                     : user
                     ? `Salvar Recorde (${estimatedScore} PTS)`
-                    : "Entre com Google p/ Salvar"}
+                    : "Entre com seu apelido p/ Salvar"}
                 </button>
               )}
               {saveError && <span className="text-xs text-red-400">{saveError}</span>}

@@ -3,10 +3,13 @@
 import { getDb } from "@/lib/mongodb";
 import { parsePlayerToken } from "@/lib/player-server";
 
+import { futureSalonSlot, salonHours, salonServices, salonToday } from "@/lib/salon";
+
 export interface BookingPayload {
   date: string; // Formato: YYYY-MM-DD
   timeSlot: string; // Formato: HH:mm
   serviceName: string; // Ex: "Balcão do Chef (Fornalha) • 4 Pessoas"
+  venue?: "salon";
   guests?: number;
   seatingZone?: string;
 }
@@ -38,7 +41,7 @@ export async function bookAppointment(data: BookingPayload, idToken: string) {
     typeof data.date !== "string" ||
     !/^\d{4}-\d{2}-\d{2}$/.test(data.date) ||
     !isValidDate(data.date) ||
-    data.date < new Date().toISOString().slice(0, 10) ||
+    data.date < (data.venue === "salon" ? salonToday() : new Date().toISOString().slice(0, 10)) ||
     typeof data.timeSlot !== "string" ||
     !ALLOWED_SLOTS.has(data.timeSlot) ||
     typeof data.serviceName !== "string" ||
@@ -51,13 +54,17 @@ export async function bookAppointment(data: BookingPayload, idToken: string) {
     return { success: false, error: "Dados da reserva inválidos." };
   }
 
+  if (data.venue === "salon" && (!salonServices.some(s => s.name === data.serviceName)
+    || !salonHours.some(hour => hour === data.timeSlot) || !futureSalonSlot(data.date, data.timeSlot))) {
+    return { success: false, error: "Escolha um serviço e um horário futuro da agenda." };
+  }
   const player = parsePlayerToken(idToken);
   if (!player) {
     return { success: false, error: "Defina um apelido para confirmar a reserva." };
   }
 
   const sanitizedSlot = data.timeSlot.replace(":", "-");
-  const slotDocId = `slot_${data.date}_${sanitizedSlot}`;
+  const slotDocId = `${data.venue === "salon" ? "salon" : "slot"}_${data.date}_${sanitizedSlot}`;
 
   try {
     const db = await getDb();
@@ -69,8 +76,10 @@ export async function bookAppointment(data: BookingPayload, idToken: string) {
       date: data.date,
       timeSlot: data.timeSlot,
       serviceName: data.serviceName,
-      guests: data.guests ?? 2,
-      seatingZone: data.seatingZone ?? "Salão Principal",
+      ...(data.venue === "salon" ? { venue: "salon" } : {
+        guests: data.guests ?? 2,
+        seatingZone: data.seatingZone ?? "Salão Principal",
+      }),
       status: "CONFIRMED",
       createdAt: new Date(),
     });
@@ -89,5 +98,15 @@ export async function bookAppointment(data: BookingPayload, idToken: string) {
       success: false,
       error: "Não foi possível processar a reserva. Tente novamente.",
     };
+  }
+}
+export async function occupiedSalonHours(date: string): Promise<string[] | null> {
+  if (!isValidDate(date)) return null;
+  try {
+    const db = await getDb();
+    return await db.collection<{ timeSlot: string; date: string; venue: string }>("appointments")
+      .distinct("timeSlot", { venue: "salon", date });
+  } catch {
+    return null;
   }
 }

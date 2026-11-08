@@ -119,7 +119,7 @@ export function ImageBlendPlayground() {
                 Presets:
               </span>
               {PRESETS.map((preset) => (
-                <button
+                <button data-tour="preset"
                   key={preset.name}
                   type="button"
                   onClick={() => {
@@ -253,7 +253,7 @@ export function ImageBlendPlayground() {
                 <span className="font-mono text-[10px] uppercase text-white/50">
                   Opacidade: {overlayOpacity}%
                 </span>
-                <input
+                <input data-tour="opacity"
                   type="range"
                   min={10}
                   max={100}
@@ -339,7 +339,7 @@ export function ImageBlendPlayground() {
               </div>
 
               {/* Botão Copiar CSS */}
-              <button
+              <button data-tour="css"
                 type="button"
                 onClick={copyCss}
                 className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-black/60 px-4 py-2.5 font-mono text-xs text-white backdrop-blur-xl transition-all hover:border-violet-300/50 hover:bg-black/80"

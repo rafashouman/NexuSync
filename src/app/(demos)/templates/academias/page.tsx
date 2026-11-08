@@ -340,7 +340,7 @@ const Hero = () => {
                   aria-hidden
                   className="absolute inset-y-0 -left-1/3 w-1/4 -skew-x-12 bg-white/40 transition-transform duration-700 group-hover:translate-x-[700%]"
                 />
-                <span className="relative">Agendar Sessão Experimental</span>
+                <span className="relative">Agendar aula experimental</span>
                 <div className="relative w-8 h-8 rounded-xl bg-black/15 flex items-center justify-center group-hover:translate-x-1 transition-transform">
                   <ArrowRight className="w-4 h-4" />
                 </div>
@@ -598,7 +598,7 @@ const Features = () => {
               <Zap className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white mb-2">Studios Imersivos</h3>
+              <h3 className="text-xl font-bold text-white mb-2">Estúdios de treino</h3>
               <p className="text-zinc-400 text-sm leading-relaxed">
                 Salas de Spinning, Cross e HIIT com iluminação cênica sincronizada e sistema de som
                 de festival para elevar sua adrenalina.
@@ -945,7 +945,7 @@ const Pricing = () => {
                 : "text-zinc-400 hover:text-white"
                 }`}
             >
-              <span>Passaporte Anual</span>
+              <span>Plano anual</span>
               <span className="px-2 py-0.5 rounded-md bg-black/20 text-[10px] font-mono">
                 -20% OFF
               </span>
@@ -1096,7 +1096,7 @@ const FAQ = () => {
   const faqs = [
     {
       q: "Existe taxa de matrícula, manutenção ou multa de cancelamento?",
-      a: "Zero letras miúdas. Na modalidade Flex (Mensal), você não possui fidelidade e pode cancelar quando desejar com aviso prévio de 30 dias. No Passaporte Anual, você garante 20% de desconto fixo durante os 12 meses.",
+      a: "Zero letras miúdas. Na modalidade Flex (Mensal), você não possui fidelidade e pode cancelar quando desejar com aviso prévio de 30 dias. No Plano anual, você garante 20% de desconto fixo durante os 12 meses.",
     },
     {
       q: "Como funciona o Day Pass Experimental Gratuito?",

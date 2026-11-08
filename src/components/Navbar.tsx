@@ -66,7 +66,7 @@ export function Navbar() {
         }`}
     >
       <div className={`border-b border-violet-200/10 bg-background/70 text-xs transition-all duration-500 ${scrolled ? "hidden" : ""}`}>
-        <div className="mx-auto flex h-8 w-full max-w-[1440px] items-center justify-end gap-5 px-6 sm:px-10 lg:px-16">
+        <div className="container-luxe flex h-8 items-center justify-end gap-5">
           <a href={`mailto:${EMAIL}`} className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-violet-200 transition-colors">
             <Mail className="h-3.5 w-3.5" aria-hidden /> {EMAIL}
           </a>
@@ -75,7 +75,7 @@ export function Navbar() {
           </a>
         </div>
       </div>
-      <div className="mx-auto flex h-20 w-full max-w-[1440px] items-center justify-between gap-6 px-6 sm:px-10 lg:px-16">
+      <div className="container-luxe flex h-20 items-center justify-between gap-6">
         <Link href="/" aria-label="NexuSync — início" className="logo-pulse flex items-center gap-2 group">
           <Image
             src="/images/logo-text.png"
@@ -154,7 +154,7 @@ export function Navbar() {
             className="xl:hidden overflow-hidden bg-background/75 backdrop-blur-2xl border-t border-violet-200/10"
             id="mobile-navigation"
           >
-            <nav aria-label="Navegação móvel" className="mx-auto flex w-full max-w-[1440px] flex-col gap-1 px-6 py-6 sm:px-10 lg:px-16">
+            <nav aria-label="Navegação móvel" className="container-luxe flex flex-col gap-1 py-6">
               {[contactItem, ...links].map((l) => (
                 <a
                   key={l.label}

@@ -107,13 +107,13 @@ interface PeriodDataset {
 const DATASETS: Record<TimeRange, PeriodDataset> = {
   "24H": {
     revenue: "R$ 14.890",
-    revenueDelta: "+22.4%",
-    roas: "5.8x",
-    roasDelta: "+0.9x",
+    revenueDelta: "+22,4%",
+    roas: "5,8x",
+    roasDelta: "+0,9x",
     leads: 142,
-    leadsDelta: "+18.1%",
+    leadsDelta: "+18,1%",
     cpa: "R$ 11,40",
-    cpaDelta: "-14.2%",
+    cpaDelta: "-14,2%",
     positiveCpa: true,
     series: [
       { label: "00h", value: 32, conv: 18 },
@@ -125,26 +125,26 @@ const DATASETS: Record<TimeRange, PeriodDataset> = {
       { label: "23h", value: 88, conv: 70 },
     ],
     funnel: [
-      { stage: "PageView (Meta Pixel)", count: "8.420", rate: 100, desc: "Sessões únicas rastreadas" },
-      { stage: "ViewContent (Engajamento)", count: "5.190", rate: 61.6, desc: "Scroll > 50% + Interação" },
-      { stage: "InitiateCheckout / Click CTA", count: "1.280", rate: 15.2, desc: "Abertura de modal ou WhatsApp" },
-      { stage: "Lead / Purchase Confirmado", count: "142", rate: 11.1, desc: "Conversão auditada via Pixel" },
+      { stage: "Visitas à página", count: "8.420", rate: 100, desc: "Sessões únicas rastreadas" },
+      { stage: "Visualizações de conteúdo", count: "5.190", rate: 61.6, desc: "Scroll > 50% + Interação" },
+      { stage: "Cliques para comprar", count: "1.280", rate: 15.2, desc: "Abertura de modal ou WhatsApp" },
+      { stage: "Contatos e compras", count: "142", rate: 11.1, desc: "Conversão auditada via Pixel" },
     ],
     channels: [
-      { name: "Meta Ads (Instagram Reels)", share: 54, roas: "6.4x", status: "Escala Alta" },
-      { name: "Meta Retargeting (Catalog)", share: 28, roas: "8.1x", status: "Otimizado" },
-      { name: "Google Search / Orgânico", share: 18, roas: "4.2x", status: "Estável" },
+      { name: "Meta Ads (Instagram Reels)", share: 54, roas: "6,4x", status: "Escala Alta" },
+      { name: "Anúncios de catálogo", share: 28, roas: "8,1x", status: "Otimizado" },
+      { name: "Pesquisa orgânica no Google", share: 18, roas: "4,2x", status: "Estável" },
     ],
   },
   "7D": {
     revenue: "R$ 98.450",
-    revenueDelta: "+31.8%",
-    roas: "6.2x",
-    roasDelta: "+1.4x",
+    revenueDelta: "+31,8%",
+    roas: "6,2x",
+    roasDelta: "+1,4x",
     leads: 964,
-    leadsDelta: "+26.5%",
+    leadsDelta: "+26,5%",
     cpa: "R$ 9,85",
-    cpaDelta: "-19.0%",
+    cpaDelta: "-19,0%",
     positiveCpa: true,
     series: [
       { label: "Seg", value: 54, conv: 40 },
@@ -156,26 +156,26 @@ const DATASETS: Record<TimeRange, PeriodDataset> = {
       { label: "Dom", value: 87, conv: 72 },
     ],
     funnel: [
-      { stage: "PageView (Meta Pixel)", count: "54.900", rate: 100, desc: "Sessões únicas rastreadas" },
-      { stage: "ViewContent (Engajamento)", count: "34.120", rate: 62.1, desc: "Scroll > 50% + Interação" },
-      { stage: "InitiateCheckout / Click CTA", count: "8.740", rate: 15.9, desc: "Abertura de modal ou WhatsApp" },
-      { stage: "Lead / Purchase Confirmado", count: "964", rate: 11.0, desc: "Conversão auditada via Pixel" },
+      { stage: "Visitas à página", count: "54.900", rate: 100, desc: "Sessões únicas rastreadas" },
+      { stage: "Visualizações de conteúdo", count: "34.120", rate: 62.1, desc: "Scroll > 50% + Interação" },
+      { stage: "Cliques para comprar", count: "8.740", rate: 15.9, desc: "Abertura de modal ou WhatsApp" },
+      { stage: "Contatos e compras", count: "964", rate: 11.0, desc: "Conversão auditada via Pixel" },
     ],
     channels: [
-      { name: "Meta Ads (Instagram Reels)", share: 58, roas: "6.8x", status: "Escala Alta" },
-      { name: "Meta Retargeting (Catalog)", share: 26, roas: "8.9x", status: "Otimizado" },
-      { name: "Google Search / Orgânico", share: 16, roas: "4.5x", status: "Estável" },
+      { name: "Meta Ads (Instagram Reels)", share: 58, roas: "6,8x", status: "Escala Alta" },
+      { name: "Anúncios de catálogo", share: 26, roas: "8,9x", status: "Otimizado" },
+      { name: "Pesquisa orgânica no Google", share: 16, roas: "4,5x", status: "Estável" },
     ],
   },
   "30D": {
     revenue: "R$ 412.800",
-    revenueDelta: "+44.2%",
-    roas: "6.7x",
-    roasDelta: "+1.8x",
+    revenueDelta: "+44,2%",
+    roas: "6,7x",
+    roasDelta: "+1,8x",
     leads: 4180,
-    leadsDelta: "+38.9%",
+    leadsDelta: "+38,9%",
     cpa: "R$ 8,90",
-    cpaDelta: "-24.5%",
+    cpaDelta: "-24,5%",
     positiveCpa: true,
     series: [
       { label: "S1", value: 48, conv: 35 },
@@ -187,26 +187,26 @@ const DATASETS: Record<TimeRange, PeriodDataset> = {
       { label: "S7", value: 100, conv: 92 },
     ],
     funnel: [
-      { stage: "PageView (Meta Pixel)", count: "218.400", rate: 100, desc: "Sessões únicas rastreadas" },
-      { stage: "ViewContent (Engajamento)", count: "141.960", rate: 65.0, desc: "Scroll > 50% + Interação" },
-      { stage: "InitiateCheckout / Click CTA", count: "39.310", rate: 18.0, desc: "Abertura de modal ou WhatsApp" },
-      { stage: "Lead / Purchase Confirmado", count: "4.180", rate: 10.6, desc: "Conversão auditada via Pixel" },
+      { stage: "Visitas à página", count: "218.400", rate: 100, desc: "Sessões únicas rastreadas" },
+      { stage: "Visualizações de conteúdo", count: "141.960", rate: 65.0, desc: "Scroll > 50% + Interação" },
+      { stage: "Cliques para comprar", count: "39.310", rate: 18.0, desc: "Abertura de modal ou WhatsApp" },
+      { stage: "Contatos e compras", count: "4.180", rate: 10.6, desc: "Conversão auditada via Pixel" },
     ],
     channels: [
-      { name: "Meta Ads (Instagram Reels)", share: 61, roas: "7.1x", status: "Escala Alta" },
-      { name: "Meta Retargeting (Catalog)", share: 24, roas: "9.4x", status: "Otimizado" },
-      { name: "Google Search / Orgânico", share: 15, roas: "4.8x", status: "Estável" },
+      { name: "Meta Ads (Instagram Reels)", share: 61, roas: "7,1x", status: "Escala Alta" },
+      { name: "Anúncios de catálogo", share: 24, roas: "9,4x", status: "Otimizado" },
+      { name: "Pesquisa orgânica no Google", share: 15, roas: "4,8x", status: "Estável" },
     ],
   },
   "90D": {
     revenue: "R$ 1.180.000",
-    revenueDelta: "+68.0%",
-    roas: "7.1x",
-    roasDelta: "+2.3x",
+    revenueDelta: "+68,0%",
+    roas: "7,1x",
+    roasDelta: "+2,3x",
     leads: 12450,
-    leadsDelta: "+52.4%",
+    leadsDelta: "+52,4%",
     cpa: "R$ 8,15",
-    cpaDelta: "-31.0%",
+    cpaDelta: "-31,0%",
     positiveCpa: true,
     series: [
       { label: "Ago/Q1", value: 42, conv: 30 },
@@ -218,15 +218,15 @@ const DATASETS: Record<TimeRange, PeriodDataset> = {
       { label: "Atual", value: 100, conv: 94 },
     ],
     funnel: [
-      { stage: "PageView (Meta Pixel)", count: "640.000", rate: 100, desc: "Sessões únicas rastreadas" },
-      { stage: "ViewContent (Engajamento)", count: "428.800", rate: 67.0, desc: "Scroll > 50% + Interação" },
-      { stage: "InitiateCheckout / Click CTA", count: "115.200", rate: 18.0, desc: "Abertura de modal ou WhatsApp" },
-      { stage: "Lead / Purchase Confirmado", count: "12.450", rate: 10.8, desc: "Conversão auditada via Pixel" },
+      { stage: "Visitas à página", count: "640.000", rate: 100, desc: "Sessões únicas rastreadas" },
+      { stage: "Visualizações de conteúdo", count: "428.800", rate: 67.0, desc: "Scroll > 50% + Interação" },
+      { stage: "Cliques para comprar", count: "115.200", rate: 18.0, desc: "Abertura de modal ou WhatsApp" },
+      { stage: "Contatos e compras", count: "12.450", rate: 10.8, desc: "Conversão auditada via Pixel" },
     ],
     channels: [
-      { name: "Meta Ads (Instagram Reels)", share: 64, roas: "7.5x", status: "Escala Alta" },
-      { name: "Meta Retargeting (Catalog)", share: 22, roas: "9.8x", status: "Otimizado" },
-      { name: "Google Search / Orgânico", share: 14, roas: "5.1x", status: "Estável" },
+      { name: "Meta Ads (Instagram Reels)", share: 64, roas: "7,5x", status: "Escala Alta" },
+      { name: "Anúncios de catálogo", share: 22, roas: "9,8x", status: "Otimizado" },
+      { name: "Pesquisa orgânica no Google", share: 14, roas: "5,1x", status: "Estável" },
     ],
   },
 };
@@ -385,7 +385,7 @@ export default function PulseMetricsDashboard() {
 
           {/* Timeframe Selector & Audio Controls */}
           <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center bg-[#0B1220] border border-slate-800 p-1 rounded-xl">
+            <div data-tour="period" className="flex items-center bg-[#0B1220] border border-slate-800 p-1 rounded-xl">
               {(["24H", "7D", "30D", "90D"] as TimeRange[]).map((item) => (
                 <button
                   key={item}
@@ -424,7 +424,7 @@ export default function PulseMetricsDashboard() {
                 onClick={handleGoogleSync}
                 className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-bold uppercase tracking-wider text-cyan-300 flex items-center gap-2 transition-all"
               >
-                <ShieldCheck className="w-4 h-4" /> Sync Cloud
+                <ShieldCheck className="w-4 h-4" /> Usar apelido
               </button>
             ) : (
               <span className="px-3 py-2 rounded-xl bg-cyan-950/50 border border-cyan-500/30 font-mono text-[11px] text-cyan-200">
@@ -460,7 +460,7 @@ export default function PulseMetricsDashboard() {
               val: currentData.leads.toLocaleString("pt-BR"),
               delta: currentData.leadsDelta,
               positive: true,
-              sub: "Eventos fbq('track', 'Lead')",
+              sub: "Contatos registrados na campanha",
               icon: Users,
             },
             {
@@ -538,7 +538,7 @@ export default function PulseMetricsDashboard() {
               </div>
 
               {/* Interactive Dual Bar Chart */}
-              <div className="h-56 flex items-end justify-between gap-3 pt-6 px-2 border-b border-slate-800/80">
+              <div data-tour="chart" className="h-56 flex items-end justify-between gap-3 pt-6 px-2 border-b border-slate-800/80">
                 {currentData.series.map((point, idx) => {
                   const isHovered = hoveredBar === idx;
                   return (
@@ -640,12 +640,12 @@ export default function PulseMetricsDashboard() {
                     </div>
                     <div className="flex items-center justify-between text-[11px] text-slate-400 mb-2">
                       <span>{step.desc}</span>
-                      <span className="font-mono text-teal-400">{step.rate}%</span>
+                      <span className="font-mono text-teal-400">{step.rate.toLocaleString("pt-BR")}%</span>
                     </div>
                     <div className="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
-                        animate={{ width: `${step.rate}%` }}
+                        animate={{ width: `${step.rate.toLocaleString("pt-BR")}%` }}
                         transition={{ duration: 0.6, delay: i * 0.08 }}
                         className="h-full bg-gradient-to-r from-cyan-400 via-teal-400 to-indigo-500"
                       />
@@ -687,7 +687,7 @@ export default function PulseMetricsDashboard() {
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <button
+              <button data-tour="lead"
                 type="button"
                 onClick={() =>
                   handleFireLivePixelEvent("Lead", {
@@ -720,7 +720,7 @@ export default function PulseMetricsDashboard() {
                 type="button"
                 onClick={() =>
                   handleFireLivePixelEvent("Schedule", {
-                    service: "Chronos Atomic Booking",
+                    service: "Agendamento no salão",
                     status: "locked",
                   })
                 }

@@ -1,5 +1,7 @@
 ﻿"use client";
 
+import { priceInReais } from "@/lib/site-config";
+
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -417,7 +419,7 @@ export default function ResinAndMiniatureStudioPage() {
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Estado do Inspektor de Estágios (Workbench)
+  // Estado do Etapas de Estágios (Workbench)
   const [activeStageIdx, setActiveStageIdx] = useState<number>(2); // Começa no Pintado
   const activeStage = WORKBENCH_STAGES[activeStageIdx];
 
@@ -751,7 +753,7 @@ export default function ResinAndMiniatureStudioPage() {
                     className="w-full py-3 rounded-xl bg-white hover:bg-fuchsia-400 text-zinc-950 font-black uppercase tracking-wider text-xs transition-colors flex items-center justify-center gap-2"
                   >
                     <ZoomIn className="w-4 h-4" />
-                    <span>Inspecionar Lupa & Paleta de Tintas</span>
+                    <span>Ver detalhes da pintura</span>
                   </button>
                 </div>
               </div>
@@ -774,7 +776,7 @@ export default function ResinAndMiniatureStudioPage() {
                 {"// 01. ALQUIMIA DE PRODUÇÃO INTERATIVA"}
               </span>
               <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tighter text-white">
-                Inspektor de <span className="text-amber-300 italic">Bancada (3 Estágios)</span>
+                Etapas de <span className="text-amber-300 italic">Bancada (3 Estágios)</span>
               </h2>
             </div>
 
@@ -842,7 +844,7 @@ export default function ResinAndMiniatureStudioPage() {
               {/* Interactive Step Slider inside Image */}
               <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-black/80 backdrop-blur-md border border-white/10">
                 <div className="flex justify-between text-[10px] font-mono uppercase text-zinc-400 mb-1.5">
-                  <span>ARRASTE PARA TRANSICIONAR O ESTÁGIO</span>
+                  <span>ARRASTE PARA VER AS ETAPAS</span>
                   <span className="text-amber-300 font-bold">ETAPA 0{activeStageIdx + 1}/03</span>
                 </div>
                 <input
@@ -1134,7 +1136,7 @@ export default function ResinAndMiniatureStudioPage() {
                         : "Apenas Resina 12K Curada"}
                     </span>
                     <span className="text-xl font-black text-white">
-                      R$ {displayPrice.toFixed(2)}
+                      R$ {priceInReais.format(displayPrice)}
                     </span>
                   </div>
                   <div className="w-10 h-10 rounded-xl bg-zinc-800 group-hover:bg-fuchsia-500 group-hover:text-zinc-950 text-white flex items-center justify-center transition-colors">

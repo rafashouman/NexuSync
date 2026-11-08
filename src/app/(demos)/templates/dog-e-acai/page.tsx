@@ -1,3 +1,5 @@
+import { AppGuide } from "@/components/AppGuide";
+import { tours } from "@/data/appTours";
 import type { Metadata } from "next";
 import DeliveryMenu from "@/components/DeliveryMenu";
 
@@ -8,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function DogAcaiPage() {
-  return <DeliveryMenu dogAcai />;
+  return <><AppGuide slug="dog-e-acai" steps={tours["dog-e-acai"]} /><DeliveryMenu dogAcai /></>;
 }

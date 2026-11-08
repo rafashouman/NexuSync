@@ -1,4 +1,5 @@
-import { RouteAppGuide } from "@/components/RouteAppGuide";
+import { AppGuide } from "@/components/AppGuide";
+import { tours } from "@/data/appTours";
 import ArcadeCabinetHub from "@/components/ArcadeCabinetHub";
 import { Radio } from "lucide-react";
 
@@ -25,7 +26,7 @@ export default function ArcadePage() {
           Troque os cartuchos ou jogue direto abaixo
         </p>
       </div>
-      <RouteAppGuide />
+      <AppGuide slug="arcade" steps={tours["arcade"]} />
         <ArcadeCabinetHub />
     </section>
 

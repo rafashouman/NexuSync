@@ -40,16 +40,16 @@ import ArcadeCabinetHub from "@/components/ArcadeCabinetHub";
 const realBusinessApps = [
   {
     id: "chronos",
-    title: "ChronosBook Executive",
-    category: "Sistema de Agendamentos & Reservas",
+    title: "Chronos · Agenda de beleza",
+    category: "Agendamento para barbearias e salões",
     statusBadge: "AGENDA ONLINE",
-    metricsLabel: "Zero Conflito de Horários • Confirmação WhatsApp",
+    metricsLabel: "Serviços, preços e horários do salão",
     description:
-      "Veja como o cliente escolhe serviço, profissional e horário, e como a equipe acompanha a agenda em um painel de gestão.",
+      "O cliente escolhe corte, barba ou escova, vê preço e duração e reserva um horário. O salão acompanha a ocupação do dia.",
     highlights: [
-      "Escolha de profissional, serviço, data e horário",
+      "Escolha do serviço por preço e duração",
       "Trava automática contra agendamento duplicado",
-      "Identificação por apelido e recibo de protocolo",
+      "Confirmação com nome, data e horário",
     ],
     tech: ["Agenda digital", "Next.js", "Painel de gestão"],
     accent: "from-blue-500/25 via-indigo-500/10 to-transparent",
@@ -93,10 +93,10 @@ const realBusinessApps = [
   },
   {
     id: "pulsemetrics",
-    title: "PulseMetrics BI & Telemetria",
-    category: "Dashboard Executivo & Auditoria de Conversão",
+    title: "PulseMetrics · Painel de vendas",
+    category: "Vendas e resultados de campanhas",
     statusBadge: "META PIXEL & BI LIVE",
-    metricsLabel: "Funil de Vendas • ROAS 6.8x • Eventos em Tempo Real",
+    metricsLabel: "Vendas, contatos e retorno dos anúncios",
     description:
       "Painel gerencial para acompanhamento de metas, receita recorrente, atribuição de campanhas e auditoria ao vivo de eventos disparados pelo Meta Pixel.",
     highlights: [
@@ -107,7 +107,7 @@ const realBusinessApps = [
     tech: ["Analytics BI", "Meta Pixel SDK", "SVG Telemetry", "React 19"],
     accent: "from-cyan-400/25 via-teal-500/10 to-transparent",
     borderGlow: "hover:border-cyan-400/60",
-    buttonLabel: "Abrir Dashboard Executivo",
+    buttonLabel: "Abrir painel de vendas",
     icon: BarChart3,
   },
 ];
@@ -118,9 +118,9 @@ const realBusinessApps = [
 const playfulApps = [
   {
     id: "pulsespin",
-    title: "PulseSpin Roulette",
+    title: "PulseSpin · Roleta de cupons",
     category: "Gamificação para Captura de Leads",
-    tag: "+34% Conversão em Campanhas",
+    tag: "Cupons para campanhas",
     description:
       "Roleta promocional com física de desaceleração e liberação de cupons exclusivos para transformar visitantes indecisos em clientes no WhatsApp.",
     icon: Flame,
@@ -306,7 +306,7 @@ export function AppsPageContent() {
                   </div>
 
                   <Link
-                      href={app.href ?? `/apps/${app.id}`}
+                      href={app.href ?? `/${app.id}`}
                       className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white hover:bg-orange-400 text-slate-950 px-5 py-3.5 text-xs font-black uppercase tracking-wider transition-all shadow-lg"
                     >
                       <span>{app.buttonLabel}</span>
@@ -389,7 +389,7 @@ export function AppsPageContent() {
             return (
               <Link
                 key={item.id}
-                href={`/apps/${item.id}`}
+                href={`/${item.id}`}
                 className="group relative flex flex-col justify-between overflow-hidden rounded-[2rem] border border-white/10 bg-[#0c0e14]/85 p-7 shadow-2xl backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-300/35 sm:p-9"
               >
                 {CardInner}
@@ -1084,7 +1084,7 @@ export function TemplatesPageContent() {
       title: "Academias & Alta Performance",
       brandName: "PulseFit Lab",
       description:
-        "Arquitetura energética em Acid Lime & Emerald projetada para converter visitantes em alunos com calculadora metabólica, grade de treinos e passaporte VIP.",
+        "Apresente as modalidades, os horários das turmas e os planos. O visitante pode agendar uma aula experimental pelo celular.",
       href: "/templates/academias",
       theme: "from-lime-400/20 via-[#101914] to-[#080b09]",
       badgeColor: "border-lime-400/35 bg-lime-400/10 text-lime-200",
@@ -1095,12 +1095,12 @@ export function TemplatesPageContent() {
         { name: "Emerald Deep", hex: "#10B981" },
         { name: "Carbon Dark", hex: "#080B09" },
       ],
-      conversionFocus: "+42% Retenção & Agendamento de Aula Experimental",
+      conversionFocus: "Agendamento de aula experimental",
       modules: [
         "Calculadora de Gasto Calórico & IMC Interativa",
         "Grade Dinâmica de Modalidades por Objetivo",
-        "Emissão de Free Pass / Passaporte Experimental",
-        "Checkout de Planos Integrado ao WhatsApp",
+        "Solicitação de aula experimental",
+        "Contato sobre planos pelo WhatsApp",
       ],
       stack: ["Next.js App Router", "Framer Motion", "Tailwind CSS", "Meta Pixel"],
     },
@@ -1278,6 +1278,30 @@ export function TemplatesPageContent() {
       modules: ["Adicionais por produto", "Montagem de combos", "Sacola e revisão do pedido"],
       stack: ["Next.js App Router", "React", "Tailwind CSS"],
     },
+    {
+      number: "09", code: "Imóveis", category: "Mercado imobiliário",
+      title: "Imobiliárias", brandName: "Pátio Imóveis",
+      description: "Venda e locação com filtro por bairro, ficha do imóvel e pedido de visita pelo WhatsApp.",
+      href: "/templates/imobiliaria", theme: "from-emerald-500/20 to-stone-950",
+      badgeColor: "border-emerald-400/35 text-emerald-200", accentText: "text-emerald-300",
+      btnGradient: "from-emerald-300 to-teal-400 text-stone-950",
+      palette: [{ name: "Mata", hex: "#254A40" }, { name: "Areia", hex: "#EAE7C9" }],
+      conversionFocus: "Pedidos de visita por imóvel",
+      modules: ["Comprar ou alugar", "Busca por bairro", "Ficha com metragem e condomínio"],
+      stack: ["Next.js", "React", "WhatsApp"],
+    },
+    {
+      number: "10", code: "Arquitetura", category: "Arquitetura residencial",
+      title: "Escritórios de arquitetura", brandName: "Ateliê Vão",
+      description: "Apresente o portfólio e deixe o visitante girar a planta de cada projeto para entender os ambientes.",
+      href: "/templates/arquitetura", theme: "from-amber-500/20 to-stone-950",
+      badgeColor: "border-amber-400/35 text-amber-200", accentText: "text-amber-300",
+      btnGradient: "from-amber-200 to-orange-300 text-stone-950",
+      palette: [{ name: "Linho", hex: "#F3EEE2" }, { name: "Argila", hex: "#DDBA92" }],
+      conversionFocus: "Contato com referência ao projeto",
+      modules: ["Portfólio residencial", "Planta 3D e vista superior", "Áreas por ambiente"],
+      stack: ["Next.js", "React", "SVG"],
+    },
   ];
 
   const [selectedIndex, setSelectedIndex] = useState<number>(3); // Inicia destacando o novo Prime Motors (ou altere para 0)
@@ -1312,7 +1336,7 @@ export function TemplatesPageContent() {
           <div className="mb-5 flex flex-wrap items-center gap-2.5">
             <span className="inline-flex items-center gap-2 rounded-full border border-violet-300/25 bg-violet-400/[0.08] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-violet-200">
               <Sparkles className="h-3.5 w-3.5 text-fuchsia-300" />
-              FocusPulse Architecture Lab · Templates Interativos
+              NexuSync · Modelos para o seu negócio
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 font-mono text-[11px] font-bold text-emerald-300">
               <span className="h-2 w-2 animate-ping rounded-full bg-emerald-400" />
@@ -1330,7 +1354,7 @@ export function TemplatesPageContent() {
             Não mostramos apenas fotos estáticas. Use o{" "}
             <strong className="text-white">painel de demonstração abaixo</strong>{" "}
             para navegar dentro de cada projeto em tempo real, testar a versão
-            Mobile/Desktop e escolher a base ideal para o seu negócio.
+            para celular e computador e escolher a base ideal para o seu negócio.
           </p>
         </div>
 
@@ -1353,26 +1377,27 @@ export function TemplatesPageContent() {
         className="relative z-10 mb-24 scroll-mt-24 rounded-[2.4rem] border border-white/15 bg-[#0a0c12]/95 p-4 shadow-[0_30px_100px_rgba(0,0,0,0.85)] backdrop-blur-2xl sm:p-7"
       >
         {/* Barra Superior de Seleção de Arquitetura + Controles de Viewport */}
-        <div className="mb-6 flex flex-col justify-between gap-4 border-b border-white/10 pb-5 xl:flex-row xl:items-center">
+        <div className="mb-6 border-b border-white/10 pb-5">
           {/* Seletor de Projetos (Tabs do Console) */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 xl:pb-0 no-scrollbar">
+          <div role="group" aria-label="Escolha um template para visualizar" className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {templates.map((tpl, idx) => {
               const isSelected = idx === selectedIndex;
               return (
                 <button
                   key={tpl.href}
                   type="button"
+                  aria-pressed={isSelected}
                   onClick={() => setSelectedIndex(idx)}
-                  className={`group flex items-center gap-2.5 rounded-2xl border px-4 py-3 text-left transition-all shrink-0 ${isSelected
+                  className={`group flex min-w-0 items-center gap-2.5 rounded-2xl border px-4 py-3 text-left transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300 ${isSelected
                       ? "border-violet-400/50 bg-gradient-to-r from-violet-500/20 via-fuchsia-500/10 to-transparent text-white shadow-lg"
                       : "border-white/10 bg-white/[0.03] text-white/55 hover:border-white/25 hover:text-white"
                     }`}
                 >
-                  <span className="font-mono text-xs font-bold text-violet-300">
+                  <span className="shrink-0 font-mono text-xs font-bold text-violet-300">
                     /{tpl.number}
                   </span>
-                  <div>
-                    <span className="block text-xs font-black uppercase tracking-wider">
+                  <div className="min-w-0 break-words">
+                    <span className="block text-xs font-black uppercase tracking-wider leading-relaxed">
                       {tpl.brandName}
                     </span>
                     <span className="block font-mono text-[10px] text-white/45">
@@ -1434,7 +1459,7 @@ export function TemplatesPageContent() {
                 {/* Sistema de Cores do Projeto */}
                 <div className="rounded-2xl border border-white/[0.08] bg-black/35 p-4">
                   <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-white/45 mb-3">
-                    Identidade Cromática do Template:
+                    Cores do modelo
                   </span>
                   <div className="grid grid-cols-3 gap-2">
                     {activeTemplate.palette.map((color) => (
@@ -1497,7 +1522,7 @@ export function TemplatesPageContent() {
             <div className="mt-8 space-y-2.5 border-t border-white/10 pt-5">
               <a
                 href={`https://wa.me/5551993583936?text=${encodeURIComponent(
-                  `Olá! Testei o modelo "${activeTemplate.title}" (${activeTemplate.brandName}) no console da FocusPulse e quero orçar um projeto baseado nessa estrutura.`
+                  `Olá! Testei o modelo "${activeTemplate.title}" (${activeTemplate.brandName}) no catálogo da NexuSync e quero orçar um projeto baseado nessa estrutura.`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

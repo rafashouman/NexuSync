@@ -12,3 +12,5 @@ export function formatBRL(cents: number) {
     minimumFractionDigits: 0,
   });
 }
+
+export const priceInReais = new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });

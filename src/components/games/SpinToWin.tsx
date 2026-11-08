@@ -88,7 +88,7 @@ interface PrizeSpec {
 const PRIZES: PrizeSpec[] = [
   {
     id: 0,
-    label: "15% OFF",
+    label: "15% DESC.",
     code: "PULSE-15OFF",
     desc: "Desconto imediato em qualquer projeto ou template web.",
     probability: "25%",
@@ -97,16 +97,16 @@ const PRIZES: PrizeSpec[] = [
   },
   {
     id: 1,
-    label: "SEO AUDIT",
+    label: "REVISÃO SEO",
     code: "PULSE-SEOVIP",
-    desc: "Diagnóstico técnico de performance, Core Web Vitals e Pixel.",
+    desc: "Revisão do site para melhorar sua presença nas buscas.",
     probability: "20%",
     color: "#1C2541",
     textColor: "#00F0FF",
   },
   {
     id: 2,
-    label: "SETUP PIXEL",
+    label: "PIXEL META",
     code: "PULSE-PIXELFREE",
     desc: "Instalação gratuita do Meta Pixel + Eventos de Conversão.",
     probability: "18%",
@@ -115,16 +115,16 @@ const PRIZES: PrizeSpec[] = [
   },
   {
     id: 3,
-    label: "25% OFF VIP",
+    label: "25% DESC.",
     code: "PULSE-25JACKPOT",
-    desc: "Bônus máximo desbloqueado para desenvolvimento Next.js + Firebase.",
+    desc: "Desconto em um projeto de site para o seu negócio.",
     probability: "10%",
     color: "#00F0FF",
     textColor: "#050505",
   },
   {
     id: 4,
-    label: "UI KIT PRO",
+    label: "KIT VISUAL",
     code: "PULSE-UIKIT",
     desc: "Pacote de micro-interações e componentes exclusivos.",
     probability: "15%",
@@ -252,7 +252,7 @@ export default function PulseSpinRoulette() {
           className="p-2.5 rounded-xl bg-[#0B132B] border border-[#1C2541] text-[#00F0FF] hover:border-[#00F0FF] transition-colors flex items-center gap-2 font-mono text-xs"
         >
           {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-          <span className="hidden sm:inline">{soundEnabled ? "SFX ATIVO" : "MUTE"}</span>
+          <span className="hidden sm:inline">{soundEnabled ? "SOM LIGADO" : "SEM SOM"}</span>
         </button>
       </div>
 
@@ -312,7 +312,7 @@ export default function PulseSpinRoulette() {
             </div>
           </div>
 
-          <motion.button
+          <motion.button data-tour="spin"
             type="button"
             onClick={handleSpin}
             disabled={isSpinning}
@@ -321,18 +321,18 @@ export default function PulseSpinRoulette() {
             className="mt-8 px-10 py-4 rounded-2xl bg-[#00F0FF] text-[#05070E] font-mono font-black text-xs sm:text-sm tracking-[0.2em] uppercase transition-all disabled:opacity-50 flex items-center gap-3 shadow-[0_0_25px_rgba(0,240,255,0.3)]"
           >
             <Sparkles className="w-4 h-4" />
-            {isSpinning ? "SORTEANDO RECOMPENSA..." : "GIRAR ROLETA QUÂNTICA"}
+            {isSpinning ? "SORTEANDO RECOMPENSA..." : "GIRAR ROLETA"}
           </motion.button>
         </div>
 
         {/* Coluna de Informações & Probabilidades Auditadas (5 Cols) */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="p-5 rounded-2xl bg-[#0B132B]/70 border border-[#1C2541] space-y-3">
+          <div data-tour="prizes" className="p-5 rounded-2xl bg-[#0B132B]/70 border border-[#1C2541] space-y-3">
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#00F0FF] flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4" /> Tabela de Recompensas & Odds
+                <ShieldCheck className="w-4 h-4" /> Prêmios e chances
               </span>
-              <span className="font-mono text-[10px] text-slate-400">RNG AUDITADO</span>
+              <span className="font-mono text-[10px] text-slate-400">DEMONSTRAÇÃO</span>
             </div>
 
             <div className="space-y-2">
@@ -413,7 +413,7 @@ export default function PulseSpinRoulette() {
                     {wonPrize.code}
                   </span>
                 </div>
-                <button
+                <button data-tour="coupon"
                   type="button"
                   onClick={handleCopyCode}
                   className="px-4 py-2.5 rounded-xl bg-[#00F0FF] text-[#05070E] font-mono text-xs font-black uppercase flex items-center gap-1.5 hover:bg-cyan-300 transition-colors"

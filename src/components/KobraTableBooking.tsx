@@ -1,5 +1,7 @@
 ﻿"use client";
 
+import { priceInReais } from "@/lib/site-config";
+
 import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useFocusTrap } from "@/components/ui/useFocusTrap";
 import Image from "next/image";
@@ -513,7 +515,7 @@ export default function KobraTableBooking({
         },
       ];
     });
-    triggerToast(`${product.name} na Comanda!`, `+ R$ ${product.price.toFixed(2)} adicionado`);
+    triggerToast(`${product.name} na Comanda!`, `+ R$ ${priceInReais.format(product.price)} adicionado`);
   };
 
   const handleConfirmCustomProduct = () => {
@@ -581,7 +583,7 @@ export default function KobraTableBooking({
     triggerToast(`Pedido #${code} Disparado!`, "Sincronizado com o KDS da Cozinha em tempo real");
 
     const waMsg = `*PEDIDO CONFIRMADO — KOBRA BURGER APP* 🔥🍔\n*Protocolo KDS:* #${code}\n*Cliente:* ${newOrder.customer}\n*Modalidade:* ${orderMode}\n${orderMode === "DELIVERY" && customerAddress ? `*Endereço:* ${customerAddress}\n` : ""
-      }----------------------------------\n*Itens:* ${summary}\n*Total:* R$ ${cartTotal.toFixed(2)}`;
+      }----------------------------------\n*Itens:* ${summary}\n*Total:* R$ ${priceInReais.format(cartTotal)}`;
 
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(waMsg)}`, "_blank");
     setCart([]);
@@ -610,12 +612,12 @@ export default function KobraTableBooking({
       soundRef.current?.playSuccessBell();
       setStatus("IDLE");
       setFeedbackMsg("");
-      triggerToast("Operador Autenticado", "Sessão Firebase Auth validada");
+      triggerToast("Operador Autenticado", "Seu apelido está pronto para uso");
     } catch (error) {
       console.error("Unable to sign in before table booking.", error);
       soundRef.current?.playError();
       setStatus("ERROR");
-      setFeedbackMsg("Não foi possível autenticar com o Google. Tente novamente.");
+      setFeedbackMsg("Não foi possível registrar seu apelido. Tente novamente.");
     }
   };
 
@@ -693,7 +695,7 @@ export default function KobraTableBooking({
   const handleSendWhatsAppTicket = () => {
     if (!protocolCode || !selectedSlot) return;
     soundRef.current?.playClick();
-    const text = `*RESERVA CONFIRMADA — KOBRA.LAB* 🔥🍔\n----------------------------------\n*Protocolo Firestore:* #${protocolCode}\n*Cliente:* ${user?.displayName || user?.email || "VIP"
+    const text = `*RESERVA CONFIRMADA — KOBRA.LAB* 🔥🍔\n----------------------------------\n*Código da reserva:* #${protocolCode}\n*Cliente:* ${user?.displayName || user?.email || "VIP"
       }\n*Data:* ${selectedDate}\n*Horário:* ${selectedSlot}\n*Lugares:* ${guests} pessoas\n*Ambiente:* ${selectedZone.name
       }\n----------------------------------\n_Reserva validada via Lock Transacional._`;
 
@@ -947,7 +949,7 @@ export default function KobraTableBooking({
 
                     <div className="px-4 pb-4 pt-2.5 border-t border-zinc-800/60 flex items-center justify-between gap-2">
                       <span className="text-base font-black text-white">
-                        R$ {item.price.toFixed(2)}
+                        R$ {priceInReais.format(item.price)}
                       </span>
                       <div className="flex items-center gap-1.5">
                         <button
@@ -1065,7 +1067,7 @@ export default function KobraTableBooking({
                           </span>
                         )}
                         <span className="text-xs font-black text-amber-400 mt-0.5 block">
-                          R$ {(item.unitFinalPrice * item.quantity).toFixed(2)}
+                          R$ {priceInReais.format(item.unitFinalPrice * item.quantity)}
                         </span>
                       </div>
                       <div className="flex items-center gap-1.5 bg-zinc-950 border border-zinc-800 rounded-xl px-2 py-1">
@@ -1118,17 +1120,17 @@ export default function KobraTableBooking({
                 <div className="p-3.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 space-y-1.5 text-xs">
                   <div className="flex justify-between text-zinc-400">
                     <span>Subtotal</span>
-                    <span>R$ {cartSubtotal.toFixed(2)}</span>
+                    <span>R$ {priceInReais.format(cartSubtotal)}</span>
                   </div>
                   <div className="flex justify-between text-zinc-400">
                     <span>Taxa de Entrega</span>
                     <span className={deliveryFee === 0 ? "text-amber-400 font-bold" : ""}>
-                      {deliveryFee === 0 ? "GRÁTIS" : `R$ ${deliveryFee.toFixed(2)}`}
+                      {deliveryFee === 0 ? "GRÁTIS" : `R$ ${priceInReais.format(deliveryFee)}`}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm font-black text-white pt-2 border-t border-zinc-800">
                     <span>Total da Comanda</span>
-                    <span className="text-orange-500">R$ {cartTotal.toFixed(2)}</span>
+                    <span className="text-orange-500">R$ {priceInReais.format(cartTotal)}</span>
                   </div>
                 </div>
 
@@ -1155,7 +1157,7 @@ export default function KobraTableBooking({
               {[
                 {
                   label: "Faturamento do Turno",
-                  val: `R$ ${totalRevenueToday.toFixed(2)}`,
+                  val: `R$ ${priceInReais.format(totalRevenueToday)}`,
                   sub: "+18.4% vs ontem",
                   icon: TrendingUp,
                   accent: "text-orange-400",
@@ -1281,7 +1283,7 @@ export default function KobraTableBooking({
                         <div>
                           <span className="text-[10px] font-mono text-zinc-500 block">TOTAL</span>
                           <span className="text-sm font-black text-white">
-                            {order.total > 0 ? `R$ ${order.total.toFixed(2)}` : "VIP PASS"}
+                            {order.total > 0 ? `R$ ${priceInReais.format(order.total)}` : "VIP PASS"}
                           </span>
                         </div>
 
@@ -1315,7 +1317,7 @@ export default function KobraTableBooking({
                 </div>
                 <div className="min-w-0">
                   <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 block">
-                    Credencial Anti-Conflito • Firestore Atomic Lock
+                    Seu nome na reserva
                   </span>
                   <p className="truncate text-xs sm:text-sm font-bold text-zinc-200">
                     {user
@@ -1487,7 +1489,7 @@ export default function KobraTableBooking({
                       {status === "ERROR" && <AlertTriangle className="w-4 h-4 shrink-0" />}
                       <span>
                         {status === "LOADING"
-                          ? "Executando lock transacional no Firestore..."
+                          ? "Confirmando sua reserva…"
                           : feedbackMsg}
                       </span>
                     </motion.div>
@@ -1633,7 +1635,7 @@ export default function KobraTableBooking({
                             <span className="text-xs font-semibold">{addon.name}</span>
                           </div>
                           <span className="text-xs font-mono text-orange-400">
-                            + R$ {addon.price.toFixed(2)}
+                            + R$ {priceInReais.format(addon.price)}
                           </span>
                         </button>
                       );
@@ -1657,10 +1659,8 @@ export default function KobraTableBooking({
                   <span>Inserir na Comanda</span>
                   <span>
                     R${" "}
-                    {(
-                      customizingProduct.price +
-                      modalAddons.reduce((s, a) => s + a.price, 0)
-                    ).toFixed(2)}
+                    {priceInReais.format(customizingProduct.price +
+                      modalAddons.reduce((s, a) => s + a.price, 0))}
                   </span>
                 </button>
               </div>

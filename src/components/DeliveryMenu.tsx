@@ -1,5 +1,7 @@
 ﻿"use client";
 
+import { priceInReais } from "@/lib/site-config";
+
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -450,18 +452,14 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
             : "";
         const donenessText = item.doneness ? `\n   • Ponto: ${item.doneness}` : "";
         const notesText = item.notes ? `\n   • Obs: ${item.notes}` : "";
-        return `*${item.quantity}x ${item.product.name}* (R$ ${(
-          item.unitFinalPrice * item.quantity
-        ).toFixed(2)})${donenessText}${addonsText}${notesText}`;
+        return `*${item.quantity}x ${item.product.name}* (R$ ${priceInReais.format(item.unitFinalPrice * item.quantity)})${donenessText}${addonsText}${notesText}`;
       })
       .join("\n\n");
 
     const message = `*NOVO PEDIDO — ${restaurant}*\n----------------------------------\n*Modalidade:* ${orderMode === "delivery" ? "🛵 Delivery" : "🏪 Retirada no Balcão"
       }\n*Cliente:* ${customerName || "Não informado"}\n${orderMode === "delivery" ? `*Endereço:* ${customerAddress}\n` : ""
-      }----------------------------------\n\n${itemsLines}\n\n----------------------------------\n*Subtotal:* R$ ${cartSubtotal.toFixed(
-        2
-      )}\n*Taxa de Entrega:* ${isFreeDelivery ? "GRÁTIS" : `R$ ${finalDeliveryFee.toFixed(2)}`
-      }\n*TOTAL A PAGAR: R$ ${cartTotal.toFixed(2)}*\n*Pagamento:* ${paymentMethod}`;
+      }----------------------------------\n\n${itemsLines}\n\n----------------------------------\n*Subtotal:* R$ ${priceInReais.format(cartSubtotal)}\n*Taxa de Entrega:* ${isFreeDelivery ? "GRÁTIS" : `R$ ${priceInReais.format(finalDeliveryFee)}`
+      }\n*TOTAL A PAGAR: R$ ${priceInReais.format(cartTotal)}*\n*Pagamento:* ${paymentMethod}`;
 
     if (!phone) {
       setOrderPreview(message);
@@ -576,7 +574,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
               <Flame className="w-4 h-4" /> {dogAcai ? "Ver cardápio" : "Abrir App KDS"}
             </a>
 
-            <button
+            <button data-tour="bag"
               onClick={openCart}
               aria-label={`Abrir sacola, ${totalItemsCount} itens`}
               className="relative inline-flex items-center gap-3 px-4 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/80 text-white transition-all group"
@@ -598,7 +596,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                 <span className="text-[10px] font-mono uppercase text-zinc-400 block leading-none">
                   Sua Sacola
                 </span>
-                <span className="text-xs font-black text-white">R$ {cartSubtotal.toFixed(2)}</span>
+                <span className="text-xs font-black text-white">R$ {priceInReais.format(cartSubtotal)}</span>
               </div>
             </button>
           </div>
@@ -688,11 +686,11 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                       </p>
                     </div>
                     <span className="text-lg font-black text-orange-400 shrink-0">
-                      R$ {menuItems[0].price.toFixed(2)}
+                      R$ {priceInReais.format(menuItems[0].price)}
                     </span>
                   </div>
                   <div className="grid grid-cols-2 gap-2 pt-1">
-                    <button
+                    <button data-tour="product"
                       onClick={() => openProductModal(menuItems[0])}
                       className="py-3 px-3 rounded-xl bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 text-white font-black uppercase tracking-wider text-[11px] transition-colors flex items-center justify-center gap-1.5"
                     >
@@ -730,10 +728,10 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
               <div className="flex items-center gap-4 bg-zinc-950/90 border border-zinc-800 p-4 rounded-2xl">
                 <div>
                   <span className="text-[10px] font-mono uppercase text-zinc-500 line-through block">
-                    De R$ {(comboBurger.price + comboSide.price + comboDrink.price).toFixed(2)}
+                    De R$ {priceInReais.format(comboBurger.price + comboSide.price + comboDrink.price)}
                   </span>
                   <span className="text-2xl font-black text-white">
-                    R$ {((comboBurger.price + comboSide.price + comboDrink.price) * 0.82).toFixed(2)}
+                    R$ {priceInReais.format((comboBurger.price + comboSide.price + comboDrink.price) * 0.82)}
                   </span>
                 </div>
                 <button
@@ -783,7 +781,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                       >
                         <span className="text-xs font-bold truncate pr-2">{item.name}</span>
                         <span className="text-[11px] font-mono shrink-0 text-amber-400">
-                          R$ {item.price.toFixed(2)}
+                          R$ {priceInReais.format(item.price)}
                         </span>
                       </button>
                     ))}
@@ -876,7 +874,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
               key={item.id}
               role="button"
               tabIndex={0}
-              aria-label={`${item.name}, R$ ${item.price.toFixed(2)}. Ver detalhes`}
+              aria-label={`${item.name}, R$ ${priceInReais.format(item.price)}. Ver detalhes`}
               onClick={() => openProductModal(item)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
@@ -932,7 +930,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                   <span className="text-[10px] font-mono uppercase text-zinc-500 block">
                     Valor Individual
                   </span>
-                  <span className="text-xl font-black text-white">R$ {item.price.toFixed(2)}</span>
+                  <span className="text-xl font-black text-white">R$ {priceInReais.format(item.price)}</span>
                 </div>
                 <div className="w-10 h-10 rounded-xl bg-zinc-800 group-hover:bg-orange-500 group-hover:text-zinc-950 text-white flex items-center justify-center transition-colors">
                   <Plus className="w-5 h-5" />
@@ -1144,7 +1142,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                             <span className="text-xs font-semibold">{addon.name}</span>
                           </div>
                           <span className="text-xs font-mono text-orange-400">
-                            + R$ {addon.price.toFixed(2)}
+                            + R$ {priceInReais.format(addon.price)}
                           </span>
                         </button>
                       );
@@ -1181,18 +1179,16 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                       <Plus className="w-4 h-4" />
                     </button>
                   </div>
-                  <button
+                  <button data-tour="add"
                     onClick={handleAddToCart}
                     className="flex-1 py-3.5 px-6 rounded-xl bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 text-white font-black uppercase tracking-wider text-xs flex items-center justify-between shadow-[0_0_20px_rgba(234,88,12,0.35)]"
                   >
                     <span>Adicionar à Sacola</span>
                     <span>
                       R${" "}
-                      {(
-                        (selectedProduct.price +
+                      {priceInReais.format((selectedProduct.price +
                           modalAddons.reduce((s, a) => s + a.price, 0)) *
-                        modalQty
-                      ).toFixed(2)}
+                        modalQty)}
                     </span>
                   </button>
                 </div>
@@ -1238,7 +1234,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                         <span className="text-zinc-300">
                           Faltam{" "}
                           <strong className="text-orange-400">
-                            R$ {missingForFreeDelivery.toFixed(2)}
+                            R$ {priceInReais.format(missingForFreeDelivery)}
                           </strong>{" "}
                           para <strong>Frete Grátis!</strong>
                         </span>
@@ -1300,7 +1296,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                               </span>
                             )}
                             <span className="text-xs font-black text-amber-400 block pt-1">
-                              R$ {(item.unitFinalPrice * item.quantity).toFixed(2)}
+                              R$ {priceInReais.format(item.unitFinalPrice * item.quantity)}
                             </span>
                           </div>
                           <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-lg px-2 py-1">
@@ -1377,17 +1373,17 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                   <div className="space-y-1.5 text-xs">
                     <div className="flex justify-between text-zinc-400">
                       <span>Subtotal dos Itens</span>
-                      <span>R$ {cartSubtotal.toFixed(2)}</span>
+                      <span>R$ {priceInReais.format(cartSubtotal)}</span>
                     </div>
                     <div className="flex justify-between text-zinc-400">
                       <span>Taxa de Entrega</span>
                       <span className={isFreeDelivery ? "text-amber-400 font-bold" : ""}>
-                        {isFreeDelivery ? "GRÁTIS" : `R$ ${finalDeliveryFee.toFixed(2)}`}
+                        {isFreeDelivery ? "GRÁTIS" : `R$ ${priceInReais.format(finalDeliveryFee)}`}
                       </span>
                     </div>
                     <div className="flex justify-between text-base font-black text-white pt-2 border-t border-zinc-800">
                       <span>Total do Pedido</span>
-                      <span className="text-orange-500">R$ {cartTotal.toFixed(2)}</span>
+                      <span className="text-orange-500">R$ {priceInReais.format(cartTotal)}</span>
                     </div>
                   </div>
                   <button

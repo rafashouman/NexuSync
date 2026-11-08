@@ -1,5 +1,7 @@
 ﻿"use client";
 
+import { priceInReais } from "@/lib/site-config";
+
 import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -362,17 +364,15 @@ export default function StreetwearEcommerceLightPage() {
         (item) =>
           `▪ *${item.quantity}x ${item.product.name}* [${item.product.code}]\n   Tam: *${
             item.size
-          }* | Cor: ${item.color} — R$ ${(item.product.price * item.quantity).toFixed(2)}`
+          }* | Cor: ${item.color} — R$ ${priceInReais.format(item.product.price * item.quantity)}`
       )
       .join("\n\n");
 
-    const msg = `*NOVO PEDIDO — VORTEX // ARCHIVE DROP #04*\n----------------------------------\n*Cliente:* ${customerName}\n*CEP:* ${customerZip}\n*Endereço:* ${customerAddress}\n----------------------------------\n\n${lines}\n\n----------------------------------\n*Subtotal:* R$ ${subtotal.toFixed(
-      2
-    )}\n${
-      paymentType === "pix" ? `*Desconto PIX (8%):* -R$ ${pixDiscount.toFixed(2)}\n` : ""
-    }*Frete Express:* ${
-      hasFreeShipping ? "GRÁTIS (+ Pack de Stickers)" : `R$ ${shippingCost.toFixed(2)}`
-    }\n*VALOR FINAL: R$ ${finalTotal.toFixed(2)}*\n*Modalidade:* ${
+    const msg = `*NOVO PEDIDO — VORTEX // ARCHIVE DROP #04*\n----------------------------------\n*Cliente:* ${customerName}\n*CEP:* ${customerZip}\n*Endereço:* ${customerAddress}\n----------------------------------\n\n${lines}\n\n----------------------------------\n*Subtotal:* R$ ${priceInReais.format(subtotal)}\n${
+      paymentType === "pix" ? `*Desconto PIX (8%):* -R$ ${priceInReais.format(pixDiscount)}\n` : ""
+    }*Frete expresso:* ${
+      hasFreeShipping ? "GRÁTIS (+ pacote de adesivos)" : `R$ ${priceInReais.format(shippingCost)}`
+    }\n*VALOR FINAL: R$ ${priceInReais.format(finalTotal)}*\n*Modalidade:* ${
       paymentType === "pix" ? "PIX Imediato" : "Link de Cartão (Até 4x Sem Juros)"
     }`;
 
@@ -555,7 +555,7 @@ export default function StreetwearEcommerceLightPage() {
                   href="#vitrine"
                   className="flex items-center gap-3 rounded-full bg-white px-5 py-4 text-xs font-black uppercase tracking-wider text-zinc-950 shadow-xl transition-all hover:bg-blue-600 hover:text-white sm:px-8 sm:text-sm"
                 >
-                  <span>Explorar Coleção Completa</span>
+                  <span>Ver coleção completa</span>
                   <ArrowDown className="w-4 h-4" />
                 </a>
 
@@ -599,10 +599,10 @@ export default function StreetwearEcommerceLightPage() {
                 </div>
                 <div className="text-right">
                   <span className="text-xs text-zinc-400 line-through block">
-                    R$ {PRODUCTS[0].originalPrice?.toFixed(2)}
+                    R$ {priceInReais.format(PRODUCTS[0].originalPrice ?? 0)}
                   </span>
                   <span className="text-xl font-black text-zinc-950">
-                    R$ {PRODUCTS[0].price.toFixed(2)}
+                    R$ {priceInReais.format(PRODUCTS[0].price)}
                   </span>
                 </div>
               </div>
@@ -779,11 +779,11 @@ export default function StreetwearEcommerceLightPage() {
                       <div className="text-right">
                         {product.originalPrice && (
                           <span className="text-xs text-zinc-400 line-through mr-2 font-mono">
-                            R$ {product.originalPrice.toFixed(2)}
+                            R$ {priceInReais.format(product.originalPrice)}
                           </span>
                         )}
                         <span className="text-xl font-black text-zinc-950">
-                          R$ {product.price.toFixed(2)}
+                          R$ {priceInReais.format(product.price)}
                         </span>
                       </div>
                     </div>
@@ -797,7 +797,7 @@ export default function StreetwearEcommerceLightPage() {
                       Adicionar Direto:
                     </span>
                     <span className="text-[10px] font-mono text-blue-600 font-bold">
-                      R$ {(product.price * 0.92).toFixed(2)} no PIX
+                      R$ {priceInReais.format(product.price * 0.92)} no PIX
                     </span>
                   </div>
                   <div className="grid grid-cols-5 gap-1.5">
@@ -940,7 +940,7 @@ export default function StreetwearEcommerceLightPage() {
               {"// CAMPANHA ARQUITETURA SOLAR 2026"}
             </span>
             <h2 className="text-4xl sm:text-5xl font-black uppercase tracking-tighter text-zinc-950">
-              Lookbook <span className="italic font-light text-blue-600">Interativo</span>
+              Catálogo <span className="italic font-light text-blue-600">Interativo</span>
             </h2>
           </div>
           <p className="text-xs font-mono text-zinc-500 uppercase">
@@ -1019,7 +1019,7 @@ export default function StreetwearEcommerceLightPage() {
                       </h3>
                       <p className="text-xs text-zinc-500 mt-1">{spotProduct.subtitle}</p>
                       <span className="text-2xl font-black text-blue-600 block mt-2">
-                        R$ {spotProduct.price.toFixed(2)}
+                        R$ {priceInReais.format(spotProduct.price)}
                       </span>
                     </div>
                   </div>
@@ -1129,7 +1129,7 @@ export default function StreetwearEcommerceLightPage() {
                       type="submit"
                       className="w-full py-4 rounded-full bg-blue-600 hover:bg-zinc-950 text-white font-black uppercase tracking-wider text-xs transition-all flex items-center justify-center gap-2 shadow-md"
                     >
-                      <span>Desbloquear 15% OFF + Early Access</span>
+                      <span>Receber 15% de desconto e acesso antecipado</span>
                       <Send className="w-4 h-4" />
                     </button>
                   </>
@@ -1233,7 +1233,7 @@ export default function StreetwearEcommerceLightPage() {
                     {selectedProductModal.name}
                   </h3>
                   <p className="text-xl font-black text-blue-600 mb-4">
-                    R$ {selectedProductModal.price.toFixed(2)}
+                    R$ {priceInReais.format(selectedProductModal.price)}
                   </p>
                   <p className="text-xs text-zinc-600 leading-relaxed mb-6">
                     {selectedProductModal.description}
@@ -1338,13 +1338,13 @@ export default function StreetwearEcommerceLightPage() {
                       <span className="text-zinc-600">
                         Faltam{" "}
                         <strong className="text-blue-600">
-                          R$ {(FREE_SHIPPING_THRESHOLD - subtotal).toFixed(2)}
+                          R$ {priceInReais.format(FREE_SHIPPING_THRESHOLD - subtotal)}
                         </strong>{" "}
-                        para <strong>Frete Grátis + Pack de Stickers!</strong>
+                        para <strong>Frete Grátis + pacote de adesivos!</strong>
                       </span>
                     ) : (
                       <span className="text-blue-600 font-bold flex items-center gap-1.5">
-                        <Sparkles className="w-4 h-4" /> Frete Grátis + Pack de Stickers Liberado!
+                        <Sparkles className="w-4 h-4" /> Frete Grátis + pacote de adesivos Liberado!
                       </span>
                     )}
                   </div>
@@ -1391,7 +1391,7 @@ export default function StreetwearEcommerceLightPage() {
                                 Tam: {item.size} • {item.color}
                               </span>
                               <span className="text-xs font-black text-zinc-900 block mt-1">
-                                R$ {(item.product.price * item.quantity).toFixed(2)}
+                                R$ {priceInReais.format(item.product.price * item.quantity)}
                               </span>
                             </div>
                           </div>
@@ -1486,23 +1486,23 @@ export default function StreetwearEcommerceLightPage() {
                   <div className="space-y-1.5 text-xs">
                     <div className="flex justify-between text-zinc-600">
                       <span>Subtotal</span>
-                      <span>R$ {subtotal.toFixed(2)}</span>
+                      <span>R$ {priceInReais.format(subtotal)}</span>
                     </div>
                     {paymentType === "pix" && (
                       <div className="flex justify-between text-blue-600 font-mono font-bold">
                         <span>Desconto PIX (8%)</span>
-                        <span>- R$ {pixDiscount.toFixed(2)}</span>
+                        <span>- R$ {priceInReais.format(pixDiscount)}</span>
                       </div>
                     )}
                     <div className="flex justify-between text-zinc-600">
-                      <span>Frete Express</span>
+                      <span>Frete expresso</span>
                       <span className={hasFreeShipping ? "text-blue-600 font-bold" : ""}>
-                        {hasFreeShipping ? "GRÁTIS" : `R$ ${shippingCost.toFixed(2)}`}
+                        {hasFreeShipping ? "GRÁTIS" : `R$ ${priceInReais.format(shippingCost)}`}
                       </span>
                     </div>
                     <div className="flex justify-between text-base font-black text-zinc-950 pt-2 border-t border-zinc-200">
                       <span>Total Final</span>
-                      <span className="text-blue-600">R$ {finalTotal.toFixed(2)}</span>
+                      <span className="text-blue-600">R$ {priceInReais.format(finalTotal)}</span>
                     </div>
                   </div>
 

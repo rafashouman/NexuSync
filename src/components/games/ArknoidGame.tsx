@@ -584,7 +584,7 @@ export function ArknoidGame() {
                       Continuar Partida
                     </button>
                   ) : (
-                    <button
+                    <button data-tour="start"
                       type="button"
                       onClick={startGame}
                       className="inline-flex items-center gap-2 rounded-full bg-violet-gradient px-7 py-3.5 text-xs sm:text-sm font-bold text-white shadow-violet-glow transition-transform hover:scale-105"
@@ -618,7 +618,7 @@ export function ArknoidGame() {
             </button>
 
             {/* Barra Deslizante para o Polegar */}
-            <div
+            <div data-tour="pad"
               onPointerDown={(e) => {
                 e.currentTarget.setPointerCapture(e.pointerId);
                 handleThumbTrackMove(e);

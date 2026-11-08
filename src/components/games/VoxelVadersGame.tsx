@@ -615,13 +615,13 @@ export default function VoxelVadersGame({
       await signInPlayer();
     } catch (error) {
       console.error("Unable to sign in to submit Voxel Vaders score.", error);
-      setLeaderboardError("Não foi possível entrar com o Google.");
+      setLeaderboardError("Não foi possível registrar o apelido.");
     }
   };
 
   const handleScoreSubmit = async () => {
     if (!user) {
-      setLeaderboardError("Entre com Google para registrar sua pontuação.");
+      setLeaderboardError("Entre com seu apelido para registrar sua pontuação.");
       return;
     }
 
@@ -703,7 +703,7 @@ export default function VoxelVadersGame({
 
         <div className="flex items-center gap-2.5 sm:gap-4">
           {/* Switch de Auto-Fire p/ facilitar 1-Thumb Play no Mobile */}
-          <button
+          <button data-tour="auto"
             type="button"
             onClick={() => {
               setAutoFire((prev) => !prev);
@@ -790,7 +790,7 @@ export default function VoxelVadersGame({
                       role="status"
                       className="text-sm font-bold text-[#00F5D4]"
                     >
-                      Pontuação registrada no leaderboard!
+                      Pontuação registrada na classificação!
                     </p>
                   ) : (
                     <>
@@ -803,7 +803,7 @@ export default function VoxelVadersGame({
                         >
                           {isSavingScore
                             ? "Salvando pontuação..."
-                            : "Registrar no leaderboard"}
+                            : "Registrar na classificação"}
                         </button>
                       ) : (
                         <button
@@ -811,7 +811,7 @@ export default function VoxelVadersGame({
                           onClick={() => void handleLeaderboardLogin()}
                           className="w-full rounded-xl border border-[#00F5D4]/60 px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#00F5D4] transition-colors hover:bg-[#00F5D4]/10"
                         >
-                          Entrar com Google para salvar
+                          Entrar com apelido para salvar
                         </button>
                       )}
                       {leaderboardError && (
@@ -824,7 +824,7 @@ export default function VoxelVadersGame({
                 </div>
               )}
 
-              <button
+              <button data-tour="intercept"
                 type="button"
                 onClick={() => restartTriggerRef.current()}
                 className="w-full py-4 rounded-xl bg-gradient-to-r from-[#FF0055] to-purple-600 hover:from-[#ff1a66] hover:to-purple-500 text-white font-black text-xs uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(255,0,85,0.4)] transition-all flex items-center justify-center gap-2"

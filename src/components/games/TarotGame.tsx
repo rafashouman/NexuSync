@@ -173,7 +173,7 @@ export default function TarotGame() {
               key={card.id}
               className="flex min-w-32 items-stretch overflow-hidden rounded-lg border border-white/10 bg-black/30"
             >
-              <button
+              <button data-tour="tarot-card"
                 type="button"
                 disabled={gameEnded || isResolving || isShopOpen}
                 onClick={() => placeOrRemoveCard(card.id)}
@@ -208,7 +208,7 @@ export default function TarotGame() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <button
+          <button data-tour="spread"
             type="button"
             disabled={gameEnded || isResolving || isShopOpen || boardCount === 0 || rewritesLeft <= 0}
             onClick={playBoardSpread}

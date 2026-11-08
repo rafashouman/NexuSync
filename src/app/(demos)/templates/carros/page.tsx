@@ -365,7 +365,7 @@ export default function CarDealershipPage() {
       setTdFeedback("");
     } catch {
       setTdStatus("ERROR");
-      setTdFeedback("Não foi possível autenticar com o Google.");
+      setTdFeedback("Não foi possível registrar seu apelido.");
     }
   };
 
@@ -1180,7 +1180,7 @@ export default function CarDealershipPage() {
                 onClick={handleGoogleLogin}
                 className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all"
               >
-                <LogIn className="w-4 h-4" /> Entrar com Google
+                <LogIn className="w-4 h-4" /> Entrar com apelido
               </button>
             )}
           </div>

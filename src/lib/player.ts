@@ -47,9 +47,9 @@ export function onPlayerChange(callback: (player: Player | null) => void) {
   };
 }
 
-export async function signInPlayer() {
+export async function signInPlayer(nameInput?: string) {
   const existing = readPlayer();
-  const answer = window.prompt(
+  const answer = nameInput ?? window.prompt(
     "Escolha um apelido (2 a 24 caracteres):",
     existing?.displayName ?? ""
   );
@@ -60,4 +60,5 @@ export async function signInPlayer() {
   const id = existing?.uid ?? crypto.randomUUID();
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ id, name }));
   window.dispatchEvent(new Event(CHANGE_EVENT));
+  return readPlayer();
 }
