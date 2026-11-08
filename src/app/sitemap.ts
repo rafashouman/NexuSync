@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 
+import { appCatalog } from "@/data/appCatalog";
+
 const publicPaths = [
   "/",
   "/apps",
@@ -7,17 +9,8 @@ const publicPaths = [
   "/marketing",
   "/lojas-virtuais",
   "/templates",
-  "/arcade",
   "/privacidade",
-  "/templates/academias",
-  "/templates/bluemoon",
-  "/templates/cardapio",
-  "/templates/carros",
-  "/templates/connection",
-  "/templates/miniaturas",
-  "/templates/reservas",
-  "/templates/seguro-piloto",
-  "/templates/streetwear",
+  ...appCatalog.map(app => app.path),
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

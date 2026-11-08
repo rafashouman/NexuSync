@@ -420,8 +420,8 @@ function PulseArkanoidBuiltIn() {
 // =========================================================
 // COMPONENTE PRINCIPAL DO GABINETE ARCADE
 // =========================================================
-export default function ArcadeCabinetHub() {
-  const [selectedGame, setSelectedGame] = useState<GameId>("voxelvaders");
+export default function ArcadeCabinetHub({ initialGame = "voxelvaders" }: { initialGame?: GameId }) {
+  const [selectedGame, setSelectedGame] = useState<GameId>(initialGame);
   const [bootPhase, setBootPhase] = useState<BootPhase>("RUNNING");
   const [crtScanlines, setCrtScanlines] = useState(true);
   const [isMuted, setIsMuted] = useState(arcadeSynth.getMuted());

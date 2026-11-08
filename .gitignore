@@ -43,3 +43,7 @@ next-env.d.ts
 
 # override local do docker compose
 docker-compose.override.yml
+
+# Docs
+copys.md
+

@@ -15,12 +15,9 @@ import {
   MoveUpRight,
   SlidersHorizontal,
   CalendarClock,
-  Gamepad2,
   BarChart3,
   Cpu,
   Radio,
-  Maximize2,
-  Terminal,
   Flame,
   MessageSquare,
   UtensilsCrossed,
@@ -34,38 +31,27 @@ import { Reveal, CountUp } from "@/components/ui/MotionKit";
 import { useFocusTrap } from "@/components/ui/useFocusTrap";
 import { QuoteLink } from "@/components/QuoteLink";
 import { DeviceStage } from "@/components/DeviceStage";
-import ChronosBooking from "@/components/ChronosBooking";
-import MemoryMatrix from "@/components/games/MemoryMatrix";
-import PulseSpinRoulette from "@/components/games/SpinToWin";
+import { AppCatalogDirectory } from "@/components/AppCatalogDirectory";
 import ArcadeCabinetHub from "@/components/ArcadeCabinetHub";
-import PulseMetricsDashboard from "@/components/PulseMetricsDashboard";
-
-type InteractiveProjectId =
-  | "chronos"
-  | "pulsemetrics"
-  | "pulsespin"
-  | "memory"
-  | "voxelvaders";
 
 // =========================================================
 // 1. APPS REAIS DE NEGÓCIOS (AGENDAMENTOS, DELIVERY & DASHBOARDS)
 // =========================================================
 const realBusinessApps = [
   {
-    id: "chronos" as InteractiveProjectId,
-    isModal: true,
+    id: "chronos",
     title: "ChronosBook Executive",
     category: "Sistema de Agendamentos & Reservas",
-    statusBadge: "FIRESTORE ATOMIC LOCK",
+    statusBadge: "AGENDA ONLINE",
     metricsLabel: "Zero Conflito de Horários • Confirmação WhatsApp",
     description:
       "Veja como o cliente escolhe serviço, profissional e horário, e como a equipe acompanha a agenda em um painel de gestão.",
     highlights: [
       "Escolha de profissional, serviço, data e horário",
       "Trava automática contra agendamento duplicado",
-      "Autenticação Google e recibo de protocolo",
+      "Identificação por apelido e recibo de protocolo",
     ],
-    tech: ["Firebase Auth", "Firestore Transactions", "Next.js", "Painel Admin"],
+    tech: ["Agenda digital", "Next.js", "Painel de gestão"],
     accent: "from-blue-500/25 via-indigo-500/10 to-transparent",
     borderGlow: "hover:border-blue-400/60",
     buttonLabel: "Testar Sistema de Agendamento",
@@ -73,7 +59,6 @@ const realBusinessApps = [
   },
   {
     id: "kobra-pdv",
-    isModal: false,
     href: "/templates/cardapio",
     title: "Kobra Burger PDV & Delivery KDS",
     category: "App de Pedidos, Comanda & Cozinha",
@@ -93,8 +78,21 @@ const realBusinessApps = [
     icon: UtensilsCrossed,
   },
   {
-    id: "pulsemetrics" as InteractiveProjectId,
-    isModal: true,
+    id: "dog-e-acai",
+    href: "/templates/dog-e-acai",
+    title: "Dog & Açaí",
+    category: "Cardápio para lancherias e açaíterias",
+    statusBadge: "DELIVERY E RETIRADA",
+    description: "Deixe o cliente montar o cachorro-quente, escolher os complementos do açaí e revisar o pedido pelo celular.",
+    highlights: ["Adicionais doces e salgados por produto", "Combos com preço calculado na hora", "Sacola com entrega ou retirada"],
+    tech: ["Cardápio digital", "Combos", "WhatsApp"],
+    accent: "from-fuchsia-500/25 via-orange-500/10 to-transparent",
+    borderGlow: "hover:border-fuchsia-400/60",
+    buttonLabel: "Experimentar Dog & Açaí",
+    icon: UtensilsCrossed,
+  },
+  {
+    id: "pulsemetrics",
     title: "PulseMetrics BI & Telemetria",
     category: "Dashboard Executivo & Auditoria de Conversão",
     statusBadge: "META PIXEL & BI LIVE",
@@ -119,8 +117,7 @@ const realBusinessApps = [
 // =========================================================
 const playfulApps = [
   {
-    id: "pulsespin" as InteractiveProjectId,
-    isModal: true,
+    id: "pulsespin",
     title: "PulseSpin Roulette",
     category: "Gamificação para Captura de Leads",
     tag: "+34% Conversão em Campanhas",
@@ -130,20 +127,17 @@ const playfulApps = [
     accent: "from-fuchsia-500/20 via-violet-500/5 to-transparent",
   },
   {
-    id: "memory" as InteractiveProjectId,
-    isModal: true,
+    id: "memory",
     title: "Memory Matrix 3D",
     category: "Desafio Interativo com Ranking Global",
     tag: "Firebase Leaderboard · 3D Flip",
     description:
-      "Jogo de memória espacial com cartas 3D, cronômetro de precisão e gravação de recordes autenticada com conta Google.",
+      "Jogo de memória espacial com cartas 3D, cronômetro de precisão e gravação de recordes por apelido.",
     icon: Layers3,
     accent: "from-lime-400/20 via-emerald-500/5 to-transparent",
   },
   {
     id: "arknoid",
-    isModal: false,
-    href: "/webdev/arknoid",
     title: "Arknoid Physics Lab",
     category: "Experimento Físico 2D no Navegador",
     tag: "HTML5 Canvas · 60 FPS",
@@ -154,8 +148,6 @@ const playfulApps = [
   },
   {
     id: "images-blend",
-    isModal: false,
-    href: "/webdev/images-blend",
     title: "Image Blend Studio",
     category: "Laboratório de Shaders & Direção de Arte",
     tag: "CSS Mix-Blend · Real-Time",
@@ -167,25 +159,6 @@ const playfulApps = [
 ];
 
 export function AppsPageContent() {
-  const [activeProject, setActiveProject] =
-    useState<InteractiveProjectId | null>(null);
-
-  useEffect(() => {
-    if (!activeProject) return;
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActiveProject(null);
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
-    };
-  }, [activeProject]);
-
   return (
     <section className="container-luxe py-28 sm:py-36 relative">
       {/* Ambient Background Glows */}
@@ -232,11 +205,11 @@ export function AppsPageContent() {
         {/* Atalhos Rápidos */}
         <div className="flex flex-wrap items-center gap-3 shrink-0">
           <a
-            href="#sistemas-reais"
+            href="#todos-os-aplicativos"
             className="inline-flex items-center gap-2 rounded-2xl bg-cyan-400 px-5 py-3.5 font-mono text-xs font-black uppercase tracking-wider text-slate-950 transition-all hover:bg-cyan-300 shadow-[0_0_25px_rgba(34,211,238,0.25)]"
           >
             <CalendarClock className="h-4 w-4" />
-            Testar Apps de Negócios
+            Ver todos os aplicativos
           </a>
           <QuoteLink
             interest="aplicacao-web"
@@ -257,7 +230,7 @@ export function AppsPageContent() {
         <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="mb-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">
-              // 01. SOLUÇÕES PRONTAS PARA EMPRESAS & SERVIÇOS
+              {"// 01. SOLUÇÕES PRONTAS PARA EMPRESAS & SERVIÇOS"}
             </p>
             <h2 className="font-display text-3xl font-black uppercase tracking-tight text-white sm:text-4xl">
               Agendamentos, Delivery & Dashboards
@@ -269,7 +242,7 @@ export function AppsPageContent() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-7 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-7 lg:grid-cols-2">
           {realBusinessApps.map((app, idx) => {
             const Icon = app.icon;
             return (
@@ -332,26 +305,13 @@ export function AppsPageContent() {
                     ))}
                   </div>
 
-                  {app.isModal ? (
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setActiveProject(app.id as InteractiveProjectId)
-                      }
-                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white hover:bg-cyan-400 text-slate-950 px-5 py-3.5 text-xs font-black uppercase tracking-wider transition-all shadow-lg"
-                    >
-                      <span>{app.buttonLabel}</span>
-                      <MoveUpRight className="h-4 w-4" />
-                    </button>
-                  ) : (
-                    <Link
-                      href={app.href!}
+                  <Link
+                      href={app.href ?? `/apps/${app.id}`}
                       className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white hover:bg-orange-400 text-slate-950 px-5 py-3.5 text-xs font-black uppercase tracking-wider transition-all shadow-lg"
                     >
                       <span>{app.buttonLabel}</span>
                       <MoveUpRight className="h-4 w-4" />
                     </Link>
-                  )}
                 </div>
               </motion.article>
             );
@@ -366,7 +326,7 @@ export function AppsPageContent() {
         <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="mb-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-fuchsia-300">
-              // 02. ENGAJAMENTO DE CAMPANHAS & EXPERIMENTOS VISUAIS
+              {"// 02. ENGAJAMENTO DE CAMPANHAS & EXPERIMENTOS VISUAIS"}
             </p>
             <h2 className="font-display text-2xl font-black uppercase tracking-tight text-white sm:text-4xl">
               Jogos e experiências para suas campanhas
@@ -417,9 +377,7 @@ export function AppsPageContent() {
 
                 <div className="relative z-10 mt-6 flex items-center justify-between border-t border-white/[0.08] pt-4 text-xs font-semibold text-violet-200/80">
                   <span>
-                    {item.isModal
-                      ? "Executar mini-app interativo"
-                      : "Abrir laboratório dedicado"}
+                    Abrir demonstração
                   </span>
                   <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 group-hover:text-violet-200">
                     Iniciar Experiência →
@@ -428,24 +386,10 @@ export function AppsPageContent() {
               </>
             );
 
-            if (item.isModal) {
-              return (
-                <div
-                  key={item.id}
-                  onClick={() =>
-                    setActiveProject(item.id as InteractiveProjectId)
-                  }
-                  className="group cursor-pointer relative flex flex-col justify-between overflow-hidden rounded-[2rem] border border-white/10 bg-[#0c0e14]/85 p-7 shadow-2xl backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-300/35 sm:p-9"
-                >
-                  {CardInner}
-                </div>
-              );
-            }
-
             return (
               <Link
                 key={item.id}
-                href={item.href!}
+                href={`/apps/${item.id}`}
                 className="group relative flex flex-col justify-between overflow-hidden rounded-[2rem] border border-white/10 bg-[#0c0e14]/85 p-7 shadow-2xl backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-300/35 sm:p-9"
               >
                 {CardInner}
@@ -466,7 +410,7 @@ export function AppsPageContent() {
           <div>
             <div className="mb-2 inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.22em] text-[#00F5D4]">
               <Radio className="h-4 w-4 animate-pulse" />
-              // 03. BÔNUS TRACK · HARDWARE EMULADO NO NAVEGADOR
+              {"// 03. BÔNUS TRACK · HARDWARE EMULADO NO NAVEGADOR"}
             </div>
             <h2 className="font-display text-3xl font-black uppercase tracking-tight text-white sm:text-4xl">
               PulseDeck <span className="text-[#FFB800]">Arcade Hub</span> (Live)
@@ -477,14 +421,7 @@ export function AppsPageContent() {
             <span className="hidden font-mono text-xs text-white/50 sm:inline">
               Troque os cartuchos ou jogue direto abaixo
             </span>
-            <button
-              type="button"
-              onClick={() => setActiveProject("voxelvaders")}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-white transition-all hover:border-[#00F5D4] hover:text-[#00F5D4]"
-            >
-              <Maximize2 className="h-3.5 w-3.5" />
-              Modo Tela Cheia
-            </button>
+            <Link href="/arcade" className="rounded-xl border border-white/20 px-4 py-2 text-sm">Abrir fliperama</Link>
           </div>
         </div>
 
@@ -494,72 +431,7 @@ export function AppsPageContent() {
         </div>
       </div>
 
-      {/* =========================================================
-          MODAL DE EXECUÇÃO EM TELA CHEIA
-      ========================================================= */}
-      <AnimatePresence>
-        {activeProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onMouseDown={(event) => {
-              if (event.target === event.currentTarget) {
-                setActiveProject(null);
-              }
-            }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-2 backdrop-blur-xl sm:p-6"
-          >
-            <motion.div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="interactive-project-title"
-              initial={{ scale: 0.96, y: 16 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.96, y: 16 }}
-              className="flex max-h-[94dvh] w-full max-w-6xl flex-col overflow-hidden rounded-3xl border border-white/15 bg-[#0c0e14] shadow-2xl"
-            >
-              <div className="flex shrink-0 items-center justify-between gap-4 border-b border-white/10 bg-[#07080d] px-5 py-3.5 sm:px-7">
-                <div className="flex min-w-0 items-center gap-3">
-                  <span
-                    aria-hidden
-                    className="h-2.5 w-2.5 shrink-0 animate-ping rounded-full bg-emerald-400"
-                  />
-                  <Terminal className="h-4 w-4 text-violet-400 shrink-0" />
-                  <h2
-                    id="interactive-project-title"
-                    className="truncate font-mono text-xs font-bold uppercase tracking-widest text-white"
-                  >
-                    {activeProject === "voxelvaders"
-                      ? "PULSEDECK ARCADE HUB // FULLSCREEN"
-                      : realBusinessApps.find((p) => p.id === activeProject)
-                        ?.title ??
-                      playfulApps.find((p) => p.id === activeProject)?.title ??
-                      "Demonstração Interativa"}
-                  </h2>
-                </div>
-                <button
-                  type="button"
-                  autoFocus
-                  onClick={() => setActiveProject(null)}
-                  className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-red-400/50 hover:bg-red-500/20"
-                >
-                  <span className="hidden sm:inline">Encerrar Sessão</span>
-                  <X aria-hidden className="h-4 w-4" />
-                </button>
-              </div>
-
-              <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
-                {activeProject === "chronos" && <ChronosBooking />}
-                {activeProject === "pulsespin" && <PulseSpinRoulette />}
-                {activeProject === "memory" && <MemoryMatrix />}
-                {activeProject === "pulsemetrics" && <PulseMetricsDashboard />}
-                {activeProject === "voxelvaders" && <ArcadeCabinetHub />}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <AppCatalogDirectory />
 
       {/* Footer Navigation Links */}
       <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-8">
@@ -1394,6 +1266,18 @@ export function TemplatesPageContent() {
       ],
       stack: ["Next.js App Router", "Framer Motion", "Cart State", "Tailwind CSS"],
     },
+    {
+      number: "08", code: "ARCH // FOOD-DELIVERY", category: "Cardápio digital",
+      title: "Cachorros-quentes & Açaí", brandName: "Dog & Açaí",
+      description: "Da chapa ao copo: escolha os adicionais e monte um combo para entrega ou retirada.",
+      href: "/templates/dog-e-acai", theme: "from-fuchsia-500/25 via-[#211226] to-[#100b14]",
+      badgeColor: "border-fuchsia-400/35 bg-fuchsia-500/10 text-fuchsia-200", accentText: "text-fuchsia-300",
+      btnGradient: "from-fuchsia-500 to-orange-400 text-white",
+      palette: [{ name: "Açaí", hex: "#A21CAF" }, { name: "Chapa", hex: "#F97316" }],
+      conversionFocus: "Pedidos de delivery e retirada",
+      modules: ["Adicionais por produto", "Montagem de combos", "Sacola e revisão do pedido"],
+      stack: ["Next.js App Router", "React", "Tailwind CSS"],
+    },
   ];
 
   const [selectedIndex, setSelectedIndex] = useState<number>(3); // Inicia destacando o novo Prime Motors (ou altere para 0)
@@ -1642,7 +1526,7 @@ export function TemplatesPageContent() {
         <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="mb-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-violet-300">
-              // VISÃO COMPARATIVA DO CATÁLOGO
+              {"// VISÃO COMPARATIVA DO CATÁLOGO"}
             </p>
             <h2 className="font-display text-2xl font-black uppercase tracking-tight text-white sm:text-4xl">
               Todos os modelos disponíveis ({templates.length})
@@ -1754,7 +1638,7 @@ export function TemplatesPageContent() {
       <div className="mt-16 rounded-3xl border border-white/10 bg-[#0c0e14]/90 p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div>
           <span className="font-mono text-xs uppercase tracking-widest text-violet-300 block mb-1">
-            // ARQUITETURA 100% PERSONALIZADA
+            {"// ARQUITETURA 100% PERSONALIZADA"}
           </span>
           <h3 className="font-display text-2xl font-bold text-white">
             Seu segmento é diferente? Criamos um projeto inédito para a sua empresa.

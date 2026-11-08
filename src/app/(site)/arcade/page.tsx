@@ -1,3 +1,4 @@
+import { RouteAppGuide } from "@/components/RouteAppGuide";
 import ArcadeCabinetHub from "@/components/ArcadeCabinetHub";
 import { Radio } from "lucide-react";
 
@@ -24,7 +25,8 @@ export default function ArcadePage() {
           Troque os cartuchos ou jogue direto abaixo
         </p>
       </div>
-      <ArcadeCabinetHub />
+      <RouteAppGuide />
+        <ArcadeCabinetHub />
     </section>
 
   );

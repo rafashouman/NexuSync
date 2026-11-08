@@ -240,7 +240,7 @@ export default function ChronosBooking() {
     if (!user) {
       soundRef.current?.playAlert();
       setStatus("ERROR");
-      setFeedbackMsg("Autentique-se com Google para executar o Lock Transacional.");
+      setFeedbackMsg("Informe seu apelido para confirmar o agendamento.");
       return;
     }
 
@@ -409,7 +409,7 @@ export default function ChronosBooking() {
               disabled={status === "LOADING"}
               className="shrink-0 rounded-xl bg-[#002FA7] hover:bg-blue-800 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-all shadow-[0_8px_20px_rgba(0,47,167,0.25)] disabled:opacity-50"
             >
-              Autenticar Google
+              Entrar com apelido
             </button>
           )}
         </div>
