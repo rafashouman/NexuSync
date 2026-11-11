@@ -1302,6 +1302,18 @@ export function TemplatesPageContent() {
       modules: ["Portfólio residencial", "Planta 3D e vista superior", "Áreas por ambiente"],
       stack: ["Next.js", "React", "SVG"],
     },
+    {
+      number: "11", code: "SEC // OFFENSIVE-CYBER", category: "Cybersegurança & Pentest",
+      title: "Segurança Ofensiva & Pentest", brandName: "CyberOregon",
+      description: "Landing page B2B para consultoria de Pentest, Red Team, Resposta a Incidentes e GRC com simulador de escopo técnico.",
+      href: "/templates/cyber-oregon", theme: "from-[#00EAFF]/25 via-[#04122C] to-[#020b1f]",
+      badgeColor: "border-[#00EAFF]/40 bg-[#00D4FF]/15 text-[#00EAFF]", accentText: "text-[#00EAFF]",
+      btnGradient: "from-[#0088CC] to-[#00EAFF] text-[#020b1f]",
+      palette: [{ name: "Deep Cyber", hex: "#020b1f" }, { name: "Electric Cyan", hex: "#00EAFF" }, { name: "Azure Shield", hex: "#0088CC" }],
+      conversionFocus: "Dimensionamento de escopo de Pentest e briefing sob NDA",
+      modules: ["Console de telemetria interativo", "Catálogo Pentest / Red Team / SOC", "Simulador de escopo Black/Grey/White Box"],
+      stack: ["Next.js App Router", "Framer Motion", "Tailwind CSS"],
+    },
   ];
 
   const [selectedIndex, setSelectedIndex] = useState<number>(3); // Inicia destacando o novo Prime Motors (ou altere para 0)

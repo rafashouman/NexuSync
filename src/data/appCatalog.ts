@@ -107,6 +107,10 @@ export const appCatalog = [
     slug: "arquitetura", name: "Ateliê Vão", category: "Arquitetura", path: "/templates/arquitetura",
     description: "Explore um portfólio residencial com plantas baixas em 3D.",
   },
+  {
+    slug: "cyber-oregon", name: "CyberOregon", category: "Cybersegurança", path: "/templates/cyber-oregon",
+    description: "Segurança ofensiva, Pentest, Red Team e resposta a incidentes com simulador de escopo.",
+  },
 ] as const;
 
 export type CatalogApp = (typeof appCatalog)[number];
