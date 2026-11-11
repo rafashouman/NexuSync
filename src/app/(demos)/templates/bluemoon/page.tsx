@@ -6,6 +6,7 @@ import TarotTableScene from '@/components/three/TarotTableScene';
 import { useGameStore, ACT_1_SPREADS, SpreadStage } from '@/store/useGameStore';
 import { CONJUNCTION_TABLE, SUIT_INFO, SPREAD_BOARD_SLOTS } from '@/lib/games/tarot-engine';
 import { soundFX } from '@/lib/audio/sound-fx';
+import { useDemoTheme } from '@/components/ui/DemoShell';
 import { useFocusTrap } from '@/components/ui/useFocusTrap';
 
 const onActivate = (action: () => void) => (e: React.KeyboardEvent) => {
@@ -22,6 +23,7 @@ import {
 } from '@/components/ui/SquareIcons';
 
 export default function DaemonArcanaGamePage() {
+  const theme = useDemoTheme();
   const {
     initRun,
     hand,
@@ -80,11 +82,11 @@ export default function DaemonArcanaGamePage() {
   const stages: SpreadStage[] = ['PAST', 'PRESENT', 'FUTURE'];
 
   return (
-    <main id="conteudo" className="relative w-screen h-screen overflow-hidden bg-[#07080B] text-slate-100 font-mono select-none">
+    <main id="conteudo" className="demo-dark relative w-screen h-screen overflow-hidden bg-[#07080B] text-slate-100 font-mono select-none">
       <a href="#mesa-controles" className="skip-link">Ir para os controles da mesa</a>
       {/* PALCO 3D */}
       <div aria-hidden className="absolute inset-0 z-0">
-        <TarotTableScene />
+        <TarotTableScene lightTheme={theme === 'claro'} />
       </div>
 
       {/* BANNER CENTRAL DE RESOLUÇÃO PASSO A PASSO */}

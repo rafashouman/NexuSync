@@ -39,6 +39,7 @@ import {
 
 import { trackMetaEvent } from "@/components/MetaPixel";
 import { Confetti, CountUp, Reveal } from "@/components/ui/MotionKit";
+import { useDemoTheme } from "@/components/ui/DemoShell";
 import { StickyMobileCta } from "@/components/ui/StickyMobileCta";
 import { useActiveSection } from "@/components/ui/useActiveSection";
 
@@ -48,6 +49,7 @@ import { useActiveSection } from "@/components/ui/useActiveSection";
 const WHATSAPP_NUMBER = "5551993583936";
 const CURRENT_YEAR = 2026;
 const LOGO_DARK_SRC = "/images/templates/cyber-oregon/logo-cyber-oregon-dark.png";
+const LOGO_LIGHT_SRC = "/images/templates/cyber-oregon/logo-cyber-oregon.png";
 
 const DEFAULT_WA_MSG = encodeURIComponent(
   "Olá! Gostaria de falar com um especialista da CyberOregon sobre Pentest e soluções de cibersegurança para minha empresa."
@@ -310,6 +312,7 @@ const SectionBadge = ({
 // 1. NAVBAR COM O NOVO LOGO DARK EM FUNDO #020b1f
 // ==========================================
 const Navbar = () => {
+  const theme = useDemoTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const activeSection = useActiveSection([
@@ -386,7 +389,7 @@ const Navbar = () => {
           >
             <div className="relative flex items-center rounded-xl overflow-hidden px-2 py-1 bg-[#020b1f] border border-[#00D4FF]/30 group-hover:border-[#00EAFF] shadow-[0_0_25px_rgba(0,212,255,0.2)] transition-all duration-300">
               <Image
-                src={LOGO_DARK_SRC}
+                src={theme === "claro" ? LOGO_LIGHT_SRC : LOGO_DARK_SRC}
                 alt="CyberOregon Cybersecurity"
                 width={230}
                 height={44}
@@ -1932,6 +1935,8 @@ const ContactSection = () => {
 // 11. RODAPÉ CORPORATIVO CYBEROREGON (SEM NEW DATE() BLOCKING WARNING)
 // ==========================================
 const Footer = () => {
+  const theme = useDemoTheme();
+
   return (
     <footer className="bg-[#010714] border-t border-[#00D4FF]/20 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1939,7 +1944,7 @@ const Footer = () => {
           <div className="space-y-3">
             <div className="inline-flex items-center rounded-xl bg-[#020b1f] px-3 py-1.5 border border-[#00D4FF]/30">
               <Image
-                src={LOGO_DARK_SRC}
+                src={theme === "claro" ? LOGO_LIGHT_SRC : LOGO_DARK_SRC}
                 alt="CyberOregon Cybersecurity"
                 width={200}
                 height={38}
@@ -1988,7 +1993,7 @@ const Footer = () => {
 // ==========================================
 export default function CyberOregonLandingPage() {
   return (
-    <div className="demo-dark min-h-screen bg-[#020b1f] text-slate-100 selection:bg-[#00EAFF] selection:text-[#020b1f] font-sans antialiased overflow-x-hidden">
+    <div className="cyber-oregon-page demo-dark min-h-screen bg-[#020b1f] text-slate-100 selection:bg-[#00EAFF] selection:text-[#020b1f] font-sans antialiased overflow-x-hidden">
       <CyberScrollProgress />
       <Navbar />
       <main id="conteudo">

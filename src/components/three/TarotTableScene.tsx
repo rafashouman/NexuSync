@@ -16,6 +16,13 @@ const SUIT_COLORS: Record<string, string> = {
   WANDS: '#8B5CF6',
 };
 
+const SUIT_COLORS_LIGHT: Record<string, string> = {
+  SWORDS: '#0F766E',
+  PENTACLES: '#92400E',
+  CUPS: '#BE185D',
+  WANDS: '#6D28D9',
+};
+
 const SHADER_EMISSIVE: Record<string, string> = {
   NONE: '#000000',
   CHROME: '#E2E8F0',
@@ -24,7 +31,15 @@ const SHADER_EMISSIVE: Record<string, string> = {
   OVERCLOCK: '#F59E0B',
 };
 
-function PrefabConcreteWall() {
+const SHADER_EMISSIVE_LIGHT: Record<string, string> = {
+  NONE: '#000000',
+  CHROME: '#64748B',
+  HOLO: '#BE185D',
+  GLITCH: '#0F766E',
+  OVERCLOCK: '#92400E',
+};
+
+function PrefabConcreteWall({ lightTheme }: { lightTheme: boolean }) {
   const blocks = [];
   for (let r = 0; r < 5; r++) {
     for (let c = 0; c < 7; c++) {
@@ -36,7 +51,11 @@ function PrefabConcreteWall() {
           receiveShadow
         >
           <boxGeometry args={[1.78, 1.08, 0.4]} />
-          <meshStandardMaterial color="#16181D" roughness={0.92} metalness={0.08} />
+          <meshStandardMaterial
+            color={lightTheme ? '#D8E1EB' : '#16181D'}
+            roughness={0.92}
+            metalness={0.08}
+          />
         </mesh>
       );
     }
@@ -44,7 +63,7 @@ function PrefabConcreteWall() {
   return <group>{blocks}</group>;
 }
 
-function CyberTarotReader() {
+function CyberTarotReader({ lightTheme }: { lightTheme: boolean }) {
   const headRef = useRef<THREE.Group>(null);
   const { currentSpread, isResolving } = useGameStore();
 
@@ -61,11 +80,19 @@ function CyberTarotReader() {
     <group ref={headRef} position={[0, 1.25, -2.5]}>
       <mesh position={[0, -0.75, 0]}>
         <cylinderGeometry args={[0.45, 0.7, 1.1, 8]} />
-        <meshStandardMaterial color="#121318" metalness={0.7} roughness={0.4} />
+        <meshStandardMaterial
+          color={lightTheme ? '#94A3B8' : '#121318'}
+          metalness={0.7}
+          roughness={0.4}
+        />
       </mesh>
       <mesh>
         <sphereGeometry args={[0.48, 24, 24]} />
-        <meshStandardMaterial color="#1F222A" metalness={0.6} roughness={0.35} />
+        <meshStandardMaterial
+          color={lightTheme ? '#CBD5E1' : '#1F222A'}
+          metalness={0.6}
+          roughness={0.35}
+        />
       </mesh>
       {/* Visor Redondo */}
       <mesh position={[0, 0.02, 0.42]}>
@@ -75,7 +102,12 @@ function CyberTarotReader() {
       {/* Pálpebra Superior Mecânica Cansada */}
       <mesh position={[0, 0.09, 0.44]} rotation={[0.32, 0, 0]}>
         <sphereGeometry args={[0.205, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.48]} />
-        <meshStandardMaterial color="#0A0B0E" metalness={0.8} roughness={0.3} side={THREE.DoubleSide} />
+        <meshStandardMaterial
+          color={lightTheme ? '#64748B' : '#0A0B0E'}
+          metalness={0.8}
+          roughness={0.3}
+          side={THREE.DoubleSide}
+        />
       </mesh>
     </group>
   );
@@ -87,11 +119,13 @@ function SpreadBoardSlot3D({
   card,
   isTriggering,
   onClickSlot,
+  lightTheme,
 }: {
   spec: SpreadSlotSpec;
   card: TarotCard | null;
   isTriggering: boolean;
   onClickSlot: () => void;
+  lightTheme: boolean;
 }) {
   const cardGroupRef = useRef<THREE.Group>(null);
   const effectiveReversed = card ? (spec.slotIndex === 1 ? !card.isReversed : card.isReversed) : false;
@@ -111,8 +145,13 @@ function SpreadBoardSlot3D({
     }
   });
 
-  const suitColor = card ? SUIT_COLORS[card.suit] : '#475569';
-  const shaderGlow = card && card.shader !== 'NONE' ? SHADER_EMISSIVE[card.shader] : suitColor;
+  const suitColor = card
+    ? (lightTheme ? SUIT_COLORS_LIGHT : SUIT_COLORS)[card.suit]
+    : '#475569';
+  const shaderGlow =
+    card && card.shader !== 'NONE'
+      ? (lightTheme ? SHADER_EMISSIVE_LIGHT : SHADER_EMISSIVE)[card.shader]
+      : suitColor;
 
   return (
     <group position={spec.position3D} onClick={(e) => { e.stopPropagation(); onClickSlot(); }}>
@@ -120,7 +159,7 @@ function SpreadBoardSlot3D({
       <mesh rotation={[-Math.PI / 2, 0, spec.rotationZ]}>
         <planeGeometry args={[0.88, 1.24]} />
         <meshBasicMaterial
-          color={card ? '#00F5D4' : '#8B5CF6'}
+          color={card ? (lightTheme ? '#0F766E' : '#00F5D4') : '#8B5CF6'}
           wireframe
           transparent
           opacity={card ? 0.85 : 0.4}
@@ -132,7 +171,7 @@ function SpreadBoardSlot3D({
         position={[0, 0.01, 0.72]}
         rotation={[-Math.PI / 2, 0, 0]}
         fontSize={0.075}
-        color={card ? '#00F5D4' : '#94A3B8'}
+        color={card ? (lightTheme ? '#0F766E' : '#00F5D4') : lightTheme ? '#475569' : '#94A3B8'}
         anchorX="center"
         anchorY="middle"
       >
@@ -145,7 +184,13 @@ function SpreadBoardSlot3D({
           <mesh castShadow>
             <boxGeometry args={[0.78, 1.14, 0.03]} />
             <meshStandardMaterial
-              color={card.shader === 'CHROME' ? '#E2E8F0' : '#11131A'}
+              color={
+                card.shader === 'CHROME'
+                  ? '#E2E8F0'
+                  : lightTheme
+                    ? '#F8FAFC'
+                    : '#11131A'
+              }
               metalness={card.shader === 'CHROME' ? 0.95 : 0.6}
               roughness={card.shader === 'CHROME' ? 0.1 : 0.3}
               emissive={isTriggering ? '#00F5D4' : shaderGlow}
@@ -153,7 +198,13 @@ function SpreadBoardSlot3D({
             />
           </mesh>
 
-          <Text position={[0, 0.26, 0.02]} fontSize={0.16} color="#FFFFFF" anchorX="center" anchorY="middle">
+          <Text
+            position={[0, 0.26, 0.02]}
+            fontSize={0.16}
+            color={lightTheme ? '#1E293B' : '#FFFFFF'}
+            anchorX="center"
+            anchorY="middle"
+          >
             {card.rank}
           </Text>
 
@@ -162,7 +213,7 @@ function SpreadBoardSlot3D({
             fontSize={0.065}
             maxWidth={0.68}
             textAlign="center"
-            color={effectiveReversed ? '#FF2A54' : '#00F5D4'}
+            color={suitColor}
             anchorX="center"
             anchorY="middle"
           >
@@ -170,7 +221,13 @@ function SpreadBoardSlot3D({
           </Text>
 
           {card.shader !== 'NONE' && (
-            <Text position={[0, -0.44, 0.02]} fontSize={0.055} color="#F59E0B" anchorX="center" anchorY="middle">
+            <Text
+              position={[0, -0.44, 0.02]}
+              fontSize={0.055}
+              color={lightTheme ? '#92400E' : '#F59E0B'}
+              anchorX="center"
+              anchorY="middle"
+            >
               {`★ ${card.shader}`}
             </Text>
           )}
@@ -180,27 +237,35 @@ function SpreadBoardSlot3D({
   );
 }
 
-export default function TarotTableScene() {
+export default function TarotTableScene({ lightTheme = false }: { lightTheme?: boolean }) {
   const { boardSlots, activeStepSlot, removeCardFromSlot } = useGameStore();
   const centerPos = SPREAD_BOARD_SLOTS[0].position3D;
 
   return (
     <div className="w-full h-full relative bg-[#07080B]">
-      <Canvas shadows="percentage">
+      <Canvas
+        shadows="percentage"
+        gl={{ alpha: true }}
+        onCreated={({ gl }) => gl.setClearColor(lightTheme ? '#F1F5F9' : '#07080B', 1)}
+      >
         <PerspectiveCamera makeDefault position={[0, 3.1, 6.3]} fov={45} rotation={[-0.45, 0, 0]} />
 
-        <ambientLight intensity={0.45} />
-        <pointLight position={[-3, 3, -1]} intensity={20} color="#8B5CF6" />
-        <pointLight position={[3, 2.5, 1]} intensity={16} color="#00F5D4" />
-        <spotLight position={[0, 5, 0.5]} angle={0.6} penumbra={0.8} intensity={40} color="#F8FAFC" castShadow />
+        <ambientLight intensity={lightTheme ? 0.8 : 0.45} />
+        <pointLight position={[-3, 3, -1]} intensity={lightTheme ? 7 : 20} color={lightTheme ? '#C4B5FD' : '#8B5CF6'} />
+        <pointLight position={[3, 2.5, 1]} intensity={lightTheme ? 6 : 16} color={lightTheme ? '#99F6E4' : '#00F5D4'} />
+        <spotLight position={[0, 5, 0.5]} angle={0.6} penumbra={0.8} intensity={lightTheme ? 22 : 40} color="#F8FAFC" castShadow />
 
-        <PrefabConcreteWall />
-        <CyberTarotReader />
+        <PrefabConcreteWall lightTheme={lightTheme} />
+        <CyberTarotReader lightTheme={lightTheme} />
 
         {/* Mesa Metálica */}
         <mesh position={[0, -0.2, 0]} receiveShadow>
           <boxGeometry args={[7.8, 0.3, 5.2]} />
-          <meshStandardMaterial color="#0C0D12" metalness={0.82} roughness={0.22} />
+          <meshStandardMaterial
+            color={lightTheme ? '#E2E8F0' : '#0C0D12'}
+            metalness={lightTheme ? 0.18 : 0.82}
+            roughness={lightTheme ? 0.58 : 0.22}
+          />
         </mesh>
 
         {/* Linhas de Sinergia Adjacente ligando o Nexo Central (Casa 0) às Casas Vizinhas */}
@@ -210,7 +275,7 @@ export default function TarotTableScene() {
             <Line
               key={`line-${slot.slotIndex}`}
               points={[centerPos, slot.position3D]}
-              color={bothOccupied ? '#00F5D4' : '#334155'}
+              color={bothOccupied ? (lightTheme ? '#0F766E' : '#00F5D4') : '#64748B'}
               lineWidth={bothOccupied ? 2.5 : 1}
               dashed={!bothOccupied}
             />
@@ -225,12 +290,13 @@ export default function TarotTableScene() {
               spec={spec}
               card={boardSlots[spec.slotIndex]}
               isTriggering={activeStepSlot === spec.slotIndex}
+              lightTheme={lightTheme}
               onClickSlot={() => removeCardFromSlot(spec.slotIndex)}
             />
           ))}
         </group>
 
-        <ContactShadows position={[0, -0.04, 0]} opacity={0.65} scale={10} blur={2} far={4} />
+        <ContactShadows position={[0, -0.04, 0]} opacity={lightTheme ? 0.24 : 0.65} scale={10} blur={2} far={4} />
       </Canvas>
     </div>
   );
