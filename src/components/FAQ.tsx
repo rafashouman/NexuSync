@@ -5,7 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
 // Perguntas baseadas no seu briefing, com foco em profissionalismo e transparência
-const faqs = [
+export type FAQItem = {
+  q: string;
+  a: string;
+};
+
+const faqs: FAQItem[] = [
   {
     "q": "Qual tipo de site é indicado para meu negócio?",
     "a": "Uma landing page concentra uma oferta e facilita o contato. Um site institucional apresenta a empresa e seus serviços. Um hotsite atende uma campanha, evento ou lançamento. Ajudamos a escolher conforme seu objetivo."
@@ -56,7 +61,17 @@ const faqs = [
   }
 ];
 
-export function FAQ() {
+type FAQProps = {
+  items?: FAQItem[];
+  heading?: string;
+  description?: string;
+};
+
+export function FAQ({
+  items = faqs,
+  heading = "Dúvidas sobre a criação do seu site.",
+  description = "Confira prazos, investimento e o que cada serviço inclui. A proposta define as entregas e as condições antes de começarmos.",
+}: FAQProps = {}) {
   // Estado para controlar qual pergunta está aberta (null = nenhuma)
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -77,17 +92,19 @@ export function FAQ() {
               Perguntas Frequentes
             </div>
             <h2 className="mb-6 font-display text-[clamp(1.5rem,7.5vw,3.125rem)] uppercase tracking-tight text-foreground sm:text-4xl md:text-5xl">
-              Dúvidas sobre a<br />
-              <span className="text-violet-gradient">criação do seu site.</span>
+              {heading}
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              <span className="font-medium text-violet-100">Saiba o que está contratando.</span> Confira prazos, investimento e o que cada serviço inclui. A proposta define as entregas e as condições antes de começarmos.
+              <span className="font-medium text-violet-100">
+                Respostas simples para decidir com segurança.
+              </span>{" "}
+              {description}
             </p>
           </motion.div>
 
           {/* Coluna da Direita: Accordion */}
           <div className="flex min-w-0 flex-col gap-4">
-            {faqs.map((faq, index) => {
+            {items.map((faq, index) => {
               const isOpen = openIndex === index;
 
               return (

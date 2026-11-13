@@ -26,13 +26,14 @@ function load(path) {
 mocks['@/data/marketingPlans'] = load('src/data/marketingPlans.ts');
 mocks['@/lib/quote'] = load('src/lib/quote.ts');
 const { saveQuoteRequest } = load('src/app/actions/quotes.ts');
+const homeInterests = mocks['@/lib/quote'].HOME_QUOTE_INTERESTS.map(({ id }) => id);
 const base = {
   name: 'Teste local', company: '', segment: 'Serviços', contact: 'teste@example.com',
   goal: 'projeto', interest: 'landing-page', budget: '', message: '',
   consentContact: true, consentPromo: false, website: '',
 };
 (async () => {
-  for (const interest of ['landing-page', 'hotsite', 'institucional', 'aplicacao-web', 'midias-digitais', 'nao-sei']) {
+  for (const interest of homeInterests) {
     const result = await saveQuoteRequest({ ...base, interest });
     assert.equal(result.ok, true);
     assert.equal(result.recorded, true);
@@ -42,9 +43,9 @@ const base = {
   for (const overrides of [{ consentContact: false }, { contact: 'inválido' }, { interest: 'desconhecido' }, { company: 'x'.repeat(151) }, { name: '' }]) {
     assert.equal((await saveQuoteRequest({ ...base, ...overrides })).ok, false);
   }
-  assert.equal(saved.length, 6, 'Invalid requests must not create leads');
+  assert.equal(saved.length, homeInterests.length, 'Invalid requests must not create leads');
   const honeypot = await saveQuoteRequest({ ...base, website: 'bot' });
   assert.deepEqual({ ...honeypot }, { ok: true, recorded: false });
-  assert.equal(saved.length, 6, 'Honeypot must not create leads');
-  console.log('Passed: six homepage interests, optional company, contact/consent validation, and unrecorded honeypot. No database contacted.');
+  assert.equal(saved.length, homeInterests.length, 'Honeypot must not create leads');
+  console.log(`Passed: ${homeInterests.length} homepage interests, optional company, contact/consent validation, and unrecorded honeypot. No database contacted.`);
 })().catch((error) => { console.error(error); process.exitCode = 1; });

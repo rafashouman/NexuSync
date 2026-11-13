@@ -171,11 +171,13 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
             </div>
 
             <h2 className="mb-4 font-display text-[clamp(1.5rem,7.5vw,3rem)] uppercase tracking-tight sm:text-4xl md:text-5xl">
-              {homeOffersOnly ? "O que falta para seu cliente chamar você?" : "Qual desafio está travando seu negócio?"}
+              {homeOffersOnly
+                ? "Seu negócio pode dar o próximo passo. Vamos conversar?"
+                : "Qual desafio está travando seu negócio?"}
             </h2>
             <p className="mb-8 text-base text-muted-foreground sm:text-lg">
               {homeOffersOnly
-                ? "Conte o que você vende e onde está a dificuldade: apresentar seus serviços, receber contatos ou organizar pedidos. Ajudamos a escolher o formato e enviamos uma proposta com escopo, valor e prazo."
+                ? "Não precisa chegar com tudo planejado ou conhecer termos técnicos. Conte sua ideia, explique o que está precisando e vamos avaliar juntos o melhor caminho."
                 : "Você não precisa saber qual tecnologia contratar. Conte seu objetivo e o que atrapalha hoje. Vamos avaliar a solução e preparar uma proposta com entregas, investimento e prazo."}
             </p>
 
@@ -307,7 +309,11 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
                 disabled={isSubmitting}
                 className="group inline-flex w-full items-center justify-center gap-3 rounded-xl bg-violet-gradient px-8 py-4 font-bold text-white shadow-violet-glow transition-transform hover:scale-[1.015] disabled:opacity-60 sm:w-auto"
               >
-                {isSubmitting ? "Enviando..." : (homeOffersOnly ? "Quero receber uma proposta" : "Quero meu orçamento")}
+                {isSubmitting
+                  ? "Enviando..."
+                  : homeOffersOnly
+                    ? "Conversar sobre meu projeto"
+                    : "Quero meu orçamento"}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </button>
               {error && (

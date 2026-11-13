@@ -51,6 +51,8 @@ export function Footer() {
             <ul className="space-y-4 text-sm text-muted-foreground">
               <li><Link href="/marketing" className="hover:text-violet-200 transition-colors">Marketing digital</Link></li>
               <li><Link href="/lojas-virtuais" className="hover:text-violet-200 transition-colors">Lojas virtuais</Link></li>
+              <li><Link href="/arcsync" className="hover:text-violet-200 transition-colors">ArcSync (pré-lançamento)</Link></li>
+              <li><Link href="/visionsync" className="hover:text-violet-200 transition-colors">VisionSync (pré-lançamento)</Link></li>
               <li><Link href="/arcade" className="hover:text-violet-200 transition-colors">Experiências interativas</Link></li>
             </ul>
           </div>

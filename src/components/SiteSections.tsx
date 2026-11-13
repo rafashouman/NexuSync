@@ -8,7 +8,6 @@ import {
   CheckCircle2,
   ClipboardList,
   LayoutTemplate,
-  Megaphone,
   MessageCircle,
   MonitorSmartphone,
   Palette,
@@ -21,40 +20,52 @@ import { waLink } from "@/lib/site-config";
 
 const solutions = [
   {
-    title: "Landing pages",
-    subtitle: "Do anúncio ao pedido de orçamento.",
+    title: "Criação de sites profissionais",
+    subtitle: "Seu negócio faz um bom trabalho. Seu site precisa mostrar isso.",
     description:
-      "Anunciar não basta se o visitante sai sem entender sua oferta. Reunimos benefícios, respostas e botões de contato em uma página focada no próximo passo.",
-    interest: "landing-page",
-    whatsapp: "Olá! Quero conversar sobre uma landing page para meu negócio.",
-    cta: "Quero uma landing page",
-    icon: Megaphone,
+      "Quando alguém pesquisa sua empresa, a primeira impressão importa. Criamos sites modernos, responsivos e fáceis de navegar para apresentar seus serviços com clareza e transmitir confiança desde o primeiro contato.",
+    interest: "institucional",
+    whatsapp: "Olá! Quero conversar sobre um site profissional para minha empresa.",
+    cta: "Quero um site para minha empresa",
+    icon: Building2,
     number: "01",
     tone: "violet",
   },
   {
-    title: "Hotsites dinâmicos",
-    subtitle: "Sua campanha com um destino claro.",
+    title: "Lojas virtuais e catálogos digitais",
+    subtitle: "Facilite a vida de quem quer comprar de você.",
     description:
-      "Vai lançar um produto, divulgar um evento ou abrir inscrições? Dê à sua ação uma página própria, com informações e recursos definidos para o objetivo da campanha.",
-    interest: "hotsite",
-    whatsapp: "Olá! Quero um orçamento para um hotsite dinâmico.",
-    cta: "Quero um hotsite",
-    icon: Sparkles,
+      "Cansou de responder às mesmas perguntas sobre preços, produtos e disponibilidade? Com uma loja virtual ou catálogo online, seus clientes encontram as informações de que precisam em um só lugar.",
+    interest: "loja-virtual",
+    whatsapp: "Olá! Quero vender pela internet com uma loja virtual ou catálogo digital.",
+    cta: "Quero vender pela internet",
+    icon: LayoutTemplate,
     number: "02",
     tone: "fuchsia",
   },
   {
-    title: "Sites institucionais",
-    subtitle: "Confiança antes da primeira conversa.",
+    title: "Sistemas web e automação de processos",
+    subtitle: "Seu tempo vale mais do que tarefas repetitivas.",
     description:
-      "Evite explicar tudo do zero a cada contato. Apresente sua empresa, seus serviços e diferenciais em um só lugar para o cliente chegar à conversa mais informado.",
-    interest: "institucional",
-    whatsapp: "Olá! Quero conversar sobre um site institucional para minha empresa.",
-    cta: "Quero um site institucional",
-    icon: Building2,
+      "Se você passa boa parte do dia organizando horários, atualizando informações ou acompanhando atendimentos manualmente, podemos ajudar. Desenvolvemos sistemas web e automações para tornar sua operação mais prática e organizada.",
+    interest: "automacoes",
+    whatsapp: "Olá! Quero automatizar uma parte da rotina do meu negócio.",
+    cta: "Quero automatizar meu negócio",
+    icon: ClipboardList,
     number: "03",
     tone: "cyan",
+  },
+  {
+    title: "Marketing digital e identidade visual",
+    subtitle: "Sua empresa merece ser vista e lembrada.",
+    description:
+      "Uma marca bem apresentada faz diferença. Ajudamos você a construir uma presença digital mais profissional com identidade visual, páginas de campanha e estratégias de marketing alinhadas aos objetivos da sua empresa.",
+    interest: "design",
+    whatsapp: "Olá! Quero fortalecer a presença e a identidade visual da minha marca.",
+    cta: "Quero fortalecer minha marca",
+    icon: Palette,
+    number: "04",
+    tone: "amber",
   },
 ] as const;
 
@@ -84,22 +95,22 @@ const benefits = [
 const steps = [
   {
     title: "Entendemos seu negócio",
-    body: "Você compartilha informações sobre seu público, sua oferta e o objetivo do site. Alinhamos o que precisa ser apresentado.",
+    body: "Conte o que sua empresa oferece, quem atende e o que quer melhorar. Não precisa conhecer termos técnicos.",
     icon: MessageCircle,
   },
   {
     title: "Definimos a proposta",
-    body: "Você recebe escopo, investimento, prazo e a lista de materiais necessários para começar.",
+    body: "Você recebe o escopo, o investimento, o prazo e os materiais necessários antes de decidir.",
     icon: ClipboardList,
   },
   {
     title: "Criamos e apresentamos",
-    body: "Desenvolvemos o projeto para você revisar e solicitar os ajustes previstos na proposta. Você fornece os conteúdos combinados.",
+    body: "Desenvolvemos o projeto e mostramos para sua revisão, com os ajustes previstos na proposta.",
     icon: LayoutTemplate,
   },
   {
-    title: "Publicamos seu site",
-    body: "Após a aprovação, preparamos a publicação e orientamos os próximos passos definidos no escopo.",
+    title: "Publicamos e orientamos",
+    body: "Depois da sua aprovação, colocamos o projeto no ar e explicamos os próximos passos previstos no escopo.",
     icon: Rocket,
   },
 ] as const;
@@ -124,20 +135,19 @@ export function SiteSolutions() {
         >
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-400/[0.06] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-violet-200">
             <span className="h-1.5 w-1.5 rounded-full bg-violet-300 shadow-[0_0_12px_rgba(196,181,253,0.8)]" />
-            Criação de sites para profissionais e empresas
+            Serviços digitais para pequenos negócios
           </div>
           <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
-            Um site pensado para o seu{" "}
-            <span className="text-violet-gradient">próximo objetivo.</span>
+              Tudo o que seu negócio precisa para{" "}
+              <span className="text-violet-gradient">crescer no digital.</span>
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-            Precisa divulgar uma oferta, receber inscrições ou apresentar sua
-            empresa? Conheça o formato que atende a cada necessidade. Se tiver
-            dúvida, ajudamos você a escolher.
+              Cada empresa tem seus desafios. A nossa missão é entender os seus e
+              criar soluções que realmente façam sentido para sua rotina.
           </p>
         </motion.div>
 
-        <div className="grid gap-5 lg:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {solutions.map((solution, index) => {
             const Icon = solution.icon;
             const accent =
@@ -145,7 +155,9 @@ export function SiteSolutions() {
                 ? "border-violet-300/20 bg-violet-400/10 text-violet-200"
                 : solution.tone === "fuchsia"
                   ? "border-fuchsia-300/20 bg-fuchsia-400/10 text-fuchsia-200"
-                  : "border-cyan-300/20 bg-cyan-400/10 text-cyan-200";
+                  : solution.tone === "amber"
+                    ? "border-amber-300/20 bg-amber-400/10 text-amber-200"
+                    : "border-cyan-300/20 bg-cyan-400/10 text-cyan-200";
 
             return (
               <motion.article
@@ -243,15 +255,22 @@ export function SiteBenefits() {
           >
             <div className="mb-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-fuchsia-200">
               <Sparkles className="h-4 w-4" aria-hidden="true" />
-              Uma presença digital que trabalha por você
+              Tecnologia para a rotina da sua empresa
             </div>
             <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
-              Facilite o caminho entre conhecer sua empresa e{" "}
-              <span className="text-violet-gradient">falar com você.</span>
+              Você cuida do seu negócio.{" "}
+              <span className="text-violet-gradient">
+                A gente ajuda com a tecnologia.
+              </span>
             </h2>
             <p className="mt-5 max-w-lg leading-7 text-muted-foreground">
-              Um bom site combina informação, confiança e caminhos claros para
-              o cliente dar o próximo passo.
+              Sabemos que empreender já exige atenção a muita coisa. Por isso,
+              antes de falar sobre ferramentas, queremos entender como sua
+              empresa funciona, quais desafios você enfrenta e o que precisa
+              melhorar. Talvez você precise começar com um site. Talvez seja
+              hora de organizar suas vendas ou automatizar processos. O
+              importante é encontrar uma solução que faça sentido para o
+              momento da sua empresa.
             </p>
           </motion.div>
 

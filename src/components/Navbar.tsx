@@ -29,6 +29,8 @@ const pages = [
   { label: "Design", href: "/design" },
   { label: "Lojas virtuais", href: "/lojas-virtuais" },
   { label: "Marketing", href: "/marketing" },
+  { label: "ArcSync (pré-lançamento)", href: "/arcsync" },
+  { label: "VisionSync (pré-lançamento)", href: "/visionsync" },
   { label: "Arcade", href: "/arcade" },
   { label: "Privacidade", href: "/privacidade" },
 ];

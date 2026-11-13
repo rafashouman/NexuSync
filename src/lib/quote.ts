@@ -6,6 +6,9 @@ export const HOME_QUOTE_INTERESTS = [
   { id: "institucional", label: "Site institucional" },
   { id: "aplicacao-web", label: "Aplicação web" },
   { id: "midias-digitais", label: "Pacote de mídias digitais" },
+  { id: "loja-virtual", label: "Loja virtual ou catálogo digital" },
+  { id: "automacoes", label: "Sistemas web ou automações" },
+  { id: "design", label: "Identidade visual ou design" },
   { id: "nao-sei", label: "Preciso de orientação" },
 ] as const;
 
@@ -14,13 +17,9 @@ export const QUOTE_INTERESTS = [
   { id: "trafego-pago", label: "Tráfego pago" },
   { id: "redes-sociais", label: "Redes sociais" },
   { id: "leads", label: "Captação de leads" },
-  { id: "automacoes", label: "Automações" },
   { id: "site", label: "Site ou landing page" },
-  ...HOME_QUOTE_INTERESTS.slice(0, 5),
-  { id: "loja-virtual", label: "Loja virtual" },
+  ...HOME_QUOTE_INTERESTS,
   { id: "aplicacao", label: "Aplicação / Mini app" },
-  { id: "design", label: "Design" },
-  HOME_QUOTE_INTERESTS[5],
 ] as const;
 
 export const QUOTE_GOALS = [

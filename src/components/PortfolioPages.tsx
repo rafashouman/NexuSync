@@ -182,9 +182,9 @@ export function AppsPageContent() {
           </div>
 
           <h1 className="mb-6 font-display text-4xl font-black uppercase tracking-tight text-white sm:text-6xl lg:leading-[1.02]">
-            Demonstrações de aplicações{" "}
+            Sistemas web e automações{" "}
             <span className="text-violet-gradient italic">
-              para a rotina do seu negócio.
+              para organizar a rotina do seu negócio.
             </span>
           </h1>
           <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
@@ -796,8 +796,8 @@ export function DesignPageContent() {
           Acervo Visual · Design
         </span>
         <h1 className="mb-6 font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
-          Design que valoriza{" "}
-          <span className="text-violet-gradient">o que você vende.</span>
+          Identidade visual e design{" "}
+          <span className="text-violet-gradient">para valorizar sua marca.</span>
         </h1>
         <p className="text-lg leading-relaxed text-muted-foreground">
           Uma seleção com mais de 100 projetos de design gráfico, identidade
