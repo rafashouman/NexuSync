@@ -18,6 +18,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://nexusync.online"),
   title: "NexuSync | Soluções Digitais",
   description: "Desenvolvimento de sites institucionais, plataformas digitais e e-commerces de alta performance.",
   other: {

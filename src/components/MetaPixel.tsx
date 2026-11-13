@@ -1,14 +1,30 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore, Suspense } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, Suspense } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import { isQuoteSection } from "@/lib/quote";
 
-export const META_PIXEL_ID = "1587285682708459";
-export const GA_MEASUREMENT_ID = "G-S1X5J5VQXK";
+export const META_PIXEL_ID =
+  process.env.NEXT_PUBLIC_META_PIXEL_ID || "1587285682708459";
+const CYBEROREGON_PIXEL_ID = process.env.NEXT_PUBLIC_CYBEROREGON_META_PIXEL_ID;
+const initializedPixels = new Set<string>();
+
+function pixelForPath(pathname: string) {
+  return (pathname === "/templates/cyber-oregon" || pathname.startsWith("/templates/cyber-oregon/"))
+    && CYBEROREGON_PIXEL_ID ? CYBEROREGON_PIXEL_ID : META_PIXEL_ID;
+}
+
+function initializePixel(pixelId: string) {
+  if (!initializedPixels.has(pixelId) && window.fbq) {
+    window.fbq("init", pixelId);
+    initializedPixels.add(pixelId);
+  }
+}
+export const GA_MEASUREMENT_ID =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-S1X5J5VQXK";
 
 declare global {
   interface Window {
@@ -24,37 +40,40 @@ export const trackMetaEvent = (
   eventName: string,
   params?: Record<string, unknown>
 ) => {
-  if (typeof window !== "undefined" && typeof window.fbq === "function") {
-    window.fbq("track", eventName, params);
+  if (typeof window !== "undefined" && readConsent() === "granted" && typeof window.fbq === "function") {
+    const pixelId = pixelForPath(window.location.pathname);
+    initializePixel(pixelId);
+    window.fbq("trackSingle", pixelId, eventName, params);
   }
 };
 
 export const openTrackedWhatsApp = (
   url: string,
-  eventName: "Lead" | "Purchase" | "Schedule" | "Contact" = "Lead",
+  eventName: "Contact" = "Contact",
   params?: Record<string, unknown>
 ) => {
   trackMetaEvent(eventName, {
-    currency: "BRL",
     ...params,
+    contact_channel: "whatsapp",
+    action: "open_whatsapp",
   });
   if (typeof window !== "undefined") {
     window.open(url, "_blank", "noopener,noreferrer");
   }
 };
 
-function MetaPixelRouteTracker() {
+function MetaPixelRouteTracker({ ready }: { ready: boolean }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const isFirstRender = useRef(true);
+  const lastPage = useRef<string | null>(null);
 
-  // A primeira visualiza??o j? ? registrada pelo script base.
+  // Um PageView por navegação, somente depois de inicializar a fila do Pixel.
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
+    if (!ready || readConsent() !== "granted") return;
+    const page = `${pathname}?${searchParams.toString()}`;
+    if (lastPage.current === page) return;
+    lastPage.current = page;
     if (typeof window.gtag === "function") {
       const query = searchParams.toString();
       window.gtag("event", "page_view", {
@@ -62,17 +81,24 @@ function MetaPixelRouteTracker() {
       });
     }
     if (typeof window.fbq === "function") {
-      window.fbq("track", "PageView");
+      const pixelId = pixelForPath(pathname);
+      initializePixel(pixelId);
+      window.fbq("trackSingle", pixelId, "PageView");
     }
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams, ready]);
 
   // Qualquer clique em link do WhatsApp conta como evento Contact.
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
-      const link = (event.target as Element | null)?.closest<HTMLAnchorElement>("a[href]");
+      if (event.defaultPrevented) return;
+      const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>("a[href]") : null;
       const href = link?.getAttribute("href") ?? "";
       if (/^https:\/\/(wa\.me|api\.whatsapp\.com)\//.test(href)) {
-        trackMetaEvent("Contact", { content_name: "whatsapp" });
+        trackMetaEvent("Contact", {
+          content_name: link?.dataset.metaContentName || "whatsapp",
+          contact_channel: "whatsapp",
+          action: "open_whatsapp",
+        });
         const section = link?.dataset.analyticsSection;
         const interest = link?.dataset.analyticsInterest;
         if (isQuoteSection(section) && interest) {
@@ -142,11 +168,16 @@ function subscribeConsent(cb: () => void) {
 }
 
 function readConsent(): Consent | null {
-  const saved = window.localStorage.getItem(CONSENT_KEY);
-  return saved === "granted" || saved === "denied" ? saved : null;
+  try {
+    const saved = window.localStorage.getItem(CONSENT_KEY);
+    return saved === "granted" || saved === "denied" ? saved : null;
+  } catch {
+    return null;
+  }
 }
 
 export default function MetaPixel() {
+  const [ready, setReady] = useState(false);
   // undefined = renderização no servidor / antes da hidratação.
   const consent = useSyncExternalStore<Consent | null | undefined>(
     subscribeConsent,
@@ -155,7 +186,12 @@ export default function MetaPixel() {
   );
 
   const choose = (value: Consent) => {
-    window.localStorage.setItem(CONSENT_KEY, value);
+    try {
+      window.localStorage.setItem(CONSENT_KEY, value);
+    } catch {
+      // Se o navegador bloqueia o armazenamento, continuamos sem rastreamento.
+      return;
+    }
     consentListeners.forEach((cb) => cb());
   };
 
@@ -174,7 +210,7 @@ export default function MetaPixel() {
             window.dataLayer = window.dataLayer || [];
             window.gtag = function(){window.dataLayer.push(arguments);};
             window.gtag('js', new Date());
-            window.gtag('config', '${GA_MEASUREMENT_ID}');
+            window.gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
           `,
         }}
       />
@@ -186,6 +222,7 @@ export default function MetaPixel() {
       <Script
         id="meta-pixel-base"
         strategy="afterInteractive"
+        onReady={() => setReady(true)}
         dangerouslySetInnerHTML={{
           __html: `
             !function(f,b,e,v,n,t,s)
@@ -196,13 +233,11 @@ export default function MetaPixel() {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '${META_PIXEL_ID}');
-            fbq('track', 'PageView');
           `,
         }}
       />
       <Suspense fallback={null}>
-        <MetaPixelRouteTracker />
+        <MetaPixelRouteTracker ready={ready} />
       </Suspense>
     </>
   );

@@ -14,9 +14,11 @@ export function Footer() {
               <Image
                 src="/images/logo-text.png"
                 alt="NexuSync"
-                width={202}
-                height={24}
-                className="h-6 w-auto transition-transform duration-300 group-hover:scale-105"
+                width={300}
+                height={99}
+                sizes="110px"
+                style={{ height: "auto" }}
+                className="w-[110px] transition-transform duration-300 group-hover:scale-105"
               />
             </Link>
             <p className="text-muted-foreground max-w-sm leading-relaxed text-sm">
@@ -34,6 +36,7 @@ export function Footer() {
             <h4 className="font-bold text-foreground mb-6 uppercase tracking-widest text-xs">Navegação</h4>
             <ul className="space-y-4 text-sm text-muted-foreground">
               <li><Link href="/" className="hover:text-violet-200 transition-colors">Início</Link></li>
+              <li><Link href="/quem-somos" className="hover:text-violet-200 transition-colors">Quem somos</Link></li>
               <li><Link href="/apps" className="hover:text-violet-200 transition-colors">Aplicativos</Link></li>
               <li><Link href="/design" className="hover:text-violet-200 transition-colors">Design</Link></li>
               <li><Link href="/templates" className="hover:text-violet-200 transition-colors">Exemplos de sites</Link></li>

@@ -26,6 +26,13 @@ const templates = [
 
 const ROTATION_MS = 9000;
 const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
+const previewViewportQuery = "(min-width: 1024px)";
+
+function subscribePreviewViewport(callback: () => void) {
+  const query = window.matchMedia(previewViewportQuery);
+  query.addEventListener("change", callback);
+  return () => query.removeEventListener("change", callback);
+}
 
 function subscribeReducedMotion(callback: () => void) {
   const query = window.matchMedia(reducedMotionQuery);
@@ -38,6 +45,11 @@ export function HeroTemplatePreview() {
   const [userPaused, setUserPaused] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [tabHidden, setTabHidden] = useState(false);
+  const previewVisible = useSyncExternalStore(
+    subscribePreviewViewport,
+    () => window.matchMedia(previewViewportQuery).matches,
+    () => false,
+  );
   const reducedMotion = useSyncExternalStore(
     subscribeReducedMotion,
     () => window.matchMedia(reducedMotionQuery).matches,
@@ -48,6 +60,7 @@ export function HeroTemplatePreview() {
 
   // Defer the heavy demo iframe until the main page has loaded and hydrated.
   useEffect(() => {
+    if (!previewVisible) return;
     let timer: ReturnType<typeof setTimeout>;
     const start = () => {
       timer = setTimeout(() => setIframeReady(true), 300);
@@ -58,8 +71,8 @@ export function HeroTemplatePreview() {
       clearTimeout(timer);
       window.removeEventListener("load", start);
     };
-  }, []);
-  const rotating = !userPaused && !hovering && !tabHidden && !reducedMotion;
+  }, [previewVisible]);
+  const rotating = previewVisible && !userPaused && !hovering && !tabHidden && !reducedMotion;
 
   useEffect(() => {
     const onVisibility = () => setTabHidden(document.hidden);
@@ -83,7 +96,7 @@ export function HeroTemplatePreview() {
       onMouseLeave={() => setHovering(false)}
       onFocus={() => setHovering(true)}
       onBlur={() => setHovering(false)}
-      className="rounded-3xl border border-violet-300/20 bg-white/[0.03] p-4 shadow-violet-glow sm:p-6">
+      className="hidden rounded-3xl border border-violet-300/20 bg-white/[0.03] p-6 shadow-violet-glow lg:block">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <p className="text-xs font-semibold uppercase tracking-widest text-violet-200">
           Prévia de sites demonstrativos
@@ -93,12 +106,12 @@ export function HeroTemplatePreview() {
         </span>
       </div>
 
-      {/* Smartphone: tela de 390x844 renderizada em escala 0.72 (280px de largura) */}
-      <div className="mx-auto w-fit max-w-full rounded-[2.5rem] border border-white/15 bg-[#05060a] p-2.5 shadow-2xl sm:rounded-[2.75rem] sm:p-3">
-        <div className="relative h-[524px] w-[242px] overflow-hidden rounded-[2rem] bg-[#0b0d10] sm:h-[608px] sm:w-[280px] sm:rounded-[2.1rem]">
+      {/* Phone at 1024–1279px; tablet viewport (768×1024) from 1280px. */}
+      <div className="mx-auto w-fit max-w-full rounded-[2.75rem] border border-white/15 bg-[#05060a] p-3 shadow-2xl xl:rounded-[2rem]">
+        <div className="relative h-[608px] w-[280px] overflow-hidden rounded-[2.1rem] bg-[#0b0d10] xl:h-[480px] xl:w-[360px] xl:rounded-[1.25rem] 2xl:h-[544px] 2xl:w-[408px]">
           <span
             aria-hidden
-            className="absolute left-1/2 top-2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-black"
+            className="absolute left-1/2 top-2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-black xl:top-1 xl:h-1.5 xl:w-1.5"
           />
           <div
             aria-hidden
@@ -106,13 +119,13 @@ export function HeroTemplatePreview() {
           >
             {template.brand}
           </div>
-          {iframeReady && <iframe
+          {iframeReady && previewVisible && <iframe
             key={template.href}
             src={template.href}
-            title={`Prévia mobile demonstrativa do site ${template.brand}, categoria ${template.category}`}
+            title={`Prévia responsiva demonstrativa do site ${template.brand}, categoria ${template.category}`}
             scrolling="no"
             tabIndex={-1}
-            className="pointer-events-none absolute left-0 top-0 h-[844px] w-[390px] origin-top-left scale-[0.62] border-0 sm:scale-[0.718]"
+            className="pointer-events-none absolute left-0 top-0 h-[844px] w-[390px] origin-top-left scale-[0.718] border-0 xl:h-[1024px] xl:w-[768px] xl:scale-[0.46875] 2xl:scale-[0.53125]"
                       />}
         </div>
       </div>

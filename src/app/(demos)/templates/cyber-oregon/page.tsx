@@ -12,14 +12,8 @@ import {
 import {
   Shield,
   ShieldCheck,
-  ShieldAlert,
   Terminal,
   Lock,
-  Code2,
-  Server,
-  Cloud,
-  Smartphone,
-  Cpu,
   Radar,
   CheckCircle2,
   ArrowRight,
@@ -30,14 +24,10 @@ import {
   X,
   Crosshair,
   Award,
-  Users,
   Zap,
-  Globe,
-  Eye,
-  FileCheck2,
 } from "lucide-react";
 
-import { trackMetaEvent } from "@/components/MetaPixel";
+import { openTrackedWhatsApp } from "@/components/MetaPixel";
 import { Confetti, CountUp, Reveal } from "@/components/ui/MotionKit";
 import { useDemoTheme } from "@/components/ui/DemoShell";
 import { StickyMobileCta } from "@/components/ui/StickyMobileCta";
@@ -78,136 +68,82 @@ interface SolutionItem {
 const SOLUTIONS: SolutionItem[] = [
   {
     id: "pentest",
-    tag: "SEGURANÇA OFENSIVA",
-    title: "Pentest Especializado (Teste de Intrusão)",
-    subtitle: "Web, APIs, Mobile, Cloud & Infraestrutura Corporativa",
+    tag: "01 • PENTEST",
+    title: "Pentest Especializado & Source Code Review",
+    subtitle: "Web, APIs, MCP, Mobile, IA, Kiosk, Desktop (Thick Client), Interno, Externo & CAPT",
     description:
-      "Simulações reais e controladas de ataques cibernéticos conduzidas manualmente por especialistas certificados. Identificamos brechas lógicas de negócio e vulnerabilidades críticas que scanners automatizados jamais enxergam.",
+      "Testes de intrusão conduzidos manualmente para identificar vulnerabilidades exploráveis em aplicações, infraestrutura e código-fonte. Atuamos em superfícies tradicionais e modernas — incluindo sistemas de Inteligência Artificial, servidores MCP, terminais Kiosk e aplicações Desktop.",
     icon: Terminal,
     bgImage: "/images/templates/cyber-oregon/cybersecurity-scaled.jpg",
-    metrics: "Redução de 94% na superfície de exposição crítica",
+    metrics: "11 modalidades de Pentest & Revisão de Código",
     deliverables: [
-      "Análise manual profunda (Black Box, Grey Box ou White Box)",
-      "Exploração controlada de falhas de lógica de negócio (IDOR, Race Condition, Bypass)",
-      "Relatório executivo para diretoria + laudo técnico reproduzível passo a passo",
-      "Sessão de Debriefing com desenvolvedores e 1 Reteste formal gratuito incluso",
+      "Pentest em Aplicações Web, APIs e Aplicativos Mobile",
+      "Pentest em Sistemas de Inteligência Artificial, MCP e Kiosk",
+      "Pentest Interno, Externo e Aplicações Desktop (Thick Client)",
+      "Code Assisted Pen Test (CAPT) e Source Code Review",
     ],
-    frameworks: ["OWASP Top 10", "PTES", "OSSTMM", "NIST SP 800-115"],
+    frameworks: ["OWASP Top 10", "OWASP API & LLM", "PTES", "NIST SP 800-115"],
     terminalPreview: {
-      cmd: "oregon-sec --run-pentest --target api.cliente-enterprise.com.br --mode greybox",
+      cmd: "oregon-sec --run-pentest --scope web,api,mcp,ai --mode capt",
       lines: [
-        { type: "info", text: "[*] Enumerando endpoints REST/GraphQL e políticas de autenticação..." },
-        { type: "warn", text: "[!] Alerta: Falha de autorização BOLA/IDOR detectada em /v2/invoices/{uuid}" },
-        { type: "crit", text: "[CRITICAL] Escalada de privilégio Horizontal -> Admin Tenant confirmada (CVSS 9.4)" },
-        { type: "ok", text: "[+] Gerando PoC segura, evidências criptografadas e patch de correção..." },
+        { type: "info", text: "[*] Mapeando endpoints Web/API, integrações MCP e fluxos de inferência IA..." },
+        { type: "warn", text: "[!] Alerta: Falha de autorização BOLA/IDOR e Prompt Injection indireto detectados" },
+        { type: "crit", text: "[CRITICAL] Bypass de isolamento em servidor MCP + execução remota validada via CAPT" },
+        { type: "ok", text: "[+] Laudo técnico reproduzível, evidências em código e orientação de correção gerados." },
       ],
     },
   },
   {
     id: "red-team",
-    tag: "SIMULAÇÃO DE ADVERSÁRIO",
-    title: "Operações de Red Team & Adversary Emulation",
-    subtitle: "Teste de resiliência contra ataques furtivos (APTs)",
+    tag: "02 • RED TEAM",
+    title: "Red Team & Simulação de Adversários",
+    subtitle: "Red Team Exercise, Engenharia Social, Purple Team / TTPs & Assumed Breach",
     description:
-      "Operações furtivas de múltiplos vetores — combinando intrusão digital, engenharia social e movimentação lateral — para avaliar a capacidade real de detecção e resposta do seu time de defesa (Blue Team / SOC).",
+      "Simulações realistas de atacantes para testar pessoas, processos e tecnologia sob pressão real. Avaliamos a eficácia de detecção e resposta da sua equipe por meio de exercícios adversariais completos, cenários de comprometimento assumido e colaboração Purple Team.",
     icon: Crosshair,
     bgImage: "/images/templates/cyber-oregon/dpp-ciberseguranca-solucoes-varejo-1.jpg",
-    metrics: "Mapeamento completo das TTPs na matriz MITRE ATT&CK",
+    metrics: "Simulação de TTPs alinhada à matriz MITRE ATT&CK",
     deliverables: [
-      "Simulação de ameaça persistente avançada (APT) sem aviso prévio à equipe técnica",
-      "Tentativas de bypass de EDR, WAF, SIEM e controles de Active Directory / Entra ID",
-      "Exercício de Purple Team colaborativo para calibração de regras de detecção",
-      "Cronograma de Kill Chain detalhando cada etapa do avanço até o Crown Jewels",
+      "Red Team Exercise completo contra objetivos críticos do negócio",
+      "Testes de Engenharia Social direcionados para avaliar exposição humana",
+      "Purple Team / Simulação de TTPs em conjunto com o time defensivo",
+      "Assumed Breach Scenario Testing partindo de acesso inicial simulado",
     ],
-    frameworks: ["MITRE ATT&CK", "TIBER-EU", "Cyber Kill Chain", "Red Team Ops"],
+    frameworks: ["MITRE ATT&CK", "TIBER-EU", "Cyber Kill Chain", "TTPs Emulation"],
     terminalPreview: {
-      cmd: "oregon-c2 --campaign apt-emulation --stealth-level high --evade-edr",
+      cmd: "oregon-rt --exercise assumed-breach --ttp-sim mitre-attack --purple-sync",
       lines: [
-        { type: "info", text: "[*] Acesso inicial obtido via Spear Phishing direcionado (Payload Furtivo)..." },
-        { type: "info", text: "[*] Movimentação lateral silenciosa via Kerberoasting no domínio interno..." },
-        { type: "crit", text: "[CRITICAL] Domain Admin comprometido sem disparo de alerta no SIEM em 48h" },
-        { type: "ok", text: "[+] Regras Sigma/YARA geradas para bloqueio imediato do vetor no SOC." },
+        { type: "info", text: "[*] Executando Assumed Breach a partir de estação corporativa simulada..." },
+        { type: "info", text: "[*] Testando TTPs de movimentação lateral e Testes de Engenharia Social..." },
+        { type: "warn", text: "[!] Telemetria defensiva não correlacionou abuso de sessão privilegiada" },
+        { type: "ok", text: "[+] Sessão Purple Team concluída: detecções calibradas contra TTPs reais." },
       ],
     },
   },
   {
-    id: "soc-ir",
-    tag: "DEFESA & EMERGÊNCIA 24/7",
-    title: "Monitoramento Contínuo, Threat Intel & Resposta a Incidentes",
-    subtitle: "Contenção rápida de Ransomware, Forense Digital e Caça a Ameaças",
+    id: "security-review",
+    tag: "03 • SECURITY REVIEW",
+    title: "Security Review & Avaliação Contínua",
+    subtitle: "Entra ID, Active Directory, Cloud, Microsoft 365, Build Pipeline & Gestão de Vulnerabilidades",
     description:
-      "Vigilância ininterrupta de ativos críticos, monitoramento de credenciais vazadas na Dark/Deep Web e prontidão imediata para estancar incidentes cibernéticos, preservar evidências forenses e restaurar operações.",
-    icon: Radar,
-    bgImage: "/images/templates/cyber-oregon/preocupe-se-com-a-ciberseguranca-de-sua-empresa.png",
-    metrics: "SLA de resposta emergencial em menos de 15 minutos",
-    deliverables: [
-      "Monitoramento de superfície externa de ataque (EASM) e vazamento de dados (Brand Protection)",
-      "Playbooks de contenção imediata para ataques de Ransomware, DDoS e exfiltração",
-      "Análise Forense Digital e investigação de causa-raiz (Root Cause Analysis)",
-      "Apoio jurídico-técnico na comunicação com ANPD, clientes e seguradoras cibernéticas",
-    ],
-    frameworks: ["NIST CSF 2.0", "ISO/IEC 27035", "SANS Incident Handler", "STIX/TAXII"],
-    terminalPreview: {
-      cmd: "oregon-radar --watch-darkweb --domain cliente-enterprise.com.br --ir-standby",
-      lines: [
-        { type: "info", text: "[*] Monitorando 142 subdomínios, certificados TLS e feeds de Stealer Logs..." },
-        { type: "warn", text: "[!] 3 credenciais corporativas identificadas em repositório privado na Dark Web" },
-        { type: "ok", text: "[+] Revogação automática de tokens de sessão e reset MFA executados em 42s" },
-        { type: "ok", text: "[+] Perímetro íntegro. Zero atividade anômala de exfiltração detectada." },
-      ],
-    },
-  },
-  {
-    id: "phishing-training",
-    tag: "FATOR HUMANO & CULTURA",
-    title: "Simulação de Phishing & Treinamento Corporativo",
-    subtitle: "Conscientização prática e DevSecOps para equipes técnicas e executivas",
-    description:
-      "Transforme seus colaboradores no seu firewall mais forte. Executamos campanhas realistas de engenharia social (e-mail, WhatsApp, Smishing e Vishing) aliadas a treinamentos de código seguro para desenvolvedores.",
-    icon: Users,
-    bgImage: "/images/templates/cyber-oregon/dpp-ciberseguranca-varejo.jpg",
-    metrics: "Queda média de 82% na taxa de cliques em golpes em 90 dias",
-    deliverables: [
-      "Campanhas de Phishing customizadas por setor (Financeiro, RH, C-Level, TI)",
-      "Microlearning imediato e gamificado no momento em que o colaborador cai na simulação",
-      "Workshop de Desenvolvimento Seguro (Secure Coding) para squads de engenharia",
-      "Dashboard de evolução de maturidade e índice de risco humano por departamento",
-    ],
-    frameworks: ["SANS Security Awareness", "OWASP SAMM", "ISO 27001 Controle A.6.3"],
-    terminalPreview: {
-      cmd: "oregon-aware --launch-campaign 'Fatura_Cloud_Urgente' --targets 450",
-      lines: [
-        { type: "info", text: "[*] Disparando campanha simulada para 450 colaboradores em 6 departamentos..." },
-        { type: "warn", text: "[!] Taxa inicial de submissão de credenciais: 18.4% (Baseline de Risco)" },
-        { type: "info", text: "[*] Trilha de treinamento relâmpago ativada para usuários impactados..." },
-        { type: "ok", text: "[+] 3ª Rodada concluída: Taxa de falha reduzida para 2.1% • 89 reportes ao SOC!" },
-      ],
-    },
-  },
-  {
-    id: "grc-compliance",
-    tag: "GOVERNANÇA & AUDITORIA",
-    title: "Consultoria GRC, Adequação ISO 27001, SOC 2 & LGPD",
-    subtitle: "Segurança como acelerador comercial para fechar contratos Enterprise",
-    description:
-      "Estruturamos políticas, controles técnicos e gestão contínua de vulnerabilidades para que sua empresa passe em auditorias rigorosas de grandes clientes, bancos, órgãos reguladores (BACEN) e investidores globais.",
+      "Revisões arquiteturais e avaliações técnicas aprofundadas para eliminar configurações inseguras, exposição de credenciais e falhas de segmentação em ambientes corporativos, nuvem, identidade e esteiras de build.",
     icon: ShieldCheck,
     bgImage: "/images/templates/cyber-oregon/cybersecurity-lock.jpeg",
-    metrics: "100% de aprovação em Due Diligence de segurança de clientes Enterprise",
+    metrics: "9 frentes especializadas de Security Review",
     deliverables: [
-      "Gap Analysis completo e plano diretor de adequação à ISO/IEC 27001 e SOC 2 Type II",
-      "Gestão Contínua de Vulnerabilidades (CVM) com priorização baseada em risco real",
-      "DPO as a Service e adequação técnica/documental à LGPD e normativas do BACEN",
-      "Emissão de Selo e Certificado de Ambiente Auditado pela CyberOregon",
+      "Microsoft Entra ID, Active Directory e Microsoft 365 Security Review",
+      "Cloud Security Review e Build Pipeline Security Assessment (CI/CD)",
+      "Credential Exposure Assessment e Attack Surface Assessment",
+      "Segmentation Testing e Gestão de Vulnerabilidades contínua",
     ],
-    frameworks: ["ISO/IEC 27001", "SOC 2 Type II", "LGPD / GDPR", "CIS Controls v8"],
+    frameworks: ["CIS Benchmarks", "Microsoft Security Baseline", "MITRE ATT&CK", "OWASP SAMM"],
     terminalPreview: {
-      cmd: "oregon-compliance --audit iso27001 --check-controls --export-report",
+      cmd: "oregon-review --audit entra-id,ad,m365,cloud,pipeline --check-segmentation",
       lines: [
-        { type: "info", text: "[*] Validando 93 controles do Anexo A ISO/IEC 27001:2022..." },
-        { type: "ok", text: "[+] Criptografia em repouso/trânsito, IAM e logs de auditoria: CONFORME (98%)" },
-        { type: "ok", text: "[+] Laudo de Pentest Anual anexado para Due Diligence de parceiros bancários" },
-        { type: "ok", text: "[+] Certificado de Conformidade CyberOregon emitido com hash de validação." },
+        { type: "info", text: "[*] Auditando políticas do Microsoft Entra ID, Active Directory e Microsoft 365..." },
+        { type: "warn", text: "[!] Credential Exposure e rota de movimentação entre VLANs identificadas no Segmentation Testing" },
+        { type: "warn", text: "[!] Build Pipeline Security Assessment apontou segredo exposto em etapa de deploy" },
+        { type: "ok", text: "[+] Plano de remediação priorizado para Gestão de Vulnerabilidades e Attack Surface." },
       ],
     },
   },
@@ -216,56 +152,56 @@ const SOLUTIONS: SolutionItem[] = [
 const METHODOLOGY_STEPS = [
   {
     step: "01",
-    title: "Scoping & Threat Modeling",
-    desc: "Mapeamento da arquitetura, regras de negócio, ativos críticos (Crown Jewels) e definição conjunta das regras de engajamento seguras.",
-    badge: "Alinhamento Estratégico",
+    title: "Scoping & Modelagem do Alvo",
+    desc: "Definição precisa do escopo — seja Pentest, Red Team ou Security Review — mapeando ativos, credenciais, arquitetura e regras de engajamento seguras.",
+    badge: "Alinhamento Técnico",
   },
   {
     step: "02",
-    title: "Reconhecimento & Inteligência (OSINT)",
-    desc: "Varredura profunda da superfície de ataque externa, descoberta de ativos sombra (Shadow IT), APIs esquecidas e credenciais expostas.",
-    badge: "Visão do Invasor",
+    title: "Reconhecimento & Attack Surface",
+    desc: "Levantamento da superfície de ataque externa e interna, mapeamento de APIs, identidade (Entra ID / AD), pipelines e exposição de credenciais.",
+    badge: "Visão do Adversário",
   },
   {
     step: "03",
-    title: "Exploração Manual & Pós-Exploração",
-    desc: "Hackers éticos seniores testam cadeias complexas de vulnerabilidades, encadeando falhas para demonstrar o impacto real no negócio.",
+    title: "Exploração Manual & Revisão Profunda",
+    desc: "Execução manual de testes em Web, Mobile, IA, MCP, Kiosk, Desktop ou revisão de código (CAPT / Source Code Review) e simulação de TTPs.",
     badge: "Zero Falso-Positivo",
   },
   {
     step: "04",
-    title: "Relatório Acionável & Transferência",
-    desc: "Entrega de relatório executivo para C-Level e guia técnico detalhado com código de correção, evidências em vídeo e CVSS contextualizado.",
+    title: "Relatório Acionável & Debriefing",
+    desc: "Entrega de relatório executivo e laudo técnico detalhado com evidências reproduzíveis, criticidade e recomendações práticas de correção.",
     badge: "Foco em Correção",
   },
   {
     step: "05",
-    title: "Reteste Validado & Certificação",
-    desc: "Após a atuação da sua equipe, reexecutamos os testes sem custo adicional para atestar que todas as brechas foram eliminadas e emitimos o Certificado.",
-    badge: "Selo CyberOregon",
+    title: "Reteste Validado",
+    desc: "Após a aplicação das correções pelo seu time, revalidamos as vulnerabilidades corrigidas para confirmar a eliminação efetiva dos riscos.",
+    badge: "Validação Final",
   },
 ];
 
 const FAQS = [
   {
-    q: "Qual a diferença entre um Pentest da CyberOregon e um scan automatizado de vulnerabilidades?",
-    a: "Scanners automatizados apenas identificam falhas conhecidas de catálogo e geram dezenas de falsos-positivos, sendo incapazes de compreender a lógica do seu negócio. Na CyberOregon, cada Pentest é conduzido manualmente por pesquisadores de segurança certificados (OSCP, OSWE, OSEP) que simulam a criatividade de um invasor real — descobrindo falhas críticas de autorização, manipulação de transações financeiras e encadeamento de brechas que ferramentas automáticas ignoram.",
+    q: "Qual a diferença entre Pentest, Red Team e Security Review na CyberOregon?",
+    a: "O Pentest busca identificar e explorar vulnerabilidades em ativos específicos (como Web, APIs, Mobile, MCP, Kiosk, IA, Desktop, rede interna/externa ou código-fonte via CAPT e Source Code Review). O Red Team simula adversários reais em cenários como Red Team Exercise, Testes de Engenharia Social, Purple Team / Simulação de TTPs e Assumed Breach. Já o Security Review avalia profundamente arquiteturas e configurações críticas como Microsoft Entra ID, Active Directory, Microsoft 365, Cloud, Build Pipeline, Segmentação, Exposição de Credenciais, Superfície de Ataque e Gestão de Vulnerabilidades.",
   },
   {
-    q: "O Pentest pode causar indisponibilidade ou queda no meu ambiente de produção?",
-    a: "Não. Trabalhamos sob rígidas Regras de Engajamento (RoE) e acordos de confidencialidade (NDA). Toda exploração é controlada, evitando payloads destrutivos ou testes de negação de serviço (DoS) não solicitados. Além disso, mantemos um canal direto em tempo real com seu time técnico e reportamos imediatamente qualquer vulnerabilidade crítica (Zero-Day ou P1) assim que descoberta, sem esperar o fim do projeto.",
+    q: "O que é Code Assisted Pen Test (CAPT) e quando vale a pena contratar?",
+    a: "No Code Assisted Pen Test (CAPT), nossos especialistas combinam testes dinâmicos de intrusão com acesso parcial ou total ao código-fonte da aplicação. Isso acelera a descoberta de falhas lógicas complexas, bypasses de autenticação e vulnerabilidades difíceis de detectar apenas em caixa-preta, complementando o Source Code Review.",
   },
   {
-    q: "O laudo da CyberOregon é aceito em auditorias de clientes Enterprise, bancos e certificações (ISO 27001 / SOC 2)?",
-    a: "Sim. Nossos relatórios seguem rigorosamente padrões internacionais (OWASP, PTES, NIST e MITRE ATT&CK) e são assinados por profissionais com certificações globais reconhecidas pela indústria. Após a validação das correções no reteste, emitimos uma Carta de Atestado (Letter of Attestation) e o Selo de Segurança Auditada para você apresentar em processos de Due Diligence comercial.",
+    q: "Como funcionam os testes em Sistemas de Inteligência Artificial, MCP e Kiosk?",
+    a: "Avaliamos vetores específicos dessas tecnologias: em Sistemas de IA e servidores MCP (Model Context Protocol), testamos manipulação de contexto, prompt injection, vazamento de dados e abuso de ferramentas conectadas; em Kiosk e Aplicações Desktop (Thick Client), analisamos escape de ambiente restrito, memória local, binários e comunicação com o backend.",
   },
   {
-    q: "Em quanto tempo recebemos uma proposta comercial e quanto dura um projeto de Pentest?",
-    a: "Após um rápido alinhamento de escopo de 15 minutos (ou pelo nosso simulador abaixo), entregamos a proposta técnica detalhada em até 24 horas úteis. A execução de um Pentest varia tipicamente de 1 a 3 semanas conforme a complexidade do ativo, já incluindo o prazo de suporte à remediação e o reteste completo.",
+    q: "O que está incluído em Assumed Breach e Purple Team / Simulação de TTPs?",
+    a: "No Assumed Breach Scenario Testing, partimos da premissa de que um atacante já obteve acesso inicial (por exemplo, uma estação comprometida ou credencial vazada) para medir até onde ele consegue avançar lateralmente. No Purple Team, executamos TTPs simuladas em alinhamento direto com sua equipe defensiva para validar alertas e melhorar a detecção.",
   },
   {
-    q: "Vocês atendem empresas que sofreram um incidente ou ataque de Ransomware agora?",
-    a: "Sim. Contamos com um esquadrão de Resposta a Incidentes (CSIRT) 24/7. Caso sua operação esteja sob ataque neste momento, acione o botão de Emergência no topo da página ou chame diretamente no WhatsApp para contenção imediata, isolamento de ativos e preservação forense.",
+    q: "Quais ambientes são cobertos no Security Review da CyberOregon?",
+    a: "Cobrimos Microsoft Entra ID, Active Directory, Microsoft 365, ambientes Cloud, Build Pipelines (CI/CD), Credential Exposure Assessment, Segmentation Testing, Attack Surface Assessment e estruturação de Gestão de Vulnerabilidades.",
   },
 ];
 
@@ -350,24 +286,20 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           <span className="inline-flex items-center gap-2 text-[#00EAFF]">
             <span className="w-2 h-2 rounded-full bg-[#00EAFF] animate-ping" />
-            SOC & RED TEAM OPERACIONAL 24/7
+            PENTEST • RED TEAM • SECURITY REVIEW
           </span>
           <span className="text-slate-600">|</span>
           <span className="text-slate-300">
-            OWASP • PTES • MITRE ATT&CK • ISO/IEC 27001
+            OWASP • PTES • MITRE ATT&CK • CIS BENCHMARKS
           </span>
         </div>
         <div className="flex items-center gap-5">
           <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-              "URGENTE: Preciso acionar o time de Resposta a Incidentes da CyberOregon."
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-amber-300 hover:text-amber-200 font-semibold transition-colors"
+            href="#simulador"
+            className="inline-flex items-center gap-1.5 text-[#00EAFF] hover:text-cyan-200 font-semibold transition-colors"
           >
-            <ShieldAlert className="w-3.5 h-3.5 text-amber-400" />
-            Sob Ataque? Plantão de Incidente 24h
+            <ShieldCheck className="w-3.5 h-3.5" />
+            Dimensionar Escopo sob NDA
           </a>
         </div>
       </div>
@@ -522,10 +454,10 @@ const Hero = () => {
           <div className="lg:col-span-7">
             <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#061838]/80 border border-[#00D4FF]/40 mb-6 backdrop-blur-md">
               <span className="px-2 py-0.5 rounded-full bg-[#00EAFF]/20 text-[#00EAFF] font-mono text-[10px] font-bold uppercase tracking-widest">
-                OFFENSIVE & DEFENSIVE CYBERSECURITY
+                SEGURANÇA OFENSIVA & SECURITY REVIEW
               </span>
               <span className="text-xs text-slate-200 font-medium hidden sm:inline">
-                Pentest • Red Team • Resposta a Incidentes
+                Pentest • Red Team • Security Review
               </span>
             </div>
 
@@ -538,11 +470,11 @@ const Hero = () => {
             </h1>
 
             <p className="text-base sm:text-lg text-slate-200 leading-relaxed max-w-2xl mb-8">
-              A <strong className="text-white font-semibold">CyberOregon</strong> combina{" "}
+              A <strong className="text-white font-semibold">CyberOregon</strong> conduz{" "}
               <span className="text-[#00EAFF] font-medium">
-                Hacking Ético manual de elite
+                Pentests, Exercícios de Red Team e Security Reviews
               </span>{" "}
-              e inteligência contínua contra ameaças para identificar falhas críticas em suas aplicações Web, APIs, Mobile e Cloud — com relatórios prontos para auditorias e{" "}
+              aprofundados em aplicações Web, APIs, MCP, Mobile, Sistemas de IA, Cloud, Microsoft Entra ID, Active Directory e código-fonte — com evidências reais e{" "}
               <strong className="text-white font-semibold">zero falso-positivo</strong>.
             </p>
 
@@ -561,12 +493,7 @@ const Hero = () => {
                 href={`https://wa.me/${WHATSAPP_NUMBER}?text=${DEFAULT_WA_MSG}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() =>
-                  trackMetaEvent("Contact", {
-                    content_name: "Hero WhatsApp Especialista",
-                    content_category: "CyberOregon Hero",
-                  })
-                }
+                data-meta-content-name="CyberOregon Hero"
                 className="inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl bg-[#051430]/90 hover:bg-[#09224C] border border-[#00D4FF]/40 text-white font-bold text-sm transition-all backdrop-blur-md"
               >
                 <MessageCircle className="w-4 h-4 text-[#00EAFF]" />
@@ -578,10 +505,10 @@ const Hero = () => {
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/15">
               <div>
                 <p className="text-2xl sm:text-3xl font-black text-white font-mono">
-                  +<CountUp to={1450} />
+                  <CountUp to={24} />
                 </p>
                 <p className="text-xs text-slate-300 mt-1">
-                  Vulnerabilidades críticas neutralizadas
+                  Serviços especializados em Pentest, Red Team & Review
                 </p>
               </div>
               <div>
@@ -594,11 +521,11 @@ const Hero = () => {
               </div>
               <div>
                 <p className="text-2xl sm:text-3xl font-black text-white font-mono">
-                  &lt;<CountUp to={15} />
-                  <span className="text-base text-[#00EAFF]">min</span>
+                  <CountUp to={3} />
+                  <span className="text-base text-[#00EAFF]"> pilares</span>
                 </p>
                 <p className="text-xs text-slate-300 mt-1">
-                  SLA de resposta a incidentes críticos
+                  Pentest, Red Team e Security Review integrados
                 </p>
               </div>
             </div>
@@ -633,7 +560,7 @@ const Hero = () => {
                       : "text-slate-400 hover:text-white"
                   }`}
                 >
-                  01. Pentest API
+                  01. Pentest
                 </button>
                 <button
                   type="button"
@@ -644,7 +571,7 @@ const Hero = () => {
                       : "text-slate-400 hover:text-white"
                   }`}
                 >
-                  02. Attack Surface
+                  02. Red Team
                 </button>
                 <button
                   type="button"
@@ -655,7 +582,7 @@ const Hero = () => {
                       : "text-slate-400 hover:text-white"
                   }`}
                 >
-                  03. Certificação
+                  03. Security Review
                 </button>
               </div>
 
@@ -664,15 +591,15 @@ const Hero = () => {
                 {activeScanTab === "pentest" && (
                   <div className="space-y-3">
                     <div className="flex items-center justify-between text-[11px] text-slate-400 pb-2 border-b border-white/10">
-                      <span>ALVO: api.fintech-core.internal</span>
-                      <span className="text-[#00EAFF]">METODOLOGIA: OWASP + PTES</span>
+                      <span>ALVO: Web • APIs • MCP • IA</span>
+                      <span className="text-[#00EAFF]">MODO: CAPT &amp; MANUAL</span>
                     </div>
                     <div className="space-y-2 text-[11px] leading-relaxed">
                       <p className="text-slate-300">
-                        <span className="text-[#00EAFF]">$</span> oregon-exploit --module auth-bypass --verify
+                        <span className="text-[#00EAFF]">$</span> oregon-sec --pentest web,api,mcp,ai --capt
                       </p>
                       <p className="text-slate-400">
-                        [+] Inspecionando validação de assinatura JWT e escopos OAuth2...
+                        [+] Inspecionando lógica de negócio, servidores MCP e código-fonte...
                       </p>
                       <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-200">
                         <div className="flex items-center justify-between font-bold text-rose-400 mb-1">
@@ -680,7 +607,7 @@ const Hero = () => {
                           <span>P1</span>
                         </div>
                         <p className="text-[11px] text-rose-100/90">
-                          Manipulação de cabeçalho X-Account-ID permite leitura e transferência entre contas sem validação de sessão.
+                          Falha de autorização em API + abuso de tool no servidor MCP confirmados com PoC reproduzível.
                         </p>
                       </div>
                       <div className="p-3 rounded-xl bg-[#00D4FF]/15 border border-[#00EAFF]/35 text-cyan-100">
@@ -688,7 +615,7 @@ const Hero = () => {
                           [✓ REMEDIAÇÃO VALIDADA NO RETESTE]
                         </p>
                         <p className="text-[11px] text-slate-200">
-                          Patch aplicado no middleware e validado pelo Red Team CyberOregon.
+                          Correção aplicada com apoio do Source Code Review e validada pela CyberOregon.
                         </p>
                       </div>
                     </div>
@@ -698,28 +625,28 @@ const Hero = () => {
                 {activeScanTab === "surface" && (
                   <div className="space-y-3">
                     <div className="flex items-center justify-between text-[11px] text-slate-400 pb-2 border-b border-white/10">
-                      <span>MÓDULO: EASM & DARK WEB RADAR</span>
-                      <span className="text-amber-300">24/7 ACTIVE</span>
+                      <span>MÓDULO: RED TEAM &amp; ASSUMED BREACH</span>
+                      <span className="text-[#00EAFF]">PURPLE TEAM SYNC</span>
                     </div>
                     <div className="grid grid-cols-2 gap-2.5">
                       <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                        <span className="text-[10px] text-slate-400 block">SUBDOMÍNIOS MAPEADOS</span>
-                        <span className="text-lg font-black text-white">84 Ativos</span>
-                        <span className="text-[10px] text-[#00EAFF] block mt-0.5">2 Shadow IT isolados</span>
+                        <span className="text-[10px] text-slate-400 block">TTPs SIMULADAS</span>
+                        <span className="text-lg font-black text-white">MITRE ATT&amp;CK</span>
+                        <span className="text-[10px] text-[#00EAFF] block mt-0.5">Purple Team colaborativo</span>
                       </div>
                       <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                        <span className="text-[10px] text-slate-400 block">CREDENCIAIS VAZADAS</span>
-                        <span className="text-lg font-black text-amber-400">0 Expostas</span>
-                        <span className="text-[10px] text-slate-300 block mt-0.5">Monitoramento contínuo</span>
+                        <span className="text-[10px] text-slate-400 block">ENGENHARIA SOCIAL</span>
+                        <span className="text-lg font-black text-amber-400">Controlled</span>
+                        <span className="text-[10px] text-slate-300 block mt-0.5">Assumed Breach Scenario</span>
                       </div>
                     </div>
                     <div className="p-3 rounded-xl bg-[#061A3A] border border-[#00D4FF]/40 space-y-1.5">
                       <div className="flex items-center justify-between text-[11px]">
-                        <span className="text-slate-200">Blindagem de Perímetro Cloud (AWS/Azure)</span>
-                        <span className="text-[#00EAFF] font-bold">99.4%</span>
+                        <span className="text-slate-200">Cobertura de Detecção em Exercício Red Team</span>
+                        <span className="text-[#00EAFF] font-bold">96.0%</span>
                       </div>
                       <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
-                        <div className="h-full w-[99%] bg-gradient-to-r from-[#0088CC] to-[#00EAFF]" />
+                        <div className="h-full w-[96%] bg-gradient-to-r from-[#0088CC] to-[#00EAFF]" />
                       </div>
                     </div>
                   </div>
@@ -728,14 +655,14 @@ const Hero = () => {
                 {activeScanTab === "compliance" && (
                   <div className="space-y-3">
                     <div className="flex items-center justify-between text-[11px] text-slate-400 pb-2 border-b border-white/10">
-                      <span>ATESTADO DE AUDITORIA</span>
-                      <span className="text-[#00EAFF]">DUE DILIGENCE READY</span>
+                      <span>REVISÃO DE ARQUITETURA &amp; IDENTIDADE</span>
+                      <span className="text-[#00EAFF]">SECURITY REVIEW</span>
                     </div>
                     <div className="space-y-2">
                       {[
-                        { name: "OWASP Top 10 (Web & API Security)", status: "100% Verificado" },
-                        { name: "ISO/IEC 27001 & SOC 2 Type II Evidence", status: "Laudo Emitido" },
-                        { name: "Conformidade Técnica LGPD & BACEN", status: "Aprovado" },
+                        { name: "Microsoft Entra ID, AD & M365 Review", status: "Auditado" },
+                        { name: "Cloud, Build Pipeline & Segmentation", status: "Validado" },
+                        { name: "Credential Exposure & Attack Surface", status: "Mapeado" },
                       ].map((item) => (
                         <div
                           key={item.name}
@@ -781,14 +708,14 @@ const Hero = () => {
 const FrameworksMarquee = () => {
   const items = [
     "OWASP TOP 10",
+    "OWASP API SECURITY TOP 10",
+    "OWASP LLM & AI SECURITY",
     "MITRE ATT&CK FRAMEWORK",
     "PTES (PENETRATION TESTING EXECUTION STANDARD)",
-    "ISO/IEC 27001",
-    "NIST CYBERSECURITY FRAMEWORK 2.0",
-    "SOC 2 TYPE II COMPLIANCE",
+    "OWASP MASVS (MOBILE)",
     "OSSTMM",
-    "CIS CRITICAL SECURITY CONTROLS",
-    "ADEQUAÇÃO TÉCNICA LGPD & BACEN",
+    "CIS BENCHMARKS (CLOUD & M365)",
+    "NIST SP 800-115",
   ];
 
   return (
@@ -836,12 +763,12 @@ const SolutionsSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <Reveal>
           <div className="max-w-3xl mb-14">
-            <SectionBadge code="SEC-01">Portfólio de Segurança Ofensiva & Defensiva</SectionBadge>
+            <SectionBadge code="SEC-01">Portfólio de Serviços Especializados</SectionBadge>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight mb-4">
-              Soluções completas para blindar cada camada do seu ecossistema digital.
+              Pentest, Red Team e Security Review para cada camada do seu ambiente.
             </h2>
             <p className="text-slate-300 text-base sm:text-lg">
-              Da descoberta de vulnerabilidades ocultas em código ao monitoramento contínuo na Dark Web e resposta emergencial a incidentes. Escolha o pilar para inspecionar os entregáveis técnicos:
+              Da exploração manual em aplicações, APIs, MCP e sistemas de IA até exercícios adversariais e revisão profunda de identidade, cloud e pipelines. Escolha o pilar para inspecionar os entregáveis técnicos:
             </p>
           </div>
         </Reveal>
@@ -1029,42 +956,51 @@ const SolutionsSection = () => {
 // 5. SUPERFÍCIES AUDITADAS COM BACKGROUND DE IMAGEM
 // ==========================================
 const AttackSurfacesGrid = () => {
-  const surfaces = [
+  const servicePillars = [
     {
-      icon: Globe,
-      title: "Aplicações Web & SaaS",
-      desc: "SPAs, portais de clientes, ERPs e plataformas de e-commerce testados contra injeções, XSS, CSRF, SSRF e falhas críticas de regra de negócio.",
-      tag: "OWASP WSTG",
+      icon: Shield,
+      title: "Pentest",
+      tag: "11 Frentes Ofensivas",
+      items: [
+        "Pentest em Aplicações Web",
+        "Pentest em Kiosk",
+        "Pentest MCP",
+        "Pentest em APIs",
+        "Pentest em Aplicativos Mobile",
+        "Pentest Interno",
+        "Pentest Externo",
+        "Pentest em Sistemas de Inteligência Artificial",
+        "Pentest em Aplicações Desktop (Thick Client)",
+        "Code Assisted Pen Test (CAPT)",
+        "Source Code Review",
+      ],
     },
     {
-      icon: Code2,
-      title: "APIs REST, GraphQL & gRPC",
-      desc: "Auditoria profunda de autenticação JWT/OAuth, BOLA/IDOR, Mass Assignment, Rate Limiting e vazamento de dados sensíveis entre tenants.",
-      tag: "OWASP API Top 10",
+      icon: Crosshair,
+      title: "Red Team",
+      tag: "4 Frentes Adversariais",
+      items: [
+        "Red Team Exercise",
+        "Testes de Engenharia Social",
+        "Purple Team / Simulação de TTPs",
+        "Assumed Breach Scenario Testing",
+      ],
     },
     {
-      icon: Smartphone,
-      title: "Aplicativos Mobile (iOS & Android)",
-      desc: "Engenharia reversa de binários, bypass de SSL Pinning/Root Detection, armazenamento inseguro e interceptação de comunicação com backend.",
-      tag: "OWASP MASVS",
-    },
-    {
-      icon: Cloud,
-      title: "Infraestrutura Cloud (AWS, Azure, GCP)",
-      desc: "Revisão de políticas IAM, buckets S3 expostos, containers Kubernetes/Docker, segredos em pipelines CI/CD e isolamento de VPCs.",
-      tag: "CIS Benchmarks",
-    },
-    {
-      icon: Server,
-      title: "Redes Internas & Active Directory",
-      desc: "Testes de intrusão em perímetro externo e rede local, avaliação de segmentação VLAN, VPNs, Wi-Fi corporativo e escalada para Domain Admin.",
-      tag: "MITRE ATT&CK",
-    },
-    {
-      icon: Cpu,
-      title: "Sistemas Financeiros, PIX & IoT",
-      desc: "Testes de concorrência (Race Condition) em carteiras digitais, gateways de pagamento, mensageria bancária e dispositivos embarcados.",
-      tag: "Zero-Tolerance",
+      icon: Radar,
+      title: "Security Review",
+      tag: "9 Frentes de Avaliação",
+      items: [
+        "Microsoft Entra ID Security Review",
+        "Build Pipeline Security Assessment",
+        "Active Directory Security Review",
+        "Cloud Security Review",
+        "Microsoft 365 Security Review",
+        "Credential Exposure Assessment",
+        "Segmentation Testing",
+        "Attack Surface Assessment",
+        "Gestão de Vulnerabilidades",
+      ],
     },
   ];
 
@@ -1086,39 +1022,48 @@ const AttackSurfacesGrid = () => {
         <Reveal>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div>
-              <SectionBadge code="SEC-02">Cobertura Tecnológica</SectionBadge>
+              <SectionBadge code="SEC-02">Catálogo Completo de Serviços</SectionBadge>
               <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-                Qualquer stack. Qualquer arquitetura.
+                Todas as frentes de Pentest, Red Team e Security Review.
               </h2>
             </div>
             <p className="text-slate-300 text-sm sm:text-base max-w-md">
-              Nossos especialistas dominam as arquiteturas modernas para testar seus ativos exatamente onde os cibercriminosos tentam explorar.
+              Escopos modulares para testar aplicações, código-fonte, infraestrutura, identidade corporativa e resiliência contra adversários.
             </p>
           </div>
         </Reveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {surfaces.map((s, idx) => {
-            const Icon = s.icon;
+        <div className="grid lg:grid-cols-3 gap-6">
+          {servicePillars.map((pillar, idx) => {
+            const Icon = pillar.icon;
             return (
-              <Reveal key={s.title} delay={idx * 0.05}>
-                <div className="group h-full p-6 rounded-2xl bg-[#04132D]/90 backdrop-blur-md border border-[#00D4FF]/20 hover:border-[#00EAFF]/70 transition-all duration-300 flex flex-col justify-between shadow-lg">
-                  <div>
-                    <div className="flex items-center justify-between mb-5">
-                      <div className="p-3 rounded-xl bg-[#082452] border border-[#00D4FF]/40 text-[#00EAFF] group-hover:bg-[#00EAFF] group-hover:text-[#020b1f] transition-colors">
+              <Reveal key={pillar.title} delay={idx * 0.06}>
+                <div className="group h-full p-6 sm:p-7 rounded-2xl bg-[#04132D]/90 backdrop-blur-md border border-[#00D4FF]/25 hover:border-[#00EAFF]/70 transition-all duration-300 flex flex-col shadow-lg">
+                  <div className="flex items-center justify-between pb-5 mb-5 border-b border-white/10">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2.5 rounded-xl bg-[#082452] border border-[#00D4FF]/40 text-[#00EAFF] group-hover:bg-[#00EAFF] group-hover:text-[#020b1f] transition-colors">
                         <Icon className="w-5 h-5" />
                       </div>
-                      <span className="font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 rounded bg-white/5 text-slate-200 border border-white/10">
-                        {s.tag}
-                      </span>
+                      <h3 className="text-xl font-black text-white group-hover:text-[#00EAFF] transition-colors">
+                        {pillar.title}
+                      </h3>
                     </div>
-                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#00EAFF] transition-colors">
-                      {s.title}
-                    </h3>
-                    <p className="text-sm text-slate-300 leading-relaxed">
-                      {s.desc}
-                    </p>
+                    <span className="font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 rounded bg-white/5 text-slate-200 border border-white/10">
+                      {pillar.tag}
+                    </span>
                   </div>
+
+                  <ul className="space-y-2.5 flex-1">
+                    {pillar.items.map((serviceName) => (
+                      <li
+                        key={serviceName}
+                        className="flex items-start gap-2.5 text-sm text-slate-200"
+                      >
+                        <CheckCircle2 className="w-4 h-4 text-[#00EAFF] shrink-0 mt-0.5" />
+                        <span>{serviceName}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </Reveal>
             );
@@ -1133,18 +1078,18 @@ const AttackSurfacesGrid = () => {
 // 6. SIMULADOR INTERATIVO DE ESCOPO DE PENTEST & MATURIDADE
 // ==========================================
 const PentestScopeCalculator = () => {
-  const [selectedTargets, setSelectedTargets] = useState<string[]>(["web-app", "api"]);
+  const [selectedTargets, setSelectedTargets] = useState<string[]>(["web-api", "ai-mcp"]);
   const [boxMode, setBoxMode] = useState<"black" | "grey" | "white">("grey");
   const [companySize, setCompanySize] = useState<"startup" | "mid" | "enterprise">("mid");
-  const [complianceNeed, setComplianceNeed] = useState<string>("Auditoria de Clientes / Due Diligence");
+  const [complianceNeed, setComplianceNeed] = useState<string>("Prevenção Proativa & Redução de Risco");
 
   const targetOptions = [
-    { id: "web-app", label: "Aplicação Web / SaaS", days: 5 },
-    { id: "api", label: "APIs (REST / GraphQL)", days: 4 },
-    { id: "mobile", label: "App Mobile (iOS / Android)", days: 5 },
-    { id: "cloud", label: "Infraestrutura Cloud (AWS/Azure/GCP)", days: 4 },
-    { id: "network", label: "Rede Corporativa / Active Directory", days: 5 },
-    { id: "phishing", label: "Campanha de Phishing / Engenharia Social", days: 3 },
+    { id: "web-api", label: "Pentest Web / APIs / Mobile", days: 5 },
+    { id: "ai-mcp", label: "Pentest em IA / MCP / Kiosk / Desktop", days: 5 },
+    { id: "capt-code", label: "Code Assisted Pen Test (CAPT) & Source Code Review", days: 4 },
+    { id: "red-team", label: "Red Team / Engenharia Social / Purple Team / Assumed Breach", days: 6 },
+    { id: "identity-m365", label: "Review Microsoft Entra ID / Active Directory / M365", days: 4 },
+    { id: "cloud-pipeline", label: "Cloud / Build Pipeline / Segmentation / Gestão de Vulnerabilidades", days: 5 },
   ];
 
   const toggleTarget = (id: string) => {
@@ -1189,15 +1134,13 @@ const PentestScopeCalculator = () => {
 
     const msg = `Olá! Usei o Simulador de Escopo da CyberOregon e gostaria de receber uma proposta comercial:\n\n• *Ativos a testar:* ${targetNames}\n• *Abordagem:* ${boxDescriptions[boxMode].title}\n• *Porte da Operação:* ${companySize.toUpperCase()}\n• *Objetivo Principal:* ${complianceNeed}\n• *Estimativa prévia:* ~${estimatedDays} dias úteis (${specialistsCount} especialistas OSCP/OSWE + 1 Reteste incluso).`;
 
-    trackMetaEvent("Lead", {
-      content_name: "Simulador de Escopo Pentest CyberOregon",
-      content_category: boxMode,
-    });
-
-    window.open(
+    openTrackedWhatsApp(
       `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,
-      "_blank",
-      "noopener,noreferrer"
+      "Contact",
+      {
+        content_name: "Simulador de Escopo Pentest CyberOregon",
+        content_category: boxMode,
+      }
     );
   };
 
@@ -1313,17 +1256,17 @@ const PentestScopeCalculator = () => {
                   onChange={(e) => setComplianceNeed(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl bg-[#020b1f] border border-white/15 text-white text-sm focus:border-[#00EAFF] focus:outline-none"
                 >
-                  <option value="Auditoria de Clientes / Due Diligence">
-                    Requisito de Cliente / Due Diligence
-                  </option>
-                  <option value="Prevenção Proativa contra Ataques">
-                    Prevenção Proativa & Redução de Risco
-                  </option>
-                  <option value="Conformidade ISO 27001 / SOC 2 / LGPD">
-                    Certificação ISO 27001 / SOC 2 / LGPD
+                  <option value="Prevenção Proativa & Redução de Risco">
+                    Prevenção Proativa &amp; Redução de Risco
                   </option>
                   <option value="Validação antes de Go-Live / Lançamento">
                     Validação Pré-Lançamento (Go-Live)
+                  </option>
+                  <option value="Avaliação de Adversários & Detecção (Red/Purple Team)">
+                    Avaliação de Adversários &amp; Detecção (Red/Purple Team)
+                  </option>
+                  <option value="Revisão de Cloud, Identidade e Pipelines">
+                    Revisão de Cloud, Identidade e Pipelines
                   </option>
                 </select>
               </div>
@@ -1499,25 +1442,25 @@ const WhyCyberOregon = () => {
     { code: "OSWE", name: "Offensive Security Web Expert" },
     { code: "OSEP", name: "Experienced Penetration Tester" },
     { code: "CRTO", name: "Certified Red Team Operator" },
+    { code: "CRTP", name: "Certified Red Team Professional (AD & Entra ID)" },
     { code: "CISSP", name: "Certified Information Systems Security Professional" },
-    { code: "ISO 27001", name: "Lead Implementer & Lead Auditor" },
   ];
 
   const visualShowcase = [
     {
       src: "/images/templates/cyber-oregon/cybersecurity-scaled.jpg",
-      tag: "AI & THREAT TELEMETRY",
-      title: "Inspeção Profunda de Código e APIs",
+      tag: "PENTEST & CAPT",
+      title: "Web, APIs, MCP, IA, Mobile & Source Code Review",
     },
     {
       src: "/images/templates/cyber-oregon/preocupe-se-com-a-ciberseguranca-de-sua-empresa.png",
-      tag: "ZERO-TRUST ARCHITECTURE",
-      title: "Proteção de Dados Críticos & Governança",
+      tag: "RED TEAM & PURPLE TEAM",
+      title: "Red Team Exercise, TTPs & Assumed Breach",
     },
     {
       src: "/images/templates/cyber-oregon/dpp-ciberseguranca-varejo.jpg",
-      tag: "MULTI-LAYER DEFENSE",
-      title: "Blindagem de Perímetro, Cloud e Endpoints",
+      tag: "SECURITY REVIEW",
+      title: "Entra ID, Active Directory, M365, Cloud & Pipelines",
     },
   ];
 
@@ -1592,7 +1535,7 @@ const WhyCyberOregon = () => {
                 Corpo Técnico Altamente Certificado
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 mb-6">
-                Nossos operadores detêm as certificações práticas mais exigentes do mercado mundial de segurança ofensiva e governança:
+                Nossos operadores detêm as certificações práticas mais exigentes do mercado mundial de segurança ofensiva e arquitetura:
               </p>
 
               <div className="grid sm:grid-cols-2 gap-3">
@@ -1720,29 +1663,28 @@ const ContactSection = () => {
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
   const [email, setEmail] = useState("");
-  const [service, setService] = useState("Pentest (Web / API / Mobile / Cloud)");
+  const [service, setService] = useState("Pentest (Web / APIs / MCP / Mobile / IA / CAPT)");
   const [submitted, setSubmitted] = useState(false);
+
+  const text = `Olá! Me chamo *${name.trim()}*${
+      company.trim() ? ` da empresa *${company.trim()}*` : ""
+    }.\nE-mail corporativo: ${
+      email.trim() || "Não informado"
+    }\nInteresse principal: *${service}*\n\nGostaria de agendar uma conversa com um especialista da CyberOregon.`;
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim().length < 2) return;
 
-    const text = `Olá! Me chamo *${name.trim()}*${
-      company.trim() ? ` da empresa *${company.trim()}*` : ""
-    }.\nE-mail corporativo: ${
-      email.trim() || "Não informado"
-    }\nInteresse principal: *${service}*\n\nGostaria de agendar uma conversa com um especialista da CyberOregon.`;
-
-    trackMetaEvent("Lead", {
-      content_name: "Formulário de Diagnóstico CyberOregon",
-      content_category: service,
-    });
-
     setSubmitted(true);
-    window.open(
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`,
-      "_blank",
-      "noopener,noreferrer"
+    openTrackedWhatsApp(
+      whatsappUrl,
+      "Contact",
+      {
+        content_name: "Formulário de Diagnóstico CyberOregon",
+        content_category: service,
+      }
     );
   };
 
@@ -1790,7 +1732,7 @@ const ContactSection = () => {
                   <div className="w-8 h-8 rounded-lg bg-[#00D4FF]/20 border border-[#00EAFF]/40 flex items-center justify-center text-[#00EAFF]">
                     <Award className="w-4 h-4" />
                   </div>
-                  <span>Relatórios válidos para auditorias ISO 27001, SOC 2, LGPD e BACEN</span>
+                  <span>Escopos completos de Pentest, Red Team e Security Review</span>
                 </div>
               </div>
             </div>
@@ -1805,11 +1747,19 @@ const ContactSection = () => {
                       <ShieldCheck className="w-7 h-7" />
                     </div>
                     <h3 className="text-xl font-black text-white">
-                      Solicitação Criptografada Enviada!
+                      Mensagem preparada para o WhatsApp
                     </h3>
                     <p className="text-sm text-slate-300 max-w-md mx-auto">
-                      Abrimos o canal direto com a equipe da CyberOregon no seu WhatsApp. Caso deseje enviar outra solicitação, clique abaixo.
+                      Para concluir a solicitação, envie a mensagem no WhatsApp. Se a janela não abriu, use o link abaixo.
                     </p>
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-sm font-semibold text-[#00EAFF] underline"
+                    >
+                      Abrir WhatsApp para enviar
+                    </a>
                     <button
                       type="button"
                       onClick={() => setSubmitted(false)}
@@ -1841,6 +1791,8 @@ const ContactSection = () => {
                           id="co-name"
                           type="text"
                           required
+                          minLength={2}
+                          autoComplete="name"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           placeholder="Ex: Rodrigo Almeida"
@@ -1875,6 +1827,7 @@ const ContactSection = () => {
                       <input
                         id="co-email"
                         type="email"
+                        autoComplete="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="rodrigo@suaempresa.com.br"
@@ -1895,20 +1848,20 @@ const ContactSection = () => {
                         onChange={(e) => setService(e.target.value)}
                         className="w-full px-4 py-3 rounded-xl bg-[#04122C] border border-white/15 text-white text-sm focus:border-[#00EAFF] focus:outline-none"
                       >
-                        <option value="Pentest (Web / API / Mobile / Cloud)">
-                          Pentest (Web / API / Mobile / Cloud)
+                        <option value="Pentest (Web / APIs / MCP / Mobile / IA / CAPT)">
+                          Pentest (Web / APIs / MCP / Mobile / IA / CAPT)
                         </option>
-                        <option value="Red Team & Simulação de Adversários">
-                          Red Team & Simulação de Adversários
+                        <option value="Pentest Interno, Externo, Kiosk & Desktop (Thick Client)">
+                          Pentest Interno, Externo, Kiosk &amp; Desktop (Thick Client)
                         </option>
-                        <option value="Resposta a Incidentes & Monitoramento SOC">
-                          Resposta a Incidentes & Monitoramento SOC
+                        <option value="Source Code Review & Code Assisted Pen Test (CAPT)">
+                          Source Code Review &amp; Code Assisted Pen Test (CAPT)
                         </option>
-                        <option value="Simulação de Phishing & Treinamento">
-                          Simulação de Phishing & Treinamento
+                        <option value="Red Team (Exercise, Engenharia Social, Purple Team, Assumed Breach)">
+                          Red Team (Exercise, Engenharia Social, Purple Team, Assumed Breach)
                         </option>
-                        <option value="Consultoria GRC / ISO 27001 / LGPD">
-                          Consultoria GRC / ISO 27001 / LGPD
+                        <option value="Security Review (Entra ID, AD, M365, Cloud, Pipeline & Gestão de Vulnerabilidades)">
+                          Security Review (Entra ID, AD, M365, Cloud, Pipeline &amp; Vulnerabilidades)
                         </option>
                       </select>
                     </div>
@@ -1952,7 +1905,7 @@ const Footer = () => {
               />
             </div>
             <p className="text-xs text-slate-400 max-w-sm">
-              Segurança Ofensiva, Testes de Intrusão (Pentest), Red Team, Threat Intelligence e Governança Cibernética para empresas de alta criticidade.
+              Serviços especializados em Pentest, Red Team e Security Review para aplicações, infraestrutura, identidade e código-fonte.
             </p>
           </div>
 
@@ -1980,7 +1933,7 @@ const Footer = () => {
             © {CURRENT_YEAR} CYBEROREGON CYBERSECURITY. TODOS OS DIREITOS RESERVADOS.
           </p>
           <p className="text-slate-500">
-            OWASP • PTES • MITRE ATT&CK • ISO/IEC 27001
+            OWASP • PTES • MITRE ATT&amp;CK • CIS BENCHMARKS
           </p>
         </div>
       </div>
@@ -2013,12 +1966,6 @@ export default function CyberOregonLandingPage() {
         href={`https://wa.me/${WHATSAPP_NUMBER}?text=${DEFAULT_WA_MSG}`}
         hideWhenVisibleId="contato"
         className="bg-gradient-to-r from-[#0088CC] to-[#00EAFF] text-[#020b1f] shadow-[0_0_30px_rgba(0,234,255,0.45)]"
-        onClick={() =>
-          trackMetaEvent("Lead", {
-            content_name: "Sticky Mobile CTA CyberOregon",
-            content_category: "CyberOregon Sticky Bar",
-          })
-        }
       />
     </div>
   );

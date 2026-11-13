@@ -4,11 +4,13 @@ import { appCatalog } from "@/data/appCatalog";
 
 const publicPaths = [
   "/",
+  "/quem-somos",
   "/apps",
   "/design",
   "/marketing",
   "/lojas-virtuais",
   "/templates",
+  "/templates/cyber-oregon",
   "/privacidade",
   ...appCatalog.map(app => app.path),
 ];

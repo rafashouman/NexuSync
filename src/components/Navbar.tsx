@@ -23,6 +23,7 @@ const links = [
 ];
 
 const pages = [
+  { label: "Quem somos", href: "/quem-somos" },
   { label: "Templates", href: "/templates" },
   { label: "Aplicativos", href: "/apps" },
   { label: "Design", href: "/design" },
@@ -82,7 +83,9 @@ export function Navbar() {
             alt="NexuSync"
             width={300}
             height={99}
-            className="h-auto w-[180px] sm:w-[220px] transition-transform duration-300 group-hover:scale-105"
+            sizes="(min-width: 640px) 220px, 180px"
+            style={{ height: "auto" }}
+            className="w-[180px] sm:w-[220px] transition-transform duration-300 group-hover:scale-105"
           />
         </Link>
 
