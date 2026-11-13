@@ -1,7 +1,8 @@
 import { Plans } from "@/components/Plans";
-import { Contact } from "@/components/Contact";
+import { ServiceHero, ServiceJourney } from "@/components/ServiceJourney";
 import { FAQ } from "@/components/FAQ";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
+import { HeroTemplatePreview } from "@/components/HeroTemplatePreview";
 
 export const metadata = nexuSyncMetadata({
   title: "Loja Virtual e Catálogo Digital para seu Negócio | NexuSync",
@@ -31,24 +32,15 @@ const shopFaqs = [
 
 export default function ShopsPage() {
   return (
-    <div className="pt-28">
-      <section className="container-luxe pb-8">
-        <h1 className="font-display text-4xl">
-          Loja virtual e catálogo digital para facilitar suas vendas
-        </h1>
-        <p className="mt-4 max-w-3xl leading-7 text-muted-foreground">
-          Apresente produtos, preços e formas de pedido em um só lugar. A
-          NexuSync cria catálogos digitais e lojas virtuais de acordo com a
-          operação da sua empresa.
-        </p>
-      </section>
-      <Plans />
+    <>
+      <ServiceHero kind="shops" visual={<HeroTemplatePreview mode="shops" />} />
+      <ServiceJourney kind="shops" />
+      <Plans commerceOnly />
       <FAQ
         items={shopFaqs}
         heading="Dúvidas sobre lojas virtuais e catálogos digitais"
         description="Entenda o que muda entre os formatos e quais recursos precisam estar previstos na proposta."
       />
-      <Contact />
-    </div>
+    </>
   );
 }

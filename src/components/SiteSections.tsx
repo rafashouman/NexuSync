@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -24,6 +25,7 @@ const solutions = [
     subtitle: "Seu negócio faz um bom trabalho. Seu site precisa mostrar isso.",
     description:
       "Quando alguém pesquisa sua empresa, a primeira impressão importa. Criamos sites modernos, responsivos e fáceis de navegar para apresentar seus serviços com clareza e transmitir confiança desde o primeiro contato.",
+    href: "/criacao-de-sites",
     interest: "institucional",
     whatsapp: "Olá! Quero conversar sobre um site profissional para minha empresa.",
     cta: "Quero um site para minha empresa",
@@ -36,6 +38,7 @@ const solutions = [
     subtitle: "Facilite a vida de quem quer comprar de você.",
     description:
       "Cansou de responder às mesmas perguntas sobre preços, produtos e disponibilidade? Com uma loja virtual ou catálogo online, seus clientes encontram as informações de que precisam em um só lugar.",
+    href: "/criacao-de-sites#lojas-virtuais",
     interest: "loja-virtual",
     whatsapp: "Olá! Quero vender pela internet com uma loja virtual ou catálogo digital.",
     cta: "Quero vender pela internet",
@@ -48,6 +51,7 @@ const solutions = [
     subtitle: "Seu tempo vale mais do que tarefas repetitivas.",
     description:
       "Se você passa boa parte do dia organizando horários, atualizando informações ou acompanhando atendimentos manualmente, podemos ajudar. Desenvolvemos sistemas web e automações para tornar sua operação mais prática e organizada.",
+    href: "/apps",
     interest: "automacoes",
     whatsapp: "Olá! Quero automatizar uma parte da rotina do meu negócio.",
     cta: "Quero automatizar meu negócio",
@@ -60,6 +64,7 @@ const solutions = [
     subtitle: "Sua empresa merece ser vista e lembrada.",
     description:
       "Uma marca bem apresentada faz diferença. Ajudamos você a construir uma presença digital mais profissional com identidade visual, páginas de campanha e estratégias de marketing alinhadas aos objetivos da sua empresa.",
+    href: "/design",
     interest: "design",
     whatsapp: "Olá! Quero fortalecer a presença e a identidade visual da minha marca.",
     cta: "Quero fortalecer minha marca",
@@ -194,17 +199,16 @@ export function SiteSolutions() {
                   </p>
                 </div>
                 <div className="relative mt-8">
-                  <QuoteLink
-                    interest={solution.interest}
-                    section="sites"
+                  <Link
+                    href={solution.href}
                     className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-violet-gradient px-5 py-3.5 text-center font-semibold text-white shadow-violet-glow transition-transform hover:scale-[1.02]"
                   >
-                    {solution.cta}
+                    Conhecer esta solução
                     <ArrowRight
                       className="h-4 w-4 transition-transform group-hover:translate-x-1"
                       aria-hidden="true"
                     />
-                  </QuoteLink>
+                  </Link>
                   <a
                     data-analytics-section="sites"
                     data-analytics-interest={solution.interest}

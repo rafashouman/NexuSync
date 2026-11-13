@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
         destination: `/${slug}`,
         permanent: true,
       })),
+      { source: "/sistemas-e-automacoes", destination: "/apps", permanent: true },
     ];
   },
   experimental: {

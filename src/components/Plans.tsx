@@ -132,7 +132,7 @@ const itemVariants = {
   },
 };
 
-export function Plans({ sitesOnly = false }: { sitesOnly?: boolean }) {
+export function Plans({ sitesOnly = false, commerceOnly = false }: { sitesOnly?: boolean; commerceOnly?: boolean }) {
   const slots = usePromoSlots();
   return (
     <section
@@ -189,7 +189,7 @@ export function Plans({ sitesOnly = false }: { sitesOnly?: boolean }) {
           viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-1 items-stretch gap-8 md:grid-cols-2"
         >
-          {(sitesOnly ? plans.slice(0, 2) : plans).map((plan) => (
+          {(commerceOnly ? plans.slice(1) : sitesOnly ? plans.slice(0, 2) : plans).map((plan) => (
             <motion.div
               key={plan.name}
               variants={itemVariants}
@@ -318,7 +318,7 @@ export function Plans({ sitesOnly = false }: { sitesOnly?: boolean }) {
           <h3 className="font-display text-2xl">Hotsite dinâmico sob medida</h3>
           <p className="mt-3 leading-7 text-muted-foreground">Para campanhas, eventos e lançamentos que precisam de uma experiência própria. Recursos interativos, investimento e prazo são definidos após entender seu projeto.</p>
           <a href={waLink("Olá! Quero um orçamento para um hotsite dinâmico.")} data-analytics-section="sites" data-analytics-interest="hotsite" target="_blank" rel="noopener noreferrer" className="mt-5 inline-block font-semibold text-violet-200 underline underline-offset-4">Pedir orçamento de hotsite</a>
-          <p className="mt-5 text-sm text-muted-foreground">Precisa vender com carrinho e pagamento online? <a href="/lojas-virtuais" className="text-violet-200 underline">Conheça a opção de loja virtual.</a></p>
+          <p className="mt-5 text-sm text-muted-foreground">Precisa vender com carrinho e pagamento online? <a href="/criacao-de-sites#lojas-virtuais" className="text-violet-200 underline">Conheça a opção de loja virtual.</a></p>
         </div>}
         {/* Barra Inferior de Garantias Técnicas */}
         <motion.div

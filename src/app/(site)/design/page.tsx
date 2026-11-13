@@ -1,5 +1,6 @@
-import { DesignPageContent } from "@/components/PortfolioPages";
+import { DesignPageContent, DesignPageHero } from "@/components/PortfolioPages";
 import { PlansDG } from "@/components/PlansDG";
+import { ServiceJourney } from "@/components/ServiceJourney";
 import { FAQ } from "@/components/FAQ";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
@@ -32,13 +33,15 @@ const designFaqs = [
 export default function DesignPage() {
   return (
     <>
-      <DesignPageContent />
+      <DesignPageHero />
+      <ServiceJourney kind="design" />
       <PlansDG />
       <FAQ
         items={designFaqs}
         heading="Dúvidas sobre identidade visual e design"
         description="Confira o que cada formato pode incluir e como os arquivos finais são definidos."
       />
+      <DesignPageContent />
     </>
   );
 }

@@ -17,7 +17,6 @@ import {
   CalendarClock,
   BarChart3,
   Cpu,
-  Radio,
   Flame,
   MessageSquare,
   UtensilsCrossed,
@@ -32,7 +31,7 @@ import { useFocusTrap } from "@/components/ui/useFocusTrap";
 import { QuoteLink } from "@/components/QuoteLink";
 import { DeviceStage } from "@/components/DeviceStage";
 import { AppCatalogDirectory } from "@/components/AppCatalogDirectory";
-import ArcadeCabinetHub from "@/components/ArcadeCabinetHub";
+import { ServiceSectionNav } from "@/components/ServiceSectionNav";
 
 // =========================================================
 // 1. APPS REAIS DE NEGÓCIOS (AGENDAMENTOS, DELIVERY & DASHBOARDS)
@@ -168,7 +167,7 @@ export function AppsPageContent() {
       {/* =========================================================
           HERO HEADER — FOCO EM SOLUÇÕES REAIS DE NEGÓCIO
       ========================================================= */}
-      <div className="relative z-10 mb-16 flex flex-col justify-between gap-8 border-b border-white/10 pb-12 lg:flex-row lg:items-end">
+      <div className="relative z-10 mb-16 grid gap-8 border-b border-white/10 pb-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-center">
         <div className="max-w-3xl">
           <div className="mb-5 flex flex-wrap items-center gap-2.5">
             <span className="inline-flex items-center gap-2 rounded-full border border-cyan-300/25 bg-cyan-400/[0.08] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-cyan-200">
@@ -200,7 +199,6 @@ export function AppsPageContent() {
             As demonstrações e os dados exibidos são ilustrativos. Recursos,
             integrações e condições de cada aplicação são definidos na proposta.
           </p>
-        </div>
 
         {/* Atalhos Rápidos */}
         <div className="flex flex-wrap items-center gap-3 shrink-0">
@@ -220,7 +218,74 @@ export function AppsPageContent() {
             Orçar Meu Sistema
           </QuoteLink>
         </div>
+        </div>
+        <aside
+          aria-hidden="true"
+          className="relative overflow-hidden rounded-[2rem] border border-cyan-300/15 bg-[#091218] p-5 shadow-[0_30px_90px_-40px_rgba(34,211,238,.5)] sm:p-7"
+        >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-10 -top-16 h-48 w-48 rounded-full bg-cyan-400/10 blur-3xl"
+          />
+          <div className="relative flex items-center justify-between border-b border-white/10 pb-5">
+            <div>
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-200">
+                Exemplo de interface
+              </p>
+              <p className="mt-1 text-sm text-white/60">Painel de operação</p>
+            </div>
+            <span className="grid h-11 w-11 place-items-center rounded-2xl border border-cyan-300/20 bg-cyan-400/10 text-cyan-200">
+              <Cpu className="h-5 w-5" />
+            </span>
+          </div>
+          <div className="relative mt-5 grid grid-cols-2 gap-3">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+              <div className="flex items-center justify-between text-white/50">
+                <span className="text-xs">Agenda de hoje</span>
+                <CalendarClock className="h-4 w-4 text-cyan-200" />
+              </div>
+              <p className="mt-3 font-display text-3xl font-semibold text-white">18</p>
+              <p className="mt-1 text-[10px] text-white/45">horários organizados</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+              <div className="flex items-center justify-between text-white/50">
+                <span className="text-xs">Pedidos</span>
+                <UtensilsCrossed className="h-4 w-4 text-amber-200" />
+              </div>
+              <p className="mt-3 font-display text-3xl font-semibold text-white">06</p>
+              <p className="mt-1 text-[10px] text-white/45">em acompanhamento</p>
+            </div>
+          </div>
+          <div className="relative mt-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+            <div className="mb-4 flex items-center justify-between">
+              <span className="text-xs font-semibold text-white/80">Fluxo do dia</span>
+              <span className="font-mono text-[10px] text-cyan-200">VISÃO DEMONSTRATIVA</span>
+            </div>
+            <div className="flex h-14 items-end gap-2">
+              {[34, 52, 43, 76, 61, 88, 69, 100, 74, 90].map((height, index) => (
+                <span
+                  key={index}
+                  className="flex-1 rounded-t-sm bg-gradient-to-t from-cyan-500/40 to-cyan-200/80"
+                  style={{ height: `${height}%` }}
+                />
+              ))}
+            </div>
+          </div>
+        </aside>
       </div>
+
+      <ServiceSectionNav
+        contained
+        items={[
+          { href: "#sistemas-reais", label: "Sistemas web" },
+          { href: "#apps-necessidades", label: "O que organizar" },
+          { href: "#apps-formatos", label: "Soluções" },
+          { href: "#apps-exemplos", label: "Exemplos" },
+          { href: "#apps-processo", label: "Etapas" },
+          { href: "#aplicacoes", label: "Planos" },
+          { href: "#faq", label: "Dúvidas" },
+        ]}
+      />
 
       {/* =========================================================
           1º BLOCO (DESTAQUE PRINCIPAL): APPS REAIS DE USO COMERCIAL
@@ -399,37 +464,11 @@ export function AppsPageContent() {
         </div>
       </div>
 
-      {/* =========================================================
-          3º BLOCO (ENCERRAMENTO): PULSEDECK ARCADE HUB (GAMES)
-      ========================================================= */}
-      <div
-        id="arcade-live-arena"
-        className="relative z-10 mb-20 border-t border-white/10 pt-20 scroll-mt-28"
-      >
-        <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <div className="mb-2 inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.22em] text-[#00F5D4]">
-              <Radio className="h-4 w-4 animate-pulse" />
-              {"// 03. BÔNUS TRACK · HARDWARE EMULADO NO NAVEGADOR"}
-            </div>
-            <h2 className="font-display text-3xl font-black uppercase tracking-tight text-white sm:text-4xl">
-              PulseDeck <span className="text-[#FFB800]">Arcade Hub</span> (Live)
-            </h2>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="hidden font-mono text-xs text-white/50 sm:inline">
-              Troque os cartuchos ou jogue direto abaixo
-            </span>
-            <Link href="/arcade" className="rounded-xl border border-white/20 px-4 py-2 text-sm">Abrir fliperama</Link>
-          </div>
-        </div>
-
-        <div className="relative rounded-[2.5rem] border border-white/15 bg-gradient-to-b from-[#13111C] via-[#0B0A10] to-[#07060B] p-2 sm:p-4 shadow-[0_30px_100px_rgba(0,0,0,0.85)]">
-          <div className="pointer-events-none absolute -top-px left-12 right-12 h-[2px] bg-gradient-to-r from-transparent via-[#00F5D4] to-transparent opacity-70" />
-          <ArcadeCabinetHub />
-        </div>
-      </div>
+      <aside className="mb-12 rounded-3xl border border-white/10 p-6 sm:p-8">
+        <h2 className="font-display text-2xl">Conheça nosso fliperama</h2>
+        <p className="mt-3 text-muted-foreground">Explore os jogos completos e descubra ideias para sua campanha.</p>
+        <Link href="/arcade" className="mt-5 inline-flex items-center gap-2 font-semibold text-violet-200">Explorar o fliperama <ArrowUpRight className="h-4 w-4" aria-hidden /></Link>
+      </aside>
 
       <AppCatalogDirectory />
 
@@ -456,7 +495,7 @@ export function AppsPageContent() {
           href="/#contato"
           className="inline-flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-500 px-6 py-2.5 text-xs font-black uppercase tracking-wider text-white transition-all shadow-lg"
         >
-          <span>Falar com a FocusPulse</span>
+          <span>Falar com a NexuSync</span>
           <ArrowUpRight className="h-4 w-4" />
         </Link>
       </div>
@@ -737,6 +776,106 @@ function WorksCarousel({
   );
 }
 
+export function DesignPageHero() {
+  const totalWorks = DESIGN_GALLERIES.reduce((n, g) => n + g.works.length, 0);
+
+  return (
+    <>
+      <section id="design-intro" className="container-luxe scroll-mt-32 pb-14 pt-32 sm:pb-16 sm:pt-40">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.85fr)]">
+          <div className="max-w-3xl">
+            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-400/[0.06] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-violet-200">
+              <Sparkles className="h-3.5 w-3.5 text-fuchsia-300" />
+              Identidade visual · Design
+            </span>
+            <h1 className="mb-6 font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
+              Identidade visual e design{" "}
+              <span className="text-violet-gradient">para valorizar sua marca.</span>
+            </h1>
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              Criamos identidades, peças digitais e interfaces para apresentar
+              sua marca com consistência e intenção.
+            </p>
+            <dl className="mt-8 grid max-w-md grid-cols-2 gap-4">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                <dt className="font-mono text-[10px] uppercase tracking-widest text-white/50">
+                  Projetos no acervo
+                </dt>
+                <dd className="font-display text-3xl font-bold text-white">
+                  <CountUp to={totalWorks} prefix="+" />
+                </dd>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                <dt className="font-mono text-[10px] uppercase tracking-widest text-white/50">
+                  Categorias
+                </dt>
+                <dd className="font-display text-3xl font-bold text-white">
+                  <CountUp to={DESIGN_GALLERIES.length} />
+                </dd>
+              </div>
+            </dl>
+          </div>
+          <div
+            aria-hidden="true"
+            className="relative mx-auto w-full max-w-[500px] overflow-hidden rounded-[2rem] border border-violet-200/15 bg-[#121018] p-5 shadow-[0_30px_90px_-40px_rgba(217,70,239,.5)] sm:p-7"
+          >
+            <div className="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full bg-fuchsia-500/15 blur-3xl" />
+            <div className="relative flex items-center justify-between border-b border-white/10 pb-5">
+              <div className="flex items-center gap-3">
+                <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-violet-400 to-fuchsia-400 font-display text-lg font-black text-white">
+                  N
+                </span>
+                <div>
+                  <p className="font-semibold text-white">Sistema de marca</p>
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-white/45">Estudo visual</p>
+                </div>
+              </div>
+              <Sparkles className="h-5 w-5 text-fuchsia-200" />
+            </div>
+            <div className="relative py-7">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-200">Direção de arte</p>
+              <p className="mt-3 font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+                Marca com <span className="text-violet-gradient">presença.</span>
+              </p>
+              <div className="mt-6 flex gap-2">
+                {["#8B5CF6", "#D946EF", "#F4B860", "#F4F1EA"].map((color) => (
+                  <span
+                    key={color}
+                    className="h-9 flex-1 rounded-xl border border-white/10"
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="relative grid grid-cols-2 gap-3">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                <p className="font-mono text-[9px] uppercase tracking-widest text-white/45">Tipografia</p>
+                <p className="mt-2 font-display text-xl font-bold text-white">Aa Bb Cc</p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                <p className="font-mono text-[9px] uppercase tracking-widest text-white/45">Aplicações</p>
+                <p className="mt-2 text-sm font-semibold text-white">Digital · Editorial</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <ServiceSectionNav
+        items={[
+          { href: "#conteudo-design", label: "Portfólio" },
+          { href: "#design-grafico", label: "Design gráfico" },
+          { href: "#web-design", label: "Web design" },
+          { href: "#design-necessidades", label: "O que sua marca precisa" },
+          { href: "#design-formatos", label: "Formatos e entregas" },
+          { href: "#design-processo", label: "Etapas" },
+          { href: "#midias-digitais", label: "Planos" },
+          { href: "#faq", label: "Dúvidas" },
+        ]}
+      />
+    </>
+  );
+}
+
 export function DesignPageContent() {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -778,7 +917,6 @@ export function DesignPageContent() {
     (g) => activeTab === "all" || g.id === activeTab
   );
   const normalizedQuery = searchQuery.trim().toLowerCase();
-  const totalWorks = DESIGN_GALLERIES.reduce((n, g) => n + g.works.length, 0);
   const totalMatches = visibleGalleries.reduce(
     (n, g) =>
       n +
@@ -789,38 +927,19 @@ export function DesignPageContent() {
   );
 
   return (
-    <section id="conteudo-design" className="container-luxe py-32 sm:py-40">
+    <section id="conteudo-design" className="container-luxe scroll-mt-32 pb-24 pt-16 sm:pt-20">
       <div className="mb-12 max-w-3xl">
         <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-400/[0.06] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-violet-200">
           <Sparkles className="h-3.5 w-3.5 text-fuchsia-300" />
-          Acervo Visual · Design
+          Exemplos de trabalhos
         </span>
-        <h1 className="mb-6 font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
-          Identidade visual e design{" "}
-          <span className="text-violet-gradient">para valorizar sua marca.</span>
-        </h1>
+        <h2 className="mb-5 font-display text-3xl font-bold uppercase tracking-tight sm:text-5xl">
+          Projetos de identidade visual e design
+        </h2>
         <p className="text-lg leading-relaxed text-muted-foreground">
-          Uma seleção com mais de 100 projetos de design gráfico, identidade
-          visual, banners para e-commerce e campanhas digitais.
+          Explore exemplos de design gráfico, identidade visual, banners para
+          e-commerce e campanhas digitais.
         </p>
-        <dl className="mt-8 grid max-w-md grid-cols-2 gap-4">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <dt className="font-mono text-[10px] uppercase tracking-widest text-white/50">
-              Projetos
-            </dt>
-            <dd className="font-display text-3xl font-bold text-white">
-              <CountUp to={totalWorks} prefix="+" />
-            </dd>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <dt className="font-mono text-[10px] uppercase tracking-widest text-white/50">
-              Categorias
-            </dt>
-            <dd className="font-display text-3xl font-bold text-white">
-              <CountUp to={DESIGN_GALLERIES.length} />
-            </dd>
-          </div>
-        </dl>
       </div>
 
       {/* Barra de Filtro + Busca Rápida */}
@@ -1304,10 +1423,17 @@ export function TemplatesPageContent() {
     },
   ];
 
-  const [selectedIndex, setSelectedIndex] = useState<number>(3); // Inicia destacando o novo Prime Motors (ou altere para 0)
-  const [fullscreenTemplate, setFullscreenTemplate] = useState<(typeof templates)[0] | null>(null);
+  const orderedTemplates = [
+    ...templates.filter((template) => template.href !== "/templates/academias"),
+    ...templates.filter((template) => template.href === "/templates/academias"),
+  ].map((template, index) => ({
+    ...template,
+    number: String(index + 1).padStart(2, "0"),
+  }));
+  const [selectedIndex, setSelectedIndex] = useState<number>(2);
+  const [fullscreenTemplate, setFullscreenTemplate] = useState<(typeof orderedTemplates)[number] | null>(null);
 
-  const activeTemplate = templates[selectedIndex];
+  const activeTemplate = orderedTemplates[selectedIndex];
 
   useEffect(() => {
     if (!fullscreenTemplate) return;
@@ -1380,7 +1506,7 @@ export function TemplatesPageContent() {
         <div className="mb-6 border-b border-white/10 pb-5">
           {/* Seletor de Projetos (Tabs do Console) */}
           <div role="group" aria-label="Escolha um template para visualizar" className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {templates.map((tpl, idx) => {
+            {orderedTemplates.map((tpl, idx) => {
               const isSelected = idx === selectedIndex;
               return (
                 <button
@@ -1554,7 +1680,7 @@ export function TemplatesPageContent() {
               {"// VISÃO COMPARATIVA DO CATÁLOGO"}
             </p>
             <h2 className="font-display text-2xl font-black uppercase tracking-tight text-white sm:text-4xl">
-              Todos os modelos disponíveis ({templates.length})
+              Todos os modelos disponíveis ({orderedTemplates.length})
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-muted-foreground">
@@ -1564,7 +1690,7 @@ export function TemplatesPageContent() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          {templates.map((template, idx) => {
+          {orderedTemplates.map((template, idx) => {
             const isCurrentlyLoaded = idx === selectedIndex;
             return (
               <article

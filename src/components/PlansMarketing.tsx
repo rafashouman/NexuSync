@@ -58,9 +58,9 @@ export function PlansMarketing() {
           >
             {[
               ["#planos-marketing", "Marketing mensal"],
-              ["#planos", "Sites"],
-              ["#planosapp", "Aplicações"],
-              ["#planosdg", "Design"],
+              ["/criacao-de-sites#planos", "Sites"],
+              ["/apps#planosapp", "Aplicações"],
+              ["/design#planosdg", "Design"],
             ].map(([href, label]) => (
               <a
                 key={href}

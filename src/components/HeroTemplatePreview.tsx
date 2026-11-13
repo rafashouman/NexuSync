@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 
-const templates = [
-  {
-    name: "Academias",
-    brand: "PulseFit",
-    href: "/templates/academias",
-    category: "Fitness e bem-estar",
-  },
+type PreviewTemplate = {
+  name: string;
+  brand: string;
+  href: string;
+  category: string;
+};
+
+const siteTemplates: readonly PreviewTemplate[] = [
   {
     name: "Cardápio",
     brand: "Kobra Burger",
@@ -22,7 +23,46 @@ const templates = [
     href: "/templates/streetwear",
     category: "Moda e e-commerce",
   },
+  {
+    name: "Dog & Açaí",
+    brand: "Dog & Açaí",
+    href: "/templates/dog-e-acai",
+    category: "Cardápio digital",
+  },
+  {
+    name: "Arquitetura",
+    brand: "Ateliê Vão",
+    href: "/templates/arquitetura",
+    category: "Arquitetura residencial",
+  },
+  {
+    name: "Academias",
+    brand: "PulseFit",
+    href: "/templates/academias",
+    category: "Fitness e bem-estar",
+  },
 ] as const;
+
+const shopTemplates: readonly PreviewTemplate[] = [
+  {
+    name: "Streetwear",
+    brand: "Vortex Atelier",
+    href: "/templates/streetwear",
+    category: "Moda e e-commerce",
+  },
+  {
+    name: "Carros",
+    brand: "Prime Motors",
+    href: "/templates/carros",
+    category: "Automotivo e seminovos",
+  },
+  {
+    name: "Miniaturas",
+    brand: "Alchemist Voxel",
+    href: "/templates/miniaturas",
+    category: "Arte 3D e colecionáveis",
+  },
+];
 
 const ROTATION_MS = 9000;
 const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
@@ -40,7 +80,12 @@ function subscribeReducedMotion(callback: () => void) {
   return () => query.removeEventListener("change", callback);
 }
 
-export function HeroTemplatePreview() {
+export function HeroTemplatePreview({
+  mode = "sites",
+}: {
+  mode?: "sites" | "shops";
+}) {
+  const templates = mode === "shops" ? shopTemplates : siteTemplates;
   const [activeIndex, setActiveIndex] = useState(0);
   const [userPaused, setUserPaused] = useState(false);
   const [hovering, setHovering] = useState(false);
@@ -56,7 +101,21 @@ export function HeroTemplatePreview() {
     () => true,
   );
   const [iframeReady, setIframeReady] = useState(false);
-  const template = templates[activeIndex];
+  const screenRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0);
+  const visibleIndex = activeIndex % templates.length;
+  const template = templates[visibleIndex];
+
+  useEffect(() => {
+    if (!previewVisible) return;
+    const screen = screenRef.current;
+    if (!screen) return;
+    const observer = new ResizeObserver(([entry]) =>
+      setScale(entry.contentRect.width / 1280),
+    );
+    observer.observe(screen);
+    return () => observer.disconnect();
+  }, [previewVisible]);
 
   // Defer the heavy demo iframe until the main page has loaded and hydrated.
   useEffect(() => {
@@ -88,7 +147,7 @@ export function HeroTemplatePreview() {
       ROTATION_MS,
     );
     return () => clearTimeout(timer);
-  }, [rotating, activeIndex]);
+  }, [rotating, activeIndex, templates.length]);
 
   return (
     <div
@@ -96,51 +155,74 @@ export function HeroTemplatePreview() {
       onMouseLeave={() => setHovering(false)}
       onFocus={() => setHovering(true)}
       onBlur={() => setHovering(false)}
-      className="hidden rounded-3xl border border-violet-300/20 bg-white/[0.03] p-6 shadow-violet-glow lg:block">
+      className={`${mode === "shops" ? "" : "hidden lg:block"} rounded-3xl border border-violet-300/20 bg-white/[0.03] p-6 shadow-violet-glow`}>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <p className="text-xs font-semibold uppercase tracking-widest text-violet-200">
-          Prévia de sites demonstrativos
+          {mode === "shops" ? "Prévia de lojas virtuais" : "Prévia de sites demonstrativos"}
         </p>
         <span className="text-xs text-muted-foreground">
           {template.category}
         </span>
       </div>
 
-      {/* Phone at 1024–1279px; tablet viewport (768×1024) from 1280px. */}
-      <div className="mx-auto w-fit max-w-full rounded-[2.75rem] border border-white/15 bg-[#05060a] p-3 shadow-2xl xl:rounded-[2rem]">
-        <div className="relative h-[608px] w-[280px] overflow-hidden rounded-[2.1rem] bg-[#0b0d10] xl:h-[480px] xl:w-[360px] xl:rounded-[1.25rem] 2xl:h-[544px] 2xl:w-[408px]">
-          <span
-            aria-hidden
-            className="absolute left-1/2 top-2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-black xl:top-1 xl:h-1.5 xl:w-1.5"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 grid place-items-center bg-gradient-to-b from-violet-950/60 to-[#0b0d10] text-xs font-semibold text-violet-200/70"
-          >
-            {template.brand}
+      <div className="mx-auto w-full max-w-[500px]">
+        <div className="rounded-t-2xl border border-white/15 bg-[#05060a] p-2.5 pb-2 shadow-2xl">
+          <div className="flex h-8 items-center gap-1.5 border-b border-white/[0.08] bg-[#0b0e13] px-3">
+            <span aria-hidden className="h-2 w-2 rounded-full bg-[#ff6b61]" />
+            <span aria-hidden className="h-2 w-2 rounded-full bg-[#ffc14f]" />
+            <span aria-hidden className="h-2 w-2 rounded-full bg-[#49c781]" />
+            <span className="ml-2 min-w-0 truncate rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-0.5 font-mono text-[10px] text-white/50">
+              nexusync.online{template.href}
+            </span>
           </div>
-          {iframeReady && previewVisible && <iframe
-            key={template.href}
-            src={template.href}
-            title={`Prévia responsiva demonstrativa do site ${template.brand}, categoria ${template.category}`}
-            scrolling="no"
-            tabIndex={-1}
-            className="pointer-events-none absolute left-0 top-0 h-[844px] w-[390px] origin-top-left scale-[0.718] border-0 xl:h-[1024px] xl:w-[768px] xl:scale-[0.46875] 2xl:scale-[0.53125]"
-                      />}
+          <div
+            ref={screenRef}
+            className="relative aspect-[1280/760] w-full overflow-hidden rounded-b-lg bg-[#0b0d10]"
+          >
+            <div
+              aria-hidden
+              className="absolute inset-0 grid place-items-center bg-gradient-to-b from-violet-950/60 to-[#0b0d10] text-xs font-semibold text-violet-200/70"
+            >
+              {template.brand}
+            </div>
+            {iframeReady && previewVisible && scale > 0 && (
+              <iframe
+                key={template.href}
+                src={template.href}
+                title={`Prévia responsiva demonstrativa do site ${template.brand}, categoria ${template.category}`}
+                scrolling="no"
+                tabIndex={-1}
+                className="pointer-events-none absolute left-0 top-0 origin-top-left border-0"
+                style={{
+                  width: 1280,
+                  height: 760,
+                  transform: `scale(${scale})`,
+                }}
+              />
+            )}
+          </div>
         </div>
+        <div
+          aria-hidden
+          className="mx-auto h-3 w-[108%] -translate-x-[3.7%] rounded-b-[1.2rem] border border-t-0 border-white/15 bg-gradient-to-b from-[#2a2b33] to-[#14151a]"
+        />
       </div>
 
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
         <div
           className="flex flex-wrap gap-2"
-          aria-label="Escolha um template para visualizar"
+          aria-label={
+            mode === "shops"
+              ? "Escolha uma loja demonstrativa para visualizar"
+              : "Escolha um template para visualizar"
+          }
         >
           {templates.map((item, index) => (
             <button
               key={item.href}
               type="button"
               onClick={() => setActiveIndex(index)}
-              aria-pressed={index === activeIndex}
+              aria-pressed={index === visibleIndex}
               className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300 ${
                 index === activeIndex
                   ? "border-violet-300/50 bg-violet-400/15 text-white"

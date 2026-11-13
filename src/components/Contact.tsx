@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -32,9 +32,15 @@ const FIELD =
 const LABEL = "text-xs font-bold uppercase tracking-widest text-muted-foreground";
 
 export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }) {
-  const visibleInterests = homeOffersOnly ? HOME_QUOTE_INTERESTS : QUOTE_INTERESTS;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [interest, setInterest] = useState<string>("nao-sei");
+  const visibleInterests = useMemo(() => {
+    if (!homeOffersOnly) return QUOTE_INTERESTS;
+    const selected = QUOTE_INTERESTS.find(item => item.id === interest);
+    return selected && !HOME_QUOTE_INTERESTS.some(item => item.id === selected.id)
+      ? [...HOME_QUOTE_INTERESTS, selected]
+      : HOME_QUOTE_INTERESTS;
+  }, [homeOffersOnly, interest]);
   const [interestSource, setInterestSource] = useState<QuoteSection>("form");
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [error, setError] = useState("");
@@ -45,7 +51,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
     const onInterest = (event: Event) => {
       const detail = (event as CustomEvent<{ id?: string | null; source?: unknown }>).detail;
       if (isQuoteSection(detail?.source)) setInterestSource(detail.source);
-      if (detail?.id && visibleInterests.some((item) => item.id === detail.id)) {
+      if (detail?.id && QUOTE_INTERESTS.some((item) => item.id === detail.id)) {
         const source = isQuoteSection(detail.source) ? detail.source : "form";
         setInterestSource(source);
         trackAnalyticsEvent({
@@ -67,7 +73,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setInterestSource(initialSource);
     }
-    if (initialInterest && visibleInterests.some((item) => item.id === initialInterest)) {
+    if (initialInterest && QUOTE_INTERESTS.some((item) => item.id === initialInterest)) {
       const source = isQuoteSection(initialSource) ? initialSource : "form";
       setInterest(initialInterest);
       setInterestSource(source);
@@ -79,7 +85,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
     }
 
     return () => window.removeEventListener(INTEREST_EVENT, onInterest);
-  }, [visibleInterests]);
+  }, []);
 
   const handleFormStart = () => {
     if (formStarted.current) return;

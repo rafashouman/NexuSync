@@ -12,16 +12,6 @@ import {
 const projects = [
   {
     number: "01",
-    category: "Fitness & bem-estar",
-    title: "PulseFit",
-    description:
-      "Uma apresentação para academias, com informações sobre modalidades e formas de contato.",
-    objective: "Apresentar serviços e facilitar pedidos de aula experimental.",
-    href: "/templates/academias",
-    theme: "from-orange-500/20 via-[#181512] to-[#0c0d0f]",
-  },
-  {
-    number: "02",
     category: "Gastronomia",
     title: "Kobra Burger Lab",
     description:
@@ -31,7 +21,7 @@ const projects = [
     theme: "from-amber-200/15 via-[#1c1713] to-[#0c0d0f]",
   },
   {
-    number: "03",
+    number: "02",
     category: "E-commerce & moda",
     title: "Vortex Atelier",
     description:
@@ -41,7 +31,7 @@ const projects = [
     theme: "from-violet-300/20 via-[#17111f] to-[#0c0d0f]",
   },
   {
-    number: "04",
+    number: "03",
     category: "Automotivo & Seminovos",
     title: "Prime Motors",
     description:
@@ -51,7 +41,7 @@ const projects = [
     theme: "from-blue-500/20 via-[#101726] to-[#0c0d0f]",
   },
   {
-    number: "05",
+    number: "04",
     category: "Arte 3D & Colecionáveis",
     title: "Alchemist Voxel",
     description:
@@ -61,24 +51,34 @@ const projects = [
     theme: "from-fuchsia-500/25 via-[#140d1f] to-[#08060c]",
   },
   {
-    number: "06",
-    category: "Bem-estar & Experiência",
-    title: "Oráculo Connection",
+    number: "05",
+    category: "Cardápio digital",
+    title: "Dog & Açaí",
     description:
-      "Jornada interativa em 3 etapas: escolha do monte, intenção e revelação.",
-    objective: "Conduzir o visitante por uma experiência interativa e apresentar o próximo passo.",
-    href: "/templates/connection",
-    theme: "from-amber-500/20 via-[#14110a] to-[#070709]",
+      "Cardápio digital para montar cachorro-quente, escolher adicionais do açaí e revisar o pedido.",
+    objective: "Facilitar pedidos para entrega ou retirada.",
+    href: "/templates/dog-e-acai",
+    theme: "from-fuchsia-500/25 via-[#211226] to-[#100b14]",
+  },
+  {
+    number: "06",
+    category: "Arquitetura residencial",
+    title: "Ateliê Vão",
+    description:
+      "Portfólio de arquitetura residencial com apresentação de projetos e plantas em 3D.",
+    objective: "Apresentar projetos e facilitar o contato sobre cada trabalho.",
+    href: "/templates/arquitetura",
+    theme: "from-amber-500/20 to-stone-950",
   },
   {
     number: "07",
-    category: "Restaurantes & Reservas",
-    title: "Kobra Fire Reservas",
+    category: "Fitness & bem-estar",
+    title: "PulseFit",
     description:
-      "Reserva de mesas VIP, comanda digital e pedidos em um único painel para a operação do restaurante.",
-    objective: "Apresentar opções de reserva e receber solicitações de atendimento.",
-    href: "/templates/reservas",
-    theme: "from-red-500/20 via-[#1c0f0e] to-[#0c0807]",
+      "Uma apresentação para academias, com informações sobre modalidades e formas de contato.",
+    objective: "Apresentar serviços e facilitar pedidos de aula experimental.",
+    href: "/templates/academias",
+    theme: "from-orange-500/20 via-[#181512] to-[#0c0d0f]",
   },
 ];
 
@@ -221,7 +221,7 @@ export function SelectedWork() {
 
   return (
     <section
-      id="trabalhos"
+      id="templates"
       className="relative scroll-mt-24 border-y border-violet-200/[0.08] bg-[#110d18]/65 py-24 backdrop-blur-2xl sm:py-32"
     >
       <div className="container-luxe">

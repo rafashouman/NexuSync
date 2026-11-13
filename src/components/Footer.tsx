@@ -37,23 +37,22 @@ export function Footer() {
             <ul className="space-y-4 text-sm text-muted-foreground">
               <li><Link href="/" className="hover:text-violet-200 transition-colors">Início</Link></li>
               <li><Link href="/quem-somos" className="hover:text-violet-200 transition-colors">Quem somos</Link></li>
-              <li><Link href="/apps" className="hover:text-violet-200 transition-colors">Aplicativos</Link></li>
-              <li><Link href="/design" className="hover:text-violet-200 transition-colors">Design</Link></li>
-              <li><Link href="/templates" className="hover:text-violet-200 transition-colors">Exemplos de sites</Link></li>
-              <li><Link href="/#planos" className="hover:text-violet-200 transition-colors">Planos & Preços</Link></li>
-              <li><Link href="/#faq" className="hover:text-violet-200 transition-colors">FAQ</Link></li>
+              <li><Link href="/criacao-de-sites" className="hover:text-violet-200 transition-colors">Criação de sites</Link></li>
+              <li><Link href="/criacao-de-sites#lojas-virtuais" className="hover:text-violet-200 transition-colors">Lojas virtuais e catálogos</Link></li>
+              <li><Link href="/apps" className="hover:text-violet-200 transition-colors">Sistemas web</Link></li>
+              <li><Link href="/criacao-de-sites#templates" className="hover:text-violet-200 transition-colors">Templates e exemplos</Link></li>
+              <li><Link href="/marketing" className="hover:text-violet-200 transition-colors">Marketing</Link></li>
+              <li><Link href="/criacao-de-sites#planos" className="hover:text-violet-200 transition-colors">Planos & Preços</Link></li>
               <li><Link href="/privacidade" className="hover:text-violet-200 transition-colors">Privacidade</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-foreground mb-6 uppercase tracking-widest text-xs">Outras soluções</h4>
+            <h4 className="font-bold text-foreground mb-6 uppercase tracking-widest text-xs">Produtos</h4>
             <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><Link href="/marketing" className="hover:text-violet-200 transition-colors">Marketing digital</Link></li>
-              <li><Link href="/lojas-virtuais" className="hover:text-violet-200 transition-colors">Lojas virtuais</Link></li>
-              <li><Link href="/arcsync" className="hover:text-violet-200 transition-colors">ArcSync (pré-lançamento)</Link></li>
-              <li><Link href="/visionsync" className="hover:text-violet-200 transition-colors">VisionSync (pré-lançamento)</Link></li>
-              <li><Link href="/arcade" className="hover:text-violet-200 transition-colors">Experiências interativas</Link></li>
+              <li><Link href="/arcsync" className="hover:text-violet-200 transition-colors">ArcSync</Link></li>
+              <li><Link href="/visionsync" className="hover:text-violet-200 transition-colors">VisionSync</Link></li>
+              <li><Link href="/arcade" className="hover:text-violet-200 transition-colors">Arcade</Link></li>
             </ul>
           </div>
 

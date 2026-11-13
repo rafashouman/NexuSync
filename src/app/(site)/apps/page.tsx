@@ -1,5 +1,6 @@
 import { AppsPageContent } from "@/components/PortfolioPages";
 import { PlansApps } from "@/components/PlansApps";
+import { ServiceJourney } from "@/components/ServiceJourney";
 import { FAQ } from "@/components/FAQ";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
@@ -33,6 +34,7 @@ export default function AppsPage() {
   return (
     <>
       <AppsPageContent />
+      <ServiceJourney kind="apps" />
       <PlansApps />
       <FAQ
         items={appFaqs}

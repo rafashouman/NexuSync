@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/Hero";
-import { SelectedWork } from "@/components/SelectedWork";
 import { SiteSolutions, SiteBenefits, SiteProcess } from "@/components/SiteSections";
 import { Plans } from "@/components/Plans";
 import { PlansApps } from "@/components/PlansApps";
@@ -23,7 +22,6 @@ export default function HomePage() {
     <>
       <Hero />
       <SiteSolutions />
-      <SelectedWork />
       <SiteBenefits />
       <SiteProcess />
       <Plans sitesOnly />

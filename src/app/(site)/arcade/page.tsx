@@ -18,6 +18,10 @@ export default function ArcadePage() {
         <p className="mb-3 font-mono text-xs font-bold uppercase tracking-[0.2em] text-violet-200">
           NexuSync Labs
         </p>
+        <p className="mb-5 max-w-2xl font-display text-xl font-semibold leading-relaxed text-cyan-100 sm:text-2xl">
+          Gamifique a experiência do usuário e transforme cada interação em
+          vontade de participar.
+        </p>
         <h1 className="mb-4 font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
           Arcade
         </h1>
