@@ -2,6 +2,14 @@ import { AppGuide } from "@/components/AppGuide";
 import { tours } from "@/data/appTours";
 import ArcadeCabinetHub from "@/components/ArcadeCabinetHub";
 import { Radio } from "lucide-react";
+import { nexuSyncMetadata } from "@/lib/site-metadata";
+
+export const metadata = nexuSyncMetadata({
+  title: "Arcade interativo PulseDeck | NexuSync",
+  description:
+    "Explore o PulseDeck, uma demonstração de experiências interativas e jogos executados no navegador pela NexuSync.",
+  path: "/arcade",
+});
 
 export default function ArcadePage() {
   return (

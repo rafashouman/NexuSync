@@ -1,4 +1,12 @@
 import Link from "next/link";
+import { nexuSyncMetadata } from "@/lib/site-metadata";
+
+export const metadata = nexuSyncMetadata({
+  title: "Aviso de Privacidade | NexuSync",
+  description:
+    "Saiba quais dados a NexuSync coleta neste site, como são usados, por quanto tempo ficam armazenados e como exercer seus direitos.",
+  path: "/privacidade",
+});
 
 export default function PrivacyPage() {
   return (

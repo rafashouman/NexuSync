@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { appCatalog } from "@/data/appCatalog";
 
-const publicPaths = [
+const publicPaths = [...new Set([
   "/",
   "/quem-somos",
   "/apps",
@@ -13,7 +13,7 @@ const publicPaths = [
   "/templates/cyber-oregon",
   "/privacidade",
   ...appCatalog.map(app => app.path),
-];
+])];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return publicPaths.map((path) => ({

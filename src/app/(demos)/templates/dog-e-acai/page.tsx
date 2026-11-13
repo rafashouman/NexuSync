@@ -1,13 +1,15 @@
 import { AppGuide } from "@/components/AppGuide";
 import { tours } from "@/data/appTours";
-import type { Metadata } from "next";
 import DeliveryMenu from "@/components/DeliveryMenu";
+import { nexuSyncMetadata } from "@/lib/site-metadata";
 
-export const metadata: Metadata = {
-  title: "Dog & Açaí | Cardápio digital NexuSync",
-  openGraph: { title: "Dog & Açaí | Cardápio digital", description: "Cachorros-quentes na chapa, açaí no copo e combos para delivery.", images: ["https://nexusync.online/images/dog-acai/cardapio.webp"] },
-  description: "Monte seu cachorro-quente, personalize o açaí e experimente o pedido para entrega ou retirada.",
-};
+export const metadata = nexuSyncMetadata({
+  title: "Cardápio digital para lancheria | Demonstração Dog & Açaí",
+  description:
+    "Explore um cardápio digital para lancheria: personalize cachorro-quente, açaí e combos para entrega ou retirada.",
+  path: "/templates/dog-e-acai",
+  image: "/images/dog-acai/cardapio.webp",
+});
 
 export default function DogAcaiPage() {
   return <><AppGuide slug="dog-e-acai" steps={tours["dog-e-acai"]} /><DeliveryMenu dogAcai /></>;

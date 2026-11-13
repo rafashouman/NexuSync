@@ -3,6 +3,7 @@ import Link from "next/link";
 import { appCatalog } from "@/data/appCatalog";
 import { AppGuide } from "./AppGuide";
 import { tours } from "@/data/appTours";
+import { nexuSyncMetadata } from "@/lib/site-metadata";
 
 type Slug = keyof typeof tours;
 
@@ -15,7 +16,7 @@ function entry(slug: Slug) {
 export function demoMetadata(slug: Slug): Metadata {
   const { name, description, path } = entry(slug);
   const title = `${name} | NexuSync`;
-  return { title, description, openGraph: { title, description, url: `https://nexusync.online${path}` } };
+  return nexuSyncMetadata({ title, description, path });
 }
 
 export function DemoPage({ slug, children }: { slug: Slug; children: React.ReactNode }) {

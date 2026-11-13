@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import PilotosLanding from "@/components/hotsites/PilotosLanding";
+import { nexuSyncMetadata } from "@/lib/site-metadata";
 
-export const metadata: Metadata = {
-  title: "Seguro de Vida para Pilotos | Costi Corretora",
+export const metadata = nexuSyncMetadata({
+  title: "Seguro para pilotos | Demonstração de site NexuSync",
   description:
-    "Seguro de vida sem exclusão para aviação: agrícola, executiva, comercial e helicópteros. Cotação em até 15 minutos.",
-};
+    "Conheça uma demonstração de página para cotação de seguro de vida voltado a pilotos de diferentes modalidades de aviação.",
+  path: "/templates/seguro-piloto",
+});
 
 export default function SeguroPilotoPage() {
   return <PilotosLanding />;

@@ -3,9 +3,19 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
   async redirects() {
-    return ["chronos", "pulsemetrics", "pulsespin", "memory", "arknoid", "images-blend", "voxelvaders", "pulse-arkanoid", "cyber-tarot"].map(slug => ({
-      source: `/apps/${slug}`, destination: `/${slug}`, permanent: true,
-    }));
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.nexusync.online" }],
+        destination: "https://nexusync.online/:path*",
+        permanent: true,
+      },
+      ...["chronos", "pulsemetrics", "pulsespin", "memory", "arknoid", "images-blend", "voxelvaders", "pulse-arkanoid", "cyber-tarot"].map(slug => ({
+        source: `/apps/${slug}`,
+        destination: `/${slug}`,
+        permanent: true,
+      })),
+    ];
   },
   experimental: {
     agentUpgrade: "security",
