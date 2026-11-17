@@ -1,5 +1,6 @@
 "use client";
 
+import { AccentText } from "@/components/AccentText";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import NextImage from "next/image";
@@ -51,8 +52,8 @@ const realBusinessApps = [
       "Confirmação com nome, data e horário",
     ],
     tech: ["Agenda digital", "Next.js", "Painel de gestão"],
-    accent: "from-blue-500/25 via-indigo-500/10 to-transparent",
-    borderGlow: "hover:border-blue-400/60",
+    accent: "from-turquoise/25 via-turquoise/10 to-transparent",
+    borderGlow: "hover:border-turquoise/60",
     buttonLabel: "Testar Sistema de Agendamento",
     icon: CalendarClock,
   },
@@ -71,8 +72,8 @@ const realBusinessApps = [
       "Fechamento de conta e envio estruturado no WhatsApp",
     ],
     tech: ["Next.js App Router", "KDS Kitchen Monitor", "Carrinho Dinâmico", "WhatsApp API"],
-    accent: "from-orange-500/25 via-amber-500/10 to-transparent",
-    borderGlow: "hover:border-orange-400/60",
+    accent: "from-champagne/25 via-champagne/10 to-transparent",
+    borderGlow: "hover:border-champagne/60",
     buttonLabel: "Abrir Sistema Delivery & KDS",
     icon: UtensilsCrossed,
   },
@@ -85,8 +86,8 @@ const realBusinessApps = [
     description: "Deixe o cliente montar o cachorro-quente, escolher os complementos do açaí e revisar o pedido pelo celular.",
     highlights: ["Adicionais doces e salgados por produto", "Combos com preço calculado na hora", "Sacola com entrega ou retirada"],
     tech: ["Cardápio digital", "Combos", "WhatsApp"],
-    accent: "from-fuchsia-500/25 via-orange-500/10 to-transparent",
-    borderGlow: "hover:border-fuchsia-400/60",
+    accent: "from-turquoise/25 via-champagne/10 to-transparent",
+    borderGlow: "hover:border-turquoise/60",
     buttonLabel: "Experimentar Dog & Açaí",
     icon: UtensilsCrossed,
   },
@@ -104,8 +105,8 @@ const realBusinessApps = [
       "Simulador de projeção de vendas e exportação de dados",
     ],
     tech: ["Analytics BI", "Meta Pixel SDK", "SVG Telemetry", "React 19"],
-    accent: "from-cyan-400/25 via-teal-500/10 to-transparent",
-    borderGlow: "hover:border-cyan-400/60",
+    accent: "from-turquoise/25 via-turquoise/10 to-transparent",
+    borderGlow: "hover:border-turquoise/60",
     buttonLabel: "Abrir painel de vendas",
     icon: BarChart3,
   },
@@ -123,7 +124,7 @@ const playfulApps = [
     description:
       "Roleta promocional com física de desaceleração e liberação de cupons exclusivos para transformar visitantes indecisos em clientes no WhatsApp.",
     icon: Flame,
-    accent: "from-fuchsia-500/20 via-violet-500/5 to-transparent",
+    accent: "from-turquoise/20 via-turquoise/5 to-transparent",
   },
   {
     id: "memory",
@@ -143,7 +144,7 @@ const playfulApps = [
     description:
       "Releitura vetorial de Arkanoid projetada para demonstrar colisão elástica, deflexão angular e partículas em tempo real.",
     icon: Code2,
-    accent: "from-amber-400/20 via-orange-500/5 to-transparent",
+    accent: "from-champagne/20 via-champagne/5 to-transparent",
   },
   {
     id: "images-blend",
@@ -153,7 +154,7 @@ const playfulApps = [
     description:
       "Ferramenta criativa para composição multicamada com controle de opacidade, matiz e blend modes direto no navegador.",
     icon: Sparkles,
-    accent: "from-violet-500/20 via-indigo-500/5 to-transparent",
+    accent: "from-turquoise/20 via-turquoise/5 to-transparent",
   },
 ];
 
@@ -161,17 +162,17 @@ export function AppsPageContent() {
   return (
     <section className="container-luxe py-28 sm:py-36 relative">
       {/* Ambient Background Glows */}
-      <div className="pointer-events-none absolute top-12 left-1/4 h-[450px] w-[450px] rounded-full bg-blue-600/10 blur-[150px]" />
-      <div className="pointer-events-none absolute top-1/3 right-10 h-[400px] w-[400px] rounded-full bg-cyan-500/10 blur-[140px]" />
+      <div className="pointer-events-none absolute top-12 left-1/4 h-[450px] w-[450px] rounded-full bg-champagne/10 blur-[150px]" />
+      <div className="pointer-events-none absolute top-1/3 right-10 h-[400px] w-[400px] rounded-full bg-turquoise/10 blur-[140px]" />
 
       {/* =========================================================
           HERO HEADER — FOCO EM SOLUÇÕES REAIS DE NEGÓCIO
       ========================================================= */}
-      <div className="relative z-10 mb-16 grid gap-8 border-b border-white/10 pb-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-center">
+      <div className="relative z-10 mb-16 grid gap-8 border-b border-turquoise/40 pb-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-center">
         <div className="max-w-3xl">
           <div className="mb-5 flex flex-wrap items-center gap-2.5">
-            <span className="inline-flex items-center gap-2 rounded-full border border-cyan-300/25 bg-cyan-400/[0.08] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-cyan-200">
-              <Cpu className="h-3.5 w-3.5 text-cyan-300" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-turquoise/40 bg-turquoise/[0.08] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-ice">
+              <Cpu className="h-3.5 w-3.5 text-ice" />
               Sistemas Web, Agendamentos, Delivery & Dashboards
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 font-mono text-[11px] font-bold text-emerald-300">
@@ -180,31 +181,28 @@ export function AppsPageContent() {
             </span>
           </div>
 
-          <h1 className="mb-6 font-display text-4xl font-black uppercase tracking-tight text-white sm:text-6xl lg:leading-[1.02]">
+          <h1 className="mb-6 font-display text-4xl font-black uppercase tracking-tight text-ivory sm:text-6xl lg:leading-[1.02]">
             Sistemas web e automações{" "}
-            <span className="text-violet-gradient italic">
+            <span className="text-brand-gradient italic">
               para organizar a rotina do seu negócio.
             </span>
           </h1>
           <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
             Teste na prática nossos sistemas de{" "}
-            <strong className="text-white">
+            <strong className="text-ivory">
               agendamento online, pedidos de delivery com monitor de cozinha e
               dashboards gerenciais
             </strong>
             . Logo abaixo, explore também nossas ferramentas lúdicas de
             gamificação e o fliperama interativo.
           </p>
-          <p className="mt-4 max-w-3xl rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-muted-foreground">
-            As demonstrações e os dados exibidos são ilustrativos. Recursos,
-            integrações e condições de cada aplicação são definidos na proposta.
-          </p>
+
 
         {/* Atalhos Rápidos */}
-        <div className="flex flex-wrap items-center gap-3 shrink-0">
+        <div className="mt-7 flex flex-wrap items-center gap-3 shrink-0">
           <a
             href="#todos-os-aplicativos"
-            className="inline-flex items-center gap-2 rounded-2xl bg-cyan-400 px-5 py-3.5 font-mono text-xs font-black uppercase tracking-wider text-slate-950 transition-all hover:bg-cyan-300 shadow-[0_0_25px_rgba(34,211,238,0.25)]"
+            className="inline-flex items-center gap-2 rounded-2xl bg-champagne px-5 py-3.5 font-mono text-xs font-black uppercase tracking-wider text-abyss transition-all hover:bg-turquoise shadow-[0_0_25px_rgba(34,211,238,0.25)]"
           >
             <CalendarClock className="h-4 w-4" />
             Ver todos os aplicativos
@@ -212,66 +210,72 @@ export function AppsPageContent() {
           <QuoteLink
             interest="aplicacao-web"
             section="apps"
-            className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3.5 text-xs font-bold uppercase tracking-wider text-white transition-all hover:border-violet-300/50 hover:bg-violet-600"
+            className="inline-flex items-center gap-2 rounded-2xl border border-turquoise/40 bg-ocean/65 px-5 py-3.5 text-xs font-bold uppercase tracking-wider text-ivory transition-all hover:border-turquoise/50 hover:bg-champagne hover:text-abyss"
           >
             <MessageSquare className="h-4 w-4" />
             Orçar Meu Sistema
           </QuoteLink>
         </div>
         </div>
+        <div className="min-w-0">
         <aside
           aria-hidden="true"
-          className="relative overflow-hidden rounded-[2rem] border border-cyan-300/15 bg-[#091218] p-5 shadow-[0_30px_90px_-40px_rgba(34,211,238,.5)] sm:p-7"
+          className="relative overflow-hidden rounded-[2rem] border border-turquoise/40 bg-ocean p-5 shadow-[0_30px_90px_-40px_rgba(34,211,238,.5)] sm:p-7"
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -right-10 -top-16 h-48 w-48 rounded-full bg-cyan-400/10 blur-3xl"
+            className="pointer-events-none absolute -right-10 -top-16 h-48 w-48 rounded-full bg-turquoise/10 blur-3xl"
           />
-          <div className="relative flex items-center justify-between border-b border-white/10 pb-5">
+          <div className="relative flex items-center justify-between border-b border-turquoise/40 pb-5">
             <div>
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-200">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-ice">
                 Exemplo de interface
               </p>
-              <p className="mt-1 text-sm text-white/60">Painel de operação</p>
+              <p className="mt-1 text-sm text-ivory/85">Painel de operação</p>
             </div>
-            <span className="grid h-11 w-11 place-items-center rounded-2xl border border-cyan-300/20 bg-cyan-400/10 text-cyan-200">
+            <span className="grid h-11 w-11 place-items-center rounded-2xl border border-turquoise/40 bg-turquoise/10 text-ice">
               <Cpu className="h-5 w-5" />
             </span>
           </div>
           <div className="relative mt-5 grid grid-cols-2 gap-3">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-              <div className="flex items-center justify-between text-white/50">
+            <div className="rounded-2xl border border-turquoise/40 bg-ocean/65 p-4">
+              <div className="flex items-center justify-between text-ivory/85">
                 <span className="text-xs">Agenda de hoje</span>
-                <CalendarClock className="h-4 w-4 text-cyan-200" />
+                <CalendarClock className="h-4 w-4 text-ice" />
               </div>
-              <p className="mt-3 font-display text-3xl font-semibold text-white">18</p>
-              <p className="mt-1 text-[10px] text-white/45">horários organizados</p>
+              <p className="mt-3 font-display text-3xl font-semibold text-ivory">18</p>
+              <p className="mt-1 text-[10px] text-ivory/85">horários organizados</p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-              <div className="flex items-center justify-between text-white/50">
+            <div className="rounded-2xl border border-turquoise/40 bg-ocean/65 p-4">
+              <div className="flex items-center justify-between text-ivory/85">
                 <span className="text-xs">Pedidos</span>
-                <UtensilsCrossed className="h-4 w-4 text-amber-200" />
+                <UtensilsCrossed className="h-4 w-4 text-champagne" />
               </div>
-              <p className="mt-3 font-display text-3xl font-semibold text-white">06</p>
-              <p className="mt-1 text-[10px] text-white/45">em acompanhamento</p>
+              <p className="mt-3 font-display text-3xl font-semibold text-ivory">06</p>
+              <p className="mt-1 text-[10px] text-ivory/85">em acompanhamento</p>
             </div>
           </div>
-          <div className="relative mt-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+          <div className="relative mt-3 rounded-2xl border border-turquoise/40 bg-ocean/65 p-4">
             <div className="mb-4 flex items-center justify-between">
-              <span className="text-xs font-semibold text-white/80">Fluxo do dia</span>
-              <span className="font-mono text-[10px] text-cyan-200">VISÃO DEMONSTRATIVA</span>
+              <span className="text-xs font-semibold text-ivory/80">Fluxo do dia</span>
+              <span className="font-mono text-[10px] text-ice">VISÃO DEMONSTRATIVA</span>
             </div>
             <div className="flex h-14 items-end gap-2">
               {[34, 52, 43, 76, 61, 88, 69, 100, 74, 90].map((height, index) => (
                 <span
                   key={index}
-                  className="flex-1 rounded-t-sm bg-gradient-to-t from-cyan-500/40 to-cyan-200/80"
+                  className="flex-1 rounded-t-sm bg-gradient-to-t from-turquoise/40 to-turquoise/80"
                   style={{ height: `${height}%` }}
                 />
               ))}
             </div>
           </div>
         </aside>
+<p className="mt-3 px-1 text-[11px] leading-5 text-muted-foreground">
+            As demonstrações e os dados exibidos são ilustrativos. Recursos,
+            integrações e condições de cada aplicação são definidos na proposta.
+          </p>
+        </div>
       </div>
 
       <ServiceSectionNav
@@ -291,15 +295,13 @@ export function AppsPageContent() {
           1º BLOCO (DESTAQUE PRINCIPAL): APPS REAIS DE USO COMERCIAL
           (AGENDAMENTOS, DELIVERY/PDV & DASHBOARDS)
       ========================================================= */}
-      <div id="sistemas-reais" className="relative z-10 mb-28 scroll-mt-28">
+      <div id="sistemas-reais" className="relative z-10 mb-28 scroll-mt-40 pt-10 sm:pt-14">
         <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="mb-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">
+            <p className="mb-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-ice">
               {"// 01. SOLUÇÕES PRONTAS PARA EMPRESAS & SERVIÇOS"}
             </p>
-            <h2 className="font-display text-3xl font-black uppercase tracking-tight text-white sm:text-4xl">
-              Agendamentos, Delivery & Dashboards
-            </h2>
+            <h2 className="font-display text-3xl font-black uppercase tracking-tight text-ivory sm:text-4xl"><AccentText text={"Agendamentos, Delivery & Dashboards"} /></h2>
           </div>
           <p className="max-w-md text-xs sm:text-sm text-muted-foreground">
             Clique em qualquer sistema abaixo para abrir e testar o fluxo real
@@ -316,7 +318,7 @@ export function AppsPageContent() {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.08 }}
-                className={`group relative flex flex-col justify-between overflow-hidden rounded-[2.2rem] border border-white/15 bg-[#0c0e14]/95 p-7 shadow-2xl backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1.5 ${app.borderGlow}`}
+                className={`group relative flex flex-col justify-between overflow-hidden rounded-[2.2rem] border border-turquoise/40 bg-ocean/95 p-7 shadow-2xl backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1.5 ${app.borderGlow}`}
               >
                 <div
                   aria-hidden
@@ -329,41 +331,39 @@ export function AppsPageContent() {
                     <span className="rounded-full border border-emerald-400/35 bg-emerald-500/10 px-3 py-1 font-mono text-[10px] font-bold text-emerald-300">
                       ● {app.statusBadge}
                     </span>
-                    <div className="grid h-12 w-12 place-items-center rounded-2xl border border-white/15 bg-black/50 text-white transition-transform duration-300 group-hover:scale-110 group-hover:border-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-950">
+                    <div className="grid h-12 w-12 place-items-center rounded-2xl border border-turquoise/40 bg-abyss/50 text-ivory transition-transform duration-300 group-hover:scale-110 group-hover:border-turquoise group-hover:bg-turquoise group-hover:text-abyss">
                       <Icon className="h-5 w-5" />
                     </div>
                   </div>
 
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-cyan-300 block mb-1">
+                  <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-ice block mb-1">
                     {app.category}
                   </span>
-                  <h3 className="mb-3 font-display text-2xl font-black uppercase tracking-tight text-white">
-                    {app.title}
-                  </h3>
+                  <h3 className="mb-3 font-display text-2xl font-black uppercase tracking-tight text-ivory"><AccentText text={app.title} /></h3>
                   <p className="text-sm leading-relaxed text-muted-foreground mb-5">
                     {app.description}
                   </p>
 
                   {/* Checklist de Funcionalidades de Negócio */}
-                  <div className="space-y-2 mb-6 rounded-2xl border border-white/10 bg-black/35 p-4">
+                  <div className="space-y-2 mb-6 rounded-2xl border border-turquoise/40 bg-abyss/35 p-4">
                     {app.highlights.map((h, i) => (
                       <div
                         key={i}
-                        className="flex items-start gap-2 text-xs text-white/85"
+                        className="flex items-start gap-2 text-xs text-ivory/85"
                       >
-                        <CheckCircle2 className="h-3.5 w-3.5 text-cyan-400 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-3.5 w-3.5 text-ice shrink-0 mt-0.5" />
                         <span>{h}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="relative z-10 pt-4 border-t border-white/10 space-y-4">
+                <div className="relative z-10 pt-4 border-t border-turquoise/40 space-y-4">
                   <div className="flex flex-wrap gap-1.5">
                     {app.tech.map((t) => (
                       <span
                         key={t}
-                        className="rounded-lg border border-white/10 bg-black/40 px-2.5 py-1 font-mono text-[10px] text-white/75"
+                        className="rounded-lg border border-turquoise/40 bg-abyss/40 px-2.5 py-1 font-mono text-[10px] text-ivory/75"
                       >
                         {t}
                       </span>
@@ -372,7 +372,7 @@ export function AppsPageContent() {
 
                   <Link
                       href={app.href ?? `/${app.id}`}
-                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white hover:bg-orange-400 text-slate-950 px-5 py-3.5 text-xs font-black uppercase tracking-wider transition-all shadow-lg"
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-ice hover:bg-champagne text-abyss px-5 py-3.5 text-xs font-black uppercase tracking-wider transition-all shadow-lg hover:text-abyss"
                     >
                       <span>{app.buttonLabel}</span>
                       <MoveUpRight className="h-4 w-4" />
@@ -387,15 +387,13 @@ export function AppsPageContent() {
       {/* =========================================================
           2º BLOCO: MINI-APPS LÚDICOS, GAMIFICAÇÃO & SANDBOX CRIATIVO
       ========================================================= */}
-      <div className="relative z-10 mb-28 border-t border-white/10 pt-20">
+      <div className="relative z-10 mb-28 border-t border-turquoise/40 pt-20">
         <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="mb-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-fuchsia-300">
+            <p className="mb-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-ice">
               {"// 02. ENGAJAMENTO DE CAMPANHAS & EXPERIMENTOS VISUAIS"}
             </p>
-            <h2 className="font-display text-2xl font-black uppercase tracking-tight text-white sm:text-4xl">
-              Jogos e experiências para suas campanhas
-            </h2>
+            <h2 className="font-display text-2xl font-black uppercase tracking-tight text-ivory sm:text-4xl"><AccentText text={"Jogos e experiências para suas campanhas"} /></h2>
           </div>
           <p className="max-w-md text-xs sm:text-sm text-muted-foreground">
             Experimente jogos e ferramentas interativas que podem fazer parte
@@ -416,22 +414,20 @@ export function AppsPageContent() {
 
                 <div className="relative z-10">
                   <div className="mb-6 flex items-center justify-between">
-                    <div className="grid h-12 w-12 place-items-center rounded-2xl border border-violet-300/25 bg-violet-400/[0.08] text-violet-200 transition-transform duration-300 group-hover:scale-105 group-hover:bg-violet-500 group-hover:text-white">
+                    <div className="grid h-12 w-12 place-items-center rounded-2xl border border-turquoise/40 bg-turquoise/[0.08] text-ice transition-transform duration-300 group-hover:scale-105 group-hover:bg-turquoise group-hover:text-abyss">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-violet-200">
+                    <span className="rounded-full border border-turquoise/40 bg-ocean/65 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-ice">
                       {item.tag}
                     </span>
                   </div>
 
-                  <p className="mb-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-violet-200">
+                  <p className="mb-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-ice">
                     {item.category}
                   </p>
                   <div className="mb-3 flex items-center justify-between gap-4">
-                    <h3 className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                      {item.title}
-                    </h3>
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/15 bg-white/5 text-white/70 transition-all group-hover:border-white group-hover:bg-white group-hover:text-black">
+                    <h3 className="font-display text-2xl font-bold tracking-tight text-ivory sm:text-3xl"><AccentText text={item.title} /></h3>
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-turquoise/40 bg-ocean/65 text-ivory/85 transition-all group-hover:border-turquoise group-hover:bg-ice group-hover:text-abyss">
                       <ArrowUpRight className="h-5 w-5" />
                     </span>
                   </div>
@@ -440,11 +436,11 @@ export function AppsPageContent() {
                   </p>
                 </div>
 
-                <div className="relative z-10 mt-6 flex items-center justify-between border-t border-white/[0.08] pt-4 text-xs font-semibold text-violet-200/80">
+                <div className="relative z-10 mt-6 flex items-center justify-between border-t border-turquoise/40 pt-4 text-xs font-semibold text-ice/80">
                   <span>
                     Abrir demonstração
                   </span>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 group-hover:text-violet-200">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-ivory/85 group-hover:text-ice">
                     Iniciar Experiência →
                   </span>
                 </div>
@@ -455,7 +451,7 @@ export function AppsPageContent() {
               <Link
                 key={item.id}
                 href={`/${item.id}`}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-[2rem] border border-white/10 bg-[#0c0e14]/85 p-7 shadow-2xl backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-300/35 sm:p-9"
+                className="group relative flex flex-col justify-between overflow-hidden rounded-[2rem] border border-turquoise/40 bg-ocean/85 p-7 shadow-2xl backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1.5 hover:border-turquoise/35 sm:p-9"
               >
                 {CardInner}
               </Link>
@@ -464,27 +460,27 @@ export function AppsPageContent() {
         </div>
       </div>
 
-      <aside className="mb-12 rounded-3xl border border-white/10 p-6 sm:p-8">
-        <h2 className="font-display text-2xl">Conheça nosso fliperama</h2>
+      <aside className="mb-12 rounded-3xl border border-turquoise/40 p-6 sm:p-8">
+        <h2 className="font-display text-2xl"><AccentText text={"Conheça nosso fliperama"} /></h2>
         <p className="mt-3 text-muted-foreground">Explore os jogos completos e descubra ideias para sua campanha.</p>
-        <Link href="/arcade" className="mt-5 inline-flex items-center gap-2 font-semibold text-violet-200">Explorar o fliperama <ArrowUpRight className="h-4 w-4" aria-hidden /></Link>
+        <Link href="/arcade" className="mt-5 inline-flex items-center gap-2 font-semibold text-ice">Explorar o fliperama <ArrowUpRight className="h-4 w-4" aria-hidden /></Link>
       </aside>
 
       <AppCatalogDirectory />
 
       {/* Footer Navigation Links */}
-      <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-8">
+      <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-turquoise/40 pt-8">
         <div className="flex flex-wrap gap-3">
           <Link
             href="/design"
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:border-violet-300/30 hover:text-violet-200"
+            className="inline-flex items-center gap-2 rounded-full border border-turquoise/40 bg-ocean/65 px-5 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:border-turquoise/30 hover:text-ice"
           >
             Explorar portfólio de design
             <ArrowUpRight className="h-4 w-4" />
           </Link>
           <Link
             href="/templates"
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:border-violet-300/30 hover:text-violet-200"
+            className="inline-flex items-center gap-2 rounded-full border border-turquoise/40 bg-ocean/65 px-5 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:border-turquoise/30 hover:text-ice"
           >
             Ver templates web
             <ArrowUpRight className="h-4 w-4" />
@@ -493,7 +489,7 @@ export function AppsPageContent() {
 
         <Link
           href="/#contato"
-          className="inline-flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-500 px-6 py-2.5 text-xs font-black uppercase tracking-wider text-white transition-all shadow-lg"
+          className="inline-flex items-center gap-2 rounded-full bg-champagne hover:bg-turquoise px-6 py-2.5 text-xs font-black uppercase tracking-wider text-abyss transition-all shadow-lg"
         >
           <span>Falar com a NexuSync</span>
           <ArrowUpRight className="h-4 w-4" />
@@ -656,9 +652,9 @@ function WorkCard({
           onOpen();
         }
       }}
-      className={`group h-full cursor-pointer overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#0c0e14]/80 transition-all duration-300 hover:-translate-y-1 hover:border-violet-300/35 hover:shadow-xl focus-visible:-translate-y-1 focus-visible:border-violet-300/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300/60 ${className}`}
+      className={`group h-full cursor-pointer overflow-hidden rounded-[1.6rem] border border-turquoise/40 bg-ocean/80 transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/35 hover:shadow-xl focus-visible:-translate-y-1 focus-visible:border-turquoise/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/60 ${className}`}
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-[#080a0f]">
+      <div className="relative aspect-[4/3] overflow-hidden bg-ocean">
         <NextImage
           src={work.src}
           alt={`${work.category}: ${work.title}`}
@@ -666,18 +662,18 @@ function WorkCard({
           sizes="(max-width: 640px) 80vw, (max-width: 1024px) 46vw, 32vw"
           className="object-contain p-3 transition-transform duration-500 group-hover:scale-[1.04]"
         />
-        <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/70 px-4 py-2 text-xs font-semibold text-white">
-            <ZoomIn className="h-3.5 w-3.5 text-violet-300" />
+        <div className="absolute inset-0 flex items-center justify-center bg-abyss/40 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+          <span className="inline-flex items-center gap-2 rounded-full border border-turquoise/40 bg-abyss/70 px-4 py-2 text-xs font-semibold text-ivory">
+            <ZoomIn className="h-3.5 w-3.5 text-ice" />
             Ampliar Peça
           </span>
         </div>
       </div>
-      <figcaption className="flex items-center justify-between gap-2 border-t border-white/[0.06] px-5 py-3.5">
-        <span className="truncate text-sm font-medium capitalize text-foreground/90 group-hover:text-violet-100">
+      <figcaption className="flex items-center justify-between gap-2 border-t border-turquoise/40 px-5 py-3.5">
+        <span className="truncate text-sm font-medium capitalize text-foreground/90 group-hover:text-ice">
           {work.title}
         </span>
-        <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-white/50">
+        <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-ivory/85">
           {work.kind}
         </span>
       </figcaption>
@@ -721,7 +717,7 @@ function WorksCarousel({
   };
 
   const arrow =
-    "grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-[#0c0e14]/90 text-white backdrop-blur transition-all hover:border-violet-300/50 hover:bg-violet-500/25 disabled:pointer-events-none disabled:opacity-30";
+    "grid h-11 w-11 place-items-center rounded-full border border-turquoise/40 bg-ocean/90 text-ivory backdrop-blur transition-all hover:border-turquoise/50 hover:bg-turquoise/25 disabled:pointer-events-none disabled:opacity-30";
 
   return (
     <div role="region" aria-roledescription="carrossel" aria-label={label}>
@@ -744,10 +740,10 @@ function WorksCarousel({
       <div className="mt-4 flex items-center gap-4">
         <div
           aria-hidden
-          className="h-1 flex-1 overflow-hidden rounded-full bg-white/10"
+          className="h-1 flex-1 overflow-hidden rounded-full bg-ice/10"
         >
           <div
-            className="h-full rounded-full bg-gradient-to-r from-violet-400 to-fuchsia-400 transition-[width] duration-200"
+            className="h-full rounded-full bg-brand-gradient transition-[width] duration-200"
             style={{ width: `${Math.max(8, progress * 100)}%` }}
           />
         </div>
@@ -784,32 +780,32 @@ export function DesignPageHero() {
       <section id="design-intro" className="container-luxe scroll-mt-32 pb-14 pt-32 sm:pb-16 sm:pt-40">
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.85fr)]">
           <div className="max-w-3xl">
-            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-400/[0.06] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-violet-200">
-              <Sparkles className="h-3.5 w-3.5 text-fuchsia-300" />
+            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-turquoise/40 bg-turquoise/[0.06] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-ice">
+              <Sparkles className="h-3.5 w-3.5 text-ice" />
               Identidade visual · Design
             </span>
             <h1 className="mb-6 font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
               Identidade visual e design{" "}
-              <span className="text-violet-gradient">para valorizar sua marca.</span>
+              <span className="text-brand-gradient">para valorizar sua marca.</span>
             </h1>
             <p className="text-lg leading-relaxed text-muted-foreground">
               Criamos identidades, peças digitais e interfaces para apresentar
               sua marca com consistência e intenção.
             </p>
             <dl className="mt-8 grid max-w-md grid-cols-2 gap-4">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                <dt className="font-mono text-[10px] uppercase tracking-widest text-white/50">
+              <div className="rounded-2xl border border-turquoise/40 bg-ocean/65 p-4">
+                <dt className="font-mono text-[10px] uppercase tracking-widest text-ivory/85">
                   Projetos no acervo
                 </dt>
-                <dd className="font-display text-3xl font-bold text-white">
+                <dd className="font-display text-3xl font-bold text-ivory">
                   <CountUp to={totalWorks} prefix="+" />
                 </dd>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                <dt className="font-mono text-[10px] uppercase tracking-widest text-white/50">
+              <div className="rounded-2xl border border-turquoise/40 bg-ocean/65 p-4">
+                <dt className="font-mono text-[10px] uppercase tracking-widest text-ivory/85">
                   Categorias
                 </dt>
-                <dd className="font-display text-3xl font-bold text-white">
+                <dd className="font-display text-3xl font-bold text-ivory">
                   <CountUp to={DESIGN_GALLERIES.length} />
                 </dd>
               </div>
@@ -817,44 +813,44 @@ export function DesignPageHero() {
           </div>
           <div
             aria-hidden="true"
-            className="relative mx-auto w-full max-w-[500px] overflow-hidden rounded-[2rem] border border-violet-200/15 bg-[#121018] p-5 shadow-[0_30px_90px_-40px_rgba(217,70,239,.5)] sm:p-7"
+            className="relative mx-auto w-full max-w-[500px] overflow-hidden rounded-[2rem] border border-turquoise/40 bg-ocean p-5 shadow-[0_30px_90px_-40px_rgba(212,255,56,.5)] sm:p-7"
           >
-            <div className="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full bg-fuchsia-500/15 blur-3xl" />
-            <div className="relative flex items-center justify-between border-b border-white/10 pb-5">
+            <div className="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full bg-turquoise/15 blur-3xl" />
+            <div className="relative flex items-center justify-between border-b border-turquoise/40 pb-5">
               <div className="flex items-center gap-3">
-                <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-violet-400 to-fuchsia-400 font-display text-lg font-black text-white">
+                <span className="grid h-11 w-11 place-items-center rounded-2xl bg-brand-gradient font-display text-lg font-black text-abyss">
                   N
                 </span>
                 <div>
-                  <p className="font-semibold text-white">Sistema de marca</p>
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-white/45">Estudo visual</p>
+                  <p className="font-semibold text-ivory">Sistema de marca</p>
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-ivory/85">Estudo visual</p>
                 </div>
               </div>
-              <Sparkles className="h-5 w-5 text-fuchsia-200" />
+              <Sparkles className="h-5 w-5 text-ice" />
             </div>
             <div className="relative py-7">
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-200">Direção de arte</p>
-              <p className="mt-3 font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                Marca com <span className="text-violet-gradient">presença.</span>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ice">Direção de arte</p>
+              <p className="mt-3 font-display text-4xl font-semibold tracking-tight text-ivory sm:text-5xl">
+                Marca com <span className="text-brand-gradient">presença.</span>
               </p>
               <div className="mt-6 flex gap-2">
-                {["#8B5CF6", "#D946EF", "#F4B860", "#F4F1EA"].map((color) => (
+                {["#d4ff38", "#8be7c5", "#d4ff38", "#f4f4e9"].map((color) => (
                   <span
                     key={color}
-                    className="h-9 flex-1 rounded-xl border border-white/10"
+                    className="h-9 flex-1 rounded-xl border border-turquoise/40"
                     style={{ backgroundColor: color }}
                   />
                 ))}
               </div>
             </div>
             <div className="relative grid grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                <p className="font-mono text-[9px] uppercase tracking-widest text-white/45">Tipografia</p>
-                <p className="mt-2 font-display text-xl font-bold text-white">Aa Bb Cc</p>
+              <div className="rounded-2xl border border-turquoise/40 bg-ocean/65 p-4">
+                <p className="font-mono text-[9px] uppercase tracking-widest text-ivory/85">Tipografia</p>
+                <p className="mt-2 font-display text-xl font-bold text-ivory">Aa Bb Cc</p>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                <p className="font-mono text-[9px] uppercase tracking-widest text-white/45">Aplicações</p>
-                <p className="mt-2 text-sm font-semibold text-white">Digital · Editorial</p>
+              <div className="rounded-2xl border border-turquoise/40 bg-ocean/65 p-4">
+                <p className="font-mono text-[9px] uppercase tracking-widest text-ivory/85">Aplicações</p>
+                <p className="mt-2 text-sm font-semibold text-ivory">Digital · Editorial</p>
               </div>
             </div>
           </div>
@@ -929,13 +925,11 @@ export function DesignPageContent() {
   return (
     <section id="conteudo-design" className="container-luxe scroll-mt-32 pb-24 pt-16 sm:pt-20">
       <div className="mb-12 max-w-3xl">
-        <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-400/[0.06] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-violet-200">
-          <Sparkles className="h-3.5 w-3.5 text-fuchsia-300" />
+        <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-turquoise/40 bg-turquoise/[0.06] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-ice">
+          <Sparkles className="h-3.5 w-3.5 text-ice" />
           Exemplos de trabalhos
         </span>
-        <h2 className="mb-5 font-display text-3xl font-bold uppercase tracking-tight sm:text-5xl">
-          Projetos de identidade visual e design
-        </h2>
+        <h2 className="mb-5 font-display text-3xl font-bold uppercase tracking-tight sm:text-5xl"><AccentText text={"Projetos de identidade visual e design"} /></h2>
         <p className="text-lg leading-relaxed text-muted-foreground">
           Explore exemplos de design gráfico, identidade visual, banners para
           e-commerce e campanhas digitais.
@@ -943,9 +937,9 @@ export function DesignPageContent() {
       </div>
 
       {/* Barra de Filtro + Busca Rápida */}
-      <div className="mb-14 flex flex-col justify-between gap-4 rounded-2xl border border-white/10 bg-[#0c0e14]/80 p-4 backdrop-blur-xl sm:flex-row sm:items-center">
+      <div className="mb-14 flex flex-col justify-between gap-4 rounded-2xl border border-turquoise/40 bg-ocean/80 p-4 backdrop-blur-xl sm:flex-row sm:items-center">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="mr-1 inline-flex items-center gap-1.5 px-2 font-mono text-[10px] uppercase tracking-widest text-white/40">
+          <span className="mr-1 inline-flex items-center gap-1.5 px-2 font-mono text-[10px] uppercase tracking-widest text-ivory/85">
             <SlidersHorizontal className="h-3 w-3" />
             Filtrar:
           </span>
@@ -954,8 +948,8 @@ export function DesignPageContent() {
             aria-pressed={activeTab === "all"}
             onClick={() => setActiveTab("all")}
             className={`rounded-xl px-4 py-2 text-xs font-semibold transition-all ${activeTab === "all"
-                ? "bg-violet-gradient text-white shadow-violet-glow"
-                : "border border-white/10 bg-white/[0.03] text-muted-foreground hover:text-white"
+                ? "bg-brand-gradient text-abyss shadow-brand-glow"
+                : "border border-turquoise/40 bg-ocean/65 text-muted-foreground hover:text-ivory"
               }`}
           >
             Todos (
@@ -970,8 +964,8 @@ export function DesignPageContent() {
               aria-pressed={activeTab === gallery.id}
               onClick={() => setActiveTab(gallery.id)}
               className={`rounded-xl px-4 py-2 text-xs font-semibold transition-all ${activeTab === gallery.id
-                  ? "bg-violet-gradient text-white shadow-violet-glow"
-                  : "border border-white/10 bg-white/[0.03] text-muted-foreground hover:text-white"
+                  ? "bg-brand-gradient text-abyss shadow-brand-glow"
+                  : "border border-turquoise/40 bg-ocean/65 text-muted-foreground hover:text-ivory"
                 }`}
             >
               {gallery.title} ({gallery.works.length})
@@ -981,21 +975,21 @@ export function DesignPageContent() {
 
         {/* Campo de Busca */}
         <div className="relative w-full sm:w-64">
-          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ivory/85" />
           <input
             type="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Buscar peça (ex: banner, cartão)..."
             aria-label="Buscar peça"
-            className="w-full rounded-xl border border-white/10 bg-white/[0.03] py-2 pl-9 pr-9 text-xs text-white placeholder:text-white/50 focus:border-violet-300/40 focus:outline-none"
+            className="w-full rounded-xl border border-turquoise/40 bg-ocean/65 py-2 pl-9 pr-9 text-xs text-ivory placeholder:text-ivory/85 focus:border-turquoise/40 focus:outline-none"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery("")}
               aria-label="Limpar busca"
-              className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-white/60 hover:bg-white/10 hover:text-white"
+              className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-ivory/85 hover:bg-ice/10 hover:text-ivory"
             >
               <X className="h-3.5 w-3.5" />
             </button>
@@ -1008,10 +1002,10 @@ export function DesignPageContent() {
       </p>
 
       <div className="mb-8 flex items-center justify-between gap-3">
-        <p className="font-mono text-[11px] uppercase tracking-widest text-white/50">
+        <p className="font-mono text-[11px] uppercase tracking-widest text-ivory/85">
           {totalMatches} peças
         </p>
-        <div className="inline-flex rounded-xl border border-white/10 bg-black/40 p-1">
+        <div className="inline-flex rounded-xl border border-turquoise/40 bg-abyss/40 p-1">
           {(
             [
               { id: "carousel", label: "Carrossel", Icon: GalleryHorizontal },
@@ -1025,8 +1019,8 @@ export function DesignPageContent() {
               onClick={() => setViewMode(id)}
               className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
                 viewMode === id
-                  ? "bg-violet-gradient text-white shadow-violet-glow"
-                  : "text-white/60 hover:text-white"
+                  ? "bg-brand-gradient text-abyss shadow-brand-glow"
+                  : "text-ivory/85 hover:text-ivory"
               }`}
             >
               <Icon className="h-3.5 w-3.5" />
@@ -1037,8 +1031,8 @@ export function DesignPageContent() {
       </div>
 
       {totalMatches === 0 && (
-        <div className="mb-10 rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-10 text-center">
-          <p className="mb-1 font-display text-lg font-bold text-white">
+        <div className="mb-10 rounded-2xl border border-dashed border-turquoise/40 bg-ocean/65 p-10 text-center">
+          <p className="mb-1 font-display text-lg font-bold text-ivory">
             Nenhuma peça encontrada
           </p>
           <p className="mb-5 text-sm text-muted-foreground">
@@ -1050,7 +1044,7 @@ export function DesignPageContent() {
               setSearchQuery("");
               setActiveTab("all");
             }}
-            className="rounded-xl bg-violet-gradient px-5 py-2 text-xs font-semibold text-white shadow-violet-glow"
+            className="rounded-xl bg-brand-gradient px-5 py-2 text-xs font-semibold text-abyss shadow-brand-glow"
           >
             Limpar filtros
           </button>
@@ -1073,16 +1067,14 @@ export function DesignPageContent() {
 
           return (
             <section key={gallery.id} id={gallery.id} className="scroll-mt-28">
-              <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-5">
+              <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-turquoise/40 pb-5">
                 <div>
-                  <h2 className="mb-1.5 font-display text-2xl font-bold sm:text-3xl">
-                    {gallery.title}
-                  </h2>
+                  <h2 className="mb-1.5 font-display text-2xl font-bold sm:text-3xl"><AccentText text={gallery.title} /></h2>
                   <p className="text-sm text-muted-foreground">
                     {gallery.description}
                   </p>
                 </div>
-                <span className="rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1 font-mono text-xs text-violet-200">
+                <span className="rounded-full border border-turquoise/40 bg-ocean/65 px-3.5 py-1 font-mono text-xs text-ice">
                   {filteredWorks.length} projetos
                   {viewMode === "carousel" ? " · arraste ou use as setas" : ""}
                 </span>
@@ -1119,7 +1111,7 @@ export function DesignPageContent() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeLightbox}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-xl sm:p-8"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-abyss/85 p-4 backdrop-blur-xl sm:p-8"
           >
             <motion.div
               ref={lightboxTrapRef}
@@ -1130,27 +1122,25 @@ export function DesignPageContent() {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.94, y: 12 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl border border-white/15 bg-[#0b0e14] shadow-2xl"
+              className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl border border-turquoise/40 bg-ocean shadow-2xl"
             >
-              <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
+              <div className="flex items-center justify-between border-b border-turquoise/40 px-6 py-4">
                 <div>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-violet-300">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-ice">
                     {lightboxItem.category}
                   </span>
-                  <h3 className="font-display text-lg font-bold capitalize text-white">
-                    {lightboxItem.title}
-                  </h3>
+                  <h3 className="font-display text-lg font-bold capitalize text-ivory"><AccentText text={lightboxItem.title} /></h3>
                 </div>
                 <button
                   type="button"
                   onClick={closeLightbox}
-                  className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-colors hover:bg-white/15 hover:text-white"
+                  className="grid h-9 w-9 place-items-center rounded-full border border-turquoise/40 bg-ocean/65 text-ivory/85 transition-colors hover:bg-ice/15 hover:text-ivory"
                   aria-label="Fechar visualização"
                 >
                   <X className="h-4 w-4" />
                 </button>
               </div>
-              <div className="relative h-[65vh] w-full bg-[#06080c] p-6">
+              <div className="relative h-[65vh] w-full bg-ocean p-6">
                 <NextImage
                   key={lightboxItem.src}
                   src={lightboxItem.src}
@@ -1165,7 +1155,7 @@ export function DesignPageContent() {
                       type="button"
                       onClick={() => stepLightbox(-1)}
                       aria-label="Peça anterior"
-                      className="absolute left-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur hover:bg-violet-500/40"
+                      className="absolute left-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-turquoise/40 bg-abyss/60 text-ivory backdrop-blur hover:bg-turquoise/40"
                     >
                       <ChevronLeft className="h-5 w-5" />
                     </button>
@@ -1173,13 +1163,13 @@ export function DesignPageContent() {
                       type="button"
                       onClick={() => stepLightbox(1)}
                       aria-label="Próxima peça"
-                      className="absolute right-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur hover:bg-violet-500/40"
+                      className="absolute right-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-turquoise/40 bg-abyss/60 text-ivory backdrop-blur hover:bg-turquoise/40"
                     >
                       <ChevronRight className="h-5 w-5" />
                     </button>
                     <span
                       role="status"
-                      className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-white/15 bg-black/70 px-3 py-1 font-mono text-[11px] text-white/80"
+                      className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-turquoise/40 bg-abyss/70 px-3 py-1 font-mono text-[11px] text-ivory/80"
                     >
                       {lightbox.index + 1} / {lightbox.items.length}
                     </span>
@@ -1205,14 +1195,14 @@ export function TemplatesPageContent() {
       description:
         "Apresente as modalidades, os horários das turmas e os planos. O visitante pode agendar uma aula experimental pelo celular.",
       href: "/templates/academias",
-      theme: "from-lime-400/20 via-[#101914] to-[#080b09]",
+      theme: "from-lime-400/20 via-ocean to-petroleum",
       badgeColor: "border-lime-400/35 bg-lime-400/10 text-lime-200",
       accentText: "text-lime-300",
-      btnGradient: "from-lime-400 to-emerald-500 text-slate-950",
+      btnGradient: "from-champagne to-champagne text-abyss",
       palette: [
-        { name: "Acid Lime", hex: "#A3E635" },
-        { name: "Emerald Deep", hex: "#10B981" },
-        { name: "Carbon Dark", hex: "#080B09" },
+        { name: "Acid Lime", hex: "#8be7c5" },
+        { name: "Emerald Deep", hex: "#d4ff38" },
+        { name: "Carbon Dark", hex: "#141f50" },
       ],
       conversionFocus: "Agendamento de aula experimental",
       modules: [
@@ -1232,14 +1222,14 @@ export function TemplatesPageContent() {
       description:
         "Sistema gastronômico completo em tons de brasa e carmesim: cardápio digital de alta conversão, reserva de mesas VIP, comanda e monitor de cozinha (KDS).",
       href: "/templates/cardapio",
-      theme: "from-orange-500/25 via-[#1c110e] to-[#0c0807]",
-      badgeColor: "border-orange-400/35 bg-orange-500/10 text-orange-200",
-      accentText: "text-orange-300",
-      btnGradient: "from-orange-500 to-amber-400 text-slate-950",
+      theme: "from-champagne/25 via-ocean to-petroleum",
+      badgeColor: "border-champagne/35 bg-champagne/10 text-champagne",
+      accentText: "text-champagne",
+      btnGradient: "from-champagne to-champagne text-abyss",
       palette: [
-        { name: "Ember Orange", hex: "#F97316" },
-        { name: "Flame Amber", hex: "#F59E0B" },
-        { name: "Charcoal", hex: "#0C0807" },
+        { name: "Ember Orange", hex: "#bce82c" },
+        { name: "Flame Amber", hex: "#bce82c" },
+        { name: "Charcoal", hex: "#141f50" },
       ],
       conversionFocus: "Zero Taxa de Marketplace • Pedidos Diretos",
       modules: [
@@ -1259,14 +1249,14 @@ export function TemplatesPageContent() {
       description:
         "Vitrine editorial de luxo para marcas autorais e e-commerces que exigem direção de arte marcante, lookbook interativo e jornada de compra fluida.",
       href: "/templates/streetwear",
-      theme: "from-violet-400/20 via-[#17111f] to-[#0c0d0f]",
-      badgeColor: "border-violet-300/35 bg-violet-400/10 text-violet-200",
-      accentText: "text-violet-300",
-      btnGradient: "from-violet-500 to-fuchsia-500 text-white",
+      theme: "from-turquoise/20 via-ocean to-petroleum",
+      badgeColor: "border-turquoise/35 bg-turquoise/10 text-ice",
+      accentText: "text-ice",
+      btnGradient: "from-champagne to-champagne text-abyss",
       palette: [
-        { name: "Cyber Violet", hex: "#8B5CF6" },
-        { name: "Fuchsia Glow", hex: "#D946EF" },
-        { name: "Obsidian", hex: "#0C0D0F" },
+        { name: "Cyber Violet", hex: "#d4ff38" },
+        { name: "Fuchsia Glow", hex: "#8be7c5" },
+        { name: "Obsidian", hex: "#141f50" },
       ],
       conversionFocus: "Posicionamento Premium & Aumento de Ticket Médio",
       modules: [
@@ -1286,14 +1276,14 @@ export function TemplatesPageContent() {
       description:
         "Portal automotivo em tema claro (Alabaster & Royal Blue) focado no mercado brasileiro real, com comparativo FIPE, simulador CDC e reserva no Firestore.",
       href: "/templates/carros",
-      theme: "from-blue-500/25 via-[#101726] to-[#07080a]",
-      badgeColor: "border-blue-400/35 bg-blue-500/10 text-blue-200",
-      accentText: "text-sky-300",
-      btnGradient: "from-blue-600 to-cyan-400 text-slate-950",
+      theme: "from-turquoise/25 via-ocean to-petroleum",
+      badgeColor: "border-turquoise/35 bg-turquoise/10 text-ice",
+      accentText: "text-ice",
+      btnGradient: "from-champagne to-champagne text-abyss",
       palette: [
-        { name: "Alabaster Light", hex: "#F8FAFC" },
-        { name: "Royal Cobalt", hex: "#1D4ED8" },
-        { name: "FIPE Emerald", hex: "#059669" },
+        { name: "Alabaster Light", hex: "#f4f4e9" },
+        { name: "Royal Cobalt", hex: "#2032a6" },
+        { name: "FIPE Emerald", hex: "#2a40ba" },
       ],
       conversionFocus: "Geração de Fichas de Financiamento & Visitas na Loja",
       modules: [
@@ -1313,14 +1303,14 @@ export function TemplatesPageContent() {
       description:
         "Estúdio criativo de impressão em resina 12K e pintura de miniaturas com Raio-X de 3 estágios, receitas de tintas e calculadora de encomendas.",
       href: "/templates/miniaturas",
-      theme: "from-fuchsia-500/25 via-[#140d1f] to-[#08060c]",
-      badgeColor: "border-fuchsia-400/35 bg-fuchsia-500/10 text-fuchsia-200",
-      accentText: "text-fuchsia-300",
-      btnGradient: "from-fuchsia-500 to-pink-400 text-slate-950",
+      theme: "from-turquoise/25 via-ocean to-petroleum",
+      badgeColor: "border-turquoise/35 bg-turquoise/10 text-ice",
+      accentText: "text-ice",
+      btnGradient: "from-champagne to-champagne text-abyss",
       palette: [
-        { name: "Resin Fuchsia", hex: "#D946EF" },
-        { name: "Pigment Pink", hex: "#F472B6" },
-        { name: "Void", hex: "#08060C" },
+        { name: "Resin Fuchsia", hex: "#8be7c5" },
+        { name: "Pigment Pink", hex: "#8be7c5" },
+        { name: "Void", hex: "#141f50" },
       ],
       conversionFocus: "Orçamentos de Encomenda & Venda de Peças Autorais",
       modules: [
@@ -1340,14 +1330,14 @@ export function TemplatesPageContent() {
       description:
         "Fluxo em 3 etapas (monte, intenção e revelação) com barra de progresso, perguntas prontas e celebração ao desbloquear o resultado.",
       href: "/templates/connection",
-      theme: "from-amber-500/20 via-[#14110a] to-[#070709]",
-      badgeColor: "border-amber-400/35 bg-amber-500/10 text-amber-200",
-      accentText: "text-amber-300",
-      btnGradient: "from-amber-500 to-amber-300 text-slate-950",
+      theme: "from-champagne/20 via-ocean to-petroleum",
+      badgeColor: "border-champagne/35 bg-champagne/10 text-champagne",
+      accentText: "text-champagne",
+      btnGradient: "from-champagne to-champagne text-abyss",
       palette: [
-        { name: "Amber Glow", hex: "#F59E0B" },
-        { name: "Parchment", hex: "#F4F1EA" },
-        { name: "Midnight", hex: "#070709" },
+        { name: "Amber Glow", hex: "#bce82c" },
+        { name: "Parchment", hex: "#f4f4e9" },
+        { name: "Midnight", hex: "#141f50" },
       ],
       conversionFocus: "Captura de Contato no Momento de Maior Engajamento",
       modules: [
@@ -1367,14 +1357,14 @@ export function TemplatesPageContent() {
       description:
         "Veja como reunir reservas de mesa, comandas e pedidos em um painel que facilita o acompanhamento pela equipe.",
       href: "/templates/reservas",
-      theme: "from-red-500/20 via-[#1c0f0e] to-[#0c0807]",
+      theme: "from-red-500/20 via-ocean to-petroleum",
       badgeColor: "border-red-400/35 bg-red-500/10 text-red-200",
       accentText: "text-red-300",
-      btnGradient: "from-red-500 to-orange-400 text-slate-950",
+      btnGradient: "from-champagne to-champagne text-abyss",
       palette: [
-        { name: "Fire Red", hex: "#EF4444" },
-        { name: "Ember", hex: "#F97316" },
-        { name: "Charcoal", hex: "#0C0807" },
+        { name: "Fire Red", hex: "#d4ff38" },
+        { name: "Ember", hex: "#bce82c" },
+        { name: "Charcoal", hex: "#141f50" },
       ],
       conversionFocus: "Mais Reservas Diretas & Menos No-Show",
       modules: [
@@ -1389,10 +1379,10 @@ export function TemplatesPageContent() {
       number: "08", code: "ARCH // FOOD-DELIVERY", category: "Cardápio digital",
       title: "Cachorros-quentes & Açaí", brandName: "Dog & Açaí",
       description: "Da chapa ao copo: escolha os adicionais e monte um combo para entrega ou retirada.",
-      href: "/templates/dog-e-acai", theme: "from-fuchsia-500/25 via-[#211226] to-[#100b14]",
-      badgeColor: "border-fuchsia-400/35 bg-fuchsia-500/10 text-fuchsia-200", accentText: "text-fuchsia-300",
-      btnGradient: "from-fuchsia-500 to-orange-400 text-white",
-      palette: [{ name: "Açaí", hex: "#A21CAF" }, { name: "Chapa", hex: "#F97316" }],
+      href: "/templates/dog-e-acai", theme: "from-turquoise/25 via-ocean to-petroleum",
+      badgeColor: "border-turquoise/35 bg-turquoise/10 text-ice", accentText: "text-ice",
+      btnGradient: "from-champagne to-champagne text-abyss",
+      palette: [{ name: "Açaí", hex: "#2a40ba" }, { name: "Chapa", hex: "#bce82c" }],
       conversionFocus: "Pedidos de delivery e retirada",
       modules: ["Adicionais por produto", "Montagem de combos", "Sacola e revisão do pedido"],
       stack: ["Next.js App Router", "React", "Tailwind CSS"],
@@ -1403,7 +1393,7 @@ export function TemplatesPageContent() {
       description: "Venda e locação com filtro por bairro, ficha do imóvel e pedido de visita pelo WhatsApp.",
       href: "/templates/imobiliaria", theme: "from-emerald-500/20 to-stone-950",
       badgeColor: "border-emerald-400/35 text-emerald-200", accentText: "text-emerald-300",
-      btnGradient: "from-emerald-300 to-teal-400 text-stone-950",
+      btnGradient: "from-champagne to-champagne text-abyss",
       palette: [{ name: "Mata", hex: "#254A40" }, { name: "Areia", hex: "#EAE7C9" }],
       conversionFocus: "Pedidos de visita por imóvel",
       modules: ["Comprar ou alugar", "Busca por bairro", "Ficha com metragem e condomínio"],
@@ -1413,9 +1403,9 @@ export function TemplatesPageContent() {
       number: "10", code: "Arquitetura", category: "Arquitetura residencial",
       title: "Escritórios de arquitetura", brandName: "Ateliê Vão",
       description: "Apresente o portfólio e deixe o visitante girar a planta de cada projeto para entender os ambientes.",
-      href: "/templates/arquitetura", theme: "from-amber-500/20 to-stone-950",
-      badgeColor: "border-amber-400/35 text-amber-200", accentText: "text-amber-300",
-      btnGradient: "from-amber-200 to-orange-300 text-stone-950",
+      href: "/templates/arquitetura", theme: "from-champagne/20 to-stone-950",
+      badgeColor: "border-champagne/35 text-champagne", accentText: "text-champagne",
+      btnGradient: "from-champagne to-champagne text-abyss",
       palette: [{ name: "Linho", hex: "#F3EEE2" }, { name: "Argila", hex: "#DDBA92" }],
       conversionFocus: "Contato com referência ao projeto",
       modules: ["Portfólio residencial", "Planta 3D e vista superior", "Áreas por ambiente"],
@@ -1451,17 +1441,17 @@ export function TemplatesPageContent() {
   return (
     <section className="container-luxe py-28 sm:py-36 relative">
       {/* Ambient Glows */}
-      <div className="pointer-events-none absolute top-12 left-1/4 h-[460px] w-[460px] rounded-full bg-violet-600/10 blur-[150px]" />
-      <div className="pointer-events-none absolute top-1/3 right-10 h-[420px] w-[420px] rounded-full bg-blue-500/10 blur-[150px]" />
+      <div className="pointer-events-none absolute top-12 left-1/4 h-[460px] w-[460px] rounded-full bg-champagne/10 blur-[150px]" />
+      <div className="pointer-events-none absolute top-1/3 right-10 h-[420px] w-[420px] rounded-full bg-turquoise/10 blur-[150px]" />
 
       {/* =========================================================
           1. HERO HEADER DO CONSOLE DE ARQUITETURAS
       ========================================================= */}
-      <div className="relative z-10 mb-14 flex flex-col justify-between gap-8 border-b border-white/10 pb-12 lg:flex-row lg:items-end">
+      <div className="relative z-10 mb-14 flex flex-col justify-between gap-8 border-b border-turquoise/40 pb-12 lg:flex-row lg:items-end">
         <div className="max-w-3xl">
           <div className="mb-5 flex flex-wrap items-center gap-2.5">
-            <span className="inline-flex items-center gap-2 rounded-full border border-violet-300/25 bg-violet-400/[0.08] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-violet-200">
-              <Sparkles className="h-3.5 w-3.5 text-fuchsia-300" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-turquoise/40 bg-turquoise/[0.08] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-ice">
+              <Sparkles className="h-3.5 w-3.5 text-ice" />
               NexuSync · Modelos para o seu negócio
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 font-mono text-[11px] font-bold text-emerald-300">
@@ -1470,15 +1460,15 @@ export function TemplatesPageContent() {
             </span>
           </div>
 
-          <h1 className="mb-5 font-display text-4xl font-black uppercase tracking-tight text-white sm:text-6xl lg:leading-[1.02]">
+          <h1 className="mb-5 font-display text-4xl font-black uppercase tracking-tight text-ivory sm:text-6xl lg:leading-[1.02]">
             Seu próximo site começa{" "}
-            <span className="text-violet-gradient italic">
+            <span className="text-brand-gradient italic">
               rodando ao vivo aqui.
             </span>
           </h1>
           <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
             Não mostramos apenas fotos estáticas. Use o{" "}
-            <strong className="text-white">painel de demonstração abaixo</strong>{" "}
+            <strong className="text-ivory">painel de demonstração abaixo</strong>{" "}
             para navegar dentro de cada projeto em tempo real, testar a versão
             para celular e computador e escolher a base ideal para o seu negócio.
           </p>
@@ -1487,7 +1477,7 @@ export function TemplatesPageContent() {
         <div className="flex flex-wrap items-center gap-3 shrink-0">
           <Link
             href="/#planos"
-            className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3.5 text-xs font-bold uppercase tracking-wider text-white transition-all hover:border-violet-300/50 hover:bg-violet-600"
+            className="inline-flex items-center gap-2 rounded-2xl border border-turquoise/40 bg-ocean/65 px-5 py-3.5 text-xs font-bold uppercase tracking-wider text-ivory transition-all hover:border-turquoise/50 hover:bg-champagne hover:text-abyss"
           >
             <span>Ver Planos & Preços</span>
             <ArrowUpRight className="h-4 w-4" />
@@ -1500,10 +1490,10 @@ export function TemplatesPageContent() {
       ========================================================= */}
       <div
         id="template-live-console"
-        className="relative z-10 mb-24 scroll-mt-24 rounded-[2.4rem] border border-white/15 bg-[#0a0c12]/95 p-4 shadow-[0_30px_100px_rgba(0,0,0,0.85)] backdrop-blur-2xl sm:p-7"
+        className="relative z-10 mb-24 scroll-mt-24 rounded-[2.4rem] border border-turquoise/40 bg-ocean/95 p-4 shadow-[0_30px_100px_rgba(9,44,52,0.85)] backdrop-blur-2xl sm:p-7"
       >
         {/* Barra Superior de Seleção de Arquitetura + Controles de Viewport */}
-        <div className="mb-6 border-b border-white/10 pb-5">
+        <div className="mb-6 border-b border-turquoise/40 pb-5">
           {/* Seletor de Projetos (Tabs do Console) */}
           <div role="group" aria-label="Escolha um template para visualizar" className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {orderedTemplates.map((tpl, idx) => {
@@ -1514,19 +1504,19 @@ export function TemplatesPageContent() {
                   type="button"
                   aria-pressed={isSelected}
                   onClick={() => setSelectedIndex(idx)}
-                  className={`group flex min-w-0 items-center gap-2.5 rounded-2xl border px-4 py-3 text-left transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300 ${isSelected
-                      ? "border-violet-400/50 bg-gradient-to-r from-violet-500/20 via-fuchsia-500/10 to-transparent text-white shadow-lg"
-                      : "border-white/10 bg-white/[0.03] text-white/55 hover:border-white/25 hover:text-white"
+                  className={`group flex min-w-0 items-center gap-2.5 rounded-2xl border px-4 py-3 text-left transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise ${isSelected
+                      ? "border-turquoise/50 bg-gradient-to-r from-turquoise/20 via-turquoise/10 to-transparent text-ivory shadow-lg"
+                      : "border-turquoise/40 bg-ocean/65 text-ivory/55 hover:border-turquoise/40 hover:text-ivory"
                     }`}
                 >
-                  <span className="shrink-0 font-mono text-xs font-bold text-violet-300">
+                  <span className="shrink-0 font-mono text-xs font-bold text-ice">
                     /{tpl.number}
                   </span>
                   <div className="min-w-0 break-words">
                     <span className="block text-xs font-black uppercase tracking-wider leading-relaxed">
                       {tpl.brandName}
                     </span>
-                    <span className="block font-mono text-[10px] text-white/45">
+                    <span className="block font-mono text-[10px] text-ivory/85">
                       {tpl.category}
                     </span>
                   </div>
@@ -1540,7 +1530,7 @@ export function TemplatesPageContent() {
         {/* Corpo do Console: Viewport Interativo (8 Cols) + Blueprint Técnico (4 Cols) */}
         <div className="grid grid-cols-1 gap-7 lg:grid-cols-12 lg:items-stretch">
           {/* COLUNA ESQUERDA: Simulador de Navegador Interativo (8 Cols) */}
-          <div className="lg:col-span-8 flex flex-col justify-between rounded-3xl border border-white/15 bg-gradient-to-br from-[#121521] via-[#090b10] to-[#050609] p-3 sm:p-5 shadow-inner">
+          <div className="lg:col-span-8 flex flex-col justify-between rounded-3xl border border-turquoise/40 bg-gradient-to-br from-ocean via-ocean to-petroleum p-3 sm:p-5 shadow-inner">
             <DeviceStage
               href={activeTemplate.href}
               title={`Console interativo ${activeTemplate.title}`}
@@ -1549,7 +1539,7 @@ export function TemplatesPageContent() {
           </div>
 
           {/* COLUNA DIREITA: Ficha de Engenharia & Conversão do Template (4 Cols) */}
-          <div className="lg:col-span-4 flex flex-col justify-between rounded-3xl border border-white/10 bg-[#0e111a]/90 p-6 sm:p-7">
+          <div className="lg:col-span-4 flex flex-col justify-between rounded-3xl border border-turquoise/40 bg-ocean/90 p-6 sm:p-7">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTemplate.href}
@@ -1566,42 +1556,40 @@ export function TemplatesPageContent() {
                     >
                       {activeTemplate.code}
                     </span>
-                    <span className="font-mono text-xs text-white/40">
+                    <span className="font-mono text-xs text-ivory/85">
                       /{activeTemplate.number}
                     </span>
                   </div>
 
-                  <p className="font-mono text-xs uppercase tracking-widest text-white/50">
+                  <p className="font-mono text-xs uppercase tracking-widest text-ivory/85">
                     Projeto Demonstrativo: {activeTemplate.brandName}
                   </p>
-                  <h2 className="mt-1 font-display text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
-                    {activeTemplate.title}
-                  </h2>
+                  <h2 className="mt-1 font-display text-2xl sm:text-3xl font-black uppercase tracking-tight text-ivory"><AccentText text={activeTemplate.title} /></h2>
                   <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
                     {activeTemplate.description}
                   </p>
                 </div>
 
                 {/* Sistema de Cores do Projeto */}
-                <div className="rounded-2xl border border-white/[0.08] bg-black/35 p-4">
-                  <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-white/45 mb-3">
+                <div className="rounded-2xl border border-turquoise/40 bg-abyss/35 p-4">
+                  <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-ivory/85 mb-3">
                     Cores do modelo
                   </span>
                   <div className="grid grid-cols-3 gap-2">
                     {activeTemplate.palette.map((color) => (
                       <div
                         key={color.hex}
-                        className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] p-2"
+                        className="flex items-center gap-2 rounded-xl border border-turquoise/40 bg-ocean/65 p-2"
                       >
                         <span
-                          className="h-5 w-5 shrink-0 rounded-lg border border-white/20 shadow"
+                          className="h-5 w-5 shrink-0 rounded-lg border border-turquoise/40 shadow"
                           style={{ backgroundColor: color.hex }}
                         />
                         <div className="min-w-0">
-                          <span className="block truncate text-[10px] font-bold text-white">
+                          <span className="block truncate text-[10px] font-bold text-ivory">
                             {color.name}
                           </span>
-                          <span className="block font-mono text-[9px] text-white/45">
+                          <span className="block font-mono text-[9px] text-ivory/85">
                             {color.hex}
                           </span>
                         </div>
@@ -1612,14 +1600,14 @@ export function TemplatesPageContent() {
 
                 {/* Módulos Funcionais Inclusos */}
                 <div>
-                  <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-white/45 mb-3">
+                  <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-ivory/85 mb-3">
                     Engenharia & Módulos Inclusos:
                   </span>
                   <ul className="space-y-2.5">
                     {activeTemplate.modules.map((mod, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2.5 text-xs sm:text-sm text-white/85"
+                        className="flex items-start gap-2.5 text-xs sm:text-sm text-ivory/85"
                       >
                         <CheckCircle2
                           className={`h-4 w-4 shrink-0 mt-0.5 ${activeTemplate.accentText}`}
@@ -1635,7 +1623,7 @@ export function TemplatesPageContent() {
                   {activeTemplate.stack.map((tech) => (
                     <span
                       key={tech}
-                      className="rounded-lg border border-white/10 bg-black/40 px-2.5 py-1 font-mono text-[10px] text-white/70"
+                      className="rounded-lg border border-turquoise/40 bg-abyss/40 px-2.5 py-1 font-mono text-[10px] text-ivory/85"
                     >
                       {tech}
                     </span>
@@ -1645,7 +1633,7 @@ export function TemplatesPageContent() {
             </AnimatePresence>
 
             {/* Botões de Ação do Console */}
-            <div className="mt-8 space-y-2.5 border-t border-white/10 pt-5">
+            <div className="mt-8 space-y-2.5 border-t border-turquoise/40 pt-5">
               <a
                 href={`https://wa.me/5551993583936?text=${encodeURIComponent(
                   `Olá! Testei o modelo "${activeTemplate.title}" (${activeTemplate.brandName}) no catálogo da NexuSync e quero orçar um projeto baseado nessa estrutura.`
@@ -1660,7 +1648,7 @@ export function TemplatesPageContent() {
 
               <Link
                 href={activeTemplate.href}
-                className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] hover:bg-white/10 py-3 px-4 text-xs font-bold uppercase tracking-wider text-white transition-colors"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-turquoise/40 bg-ocean/65 hover:bg-ice/10 py-3 px-4 text-xs font-bold uppercase tracking-wider text-ivory transition-colors"
               >
                 <span>Abrir Página Completa Dedicada</span>
                 <MoveUpRight className="h-3.5 w-3.5" />
@@ -1676,10 +1664,10 @@ export function TemplatesPageContent() {
       <div className="relative z-10">
         <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="mb-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-violet-300">
+            <p className="mb-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-ice">
               {"// VISÃO COMPARATIVA DO CATÁLOGO"}
             </p>
-            <h2 className="font-display text-2xl font-black uppercase tracking-tight text-white sm:text-4xl">
+            <h2 className="font-display text-2xl font-black uppercase tracking-tight text-ivory sm:text-4xl">
               Todos os modelos disponíveis ({orderedTemplates.length})
             </h2>
           </div>
@@ -1695,21 +1683,21 @@ export function TemplatesPageContent() {
             return (
               <article
                 key={template.href}
-                className={`group flex flex-col overflow-hidden rounded-[2rem] border bg-[#0c0e14]/90 shadow-2xl backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1.5 ${isCurrentlyLoaded
-                    ? "border-violet-400/50 ring-1 ring-violet-400/30"
-                    : "border-white/10 hover:border-violet-300/30"
+                className={`group flex flex-col overflow-hidden rounded-[2rem] border bg-ocean/90 shadow-2xl backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1.5 ${isCurrentlyLoaded
+                    ? "border-turquoise/50 ring-1 ring-turquoise/30"
+                    : "border-turquoise/40 hover:border-turquoise/30"
                   }`}
               >
                 {/* Topo com Preview Desktop em Escala */}
                 <div
                   className={`relative h-[260px] overflow-hidden bg-gradient-to-br ${template.theme} p-4 sm:h-[290px] sm:p-5`}
                 >
-                  <div className="relative h-full w-full overflow-hidden rounded-2xl border border-white/15 bg-[#0b0d10] shadow-2xl">
-                    <div className="flex h-8 items-center gap-1.5 border-b border-white/[0.08] bg-[#100d15] px-3">
+                  <div className="relative h-full w-full overflow-hidden rounded-2xl border border-turquoise/40 bg-ocean shadow-2xl">
+                    <div className="flex h-8 items-center gap-1.5 border-b border-turquoise/40 bg-ocean px-3">
                       <span className="h-2 w-2 rounded-full bg-[#ff6b61]/80" />
                       <span className="h-2 w-2 rounded-full bg-[#ffc14f]/80" />
                       <span className="h-2 w-2 rounded-full bg-[#49c781]/80" />
-                      <span className="ml-auto truncate font-mono text-[9px] text-white/45">
+                      <span className="ml-auto truncate font-mono text-[9px] text-ivory/85">
                         nexusync.online{template.href}
                       </span>
                     </div>
@@ -1721,7 +1709,7 @@ export function TemplatesPageContent() {
                         loading="lazy"
                         scrolling="no"
                         tabIndex={-1}
-                        className="pointer-events-none h-[200%] w-[200%] origin-top-left scale-50 border-0 bg-[#0b0d10]"
+                        className="pointer-events-none h-[200%] w-[200%] origin-top-left scale-50 border-0 bg-ocean"
                       />
                     </div>
                   </div>
@@ -1736,20 +1724,18 @@ export function TemplatesPageContent() {
                       >
                         {template.category}
                       </span>
-                      <span className="font-mono text-xs text-white/40">
+                      <span className="font-mono text-xs text-ivory/85">
                         /{template.number} • {template.brandName}
                       </span>
                     </div>
 
-                    <h3 className="font-display text-2xl font-bold text-white">
-                      {template.title}
-                    </h3>
+                    <h3 className="font-display text-2xl font-bold text-ivory"><AccentText text={template.title} /></h3>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                       {template.description}
                     </p>
                   </div>
 
-                  <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2.5 border-t border-white/[0.08] pt-5">
+                  <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2.5 border-t border-turquoise/40 pt-5">
                     <button
                       type="button"
                       onClick={() => {
@@ -1759,8 +1745,8 @@ export function TemplatesPageContent() {
                           ?.scrollIntoView({ behavior: "smooth" });
                       }}
                       className={`rounded-xl py-3 px-4 font-mono text-xs font-bold uppercase tracking-wider transition-all ${isCurrentlyLoaded
-                          ? "bg-violet-500/20 border border-violet-400/40 text-violet-200"
-                          : "border border-white/10 bg-white/[0.04] text-white hover:bg-white/10"
+                          ? "bg-turquoise/20 border border-turquoise/40 text-ice"
+                          : "border border-turquoise/40 bg-ocean/65 text-ivory hover:bg-ice/10"
                         }`}
                     >
                       {isCurrentlyLoaded
@@ -1770,7 +1756,7 @@ export function TemplatesPageContent() {
 
                     <Link
                       href={template.href}
-                      className="inline-flex items-center justify-center gap-2 rounded-xl bg-white hover:bg-violet-400 text-slate-950 py-3 px-4 text-xs font-black uppercase tracking-wider transition-colors"
+                      className="inline-flex items-center justify-center gap-2 rounded-xl bg-ice hover:bg-turquoise text-abyss py-3 px-4 text-xs font-black uppercase tracking-wider transition-colors"
                     >
                       <span>Abrir Site Inteiro</span>
                       <ArrowUpRight className="h-4 w-4" />
@@ -1786,18 +1772,16 @@ export function TemplatesPageContent() {
       {/* =========================================================
           4. CTA FINAL P/ PROJETO EXCLUSIVO
       ========================================================= */}
-      <div className="mt-16 rounded-3xl border border-white/10 bg-[#0c0e14]/90 p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div className="mt-16 rounded-3xl border border-turquoise/40 bg-ocean/90 p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div>
-          <span className="font-mono text-xs uppercase tracking-widest text-violet-300 block mb-1">
+          <span className="font-mono text-xs uppercase tracking-widest text-ice block mb-1">
             {"// ARQUITETURA 100% PERSONALIZADA"}
           </span>
-          <h3 className="font-display text-2xl font-bold text-white">
-            Seu segmento é diferente? Criamos um projeto inédito para a sua empresa.
-          </h3>
+          <h3 className="font-display text-2xl font-bold text-ivory"><AccentText text={"Seu segmento é diferente? Criamos um projeto inédito para a sua empresa."} /></h3>
         </div>
         <Link
           href="/#contato"
-          className="shrink-0 inline-flex items-center gap-2 rounded-2xl bg-violet-600 hover:bg-violet-500 px-6 py-4 text-xs font-black uppercase tracking-wider text-white transition-all shadow-lg"
+          className="shrink-0 inline-flex items-center gap-2 rounded-2xl bg-champagne hover:bg-turquoise px-6 py-4 text-xs font-black uppercase tracking-wider text-abyss transition-all shadow-lg"
         >
           <Flame className="h-4 w-4" />
           <span>Solicitar Projeto Sob Medida</span>
@@ -1813,12 +1797,12 @@ export function TemplatesPageContent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex flex-col bg-black/95 backdrop-blur-2xl"
+            className="fixed inset-0 z-50 flex flex-col bg-abyss/95 backdrop-blur-2xl"
           >
-            <div className="flex items-center justify-between border-b border-white/10 bg-[#080a0f] px-5 py-3">
+            <div className="flex items-center justify-between border-b border-turquoise/40 bg-ocean px-5 py-3">
               <div className="flex items-center gap-3">
                 <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-ping" />
-                <span className="font-mono text-xs font-bold uppercase tracking-widest text-white">
+                <span className="font-mono text-xs font-bold uppercase tracking-widest text-ivory">
                   {fullscreenTemplate.brandName} — {fullscreenTemplate.title}
                 </span>
               </div>
@@ -1826,14 +1810,14 @@ export function TemplatesPageContent() {
               <div className="flex items-center gap-3">
                 <Link
                   href={fullscreenTemplate.href}
-                  className="rounded-xl bg-violet-600 hover:bg-violet-500 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white"
+                  className="rounded-xl bg-champagne hover:bg-turquoise px-4 py-2 text-xs font-bold uppercase tracking-wider text-abyss"
                 >
                   Ir para a Rota Direta
                 </Link>
                 <button
                   type="button"
                   onClick={() => setFullscreenTemplate(null)}
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-3.5 py-2 text-xs font-bold uppercase text-white hover:bg-red-500/20 hover:border-red-400/50"
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-turquoise/40 bg-ocean/65 px-3.5 py-2 text-xs font-bold uppercase text-ivory hover:bg-red-500/20 hover:border-red-400/50"
                 >
                   <span>Fechar</span>
                   <X className="h-4 w-4" />
@@ -1841,7 +1825,7 @@ export function TemplatesPageContent() {
               </div>
             </div>
 
-            <div className="flex-1 w-full bg-white">
+            <div className="flex-1 w-full bg-ice">
               <iframe
                 src={fullscreenTemplate.href}
                 title={fullscreenTemplate.title}

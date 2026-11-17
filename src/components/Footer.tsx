@@ -1,4 +1,5 @@
-﻿import { Suspense } from "react";
+﻿import { AccentText } from "@/components/AccentText";
+import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { io } from "next/cache";
@@ -26,33 +27,34 @@ export function Footer() {
             </p>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Também precisa de divulgação?{" "}
-              <Link href="/marketing" className="font-semibold text-violet-200 underline-offset-4 hover:underline">
-                Conheça nossos serviços de marketing digital.
+              <Link href="/marketing" className="font-semibold text-ice underline-offset-4 hover:underline">
+                Conheça nossos serviços de tráfego pago e SEO.
               </Link>
             </p>
           </div>
 
           <div>
-            <h4 className="font-bold text-foreground mb-6 uppercase tracking-widest text-xs">Navegação</h4>
+            <h4 className="font-bold text-foreground mb-6 uppercase tracking-widest text-xs"><AccentText text={"Navegação"} /></h4>
             <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><Link href="/" className="hover:text-violet-200 transition-colors">Início</Link></li>
-              <li><Link href="/quem-somos" className="hover:text-violet-200 transition-colors">Quem somos</Link></li>
-              <li><Link href="/criacao-de-sites" className="hover:text-violet-200 transition-colors">Criação de sites</Link></li>
-              <li><Link href="/criacao-de-sites#lojas-virtuais" className="hover:text-violet-200 transition-colors">Lojas virtuais e catálogos</Link></li>
-              <li><Link href="/apps" className="hover:text-violet-200 transition-colors">Sistemas web</Link></li>
-              <li><Link href="/criacao-de-sites#templates" className="hover:text-violet-200 transition-colors">Templates e exemplos</Link></li>
-              <li><Link href="/marketing" className="hover:text-violet-200 transition-colors">Marketing</Link></li>
-              <li><Link href="/criacao-de-sites#planos" className="hover:text-violet-200 transition-colors">Planos & Preços</Link></li>
-              <li><Link href="/privacidade" className="hover:text-violet-200 transition-colors">Privacidade</Link></li>
+              <li><Link href="/" className="hover:text-ice transition-colors">Início</Link></li>
+              <li><Link href="/contato" className="hover:text-ice transition-colors">Contato</Link></li>
+              <li><Link href="/quem-somos" className="hover:text-ice transition-colors">Quem somos</Link></li>
+              <li><Link href="/criacao-de-sites" className="hover:text-ice transition-colors">Criação de sites</Link></li>
+              <li><Link href="/criacao-de-sites#lojas-virtuais" className="hover:text-ice transition-colors">Lojas virtuais e catálogos</Link></li>
+              <li><Link href="/apps" className="hover:text-ice transition-colors">Sistemas web</Link></li>
+              <li><Link href="/criacao-de-sites#templates" className="hover:text-ice transition-colors">Templates e exemplos</Link></li>
+              <li><Link href="/marketing" className="hover:text-ice transition-colors">Tráfego e SEO</Link></li>
+              <li><Link href="/#planos" className="hover:text-ice transition-colors">Planos & Preços</Link></li>
+              <li><Link href="/privacidade" className="hover:text-ice transition-colors">Privacidade</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-foreground mb-6 uppercase tracking-widest text-xs">Produtos</h4>
+            <h4 className="font-bold text-foreground mb-6 uppercase tracking-widest text-xs"><AccentText text={"Produtos"} /></h4>
             <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><Link href="/arcsync" className="hover:text-violet-200 transition-colors">ArcSync</Link></li>
-              <li><Link href="/visionsync" className="hover:text-violet-200 transition-colors">VisionSync</Link></li>
-              <li><Link href="/arcade" className="hover:text-violet-200 transition-colors">Arcade</Link></li>
+              <li><Link href="/arcsync" className="hover:text-ice transition-colors">ArcSync</Link></li>
+              <li><Link href="/visionsync" className="hover:text-ice transition-colors">VisionSync</Link></li>
+              <li><Link href="/arcade" className="hover:text-ice transition-colors">Arcade</Link></li>
             </ul>
           </div>
 

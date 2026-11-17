@@ -5,6 +5,7 @@ import { appCatalog } from "@/data/appCatalog";
 const publicPaths = [...new Set([
   "/",
   "/quem-somos",
+  "/contato",
   "/criacao-de-sites",
   "/arcsync",
   "/visionsync",

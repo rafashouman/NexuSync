@@ -1,29 +1,61 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getPromoSlots } from "@/app/actions/promoSlots";
-import type { PromoKey, PromoRemaining } from "@/lib/promo-slots";
+import { MAX_PROMO_SLOTS, PROMO_KEYS, type PromoKey, type PromoRemaining } from "@/lib/promo-slots";
+import { isPublicPrice } from "@/lib/public-pricing";
 
 let cached: Promise<PromoRemaining | null> | null = null;
 
 // Uma única consulta por carregamento da página, compartilhada entre as seções de planos.
 function loadSlots() {
-  cached ??= getPromoSlots().catch((error) => {
-    console.error("Could not load promo slots.", error);
-    return null;
+  cached ??= fetchSlots().then((slots) => {
+    // Uma falha transitória não deve ficar em cache até recarregar a página.
+    if (slots === null) cached = null;
+    return slots;
   });
   return cached;
+}
+
+async function fetchSlots(): Promise<PromoRemaining | null> {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const response = await fetch("/api/promo-slots", {
+        cache: "no-store",
+        signal: AbortSignal.timeout(12_000),
+      });
+      if (!response.ok) throw new Error(`Promo slots: ${response.status}`);
+      const value: unknown = await response.json();
+      if (
+        !value || typeof value !== "object" ||
+        !PROMO_KEYS.every((key) => {
+          const remaining = (value as Record<string, unknown>)[key];
+          return typeof remaining === "number" && Number.isInteger(remaining) &&
+            remaining >= 0 && remaining <= MAX_PROMO_SLOTS;
+        })
+      ) return null;
+      return value as PromoRemaining;
+    } catch {
+      // Sem conexão, timeout ou servidor indisponível: mantém o fallback visual.
+      if (attempt === 0) await new Promise((resolve) => setTimeout(resolve, 500));
+    }
+  }
+  return null;
 }
 
 export function usePromoSlots() {
   const [slots, setSlots] = useState<PromoRemaining | null>(null);
   useEffect(() => {
     let active = true;
-    loadSlots().then((value) => {
-      if (active) setSlots(value);
-    });
+    const refresh = () => {
+      void loadSlots().then((value) => {
+        if (active) setSlots(value);
+      });
+    };
+    refresh();
+    window.addEventListener("online", refresh);
     return () => {
       active = false;
+      window.removeEventListener("online", refresh);
     };
   }, []);
   return slots;
@@ -37,17 +69,18 @@ export function promoView(
   plan: { price: string; originalPrice?: string }
 ) {
   const remaining = slots?.[key];
-  if (remaining === undefined) {
-    return { price: plan.price, originalPrice: plan.originalPrice, label: null };
-  }
-  if (remaining <= 0) {
-    return { price: plan.originalPrice ?? plan.price, originalPrice: undefined, label: null };
-  }
+  const exhausted = remaining !== undefined && remaining <= 0;
+  const price = exhausted ? plan.originalPrice ?? plan.price : plan.price;
+  const consultation = !isPublicPrice(price);
+  const originalPrice = !exhausted && !consultation && plan.originalPrice && isPublicPrice(plan.originalPrice)
+    ? plan.originalPrice : undefined;
   return {
-    price: plan.price,
-    originalPrice: plan.originalPrice,
+    price: consultation ? "Sob consulta" : price,
+    displayPrice: consultation ? "Sob consulta" : `R$ ${price}`,
+    consultation,
+    originalPrice,
     label:
-      remaining === 1
+      consultation || remaining === undefined || exhausted ? null : remaining === 1
         ? "Última vaga promocional"
         : `Promoção · restam ${remaining} vagas`,
   };

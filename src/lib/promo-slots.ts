@@ -1,7 +1,7 @@
 export const PROMO_SLOTS = {
-  "sites-presence": { label: "Sites · Presence", total: 5 },
-  "sites-pulse": { label: "Sites · Pulse", total: 5 },
-  "sites-premium": { label: "Sites · Premium", total: 3 },
+  "sites-presence": { label: "Sites · Go", total: 5 },
+  "sites-pulse": { label: "Sites · Presence", total: 5 },
+  "sites-premium": { label: "Sites · Pulse", total: 3 },
   "apps-agendamentos": { label: "Apps · Agendamentos Online", total: 5 },
   "apps-gestao": { label: "Apps · Gestão Web & Dashboards", total: 3 },
   "apps-miniapps": { label: "Apps · Mini Apps & Gamificação", total: 5 },

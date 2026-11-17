@@ -1,5 +1,6 @@
 "use server";
 
+import { notifyQuote } from "@/lib/quote-notification";
 import { headers } from "next/headers";
 import { ObjectId } from "mongodb";
 import { getDb } from "@/lib/mongodb";
@@ -45,11 +46,12 @@ export interface QuoteInput {
   consentContact: boolean;
   consentPromo: boolean;
   website: string;
+  channel?: "email" | "whatsapp";
 }
 
 export async function saveQuoteRequest(
   input: QuoteInput
-): Promise<{ ok: true; recorded: boolean } | { ok: false; error: string }> {
+): Promise<{ ok: true; recorded: boolean; emailSent?: boolean } | { ok: false; error: string }> {
   const invalid = { ok: false as const, error: "Confira os campos e tente novamente." };
   if (!input || typeof input !== "object") return invalid;
 
@@ -58,6 +60,8 @@ export async function saveQuoteRequest(
     return { ok: true, recorded: false };
   }
 
+  if (input.channel !== undefined && input.channel !== "email" && input.channel !== "whatsapp") return invalid;
+  const channel = input.channel ?? "email";
   const name = text(input.name, 100);
   const company = text(input.company, 150, false);
   const segment = text(input.segment, 100);
@@ -99,7 +103,7 @@ export async function saveQuoteRequest(
 
   try {
     const db = await getDb();
-    await db.collection("quote_requests").insertOne({
+    const result = await db.collection("quote_requests").insertOne({
       name,
       company,
       segment,
@@ -108,13 +112,27 @@ export async function saveQuoteRequest(
       interest: interest.id,
       budget,
       message,
+      channel,
+      emailStatus: "pending",
       consentContact: true,
       consentPromo: input.consentPromo === true,
       status: "novo",
       createdAt: new Date(),
       deleteAfter: new Date(Date.now() + RETENTION_DAYS * DAY_IN_MS),
     });
-    return { ok: true, recorded: true };
+    const emailSent = await notifyQuote({
+      id: result.insertedId.toString(), name, company, contact, segment,
+      interest: interest.label, goal: goal.label, budget, message, channel,
+    });
+    try {
+      await db.collection("quote_requests").updateOne(
+        { _id: result.insertedId },
+        { $set: { emailStatus: emailSent ? "sent" : "failed", emailSent } },
+      );
+    } catch {
+      console.error("Could not update quote notification status; lead remains saved.");
+    }
+    return { ok: true, recorded: true, emailSent };
   } catch (error) {
     console.error("Could not save the quote request.", error);
     return { ok: false, error: "Não foi possível enviar agora. Tente novamente ou chame no WhatsApp." };

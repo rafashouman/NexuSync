@@ -6,7 +6,7 @@ import DemoShell from "@/components/ui/DemoShell";
 import { ScrollProgress } from "@/components/ui/MotionKit";
 
 export const metadata: Metadata = {
-  title: "NexuSync | Marketing Digital, Sites e Automações",
+  title: "NexuSync | Tráfego Pago e SEO, Sites e Automações",
   description: "Sites, tráfego pago, gestão de redes sociais e automações para pequenos e médios negócios. Conheça os serviços e pacotes da NexuSync.",
   openGraph: {
     type: "website",
@@ -74,8 +74,9 @@ export default function RootLayout({
           __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
         }}
       />
+      <div className="nexusync-site">
       <DemoShell>
-        <ScrollProgress />
+        <ScrollProgress className="from-turquoise via-ice to-champagne" />
         <Navbar />
         <main id="conteudo" className="relative flex min-h-screen flex-col overflow-hidden">
           {children}
@@ -83,6 +84,7 @@ export default function RootLayout({
         <Footer />
         <FloatingWA />
       </DemoShell>
+      </div>
     </>
   );
 }

@@ -1,3 +1,4 @@
+import { AccentText } from "@/components/AccentText";
 import Link from "next/link";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
@@ -12,12 +13,10 @@ export default function PrivacyPage() {
   return (
     <section className="container-luxe min-h-[70vh] py-32 sm:py-40">
       <div className="mx-auto max-w-3xl">
-        <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-violet-200">
+        <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-ice">
           NexuSync · Privacidade
         </p>
-        <h1 className="mb-6 font-display text-4xl font-bold uppercase tracking-tight sm:text-5xl">
-          Aviso de Privacidade
-        </h1>
+        <h1 className="mb-6 font-display text-4xl font-bold uppercase tracking-tight sm:text-5xl"><AccentText text={"Aviso de Privacidade"} /></h1>
         <p className="mb-10 leading-relaxed text-muted-foreground">
           Este aviso explica quais dados são registrados neste site, para que
           são usados e como você pode exercer seus direitos. Última atualização:
@@ -26,9 +25,7 @@ export default function PrivacyPage() {
 
         <div className="space-y-8 text-sm leading-7 text-muted-foreground">
           <section>
-            <h2 className="mb-2 font-display text-xl font-semibold text-foreground">
-              Solicitações de contato
-            </h2>
+            <h2 className="mb-2 font-display text-xl font-semibold text-foreground"><AccentText text={"Solicitações de contato"} /></h2>
             <p>
               Se você enviar o briefing, armazenamos seu nome, empresa, mensagem,
               tipo de projeto, plano de referência, página de origem e registro
@@ -43,9 +40,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="mb-2 font-display text-xl font-semibold text-foreground">
-              Leituras e mini-game de tarot
-            </h2>
+            <h2 className="mb-2 font-display text-xl font-semibold text-foreground"><AccentText text={"Leituras e mini-game de tarot"} /></h2>
             <p>
               Se você optar por desbloquear a leitura no hotsite de tarot,
               armazenamos seu nome, WhatsApp, monte escolhido, pergunta,
@@ -61,9 +56,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="mb-2 font-display text-xl font-semibold text-foreground">
-              Seguro de vida para pilotos
-            </h2>
+            <h2 className="mb-2 font-display text-xl font-semibold text-foreground"><AccentText text={"Seguro de vida para pilotos"} /></h2>
             <p>
               Se você solicitar uma cotação no hotsite Costi, armazenamos seu
               nome, WhatsApp, modalidade de voo, capital segurado solicitado e
@@ -76,9 +69,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="mb-2 font-display text-xl font-semibold text-foreground">
-              Pontuações dos jogos
-            </h2>
+            <h2 className="mb-2 font-display text-xl font-semibold text-foreground"><AccentText text={"Pontuações dos jogos"} /></h2>
             <p>
               Se você escolher um apelido e registrar sua pontuação no Memory
               Matrix ou no Voxel Vaders, armazenamos um identificador anônimo
@@ -90,9 +81,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="mb-2 font-display text-xl font-semibold text-foreground">
-              Estatísticas
-            </h2>
+            <h2 className="mb-2 font-display text-xl font-semibold text-foreground"><AccentText text={"Estatísticas"} /></h2>
             <p>
               Com sua permissão, usamos o Google Analytics para registrar
               visualizações de páginas e interações de forma estatística. O
@@ -103,9 +92,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="mb-2 font-display text-xl font-semibold text-foreground">
-              Armazenamento e compartilhamento
-            </h2>
+            <h2 className="mb-2 font-display text-xl font-semibold text-foreground"><AccentText text={"Armazenamento e compartilhamento"} /></h2>
             <p>
               Briefings, leads de tarot, leads Costi, reservas de demonstração
               e registros dos jogos são armazenados em um banco MongoDB
@@ -116,15 +103,13 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="mb-2 font-display text-xl font-semibold text-foreground">
-              Seus direitos e contato
-            </h2>
+            <h2 className="mb-2 font-display text-xl font-semibold text-foreground"><AccentText text={"Seus direitos e contato"} /></h2>
             <p>
               Você pode solicitar acesso, correção ou exclusão das informações
               enviando um e-mail para{" "}
               <a
                 href="mailto:contato@nexusync.online"
-                className="font-semibold text-violet-200 underline-offset-4 hover:underline"
+                className="font-semibold text-ice underline-offset-4 hover:underline"
               >
                 contato@nexusync.online
               </a>
@@ -135,7 +120,7 @@ export default function PrivacyPage() {
 
         <Link
           href="/"
-          className="mt-10 inline-flex text-sm font-semibold text-violet-200 hover:text-white"
+          className="mt-10 inline-flex text-sm font-semibold text-ice hover:text-ivory"
         >
           Voltar ao início
         </Link>

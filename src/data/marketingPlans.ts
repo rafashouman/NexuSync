@@ -2,8 +2,8 @@ export type MarketingPlan = {
   id: string;
   name: string;
   description: string;
-  monthlyPriceCents: number;
-  setupPriceCents: number;
+  monthlyPriceCents: number | null;
+  setupPriceCents: number | null;
   idealFor: string;
   features: string[];
   details: string[];
@@ -19,8 +19,7 @@ export const marketingPlans: MarketingPlan[] = [
   {
     id: "presenca-ativa",
     name: "Presença Ativa",
-    description:
-      "Falta tempo para manter as redes atualizadas? Organizamos conteúdo, legendas e publicações para apresentar sua oferta com frequência e clareza.",
+    description: "Falta tempo para manter as redes atualizadas? Organizamos conteúdo, legendas e publicações para apresentar sua oferta com frequência e clareza.",
     monthlyPriceCents: 69000,
     setupPriceCents: 29000,
     idealFor: "Empresa que precisa manter as redes organizadas",
@@ -32,21 +31,27 @@ export const marketingPlans: MarketingPlan[] = [
       "Uma rodada consolidada de ajustes",
       "Relatório mensal",
     ],
-    details: [
-      "O cliente fornece identidade visual, informações, fotos e aprovações.",
-      "Uma adaptação para stories não é uma criação inédita.",
-    ],
-    exclusions: [
-      "Filmagem e edição de reels",
-      "Atendimento de mensagens e respostas diárias a comentários",
-      "Anúncios",
-    ],
-    onboardingTime:
-      "Início previsto em 5 a 10 dias úteis após briefing, acessos e aprovações",
+    details: ["O cliente fornece identidade visual, informações, fotos e aprovações.", "Uma adaptação para stories não é uma criação inédita."],
+    exclusions: ["Filmagem e edição de reels", "Atendimento de mensagens e respostas diárias a comentários", "Anúncios"],
+    onboardingTime: "Início previsto em 5 a 10 dias úteis após briefing, acessos e aprovações",
     highlight: false,
     buttonText: "Quero minha marca presente",
-    waMessage:
-      "Olá! Tenho interesse no Presença Ativa da NexuSync, por R$ 690/mês mais R$ 290 de implantação. Quero apresentar meu negócio.",
+    waMessage: "Olá! Tenho interesse no Presença Ativa da NexuSync, por R$ 690/mês mais R$ 290 de implantação. Quero apresentar meu negócio.",
+  },
+  {
+    id: "seo-local",
+    name: "SEO e presença local",
+    description: "Ajude quem procura seus serviços a encontrar sua empresa. Avaliamos seu site e sua presença nas buscas para definir as melhorias prioritárias.",
+    monthlyPriceCents: null,
+    setupPriceCents: null,
+    idealFor: "Empresas que querem melhorar a visibilidade nas buscas",
+    features: ["Diagnóstico técnico do site", "Revisão de títulos e descrições", "Estrutura das páginas e conteúdo", "Orientações para o Perfil da Empresa no Google", "Acompanhamento dos indicadores definidos na proposta"],
+    details: ["As prioridades, as páginas e a frequência de acompanhamento são definidas após o diagnóstico."],
+    exclusions: ["Verba de anúncios", "Gestão de redes sociais", "Garantia de posição no Google"],
+    onboardingTime: "Prazo definido após avaliação do site e dos acessos",
+    highlight: false,
+    buttonText: "Quero avaliar meu SEO",
+    waMessage: "Olá! Quero uma proposta de SEO e presença local para minha empresa.",
   },
   {
     id: "aquisicao-local",
@@ -66,7 +71,7 @@ export const marketingPlans: MarketingPlan[] = [
     ],
     details: [
       "As variações são peças estáticas e textos, sem vídeo produzido.",
-      "Escopo pressupõe mídia de até R$ 3.000/mês; acima disso, reavaliamos a complexidade.",
+      "A verba de mídia e a complexidade das campanhas são definidas na proposta.",
       "A verba é paga diretamente à plataforma pelo cliente.",
     ],
     exclusions: ["Landing page", "Redes sociais orgânicas", "CRM"],
@@ -106,16 +111,26 @@ export const marketingPlans: MarketingPlan[] = [
       "Início previsto em 10 a 15 dias úteis após briefing, acessos e aprovações",
     highlight: true,
     badge: "Recomendado",
-    buttonText: "Quero conectar meu marketing",
+    buttonText: "Quero integrar conteúdo e anúncios",
     waMessage:
-      "Olá! Tenho interesse no Crescimento Integrado da NexuSync, por R$ 1.790/mês mais R$ 990 de implantação. Quero integrar conteúdo, anúncios e leads.",
+      "Olá! Quero uma proposta do Crescimento Integrado para conectar conteúdo, anúncios e acompanhamento de contatos.",
   },
 ];
 
 export const marketingAddons = [
   {
+    name: "Quatro publicações estáticas adicionais",
+    price: "+ R$ 290/mês",
+    scope: "Artes e legendas, com uma rodada consolidada de ajustes.",
+  },
+  {
+    name: "Dois reels simples",
+    price: "+ R$ 350/mês",
+    scope: "Até 30 segundos cada, com material enviado pelo cliente e uma revisão. Sem gravação.",
+  },
+  {
     name: "Captação e organização de leads",
-    price: "R$ 990 de implantação + R$ 290/mês",
+    price: "Implantação sob consulta + R$ 290/mês",
     scope:
       "Uma landing page de modelo, um formulário e um funil com cinco etapas. A mensalidade cobre revisão do fluxo e até 1 h de ajustes.",
   },
@@ -130,17 +145,7 @@ export const marketingAddons = [
     price: "+ R$ 590/mês e R$ 290 de configuração",
     scope: "Até duas campanhas adicionais. Verba de mídia separada.",
   },
-  {
-    name: "Quatro publicações estáticas adicionais",
-    price: "+ R$ 290/mês",
-    scope: "Artes e legendas, com uma rodada consolidada de ajustes.",
-  },
-  {
-    name: "Dois reels simples",
-    price: "+ R$ 350/mês",
-    scope:
-      "Até 30 segundos cada, com material enviado pelo cliente e uma revisão. Sem gravação.",
-  },
+
 ];
 
 export const marketingMicrocopy =

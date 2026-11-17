@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { AccentText } from "@/components/AccentText";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -28,7 +29,7 @@ import {
 import { WA_NUMBER, waLink } from "@/lib/site-config";
 
 const FIELD =
-  "w-full rounded-xl border border-white/10 bg-white/[0.035] px-4 py-3.5 text-foreground backdrop-blur-xl transition-all focus:border-violet-300/50 focus:outline-none focus:ring-1 focus:ring-violet-300/30";
+  "w-full rounded-xl border border-turquoise/40 bg-ocean/65 px-4 py-3.5 text-foreground backdrop-blur-xl transition-all focus:border-turquoise/50 focus:outline-none focus:ring-1 focus:ring-turquoise/30";
 const LABEL = "text-xs font-bold uppercase tracking-widest text-muted-foreground";
 
 export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }) {
@@ -44,6 +45,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
   const [interestSource, setInterestSource] = useState<QuoteSection>("form");
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [error, setError] = useState("");
+  const [emailDelivered, setEmailDelivered] = useState(false);
   const [sent, setSent] = useState<string | null>(null);
   const formStarted = useRef(false);
 
@@ -106,14 +108,27 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
     setError("");
 
     const form = e.currentTarget;
+    const submitter = (e.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null;
+    const channel = submitter?.value === "whatsapp" ? "whatsapp" : "email";
+    // Reserve the window during the user gesture so browsers allow it after saving.
+    const popup = channel === "whatsapp" ? window.open("about:blank", "_blank") : null;
+    if (popup) popup.opener = null;
     const data = new FormData(form);
     const field = (key: string) => String(data.get(key) ?? "").trim();
     const name = field("nome");
     const interestLabel =
       QUOTE_INTERESTS.find((i) => i.id === interest)?.label ?? interest;
 
+    const whatsMessage = [
+      `Olá! Sou ${name}. Tenho interesse em ${interestLabel}.`,
+      field("empresa") && `Empresa: ${field("empresa")}`,
+      `Contato: ${field("contato")}`,
+      `Segmento: ${field("segmento")}`,
+      field("mensagem"),
+    ].filter(Boolean).join("\n");
     try {
       const result = await saveQuoteRequest({
+        channel,
         name,
         company: field("empresa"),
         segment: field("segmento"),
@@ -135,14 +150,19 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
             section: interestSource,
           });
         }
-        setSent(
-          `Olá! Sou ${name} e acabei de enviar um pedido de orçamento (${interestLabel}) pelo site da NexuSync.`
-        );
+        setSent(whatsMessage);
+        setEmailDelivered(result.emailSent === true);
+        if (channel === "whatsapp" && result.recorded) {
+          if (popup) popup.location.replace(waLink(whatsMessage));
+          else window.location.assign(waLink(whatsMessage));
+        } else popup?.close();
         form.reset();
       } else {
+        popup?.close();
         setError(result.error);
       }
     } catch (err) {
+      popup?.close();
       console.error("Unable to send the quote request.", err);
       setError("Não foi possível enviar agora. Tente novamente ou chame no WhatsApp.");
     } finally {
@@ -158,7 +178,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
       {/* Glow de fundo */}
       <div
         aria-hidden
-        className="pointer-events-none absolute right-0 top-0 h-[600px] w-[600px] -translate-y-12 translate-x-1/3 rounded-full bg-violet-500/10 blur-[130px]"
+        className="pointer-events-none absolute right-0 top-0 h-[600px] w-[600px] -translate-y-12 translate-x-1/3 rounded-full bg-turquoise/10 blur-[130px]"
       />
 
       <div className="container-luxe relative z-10">
@@ -169,17 +189,17 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="min-w-0 rounded-[2rem] border border-white/[0.09] bg-[#0c0e14]/80 p-7 shadow-2xl backdrop-blur-2xl sm:p-10"
+            className="min-w-0 rounded-[2rem] border border-turquoise/40 bg-ocean/80 p-7 shadow-2xl backdrop-blur-2xl sm:p-10"
           >
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-400/[0.06] px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-violet-200">
-              <Sparkles className="h-3.5 w-3.5 text-fuchsia-300" />
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-turquoise/40 bg-turquoise/[0.06] px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-ice">
+              <Sparkles className="h-3.5 w-3.5 text-ice" />
               Iniciar Projeto
             </div>
 
-            <h2 className="mb-4 font-display text-[clamp(1.5rem,7.5vw,3rem)] uppercase tracking-tight sm:text-4xl md:text-5xl">
-              {homeOffersOnly
+            <h2 className="mb-4 font-display text-[clamp(1.5rem,7.5vw,3rem)] uppercase tracking-tight sm:text-3xl xl:text-4xl">
+              <AccentText text={homeOffersOnly
                 ? "Seu negócio pode dar o próximo passo. Vamos conversar?"
-                : "Qual desafio está travando seu negócio?"}
+                : "Vamos conversar sobre seu próximo projeto?"} />
             </h2>
             <p className="mb-8 text-base text-muted-foreground sm:text-lg">
               {homeOffersOnly
@@ -192,23 +212,24 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
                 <p className="flex items-center gap-2 font-display text-xl font-bold text-emerald-200">
                   <Check className="h-5 w-5" /> Pedido recebido
                 </p>
-                <p className="text-sm leading-relaxed text-white/75">
-                  Recebemos seu pedido de orçamento e retornaremos em breve. Se
-                  preferir agilizar, chame também no WhatsApp.
+                <p className="text-sm leading-relaxed text-ivory/75">
+                  {emailDelivered
+                    ? "Pedido registrado e enviado por e-mail à nossa equipe. Se preferir, continue pelo WhatsApp."
+                    : "Seu pedido está registrado. O aviso por e-mail está indisponível no momento; você pode continuar pelo WhatsApp abaixo."}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
                     href={waLink(sent)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-xl bg-violet-gradient px-5 py-3 text-sm font-bold text-white"
+                    className="inline-flex items-center gap-2 rounded-xl bg-brand-gradient px-5 py-3 text-sm font-bold text-abyss"
                   >
                     <MessageSquare className="h-4 w-4" /> Chamar no WhatsApp
                   </a>
                   <button
                     type="button"
                     onClick={() => setSent(null)}
-                    className="rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold text-white/80 hover:text-white"
+                    className="rounded-xl border border-turquoise/40 px-5 py-3 text-sm font-semibold text-ivory/80 hover:text-ivory"
                   >
                     Enviar outro pedido
                   </button>
@@ -217,34 +238,14 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
             ) : (
             <form id="orcamento" onSubmit={handleSubmit} onFocusCapture={handleFormStart} className="scroll-mt-28 space-y-6">
               <div className="space-y-2.5">
-                <p className={LABEL}>1. O que você precisa?</p>
-                <div className="flex flex-wrap gap-2">
-                  {visibleInterests.map((item) => {
-                    const active = interest === item.id;
-                    return (
-                      <button
-                        key={item.id}
-                        type="button"
-                        aria-pressed={active}
-                        onClick={() => {
-                          setInterest(item.id);
-                          trackAnalyticsEvent({
-                            eventName: "quote_interest_select",
-                            interest: item.id,
-                            section: "form",
-                          });
-                        }}
-                        className={`rounded-xl border px-3.5 py-2 text-xs font-semibold transition-all ${
-                          active
-                            ? "border-violet-300/50 bg-violet-500/25 text-white shadow-sm shadow-violet-500/20"
-                            : "border-white/10 bg-white/[0.03] text-white/60 hover:border-white/25 hover:text-white"
-                        }`}
-                      >
-                        {item.label}
-                      </button>
-                    );
-                  })}
-                </div>
+                <label htmlFor="interesse" className={LABEL}>1. O que você precisa?</label>
+                <select id="interesse" name="interesse" value={interest} className={FIELD}
+                  onChange={(event) => {
+                    setInterest(event.target.value);
+                    trackAnalyticsEvent({ eventName: "quote_interest_select", interest: event.target.value, section: "form" });
+                  }}>
+                  {visibleInterests.map((item) => <option key={item.id} value={item.id} className="bg-ocean">{item.label}</option>)}
+                </select>
               </div>
 
               <div className="grid gap-5 sm:grid-cols-2">
@@ -269,7 +270,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
                   <select id="objetivo" name="objetivo" required defaultValue="" className={FIELD}>
                     <option value="" disabled>Selecione</option>
                     {QUOTE_GOALS.map((g) => (
-                      <option key={g.id} value={g.id} className="bg-[#0c0e14]">{g.label}</option>
+                      <option key={g.id} value={g.id} className="bg-ocean">{g.label}</option>
                     ))}
                   </select>
                 </div>}
@@ -278,7 +279,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
                   <select id="orcamento-faixa" name="orcamento" defaultValue="" className={FIELD}>
                     <option value="">Prefiro não informar</option>
                     {QUOTE_BUDGETS.map((b) => (
-                      <option key={b} value={b} className="bg-[#0c0e14]">{b}</option>
+                      <option key={b} value={b} className="bg-ocean">{b}</option>
                     ))}
                   </select>
                 </div>}
@@ -299,7 +300,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
                 <span>
                   Autorizo a NexuSync a usar estes dados para entrar em contato
                   sobre este orçamento, conforme o{" "}
-                  <Link href="/privacidade" className="font-semibold text-violet-200 underline-offset-4 hover:underline">
+                  <Link href="/privacidade" className="font-semibold text-ice underline-offset-4 hover:underline">
                     Aviso de Privacidade
                   </Link>
                   .
@@ -310,18 +311,18 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
                 <span>(Opcional) Aceito receber novidades e ofertas da NexuSync.</span>
               </label>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="group inline-flex w-full items-center justify-center gap-3 rounded-xl bg-violet-gradient px-8 py-4 font-bold text-white shadow-violet-glow transition-transform hover:scale-[1.015] disabled:opacity-60 sm:w-auto"
-              >
-                {isSubmitting
-                  ? "Enviando..."
-                  : homeOffersOnly
-                    ? "Conversar sobre meu projeto"
-                    : "Quero meu orçamento"}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </button>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <button type="submit" name="channel" value="email" disabled={isSubmitting}
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-brand-gradient px-4 py-3.5 text-center text-sm font-bold leading-snug text-abyss transition-colors disabled:opacity-60">
+                  <Mail className="h-4 w-4 shrink-0" />
+                  {isSubmitting ? "Enviando..." : "Enviar por e-mail"}
+                </button>
+                <button type="submit" name="channel" value="whatsapp" disabled={isSubmitting}
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-turquoise/60 bg-turquoise/10 px-4 py-3.5 text-center text-sm font-bold leading-snug text-ice transition-colors hover:bg-turquoise/20 disabled:opacity-60">
+                  <MessageSquare className="h-4 w-4 shrink-0" /> Chamar no WhatsApp
+                </button>
+              </div>
+              <p className="text-xs leading-5 text-muted-foreground">Nos dois caminhos, registramos seu pedido para acompanhar o atendimento. No WhatsApp, a mensagem leva o assunto e os detalhes que você preencheu.</p>
               {error && (
                 <p role="alert" className="text-sm leading-relaxed text-rose-300">
                   {error}
@@ -340,11 +341,9 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
             className="flex min-w-0 flex-col gap-6"
           >
             {/* Card de Status Online + Contatos Diretos */}
-            <div className="rounded-[2rem] border border-white/10 bg-white/[0.035] p-5 backdrop-blur-xl sm:p-8 lg:p-9">
+            <div className="rounded-[2rem] border border-turquoise/40 bg-ocean/65 p-5 backdrop-blur-xl sm:p-8 lg:p-9">
               <div className="mb-6 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <h3 className="font-display text-2xl font-bold text-foreground">
-                  Contato Direto
-                </h3>
+                <h3 className="font-display text-2xl font-bold text-foreground"><AccentText text={"Contato Direto"} /></h3>
                 <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-500/10 px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-emerald-300">
                   <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
                   Atendimento pelo WhatsApp
@@ -356,10 +355,10 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
                   href={`https://wa.me/${WA_NUMBER}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-3 transition-all hover:border-violet-300/30 hover:bg-white/[0.05] sm:gap-4 sm:p-4"
+                  className="group flex items-center justify-between gap-3 rounded-2xl border border-turquoise/40 bg-ocean/65 p-3 transition-all hover:border-turquoise/30 hover:bg-ocean/65 sm:gap-4 sm:p-4"
                 >
                   <div className="flex min-w-0 items-center gap-3 sm:gap-4">
-                    <div className="rounded-xl bg-violet-300/10 p-3 text-violet-200 transition-colors group-hover:bg-violet-500 group-hover:text-white">
+                    <div className="rounded-xl bg-turquoise/10 p-3 text-ice transition-colors group-hover:bg-turquoise group-hover:text-abyss">
                       <Phone className="h-5 w-5" />
                     </div>
                     <div className="min-w-0">
@@ -371,15 +370,15 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
                       </p>
                     </div>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-white/30 transition-transform group-hover:translate-x-1 group-hover:text-violet-200" />
+                  <ArrowRight className="h-4 w-4 text-ivory/85 transition-transform group-hover:translate-x-1 group-hover:text-ice" />
                 </a>
 
-                <div className="group flex flex-col gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-3 transition-all hover:border-violet-300/30 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:p-4">
+                <div className="group flex flex-col gap-3 rounded-2xl border border-turquoise/40 bg-ocean/65 p-3 transition-all hover:border-turquoise/30 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:p-4">
                   <a
                     href="mailto:contato@nexusync.online"
                     className="flex min-w-0 items-center gap-3 sm:flex-1 sm:gap-4"
                   >
-                    <div className="rounded-xl bg-violet-300/10 p-3 text-violet-200 transition-colors group-hover:bg-violet-500 group-hover:text-white">
+                    <div className="rounded-xl bg-turquoise/10 p-3 text-ice transition-colors group-hover:bg-turquoise group-hover:text-abyss">
                       <Mail className="h-5 w-5" />
                     </div>
                     <div className="min-w-0">
@@ -394,7 +393,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
                   <button
                     type="button"
                     onClick={handleCopyEmail}
-                    className="inline-flex self-start items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 font-mono text-[10px] text-white/70 transition-colors hover:border-violet-300/40 hover:text-white sm:self-auto"
+                    className="inline-flex self-start items-center gap-1.5 rounded-lg border border-turquoise/40 bg-ocean/65 px-2.5 py-1.5 font-mono text-[10px] text-ivory/85 transition-colors hover:border-turquoise/40 hover:text-ivory sm:self-auto"
                     title="Copiar e-mail"
                   >
                     {copiedEmail ? (
@@ -411,8 +410,8 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
                   </button>
                 </div>
 
-                <div className="flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-3 sm:gap-4 sm:p-4">
-                  <div className="rounded-xl bg-violet-300/10 p-3 text-violet-200">
+                <div className="flex items-center gap-3 rounded-2xl border border-turquoise/40 bg-ocean/65 p-3 sm:gap-4 sm:p-4">
+                  <div className="rounded-xl bg-turquoise/10 p-3 text-ice">
                     <Globe2 className="h-5 w-5" />
                   </div>
                   <div className="min-w-0">
@@ -428,25 +427,25 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
             </div>
 
             {/* Mini Card: Como funciona nosso processo */}
-            <div className="rounded-[2rem] border border-violet-300/15 bg-gradient-to-br from-violet-500/10 via-[#130e1c]/90 to-[#0c0e14] p-7 backdrop-blur-xl">
-              <p className="mb-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-violet-200">
+            <div className="rounded-[2rem] border border-turquoise/40 bg-gradient-to-br from-turquoise/10 via-ocean/90 to-petroleum p-7 backdrop-blur-xl">
+              <p className="mb-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-ice">
                 Próximos Passos
               </p>
-              <ol className="space-y-3 text-sm text-white/75">
+              <ol className="space-y-3 text-sm text-ivory/75">
                 <li className="flex items-center gap-3">
-                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-violet-300/30 bg-violet-400/10 font-mono text-[10px] text-violet-200">
+                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-turquoise/30 bg-turquoise/10 font-mono text-[10px] text-ice">
                     01
                   </span>
                   <span>Conversamos sobre seu negócio e sua dificuldade</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-violet-300/30 bg-violet-400/10 font-mono text-[10px] text-violet-200">
+                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-turquoise/30 bg-turquoise/10 font-mono text-[10px] text-ice">
                     02
                   </span>
                   <span>Você recebe escopo, valor e prazo para avaliar</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-violet-300/30 bg-violet-400/10 font-mono text-[10px] text-violet-200">
+                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-turquoise/30 bg-turquoise/10 font-mono text-[10px] text-ice">
                     03
                   </span>
                   <span>Com a proposta aprovada, começamos a criação</span>

@@ -42,7 +42,7 @@ export function Reveal({
   );
 }
 
-export function ScrollProgress() {
+export function ScrollProgress({ className = "from-[#FF5500] via-[#FF8A00] to-[#FFB36B]" }: { className?: string }) {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 28 });
 
@@ -50,7 +50,7 @@ export function ScrollProgress() {
     <motion.div
       aria-hidden
       style={{ scaleX }}
-      className="fixed inset-x-0 top-0 z-[60] h-1 origin-left bg-gradient-to-r from-[#FF5500] via-[#FF8A00] to-[#FFB36B]"
+      className={`fixed inset-x-0 top-0 z-[60] h-1 origin-left bg-gradient-to-r ${className}`}
     />
   );
 }

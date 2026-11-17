@@ -1,21 +1,6 @@
 import type { Metadata } from "next";
-import { Sora, Plus_Jakarta_Sans } from "next/font/google";
 import MetaPixel from "@/components/MetaPixel";
 import "./globals.css"; // Ajuste o caminho se necessário
-
-// Fonte para Títulos
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-// Fonte para Textos
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nexusync.online"),
@@ -33,8 +18,18 @@ export default function RootLayout({
 }>) {
   return (
     <html data-scroll-behavior="smooth" lang="pt-BR" className="scroll-smooth dark">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Fonte solicitada via stylesheet externo; carregamento no navegador. */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body
-        className={`${sora.variable} ${jakarta.variable} antialiased bg-background text-foreground selection:bg-violet-500/30 font-sans`}
+        className="antialiased bg-background text-foreground selection:bg-[#d4ff38]/30 selection:text-[#f4f4e9] font-sans"
       >
         <MetaPixel />
         {/* O children aqui vai renderizar ou o SiteLayout ou a página do Template */}

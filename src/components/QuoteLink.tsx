@@ -22,14 +22,14 @@ export function QuoteLink({
   if (interest) search.set("interest", interest);
   search.set("source", section);
   const query = search.toString();
-  const href = `/${query ? `?${query}` : ""}#contato`;
+  const href = `/contato${query ? `?${query}` : ""}#orcamento`;
 
   return (
     <a
       href={href}
       className={className}
       onClick={(event) => {
-        if (window.location.pathname === "/") {
+        if (window.location.pathname === "/" || window.location.pathname === "/contato") {
           event.preventDefault();
           selectInterest(interest ?? null, section);
         }

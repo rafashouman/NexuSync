@@ -14,6 +14,7 @@ export const HOME_QUOTE_INTERESTS = [
 
 export const QUOTE_INTERESTS = [
   ...marketingPlans.map((p) => ({ id: p.id, label: p.name })),
+  { id: "seo", label: "SEO e presença no Google" },
   { id: "trafego-pago", label: "Tráfego pago" },
   { id: "redes-sociais", label: "Redes sociais" },
   { id: "leads", label: "Captação de leads" },
@@ -32,10 +33,10 @@ export const QUOTE_GOALS = [
 ] as const;
 
 export const QUOTE_BUDGETS = [
-  "Até R$ 1.000",
-  "R$ 1.000 a R$ 2.000",
-  "R$ 2.000 a R$ 5.000",
-  "Acima de R$ 5.000",
+  "Até R$ 300",
+  "R$ 300 a R$ 600",
+  "R$ 600 a R$ 900",
+  "Prefiro solicitar uma proposta",
 ] as const;
 
 export const QUOTE_STATUSES = [

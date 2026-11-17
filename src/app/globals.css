@@ -4,6 +4,21 @@
 
 /* Mapeamento de variáveis para o Tailwind v4 */
 @theme {
+  /* Cobalto Botânico: azuis levemente mais escuros, lima nas ações e esmeralda no apoio. */
+  --color-petroleum: #141f50;
+  --color-ocean: #2032a6;
+  --color-sea: #2a40ba;
+  --color-turquoise: #10b981;
+  --color-ice: #8be7c5;
+  --color-champagne: #d4ff38;
+  --color-gold: #bce82c;
+  --color-ivory: #f4f4e9;
+  --color-mist: #dce4f5;
+  --color-abyss: #0d1639;
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
@@ -12,35 +27,73 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   
-  --font-display: var(--font-display);
-  --font-sans: var(--font-sans);
+  --font-display: "Montserrat", Arial, sans-serif;
+  --font-sans: "Geist", Arial, sans-serif;
 }
 
 :root {
   --radius: 0.75rem;
 }
 
+@utility text-brand-gradient {
+  background-color: #d4ff38;
+  background-image: none;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility bg-brand-gradient {
+  background-color: #d4ff38;
+  background-image: none;
+  @variant hover {
+    background-color: #bce82c;
+  }
+}
+
+@utility shadow-brand-glow {
+  box-shadow: 0 8px 34px -12px rgb(212 255 56 / 25%);
+}
+
+.nexusync-site {
+  color-scheme: dark;
+  background: #141f50;
+  color: #f4f4e9;
+}
+
+.nexusync-site :is(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+.nexusync-site :is(#planos, #aplicacoes, #midias-digitais, #planos-marketing, #contato) {
+  scroll-margin-top: 9rem;
+}
+
+.nexusync-site :is(a, button) > svg {
+  flex-shrink: 0;
+}
+
+.nexusync-site :is(a, button, input, textarea, select, summary):focus-visible {
+  outline: 2px solid #d4ff38;
+  outline-offset: 4px;
+}
+
 .dark {
-  /* Fundo violeta escuro e texto claro */
-  --background: hsl(258, 24%, 7%);
-  --foreground: hsl(210, 40%, 98%);
+  --background: #141f50;
+  --foreground: #f4f4e9;
 
-  /* Elementos de Interface */
-  --card: hsla(258, 22%, 10%, 0.78);
-  --card-foreground: hsl(210, 40%, 98%);
-  --popover: hsla(258, 22%, 10%, 0.9);
-  --popover-foreground: hsl(210, 40%, 98%);
+  --card: #2032a6;
+  --card-foreground: #f4f4e9;
+  --popover: #141f50;
+  --popover-foreground: #f4f4e9;
 
-  /* Paleta lilás e violeta */
-  --primary: hsl(267, 83%, 70%);
-  --primary-foreground: hsl(210, 40%, 98%);
-  --muted: hsl(258, 20%, 15%);
-  --muted-foreground: hsl(255, 15%, 70%);
-  
-  /* Bordas e Inputs */
-  --border: hsla(260, 18%, 25%, 0.7);
-  --input: hsla(260, 18%, 25%, 0.8);
-  --ring: hsl(267, 83%, 70%);
+  --primary: #d4ff38;
+  --primary-foreground: #0d1639;
+  --muted: #2032a6;
+  --muted-foreground: #dce4f5;
+  --border: rgb(16 185 129 / 28%);
+  --input: rgb(16 185 129 / 38%);
+  --ring: #10b981;
 }
 
 @layer base {
@@ -61,14 +114,14 @@
 
 /* Utilitários no novo padrão do Tailwind v4 */
 @utility text-violet-gradient {
-  background-image: linear-gradient(to right, #e9d5ff, #c4b5fd, #8b5cf6);
+  background-image: linear-gradient(to right, #f4f4e9, #d4ff38 72%, #bce82c);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 @utility bg-violet-gradient {
-  background-image: linear-gradient(120deg, #a78bfa, #7c3aed 58%, #6d28d9);
+  background-image: linear-gradient(120deg, #e4ff8b, #d4ff38 58%, #bce82c);
 }
 
 @utility container-luxe {
@@ -80,12 +133,28 @@
   @media (width >= 1024px) { padding-inline: 4rem; }
 }
 
+.home-hero {
+  background:
+    radial-gradient(ellipse at 68% 58%, rgb(16 185 129 / 17%), transparent 42%),
+    linear-gradient(115deg, #141f50 0%, #2032a6 65%, #2032a6 100%);
+}
+
+.home-hero-glow {
+  background:
+    radial-gradient(ellipse at 100% 12%, rgb(212 255 56 / 14%), transparent 24%),
+    radial-gradient(ellipse at 2% 92%, rgb(16 185 129 / 16%), transparent 30%);
+}
+
+.home-solutions {
+  background: linear-gradient(180deg, rgb(32 50 166 / 35%), rgb(20 31 80 / 15%));
+}
+
 @utility shadow-elegant {
-  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(192, 132, 252, 0.1);
+  box-shadow: 0 30px 80px -30px rgb(13 22 57 / 60%), 0 0 0 1px rgb(16 185 129 / 12%);
 }
 
 @utility shadow-violet-glow {
-  box-shadow: 0 0 40px -10px rgba(167, 139, 250, 0.32);
+  box-shadow: 0 8px 34px -12px rgb(212 255 56 / 38%);
 }
 
 .hero-title {
@@ -110,11 +179,11 @@
 @keyframes logo-pulse {
   0%, 100% {
     transform: scale(1);
-    filter: drop-shadow(0 0 0 rgba(192, 132, 252, 0));
+    filter: drop-shadow(0 0 0 rgb(212 255 56 / 0%));
   }
   50% {
     transform: scale(1.04);
-    filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.4));
+    filter: drop-shadow(0 0 8px rgb(212 255 56 / 40%));
   }
 }
 
@@ -413,4 +482,12 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Leitura e hierarquia das páginas comerciais. */
+.nexusync-site :is(h1, h2, h3, h4) {
+  text-wrap: balance;
+}
+.nexusync-site p {
+  text-wrap: pretty;
 }

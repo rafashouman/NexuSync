@@ -12,9 +12,9 @@ import { getPromoSlots, setPromoSlot } from "@/app/actions/promoSlots";
 import { PROMO_KEYS, PROMO_SLOTS, type PromoRemaining } from "@/lib/promo-slots";
 import { QUOTE_INTERESTS, QUOTE_STATUSES } from "@/lib/quote";
 
-const card = "rounded-2xl border border-white/10 bg-white/[0.04] p-5";
+const card = "rounded-2xl border border-turquoise/25 bg-ocean/65 p-5";
 const input =
-  "rounded-lg border border-white/15 bg-black/30 px-3 py-2 text-sm text-white focus:border-violet-300/60 focus:outline-none";
+  "rounded-lg border border-turquoise/25 bg-abyss/30 px-3 py-2 text-sm text-ivory focus:border-turquoise/60 focus:outline-none";
 
 const interestLabel = (id: string) =>
   QUOTE_INTERESTS.find((i) => i.id === id)?.label ?? id;
@@ -85,14 +85,14 @@ export default function QuoteAdminPanel() {
   };
 
   if (loading) {
-    return <main className="p-10 text-white/60">Carregando...</main>;
+    return <main className="p-10 text-ivory/60">Carregando...</main>;
   }
 
   if (!authenticated) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#07070c] p-6">
+      <main className="grid min-h-screen place-items-center bg-ocean p-6">
         <form onSubmit={login} className={`${card} w-full max-w-sm space-y-4`}>
-          <h1 className="font-display text-xl font-bold text-white">Painel NexuSync</h1>
+          <h1 className="font-display text-xl font-bold text-ivory">Painel NexuSync</h1>
           <input
             type="password"
             value={password}
@@ -102,7 +102,7 @@ export default function QuoteAdminPanel() {
             className={`${input} w-full`}
           />
           {error && <p className="text-sm text-rose-300">{error}</p>}
-          <button className="w-full rounded-lg bg-violet-500 py-2.5 text-sm font-bold text-white">
+          <button className="w-full rounded-lg bg-champagne py-2.5 text-sm font-bold text-abyss">
             Entrar
           </button>
         </form>
@@ -111,7 +111,7 @@ export default function QuoteAdminPanel() {
   }
 
   return (
-    <main className="min-h-screen bg-[#07070c] px-4 py-10 text-white sm:px-8">
+    <main className="min-h-screen bg-ocean px-4 py-10 text-ivory sm:px-8">
       <div className="mx-auto max-w-6xl space-y-8">
         <header className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="font-display text-2xl font-bold">Orçamentos e vagas</h1>
@@ -120,29 +120,29 @@ export default function QuoteAdminPanel() {
               await adminLogout();
               setAuthenticated(false);
             }}
-            className="rounded-lg border border-white/15 px-4 py-2 text-sm text-white/80 hover:text-white"
+            className="rounded-lg border border-turquoise/25 px-4 py-2 text-sm text-ivory/80 hover:text-ivory"
           >
             Sair
           </button>
         </header>
 
         {(notice || error) && (
-          <p role="status" className="text-sm text-violet-200">
+          <p role="status" className="text-sm text-ice">
             {error || notice}
           </p>
         )}
 
         <section className={card}>
           <h2 className="mb-1 font-display text-lg font-bold">Vagas promocionais</h2>
-          <p className="mb-4 text-xs text-white/50">
+          <p className="mb-4 text-xs text-ivory/50">
             Informe quantas vagas ainda restam. Em 0, o site mostra o preço cheio e esconde a promoção.
           </p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {PROMO_KEYS.map((key) => (
-              <div key={key} className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-black/20 p-3">
+              <div key={key} className="flex items-center justify-between gap-3 rounded-xl border border-turquoise/25 bg-abyss/20 p-3">
                 <div>
                   <p className="text-sm font-semibold">{PROMO_SLOTS[key].label}</p>
-                  <p className="text-[11px] text-white/40">
+                  <p className="text-[11px] text-ivory/40">
                     Atual: {slots?.[key] ?? "–"} · padrão {PROMO_SLOTS[key].total}
                   </p>
                 </div>
@@ -160,7 +160,7 @@ export default function QuoteAdminPanel() {
                     onClick={() =>
                       run(() => setPromoSlot(key, Number(drafts[key])), "Vagas atualizadas.")
                     }
-                    className="rounded-lg bg-violet-500 px-3 py-2 text-xs font-bold"
+                    className="rounded-lg bg-turquoise px-3 py-2 text-xs font-bold"
                   >
                     Salvar
                   </button>
@@ -172,7 +172,7 @@ export default function QuoteAdminPanel() {
 
         <section className="space-y-3">
           <h2 className="font-display text-lg font-bold">Pedidos de orçamento ({quotes.length})</h2>
-          {quotes.length === 0 && <p className="text-sm text-white/50">Nenhum pedido ainda.</p>}
+          {quotes.length === 0 && <p className="text-sm text-ivory/50">Nenhum pedido ainda.</p>}
           {quotes.map((q) => {
             const wa = whatsappHref(q.contact);
             return (
@@ -180,9 +180,9 @@ export default function QuoteAdminPanel() {
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <p className="font-semibold">
-                      {q.name} <span className="text-white/50">· {q.company}</span>
+                      {q.name} <span className="text-ivory/50">· {q.company}</span>
                     </p>
-                    <p className="text-xs text-white/50">
+                    <p className="text-xs text-ivory/50">
                       {q.segment} · {new Date(q.createdAt).toLocaleString("pt-BR")}
                     </p>
                   </div>
@@ -196,7 +196,7 @@ export default function QuoteAdminPanel() {
                       aria-label="Status"
                     >
                       {QUOTE_STATUSES.map((s) => (
-                        <option key={s} value={s} className="bg-[#0c0e14]">
+                        <option key={s} value={s} className="bg-ocean">
                           {s}
                         </option>
                       ))}
@@ -207,7 +207,7 @@ export default function QuoteAdminPanel() {
                           run(() => deleteQuoteRequest(q.id), "Pedido excluído.");
                         }
                       }}
-                      className="rounded-lg border border-rose-400/30 px-3 py-2 text-xs text-rose-200"
+                      className="rounded-lg border border-turquoise/30 px-3 py-2 text-xs text-rose-200"
                     >
                       Excluir
                     </button>
@@ -215,34 +215,34 @@ export default function QuoteAdminPanel() {
                 </div>
                 <dl className="mt-3 grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
                   <div>
-                    <dt className="inline text-white/40">Interesse: </dt>
+                    <dt className="inline text-ivory/40">Interesse: </dt>
                     <dd className="inline">{interestLabel(q.interest)}</dd>
                   </div>
                   <div>
-                    <dt className="inline text-white/40">Objetivo: </dt>
+                    <dt className="inline text-ivory/40">Objetivo: </dt>
                     <dd className="inline">{q.goal}</dd>
                   </div>
                   <div>
-                    <dt className="inline text-white/40">Contato: </dt>
+                    <dt className="inline text-ivory/40">Contato: </dt>
                     <dd className="inline">
                       {wa ? (
                         <a href={wa} target="_blank" rel="noopener noreferrer" className="text-emerald-300 underline">
                           {q.contact}
                         </a>
                       ) : (
-                        <a href={`mailto:${q.contact}`} className="text-violet-200 underline">
+                        <a href={`mailto:${q.contact}`} className="text-ice underline">
                           {q.contact}
                         </a>
                       )}
                     </dd>
                   </div>
                   <div>
-                    <dt className="inline text-white/40">Orçamento: </dt>
+                    <dt className="inline text-ivory/40">Orçamento: </dt>
                     <dd className="inline">{q.budget || "não informado"}</dd>
                   </div>
                 </dl>
-                {q.message && <p className="mt-3 text-sm text-white/70">{q.message}</p>}
-                <p className="mt-2 text-[11px] text-white/40">
+                {q.message && <p className="mt-3 text-sm text-ivory/70">{q.message}</p>}
+                <p className="mt-2 text-[11px] text-ivory/40">
                   Aceita novidades: {q.consentPromo ? "sim" : "não"}
                 </p>
               </article>

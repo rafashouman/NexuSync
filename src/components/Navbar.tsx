@@ -12,14 +12,14 @@ const EMAIL = "contato@nexusync.online";
 const WA_DISPLAY = "(51) 99358-3936";
 const WA_HREF = waLink("Olá! Vim pelo site da NexuSync e gostaria de falar sobre um projeto.");
 
-const contactItem = { label: "Contato", href: "/#orcamento" };
+const contactItem = { label: "Contato", href: "/contato" };
 
 const links = [
   { label: "Criação de sites", href: "/criacao-de-sites" },
   { label: "Sistemas web", href: "/apps" },
-  { label: "Marketing", href: "/marketing" },
-  { label: "Privacidade", href: "/privacidade" },
-  { label: "Planos e Pacotes", href: "/criacao-de-sites#planos" },
+  { label: "Design", href: "/design" },
+  { label: "Tráfego e SEO", href: "/marketing" },
+  { label: "Planos e Pacotes", href: "/#planos" },
 ];
 
 const products = [
@@ -57,16 +57,16 @@ export function Navbar() {
   return (
     <motion.header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled
-        ? "backdrop-blur-2xl bg-background/55 border-b border-violet-200/10 shadow-elegant"
+        ? "backdrop-blur-2xl bg-[#141f50]/90 border-b border-[#10b981]/25 shadow-elegant"
         : "bg-transparent"
         }`}
     >
-      <div className={`border-b border-violet-200/10 bg-background/70 text-xs transition-all duration-500 ${scrolled ? "hidden" : ""}`}>
+      <div className={`border-b border-[#10b981]/15 bg-[#141f50]/55 text-xs transition-all duration-500 ${scrolled ? "hidden" : ""}`}>
         <div className="container-luxe flex h-8 items-center justify-end gap-5">
-          <a href={`mailto:${EMAIL}`} className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-violet-200 transition-colors">
+          <a href={`mailto:${EMAIL}`} className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-[#d4ff38] transition-colors">
             <Mail className="h-3.5 w-3.5" aria-hidden /> {EMAIL}
           </a>
-          <a href={WA_HREF} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-violet-200 transition-colors">
+          <a href={WA_HREF} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-[#d4ff38] transition-colors">
             <MessageCircle className="h-3.5 w-3.5" aria-hidden /> WhatsApp {WA_DISPLAY}
           </a>
         </div>
@@ -80,16 +80,16 @@ export function Navbar() {
             height={99}
             sizes="(min-width: 640px) 220px, 180px"
             style={{ height: "auto" }}
-            className="w-[180px] sm:w-[220px] transition-transform duration-300 group-hover:scale-105"
+            className="w-[180px] sm:w-[220px] xl:w-[180px] 2xl:w-[220px] transition-transform duration-300 group-hover:scale-105"
           />
         </Link>
 
-        <nav aria-label="Navegação principal" className="hidden xl:flex items-center gap-5">
+        <nav aria-label="Navegação principal" className="hidden xl:flex items-center gap-3 2xl:gap-5">
           {[contactItem, ...links].map((l) => (
             <a
               key={l.label}
               href={l.href}
-              className="text-sm font-medium text-muted-foreground hover:text-violet-200 transition-colors duration-300"
+              className="whitespace-nowrap text-xs 2xl:text-sm font-medium text-muted-foreground hover:text-[#d4ff38] transition-colors duration-300"
             >
               {l.label}
             </a>
@@ -100,19 +100,19 @@ export function Navbar() {
               aria-haspopup="true"
               aria-expanded={productsOpen}
               onClick={() => setProductsOpen((v) => !v)}
-              className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-violet-200 transition-colors duration-300"
+              className="inline-flex items-center gap-1 whitespace-nowrap text-xs 2xl:text-sm font-medium text-muted-foreground hover:text-[#d4ff38] transition-colors duration-300"
             >
               Produtos
               <ChevronDown className={`h-3.5 w-3.5 transition-transform ${productsOpen ? "rotate-180" : ""}`} aria-hidden />
             </button>
             {productsOpen && (
-              <ul className="absolute right-0 top-full mt-3 w-56 rounded-2xl border border-violet-200/15 bg-background/95 p-2 shadow-elegant backdrop-blur-2xl">
+              <ul className="absolute right-0 top-full mt-3 w-56 rounded-2xl border border-[#10b981]/25 bg-[#141f50]/95 p-2 shadow-elegant backdrop-blur-2xl">
                 {products.map((product) => (
                   <li key={product.href}>
                     <Link
                       href={product.href}
                       onClick={() => setProductsOpen(false)}
-                      className="block rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-white/5 hover:text-violet-200 transition-colors"
+                      className="block rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-[#2032a6] hover:text-[#d4ff38] transition-colors"
                     >
                       {product.label}
                     </Link>
@@ -125,7 +125,7 @@ export function Navbar() {
 
         <QuoteLink
           section="header"
-          className="hidden xl:inline-flex items-center gap-2 rounded-full border border-violet-300/30 bg-white/[0.025] px-5 py-2.5 text-sm font-semibold text-violet-200 hover:bg-violet-gradient hover:text-white hover:border-transparent hover:shadow-violet-glow transition-all duration-300"
+          className="hidden whitespace-nowrap xl:inline-flex items-center gap-2 rounded-full border border-[#d4ff38]/65 bg-[#d4ff38] px-5 py-2.5 text-sm font-bold text-abyss hover:bg-[#bce82c] hover:border-[#bce82c] hover:shadow-brand-glow transition-all duration-300"
         >
           Pedir orçamento
         </QuoteLink>
@@ -149,7 +149,7 @@ export function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="xl:hidden overflow-hidden bg-background/75 backdrop-blur-2xl border-t border-violet-200/10"
+            className="xl:hidden overflow-hidden bg-[#141f50]/95 backdrop-blur-2xl border-t border-[#10b981]/20"
             id="mobile-navigation"
           >
             <nav aria-label="Navegação móvel" className="container-luxe flex flex-col gap-1 py-6">
@@ -163,7 +163,7 @@ export function Navbar() {
                   {l.label}
                 </a>
               ))}
-              <p className="pt-4 pb-1 text-xs font-bold uppercase tracking-widest text-violet-200">Produtos</p>
+              <p className="pt-4 pb-1 text-xs font-bold uppercase tracking-widest text-[#8be7c5]">Produtos</p>
               {products.map((product) => (
                 <Link
                   key={product.href}
@@ -183,7 +183,7 @@ export function Navbar() {
               <QuoteLink
                 section="header"
                 onClick={() => setOpen(false)}
-                className="mt-4 inline-flex justify-center rounded-full bg-violet-gradient px-6 py-3 text-white text-sm font-bold shadow-violet-glow"
+                className="mt-4 inline-flex justify-center rounded-full bg-brand-gradient px-6 py-3 text-abyss text-sm font-bold shadow-brand-glow"
               >
                 Pedir orçamento
               </QuoteLink>

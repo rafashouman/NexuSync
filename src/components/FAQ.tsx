@@ -1,5 +1,6 @@
 "use client";
 
+import { AccentText } from "@/components/AccentText";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
@@ -88,14 +89,12 @@ export function FAQ({
             transition={{ duration: 0.6, ease: "easeOut" as const }}
             className="min-w-0 lg:sticky lg:top-32"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-violet-300/20 bg-violet-400/[0.06] text-xs font-bold uppercase tracking-widest text-violet-200">
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-turquoise/40 bg-turquoise/[0.06] text-xs font-bold uppercase tracking-widest text-ice">
               Perguntas Frequentes
             </div>
-            <h2 className="mb-6 font-display text-[clamp(1.5rem,7.5vw,3.125rem)] uppercase tracking-tight text-foreground sm:text-4xl md:text-5xl">
-              {heading}
-            </h2>
+            <h2 className="mb-6 font-display text-[clamp(1.5rem,7.5vw,3.125rem)] uppercase tracking-tight text-foreground sm:text-4xl md:text-5xl"><AccentText text={heading} /></h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              <span className="font-medium text-violet-100">
+              <span className="font-medium text-ice">
                 Respostas simples para decidir com segurança.
               </span>{" "}
               {description}
@@ -114,7 +113,7 @@ export function FAQ({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" as const }}
-                  className={`border rounded-2xl overflow-hidden backdrop-blur-xl transition-colors duration-300 ${isOpen ? "border-violet-300/30 bg-violet-300/[0.07] shadow-violet-glow" : "border-white/[0.09] bg-white/[0.025] hover:bg-white/[0.05] hover:border-violet-300/20"
+                  className={`border rounded-2xl overflow-hidden backdrop-blur-xl transition-colors duration-300 ${isOpen ? "border-turquoise/30 bg-turquoise/[0.07] shadow-brand-glow" : "border-turquoise/40 bg-ocean/65 hover:bg-ocean/65 hover:border-turquoise/40"
                     }`}
                 >
                   <button
@@ -122,13 +121,13 @@ export function FAQ({
                     aria-expanded={isOpen}
                     aria-controls={`faq-panel-${index}`}
                     id={`faq-trigger-${index}`}
-                    className="flex items-center justify-between w-full p-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 rounded-2xl"
+                    className="flex items-center justify-between w-full p-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-turquoise rounded-2xl"
                   >
                     <span className="font-bold font-display text-foreground pr-4">
                       {faq.q}
                     </span>
                     <ChevronDown
-                      className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180 text-violet-200" : "text-muted-foreground"
+                      className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180 text-ice" : "text-muted-foreground"
                         }`}
                     />
                   </button>

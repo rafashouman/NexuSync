@@ -133,7 +133,7 @@ export default function PilotAdminPanel() {
 
   if (authLoading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-950 text-white">
+      <main className="flex min-h-screen items-center justify-center bg-abyss text-ivory">
         Verificando acesso...
       </main>
     );
@@ -141,14 +141,14 @@ export default function PilotAdminPanel() {
 
   if (!authenticated) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-950 p-6 text-white">
+      <main className="flex min-h-screen items-center justify-center bg-abyss p-6 text-ivory">
         <form
-          className="w-full max-w-sm space-y-4 rounded-2xl border border-white/10 bg-slate-900 p-8"
+          className="w-full max-w-sm space-y-4 rounded-2xl border border-turquoise/25 bg-abyss p-8"
           onSubmit={handleLogin}
         >
-          <div className="flex items-center gap-2 text-orange-500">
+          <div className="flex items-center gap-2 text-champagne">
             <Lock size={20} />
-            <h1 className="text-lg font-bold text-white">Leads Costi</h1>
+            <h1 className="text-lg font-bold text-ivory">Leads Costi</h1>
           </div>
           <input
             type="password"
@@ -159,12 +159,12 @@ export default function PilotAdminPanel() {
             placeholder="Senha"
             aria-label="Senha"
             required
-            className="w-full rounded-lg border border-white/10 bg-slate-800 px-4 py-3 outline-none focus:border-orange-500"
+            className="w-full rounded-lg border border-turquoise/25 bg-ocean px-4 py-3 outline-none focus:border-champagne"
           />
           {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
           <button
             disabled={pending || !password}
-            className="w-full rounded-lg bg-orange-600 py-3 font-bold hover:bg-orange-500 disabled:opacity-50"
+            className="w-full rounded-lg bg-champagne py-3 font-bold hover:bg-champagne disabled:opacity-50 hover:text-abyss"
           >
             {pending ? "Entrando..." : "Entrar"}
           </button>
@@ -174,12 +174,12 @@ export default function PilotAdminPanel() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 p-6 text-white">
+    <main className="min-h-screen bg-abyss p-6 text-ivory">
       <div className="mx-auto max-w-6xl">
         <header className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-2xl font-black">Leads • Seguro para Pilotos</h1>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-mist">
               {currentLeads.length} leads •{" "}
               {currentLeads.filter((lead) => lead.status === "novo").length} novos
             </p>
@@ -188,7 +188,7 @@ export default function PilotAdminPanel() {
             <select
               value={filter}
               onChange={(event) => setFilter(event.target.value)}
-              className="rounded-lg border border-white/10 bg-slate-900 px-3 py-2 text-sm"
+              className="rounded-lg border border-turquoise/25 bg-abyss px-3 py-2 text-sm"
             >
               <option value="todos">Todos</option>
               {STATUSES.map((status) => (
@@ -201,7 +201,7 @@ export default function PilotAdminPanel() {
               type="button"
               disabled={pending}
               onClick={handleLogout}
-              className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm hover:bg-white/5"
+              className="flex items-center gap-2 rounded-lg border border-turquoise/25 px-3 py-2 text-sm hover:bg-ocean/65"
             >
               <LogOut size={14} /> Sair
             </button>
@@ -219,9 +219,9 @@ export default function PilotAdminPanel() {
           </p>
         )}
 
-        <div className="overflow-x-auto rounded-2xl border border-white/10 bg-slate-900">
+        <div className="overflow-x-auto rounded-2xl border border-turquoise/25 bg-abyss">
           <table className="w-full text-left text-sm">
-            <thead className="bg-white/5 text-xs uppercase text-slate-400">
+            <thead className="bg-ocean/65 text-xs uppercase text-mist">
               <tr>
                 <th className="p-3">Data</th>
                 <th className="p-3">Nome</th>
@@ -236,15 +236,15 @@ export default function PilotAdminPanel() {
                 const digits = lead.whatsapp.replace(/\D/g, "");
                 const phone = digits.startsWith("55") ? digits : `55${digits}`;
                 return (
-                  <tr key={lead.id} className="border-t border-white/5">
-                    <td className="p-3 text-slate-400">
+                  <tr key={lead.id} className="border-t border-turquoise/5">
+                    <td className="p-3 text-mist">
                       {lead.createdAt
                         ? new Date(lead.createdAt).toLocaleString("pt-BR")
                         : "—"}
                     </td>
                     <td className="p-3 font-semibold">
                       {lead.name}
-                      <div className="text-xs font-normal text-slate-400">{lead.whatsapp}</div>
+                      <div className="text-xs font-normal text-mist">{lead.whatsapp}</div>
                     </td>
                     <td className="p-3">{MODALITY_LABELS[lead.modality] ?? lead.modality}</td>
                     <td className="p-3">{brl(lead.capitalInsured)}</td>
@@ -257,7 +257,7 @@ export default function PilotAdminPanel() {
                             updatePilotLeadStatus(lead.id, event.target.value)
                           )
                         }
-                        className="rounded-md border border-white/10 bg-slate-800 px-2 py-1"
+                        className="rounded-md border border-turquoise/25 bg-ocean px-2 py-1"
                       >
                         {STATUSES.map((status) => (
                           <option key={status} value={status}>
@@ -297,7 +297,7 @@ export default function PilotAdminPanel() {
               })}
               {visible.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="p-8 text-center text-slate-500">
+                  <td colSpan={6} className="p-8 text-center text-mist">
                     {leads === null ? "Carregando leads..." : "Nenhum lead encontrado."}
                   </td>
                 </tr>

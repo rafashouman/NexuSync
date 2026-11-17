@@ -3,6 +3,7 @@ import { Hero } from "@/components/Hero";
 import { SiteSolutions, SiteBenefits, SiteProcess } from "@/components/SiteSections";
 import { Plans } from "@/components/Plans";
 import { PlansApps } from "@/components/PlansApps";
+import { PlansMarketing } from "@/components/PlansMarketing";
 import { PlansDG } from "@/components/PlansDG";
 import { FAQ } from "@/components/FAQ";
 import { Contact } from "@/components/Contact";
@@ -24,11 +25,17 @@ export default function HomePage() {
       <SiteSolutions />
       <SiteBenefits />
       <SiteProcess />
+      <div className="container-luxe pt-16">
+        <nav aria-label="Categorias de planos" className="flex flex-wrap justify-center gap-3">
+          {[["#planos", "Sites"], ["#aplicacoes", "Aplicativos"], ["#midias-digitais", "Design"], ["#planos-marketing", "Redes sociais, tráfego e SEO"]].map(([href, label]) => <a key={href} href={href} className="inline-flex min-h-11 items-center rounded-full border border-turquoise/40 px-5 py-2 text-sm font-semibold text-ice hover:bg-turquoise/10">{label}</a>)}
+        </nav>
+      </div>
       <Plans sitesOnly />
       <PlansApps />
       <PlansDG />
+      <PlansMarketing />
       <FAQ />
-      <Contact homeOffersOnly />
+      <Contact />
     </>
   );
 }

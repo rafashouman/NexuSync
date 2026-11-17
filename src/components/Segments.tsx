@@ -1,5 +1,6 @@
 "use client";
 
+import { AccentText } from "@/components/AccentText";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -104,11 +105,11 @@ export function Segments() {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-48 top-20 -z-10 h-[34rem] w-[34rem] rounded-full bg-fuchsia-500/[0.06] blur-[130px]"
+        className="pointer-events-none absolute -left-48 top-20 -z-10 h-[34rem] w-[34rem] rounded-full bg-turquoise/[0.06] blur-[130px]"
       />
       <div
         aria-hidden
-        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-300/20 to-transparent"
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-turquoise/20 to-transparent"
       />
 
       <div className="container-luxe">
@@ -120,9 +121,9 @@ export function Segments() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="mb-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-violet-200"
+              className="mb-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-ice"
             >
-              <span className="h-px w-7 bg-fuchsia-300/80" />
+              <span className="h-px w-7 bg-turquoise/80" />
               Soluções sob Medida
             </motion.div>
 
@@ -135,7 +136,7 @@ export function Segments() {
             >
               Seu mercado.
               <br />
-              <span className="text-violet-gradient">Sua próxima fase.</span>
+              <span className="text-brand-gradient">Sua próxima fase.</span>
             </motion.h2>
           </div>
 
@@ -148,7 +149,7 @@ export function Segments() {
           >
             Cada setor tem desafios diferentes. Criamos experiências digitais
             alinhadas à rotina e às oportunidades de cada negócio.
-            <span className="mt-3 block font-medium text-violet-100">
+            <span className="mt-3 block font-medium text-ice">
               Passe o cursor ou selecione o seu setor abaixo.
             </span>
           </motion.p>
@@ -177,14 +178,14 @@ export function Segments() {
                 onClick={() => setActiveIdx(idx)}
                 className={`group relative flex min-h-[275px] cursor-pointer flex-col justify-between overflow-hidden rounded-[1.75rem] border p-6 backdrop-blur-xl transition-all duration-300 ${
                   isSelected
-                    ? "border-violet-300/40 bg-violet-400/[0.08] -translate-y-1 shadow-[0_20px_50px_-20px_rgba(139,92,246,0.35)]"
-                    : "border-white/[0.08] bg-white/[0.025] hover:-translate-y-1 hover:border-violet-200/20 hover:bg-white/[0.045]"
+                    ? "border-turquoise/40 bg-turquoise/[0.08] -translate-y-1 shadow-[0_20px_50px_-20px_rgba(212,255,56,0.35)]"
+                    : "border-turquoise/40 bg-ocean/65 hover:-translate-y-1 hover:border-turquoise/40 hover:bg-ocean/65"
                 }`}
               >
                 {/* Brilho de fundo quando selecionado */}
                 <div
                   aria-hidden
-                  className={`pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/15 via-transparent to-fuchsia-500/10 transition-opacity duration-500 ${
+                  className={`pointer-events-none absolute inset-0 bg-gradient-to-br from-turquoise/15 via-transparent to-turquoise/10 transition-opacity duration-500 ${
                     isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-60"
                   }`}
                 />
@@ -194,35 +195,33 @@ export function Segments() {
                     <div
                       className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl border transition-all duration-300 ${
                         isSelected
-                          ? "border-violet-300/50 bg-violet-500 text-white shadow-lg shadow-violet-500/30"
-                          : "border-white/10 bg-white/[0.035] text-violet-200 group-hover:border-violet-300/30 group-hover:bg-violet-400/[0.1]"
+                          ? "border-turquoise/50 bg-champagne text-abyss shadow-lg shadow-turquoise/30"
+                          : "border-turquoise/40 bg-ocean/65 text-ice group-hover:border-turquoise/30 group-hover:bg-turquoise/[0.1]"
                       }`}
                     >
                       <Icon className="h-5 w-5" />
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <span className="rounded-full border border-white/10 bg-black/30 px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-violet-200/80">
+                      <span className="rounded-full border border-turquoise/40 bg-abyss/30 px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-ice/80">
                         {segment.pill}
                       </span>
-                      <span className="font-mono text-[11px] tracking-[0.16em] text-white/30">
+                      <span className="font-mono text-[11px] tracking-[0.16em] text-ivory/85">
                         0{idx + 1}
                       </span>
                     </div>
                   </div>
 
-                  <h3 className="mb-2.5 font-display text-xl font-semibold leading-snug tracking-tight text-foreground transition-colors group-hover:text-violet-100">
-                    {segment.title}
-                  </h3>
+                  <h3 className="mb-2.5 font-display text-xl font-semibold leading-snug tracking-tight text-foreground transition-colors group-hover:text-ice"><AccentText text={segment.title} /></h3>
                   <p className="text-sm leading-6 text-muted-foreground">
                     {segment.desc}
                   </p>
                 </div>
 
                 {/* Rodapé do Card com entregável específico do nicho */}
-                <div className="relative z-10 mt-6 flex items-center justify-between gap-2 border-t border-white/[0.08] pt-4">
-                  <div className="flex items-center gap-2 text-xs text-violet-100/85">
-                    <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-fuchsia-300" />
+                <div className="relative z-10 mt-6 flex items-center justify-between gap-2 border-t border-turquoise/40 pt-4">
+                  <div className="flex items-center gap-2 text-xs text-ice/85">
+                    <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-ice" />
                     <span className="line-clamp-1 font-medium">
                       {segment.focus}
                     </span>
@@ -233,7 +232,7 @@ export function Segments() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Quero receber uma proposta para ${segment.title}`}
-                    className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-white/15 bg-white/5 text-white/70 transition-colors hover:border-white hover:bg-white hover:text-black"
+                    className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-turquoise/40 bg-ocean/65 text-ivory/85 transition-colors hover:border-turquoise hover:bg-ice hover:text-abyss"
                   >
                     <ArrowUpRight className="h-3.5 w-3.5" />
                   </a>
@@ -251,12 +250,12 @@ export function Segments() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25 }}
-            className="mt-8 flex flex-col items-start justify-between gap-4 rounded-2xl border border-violet-300/20 bg-[#130e1c]/90 px-6 py-4 backdrop-blur-xl sm:flex-row sm:items-center"
+            className="mt-8 flex flex-col items-start justify-between gap-4 rounded-2xl border border-turquoise/40 bg-ocean/90 px-6 py-4 backdrop-blur-xl sm:flex-row sm:items-center"
           >
             <div className="flex items-center gap-3">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-fuchsia-400" />
-              <p className="text-sm text-white/80">
-                <strong className="text-white">{activeSegment.title}:</strong>{" "}
+              <span className="h-2 w-2 animate-pulse rounded-full bg-turquoise" />
+              <p className="text-sm text-ivory/80">
+                <strong className="text-ivory">{activeSegment.title}:</strong>{" "}
                 {activeSegment.focus}
               </p>
             </div>
@@ -266,7 +265,7 @@ export function Segments() {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex shrink-0 items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-violet-200 transition-colors hover:text-white"
+              className="inline-flex shrink-0 items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-ice transition-colors hover:text-ivory"
             >
               Solicitar diagnóstico para {activeSegment.title}
               <ArrowUpRight className="h-4 w-4" />

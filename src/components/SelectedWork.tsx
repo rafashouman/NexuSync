@@ -1,5 +1,6 @@
 "use client";
 
+import { AccentText } from "@/components/AccentText";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import {
@@ -18,7 +19,7 @@ const projects = [
       "Cardápio digital com personalidade para apresentar opções de uma hamburgueria.",
     objective: "Apresentar o cardápio e direcionar o visitante para fazer um pedido.",
     href: "/templates/cardapio",
-    theme: "from-amber-200/15 via-[#1c1713] to-[#0c0d0f]",
+    theme: "from-champagne/15 via-ocean to-petroleum",
   },
   {
     number: "02",
@@ -28,7 +29,7 @@ const projects = [
       "Uma vitrine editorial para destacar uma coleção de moda.",
     objective: "Apresentar produtos e facilitar a exploração da coleção.",
     href: "/templates/streetwear",
-    theme: "from-violet-300/20 via-[#17111f] to-[#0c0d0f]",
+    theme: "from-turquoise/20 via-ocean to-petroleum",
   },
   {
     number: "03",
@@ -38,7 +39,7 @@ const projects = [
       "Portal automotivo em tema claro com comparativo FIPE, simulador CDC e reserva de visita online.",
     objective: "Apresentar veículos e facilitar pedidos de informação ou visita.",
     href: "/templates/carros",
-    theme: "from-blue-500/20 via-[#101726] to-[#0c0d0f]",
+    theme: "from-turquoise/20 via-ocean to-petroleum",
   },
   {
     number: "04",
@@ -48,7 +49,7 @@ const projects = [
       "Estúdio de impressão em resina 12K e pintura de miniaturas, com Raio-X de 3 estágios e calculadora de encomendas.",
     objective: "Apresentar serviços e receber solicitações de encomenda.",
     href: "/templates/miniaturas",
-    theme: "from-fuchsia-500/25 via-[#140d1f] to-[#08060c]",
+    theme: "from-turquoise/25 via-ocean to-petroleum",
   },
   {
     number: "05",
@@ -58,7 +59,7 @@ const projects = [
       "Cardápio digital para montar cachorro-quente, escolher adicionais do açaí e revisar o pedido.",
     objective: "Facilitar pedidos para entrega ou retirada.",
     href: "/templates/dog-e-acai",
-    theme: "from-fuchsia-500/25 via-[#211226] to-[#100b14]",
+    theme: "from-turquoise/25 via-ocean to-petroleum",
   },
   {
     number: "06",
@@ -68,7 +69,7 @@ const projects = [
       "Portfólio de arquitetura residencial com apresentação de projetos e plantas em 3D.",
     objective: "Apresentar projetos e facilitar o contato sobre cada trabalho.",
     href: "/templates/arquitetura",
-    theme: "from-amber-500/20 to-stone-950",
+    theme: "from-champagne/20 to-stone-950",
   },
   {
     number: "07",
@@ -78,7 +79,7 @@ const projects = [
       "Uma apresentação para academias, com informações sobre modalidades e formas de contato.",
     objective: "Apresentar serviços e facilitar pedidos de aula experimental.",
     href: "/templates/academias",
-    theme: "from-orange-500/20 via-[#181512] to-[#0c0d0f]",
+    theme: "from-champagne/20 via-ocean to-petroleum",
   },
 ];
 
@@ -127,7 +128,7 @@ function ScaledFrame({
   return (
     <div
       ref={boxRef}
-      className="relative w-full overflow-hidden bg-[#0b0d10]"
+      className="relative w-full overflow-hidden bg-ocean"
       style={{ aspectRatio: `${width} / ${height}` }}
     >
       {scale > 0 && (
@@ -141,13 +142,6 @@ function ScaledFrame({
           style={{ width, height, transform: `scale(${scale})` }}
         />
       )}
-      <Link
-        href={href}
-        className="absolute bottom-3 right-3 z-20 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/75 px-3 py-2 text-xs font-semibold text-white shadow-lg backdrop-blur transition-colors hover:border-violet-300/60 hover:bg-violet-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300"
-      >
-        Abrir layout
-        <ArrowUpRight aria-hidden className="h-3.5 w-3.5" />
-      </Link>
     </div>
   );
 }
@@ -161,11 +155,11 @@ function DeviceMockup({ href, title }: { href: string; title: string }) {
 
   if (device === "phone") {
     return (
-      <div className="relative mx-auto w-[min(100%,260px)] rounded-[2.5rem] border border-white/15 bg-[#05060a] p-2.5 shadow-2xl">
+      <div className="relative mx-auto w-[min(100%,260px)] rounded-[2.5rem] border border-turquoise/40 bg-ocean p-2.5 shadow-2xl">
         <div className="relative overflow-hidden rounded-[2rem]">
           <span
             aria-hidden
-            className="absolute left-1/2 top-2 z-10 h-4 w-16 -translate-x-1/2 rounded-full bg-black"
+            className="absolute left-1/2 top-2 z-10 h-4 w-16 -translate-x-1/2 rounded-full bg-abyss"
           />
           <ScaledFrame href={href} title={title} width={390} height={844} />
         </div>
@@ -175,7 +169,7 @@ function DeviceMockup({ href, title }: { href: string; title: string }) {
 
   if (device === "tablet") {
     return (
-      <div className="mx-auto w-full max-w-[440px] rounded-[2rem] border border-white/15 bg-[#05060a] p-3.5 shadow-2xl">
+      <div className="mx-auto w-full max-w-[440px] rounded-[2rem] border border-turquoise/40 bg-ocean p-3.5 shadow-2xl">
         <div className="relative overflow-hidden rounded-xl">
           <ScaledFrame href={href} title={title} width={820} height={1100} />
         </div>
@@ -186,13 +180,13 @@ function DeviceMockup({ href, title }: { href: string; title: string }) {
   if (device === "laptop") {
     return (
       <div className="mx-auto w-full max-w-[860px]">
-        <div className="rounded-t-2xl border border-white/15 bg-[#05060a] p-2.5 pb-2 shadow-2xl">
+        <div className="rounded-t-2xl border border-turquoise/40 bg-ocean p-2.5 pb-2 shadow-2xl">
           <div className="overflow-hidden rounded-lg">
-            <div className="flex h-8 items-center gap-1.5 border-b border-white/[0.08] bg-[#0b0e13] px-4">
+            <div className="flex h-8 items-center gap-1.5 border-b border-turquoise/40 bg-ocean px-4">
               <span aria-hidden className="h-2 w-2 rounded-full bg-[#ff6b61]" />
               <span aria-hidden className="h-2 w-2 rounded-full bg-[#ffc14f]" />
               <span aria-hidden className="h-2 w-2 rounded-full bg-[#49c781]" />
-              <span className="ml-3 min-w-0 truncate rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-0.5 font-mono text-[10px] text-white/50">
+              <span className="ml-3 min-w-0 truncate rounded-full border border-turquoise/40 bg-ocean/65 px-3 py-0.5 font-mono text-[10px] text-ivory/85">
                 nexusync.online{href}
               </span>
             </div>
@@ -201,7 +195,7 @@ function DeviceMockup({ href, title }: { href: string; title: string }) {
         </div>
         <div
           aria-hidden
-          className="mx-auto h-3 w-[108%] -translate-x-[3.7%] rounded-b-[1.2rem] border border-t-0 border-white/15 bg-gradient-to-b from-[#2a2b33] to-[#14151a]"
+          className="mx-auto h-3 w-[108%] -translate-x-[3.7%] rounded-b-[1.2rem] border border-t-0 border-turquoise/40 bg-gradient-to-b from-ocean to-petroleum"
         />
       </div>
     );
@@ -222,19 +216,19 @@ export function SelectedWork() {
   return (
     <section
       id="templates"
-      className="relative scroll-mt-24 border-y border-violet-200/[0.08] bg-[#110d18]/65 py-24 backdrop-blur-2xl sm:py-32"
+      className="relative scroll-mt-24 border-y border-turquoise/40 bg-ocean/65 py-24 backdrop-blur-2xl sm:py-32"
     >
       <div className="container-luxe">
         <div className="mb-12 flex flex-col gap-7 md:mb-16 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <p className="mb-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-violet-200">
-              <span className="h-px w-7 bg-fuchsia-300/80" />
+            <p className="mb-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-ice">
+              <span className="h-px w-7 bg-turquoise/80" />
               Feito para ser lembrado
             </p>
             <h2 className="text-balance font-display text-4xl font-semibold leading-[1.02] tracking-[-0.055em] sm:text-5xl md:text-6xl">
               Veja como seu negócio
               <br />
-              <span className="text-violet-gradient">
+              <span className="text-brand-gradient">
                 pode se apresentar na internet.
               </span>
             </h2>
@@ -248,7 +242,7 @@ export function SelectedWork() {
 
         <div>
           <div
-            className={`relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br ${project.theme} p-4 sm:p-8 transition-colors duration-700`}
+            className={`relative overflow-hidden rounded-[2rem] border border-turquoise/40 bg-gradient-to-br ${project.theme} p-4 sm:p-8 transition-colors duration-700`}
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_20%,rgba(255,255,255,.1),transparent_60%)]" />
 
@@ -259,12 +253,15 @@ export function SelectedWork() {
             />
           </div>
 
-          <div className="mt-5 flex items-center justify-center gap-4">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-4">
+            <Link href={project.href} className="inline-flex items-center gap-1.5 rounded-full border border-turquoise/35 bg-ocean px-4 py-2 text-xs font-semibold text-ivory transition-colors hover:bg-sea">
+              Abrir layout <ArrowUpRight aria-hidden className="h-3.5 w-3.5" />
+            </Link>
             <button
               type="button"
               onClick={prev}
               aria-label="Template anterior"
-              className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-colors hover:border-violet-400/40 hover:bg-violet-500/20 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300"
+              className="grid h-10 w-10 place-items-center rounded-full border border-turquoise/40 bg-ocean/65 text-ivory/85 transition-colors hover:border-turquoise/40 hover:bg-turquoise/20 hover:text-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
@@ -278,8 +275,8 @@ export function SelectedWork() {
                   aria-current={index === active}
                   className={`h-1.5 rounded-full transition-all ${
                     index === active
-                      ? "w-8 bg-violet-400"
-                      : "w-3 bg-white/20 hover:bg-white/40"
+                      ? "w-8 bg-turquoise"
+                      : "w-3 bg-ice/20 hover:bg-ice/40"
                   }`}
                 />
               ))}
@@ -288,7 +285,7 @@ export function SelectedWork() {
               type="button"
               onClick={next}
               aria-label="Próximo template"
-              className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-colors hover:border-violet-400/40 hover:bg-violet-500/20 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300"
+              className="grid h-10 w-10 place-items-center rounded-full border border-turquoise/40 bg-ocean/65 text-ivory/85 transition-colors hover:border-turquoise/40 hover:bg-turquoise/20 hover:text-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
@@ -297,34 +294,32 @@ export function SelectedWork() {
           <div className="mt-6 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
             <div className="min-w-0">
               <div className="mb-2 flex items-center gap-3">
-                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-violet-100/60">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-ice/60">
                   {project.category}
                 </span>
-                <span className="font-mono text-xs text-white/35">
+                <span className="font-mono text-xs text-ivory/35">
                   {project.number}/{String(projects.length).padStart(2, "0")}
                 </span>
               </div>
-              <h3 className="font-display text-2xl font-semibold tracking-tight text-foreground">
-                {project.title}
-              </h3>
+              <h3 className="font-display text-2xl font-semibold tracking-tight text-foreground"><AccentText text={project.title} /></h3>
               <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
                 {project.description}
               </p>
-              <p className="mt-3 text-xs leading-5 text-violet-100/80">
+              <p className="mt-3 text-xs leading-5 text-ice/80">
                 <span className="font-semibold">Objetivo:</span> {project.objective}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-start justify-between gap-5 border-t border-white/10 pt-7 sm:flex-row sm:items-center">
+        <div className="mt-10 flex flex-col items-start justify-between gap-5 border-t border-turquoise/40 pt-7 sm:flex-row sm:items-center">
           <p className="text-sm text-muted-foreground">
             Os exemplos são demonstrativos e podem ser adaptados à sua marca e
             aos objetivos do projeto.
           </p>
           <Link
             href="/templates"
-            className="group inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-violet-200"
+            className="group inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-ice"
           >
             Ver todos os exemplos
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

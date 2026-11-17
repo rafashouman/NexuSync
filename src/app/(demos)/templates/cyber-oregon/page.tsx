@@ -25,9 +25,14 @@ import {
   Crosshair,
   Award,
   Zap,
+  Mail,
+  Send,
+  Loader2,
+  AlertCircle,
 } from "lucide-react";
 
-import { openTrackedWhatsApp } from "@/components/MetaPixel";
+import { openTrackedWhatsApp, trackMetaEvent } from "@/components/MetaPixel";
+import { saveCyberOregonLead } from "@/app/actions/leads";
 import { Confetti, CountUp, Reveal } from "@/components/ui/MotionKit";
 import { useDemoTheme } from "@/components/ui/DemoShell";
 import { StickyMobileCta } from "@/components/ui/StickyMobileCta";
@@ -354,28 +359,29 @@ const Navbar = () => {
             })}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* CTA Button — Acesso rápido ao formulário */}
+          <div className="flex items-center gap-2 sm:gap-3">
             <a
               href="#contato"
-              className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#0088CC] via-[#00B8E6] to-[#00EAFF] text-[#020b1f] font-black text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(0,212,255,0.45)] hover:shadow-[0_0_35px_rgba(0,234,255,0.7)] transition-all active:scale-95"
+              className="group relative inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-[#0088CC] via-[#00B8E6] to-[#00EAFF] text-[#020b1f] font-black text-[11px] sm:text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(0,212,255,0.45)] hover:shadow-[0_0_35px_rgba(0,234,255,0.7)] transition-all active:scale-95"
             >
-              <Shield className="w-4 h-4 fill-current" />
-              <span>Solicitar Pentest</span>
-              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Solicitar Proposta</span>
+              <span className="sm:hidden">Formulário</span>
+              <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
-          </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            type="button"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
-            aria-expanded={isOpen}
-            className="lg:hidden p-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-200 hover:text-[#00EAFF]"
-          >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+            {/* Mobile Menu Toggle */}
+            <button
+              type="button"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+              aria-expanded={isOpen}
+              className="lg:hidden p-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-200 hover:text-[#00EAFF]"
+            >
+              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu Drawer */}
@@ -1663,29 +1669,50 @@ const ContactSection = () => {
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [service, setService] = useState("Pentest (Web / APIs / MCP / Mobile / IA / CAPT)");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const text = `Olá! Me chamo *${name.trim()}*${
-      company.trim() ? ` da empresa *${company.trim()}*` : ""
-    }.\nE-mail corporativo: ${
-      email.trim() || "Não informado"
-    }\nInteresse principal: *${service}*\n\nGostaria de agendar uma conversa com um especialista da CyberOregon.`;
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (name.trim().length < 2) return;
+    if (name.trim().length < 2 || !email.trim()) return;
 
-    setSubmitted(true);
-    openTrackedWhatsApp(
-      whatsappUrl,
-      "Contact",
-      {
+    setIsSubmitting(true);
+    setErrorMsg("");
+
+    try {
+      await saveCyberOregonLead({
+        name,
+        company,
+        email,
+        phone,
+        service,
+        message,
+      });
+
+      trackMetaEvent("Lead", {
         content_name: "Formulário de Diagnóstico CyberOregon",
         content_category: service,
-      }
-    );
+      });
+
+      setSubmitted(true);
+      setName("");
+      setCompany("");
+      setEmail("");
+      setPhone("");
+      setMessage("");
+    } catch (err) {
+      setErrorMsg(
+        err instanceof Error
+          ? err.message
+          : "Não foi possível enviar sua solicitação. Tente novamente."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -1747,25 +1774,17 @@ const ContactSection = () => {
                       <ShieldCheck className="w-7 h-7" />
                     </div>
                     <h3 className="text-xl font-black text-white">
-                      Mensagem preparada para o WhatsApp
+                      Solicitação Registrada com Sucesso!
                     </h3>
                     <p className="text-sm text-slate-300 max-w-md mx-auto">
-                      Para concluir a solicitação, envie a mensagem no WhatsApp. Se a janela não abriu, use o link abaixo.
+                      Recebemos os dados do seu escopo e notificamos nossa equipe por e-mail. Em breve um especialista da CyberOregon entrará em contato.
                     </p>
-                    <a
-                      href={whatsappUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-sm font-semibold text-[#00EAFF] underline"
-                    >
-                      Abrir WhatsApp para enviar
-                    </a>
                     <button
                       type="button"
                       onClick={() => setSubmitted(false)}
                       className="px-5 py-2.5 rounded-xl bg-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-white/15"
                     >
-                      Enviar novo escopo
+                      Enviar nova solicitação
                     </button>
                   </div>
                 ) : (
@@ -1778,6 +1797,16 @@ const ContactSection = () => {
                         TLS 1.3 SECURE
                       </span>
                     </div>
+
+                    {errorMsg && (
+                      <div
+                        role="alert"
+                        className="p-3 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-200 text-xs flex items-center gap-2"
+                      >
+                        <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                        <span>{errorMsg}</span>
+                      </div>
+                    )}
 
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
@@ -1817,22 +1846,42 @@ const ContactSection = () => {
                       </div>
                     </div>
 
-                    <div>
-                      <label
-                        htmlFor="co-email"
-                        className="block font-mono text-[11px] uppercase tracking-wider text-slate-300 mb-1.5"
-                      >
-                        E-mail Corporativo
-                      </label>
-                      <input
-                        id="co-email"
-                        type="email"
-                        autoComplete="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="rodrigo@suaempresa.com.br"
-                        className="w-full px-4 py-3 rounded-xl bg-[#04122C] border border-white/15 text-white text-sm placeholder:text-slate-500 focus:border-[#00EAFF] focus:outline-none"
-                      />
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div>
+                        <label
+                          htmlFor="co-email"
+                          className="block font-mono text-[11px] uppercase tracking-wider text-slate-300 mb-1.5"
+                        >
+                          E-mail Corporativo *
+                        </label>
+                        <input
+                          id="co-email"
+                          type="email"
+                          required
+                          autoComplete="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="rodrigo@suaempresa.com.br"
+                          className="w-full px-4 py-3 rounded-xl bg-[#04122C] border border-white/15 text-white text-sm placeholder:text-slate-500 focus:border-[#00EAFF] focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label
+                          htmlFor="co-phone"
+                          className="block font-mono text-[11px] uppercase tracking-wider text-slate-300 mb-1.5"
+                        >
+                          Telefone / Contato
+                        </label>
+                        <input
+                          id="co-phone"
+                          type="tel"
+                          autoComplete="tel"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          placeholder="(11) 99999-9999"
+                          className="w-full px-4 py-3 rounded-xl bg-[#04122C] border border-white/15 text-white text-sm placeholder:text-slate-500 focus:border-[#00EAFF] focus:outline-none"
+                        />
+                      </div>
                     </div>
 
                     <div>
@@ -1866,12 +1915,40 @@ const ContactSection = () => {
                       </select>
                     </div>
 
+                    <div>
+                      <label
+                        htmlFor="co-message"
+                        className="block font-mono text-[11px] uppercase tracking-wider text-slate-300 mb-1.5"
+                      >
+                        Detalhes do Escopo (opcional)
+                      </label>
+                      <textarea
+                        id="co-message"
+                        rows={3}
+                        maxLength={1500}
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Informe URLs, quantidade de APIs, prazo desejado ou observações..."
+                        className="w-full px-4 py-3 rounded-xl bg-[#04122C] border border-white/15 text-white text-sm placeholder:text-slate-500 focus:border-[#00EAFF] focus:outline-none resize-none"
+                      />
+                    </div>
+
                     <button
                       type="submit"
-                      className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#0088CC] via-[#00C4F0] to-[#00EAFF] text-[#020b1f] font-black text-xs sm:text-sm uppercase tracking-wider shadow-[0_0_30px_rgba(0,234,255,0.4)] hover:opacity-95 transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
+                      disabled={isSubmitting}
+                      className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#0088CC] via-[#00C4F0] to-[#00EAFF] text-[#020b1f] font-black text-xs sm:text-sm uppercase tracking-wider shadow-[0_0_30px_rgba(0,234,255,0.4)] hover:opacity-95 disabled:opacity-60 transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
                     >
-                      <MessageCircle className="w-4 h-4" />
-                      <span>Iniciar Briefing Seguro via WhatsApp</span>
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>Enviando Solicitação...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4" />
+                          <span>Enviar Solicitação de Proposta</span>
+                        </>
+                      )}
                     </button>
                   </form>
                 )}

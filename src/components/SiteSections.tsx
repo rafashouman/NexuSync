@@ -1,5 +1,6 @@
 "use client";
 
+import { AccentText } from "@/components/AccentText";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -31,7 +32,6 @@ const solutions = [
     cta: "Quero um site para minha empresa",
     icon: Building2,
     number: "01",
-    tone: "violet",
   },
   {
     title: "Lojas virtuais e catálogos digitais",
@@ -44,7 +44,6 @@ const solutions = [
     cta: "Quero vender pela internet",
     icon: LayoutTemplate,
     number: "02",
-    tone: "fuchsia",
   },
   {
     title: "Sistemas web e automação de processos",
@@ -57,20 +56,18 @@ const solutions = [
     cta: "Quero automatizar meu negócio",
     icon: ClipboardList,
     number: "03",
-    tone: "cyan",
   },
   {
-    title: "Marketing digital e identidade visual",
+    title: "Design e identidade visual",
     subtitle: "Sua empresa merece ser vista e lembrada.",
     description:
-      "Uma marca bem apresentada faz diferença. Ajudamos você a construir uma presença digital mais profissional com identidade visual, páginas de campanha e estratégias de marketing alinhadas aos objetivos da sua empresa.",
+      "Uma marca bem apresentada faz diferença. Criamos identidade visual, peças digitais e interfaces para apresentar sua empresa com clareza e manter uma comunicação visual consistente.",
     href: "/design",
     interest: "design",
     whatsapp: "Olá! Quero fortalecer a presença e a identidade visual da minha marca.",
     cta: "Quero fortalecer minha marca",
     icon: Palette,
     number: "04",
-    tone: "amber",
   },
 ] as const;
 
@@ -124,11 +121,11 @@ export function SiteSolutions() {
   return (
     <section
       id="servicos"
-      className="relative isolate scroll-mt-24 overflow-hidden border-t border-border py-24 sm:py-32"
+      className="home-solutions relative isolate scroll-mt-24 overflow-hidden border-t border-[#10b981]/25 py-14 sm:py-16"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-40 top-20 -z-10 h-96 w-96 rounded-full bg-violet-500/[0.09] blur-[120px]"
+        className="pointer-events-none absolute -left-40 top-20 -z-10 h-96 w-96 rounded-full bg-[#d4ff38]/[0.12] blur-[120px]"
       />
       <div className="container-luxe">
         <motion.div
@@ -136,34 +133,24 @@ export function SiteSolutions() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.55 }}
-          className="mb-12 max-w-3xl sm:mb-16"
+          className="mx-auto mb-8 max-w-6xl text-center sm:mb-10"
         >
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-400/[0.06] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-violet-200">
-            <span className="h-1.5 w-1.5 rounded-full bg-violet-300 shadow-[0_0_12px_rgba(196,181,253,0.8)]" />
-            Serviços digitais para pequenos negócios
+          <div className="mb-3 inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#d4ff38]">
+            <span aria-hidden className="h-px w-8 bg-[#d4ff38]" />
+            Nossas soluções
+            <span aria-hidden className="h-px w-8 bg-[#d4ff38]" />
           </div>
-          <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
-              Tudo o que seu negócio precisa para{" "}
-              <span className="text-violet-gradient">crescer no digital.</span>
+          <h2 className="text-balance font-display text-2xl font-semibold leading-tight tracking-tight sm:text-3xl xl:text-4xl">
+              Soluções digitais completas <span className="text-champagne">para o seu negócio</span>
           </h2>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-              Cada empresa tem seus desafios. A nossa missão é entender os seus e
-              criar soluções que realmente façam sentido para sua rotina.
+          <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
+              Da presença online à performance, unimos tecnologia, estratégia e design para gerar crescimento.
           </p>
         </motion.div>
 
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
           {solutions.map((solution, index) => {
             const Icon = solution.icon;
-            const accent =
-              solution.tone === "violet"
-                ? "border-violet-300/20 bg-violet-400/10 text-violet-200"
-                : solution.tone === "fuchsia"
-                  ? "border-fuchsia-300/20 bg-fuchsia-400/10 text-fuchsia-200"
-                  : solution.tone === "amber"
-                    ? "border-amber-300/20 bg-amber-400/10 text-amber-200"
-                    : "border-cyan-300/20 bg-cyan-400/10 text-cyan-200";
-
             return (
               <motion.article
                 key={solution.title}
@@ -171,37 +158,35 @@ export function SiteSolutions() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative flex flex-col overflow-hidden rounded-[1.75rem] border border-white/[0.09] bg-[#0c0e14]/75 p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:border-violet-300/30 hover:bg-[#11101a] sm:p-8"
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#10b981]/35 bg-[#2032a6]/65 p-5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#8be7c5]/65 hover:bg-[#2032a6] sm:p-6"
               >
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-violet-500/[0.08] blur-[70px] transition-opacity group-hover:bg-violet-400/[0.16]"
+                  className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#d4ff38]/[0.1] blur-[70px] transition-opacity group-hover:bg-[#d4ff38]/[0.2]"
                 />
                 <div className="relative flex items-center justify-between">
                   <span
-                    className={`grid h-12 w-12 place-items-center rounded-2xl border ${accent}`}
+                    className="grid h-10 w-10 place-items-center rounded-xl border border-[#10b981]/45 bg-ocean text-[#d4ff38]"
                   >
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
-                  <span className="font-mono text-xs tracking-widest text-white/30">
+                  <span className="font-mono text-xs tracking-widest text-[#8be7c5]/65">
                     {solution.number}
                   </span>
                 </div>
-                <div className="relative mt-8">
-                  <h3 className="font-display text-2xl font-semibold tracking-tight">
-                    {solution.title}
-                  </h3>
-                  <p className="mt-2 text-sm font-semibold text-violet-200">
-                    {solution.subtitle}
+                <div className="relative mt-5">
+                  <h3 className="font-display text-xl font-semibold tracking-tight"><AccentText text={solution.title} /></h3>
+                  <p className="mt-2 text-xs font-semibold text-[#8be7c5]">
+                    <AccentText text={solution.subtitle} />
                   </p>
-                  <p className="mt-4 min-h-[6.5rem] leading-7 text-muted-foreground">
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
                     {solution.description}
                   </p>
                 </div>
-                <div className="relative mt-8">
+                <div className="relative mt-auto pt-6">
                   <Link
                     href={solution.href}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-violet-gradient px-5 py-3.5 text-center font-semibold text-white shadow-violet-glow transition-transform hover:scale-[1.02]"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-champagne/60 bg-brand-gradient px-4 py-3 text-center text-sm font-bold text-abyss transition-colors"
                   >
                     Conhecer esta solução
                     <ArrowRight
@@ -212,7 +197,7 @@ export function SiteSolutions() {
                   <a
                     data-analytics-section="sites"
                     data-analytics-interest={solution.interest}
-                    className="mt-4 inline-flex w-full items-center justify-center gap-2 text-sm font-semibold text-white/55 transition-colors hover:text-white"
+                    className="mt-3 inline-flex w-full items-center justify-center gap-2 text-xs font-semibold text-[#c8d2eb] transition-colors hover:text-[#d4ff38]"
                     href={waLink(solution.whatsapp)}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -232,7 +217,7 @@ export function SiteSolutions() {
           <QuoteLink
             interest="nao-sei"
             section="sites"
-            className="font-semibold text-violet-200 underline decoration-violet-300/40 underline-offset-4 transition-colors hover:text-white"
+            className="font-semibold text-[#d4ff38] underline decoration-[#d4ff38]/40 underline-offset-4 transition-colors hover:text-[#f4f4e9]"
           >
             Conte seu objetivo e ajudamos a definir o formato.
           </QuoteLink>
@@ -247,7 +232,7 @@ export function SiteBenefits() {
     <section className="relative isolate overflow-hidden border-t border-border py-24 sm:py-32">
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-40 top-1/4 -z-10 h-96 w-96 rounded-full bg-fuchsia-500/[0.07] blur-[130px]"
+        className="pointer-events-none absolute -right-40 top-1/4 -z-10 h-96 w-96 rounded-full bg-turquoise/[0.07] blur-[130px]"
       />
       <div className="container-luxe">
         <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
@@ -257,13 +242,13 @@ export function SiteBenefits() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.55 }}
           >
-            <div className="mb-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-fuchsia-200">
+            <div className="mb-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-ice">
               <Sparkles className="h-4 w-4" aria-hidden="true" />
               Tecnologia para a rotina da sua empresa
             </div>
             <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
               Você cuida do seu negócio.{" "}
-              <span className="text-violet-gradient">
+              <span className="text-brand-gradient">
                 A gente ajuda com a tecnologia.
               </span>
             </h2>
@@ -288,25 +273,23 @@ export function SiteBenefits() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.45, delay: index * 0.08 }}
-                  className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 transition-all duration-300 hover:border-violet-300/25 hover:bg-violet-400/[0.045] sm:p-6"
+                  className="group relative overflow-hidden rounded-2xl border border-turquoise/40 bg-ocean/65 p-5 transition-all duration-300 hover:border-turquoise/40 hover:bg-turquoise/[0.045] sm:p-6"
                 >
                   <div className="flex items-start justify-between gap-4">
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-violet-300/15 bg-violet-400/[0.08] text-violet-200 transition-colors group-hover:border-violet-300/30 group-hover:bg-violet-400/15">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-turquoise/40 bg-turquoise/[0.08] text-ice transition-colors group-hover:border-turquoise/30 group-hover:bg-turquoise/15">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
-                    <span className="font-mono text-[10px] tracking-widest text-white/25">
+                    <span className="font-mono text-[10px] tracking-widest text-ivory/25">
                       0{index + 1}
                     </span>
                   </div>
-                  <h3 className="mt-6 text-lg font-semibold leading-snug text-white">
-                    {benefit.title}
-                  </h3>
+                  <h3 className="mt-6 text-lg font-semibold leading-snug text-ivory"><AccentText text={benefit.title} /></h3>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground">
                     {benefit.body}
                   </p>
                   <div
                     aria-hidden
-                    className="mt-5 h-px w-10 bg-gradient-to-r from-violet-300/70 to-transparent transition-all duration-300 group-hover:w-20"
+                    className="mt-5 h-px w-10 bg-gradient-to-r from-turquoise/70 to-transparent transition-all duration-300 group-hover:w-20"
                   />
                 </motion.article>
               );
@@ -322,11 +305,11 @@ export function SiteProcess() {
   return (
     <section
       id="como-funciona"
-      className="relative isolate scroll-mt-24 overflow-hidden border-t border-border bg-violet-500/[0.035] py-24 sm:py-32"
+      className="relative isolate scroll-mt-24 overflow-hidden border-t border-border bg-turquoise/[0.035] py-24 sm:py-32"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/3 -z-10 h-[30rem] w-[50rem] -translate-x-1/2 rounded-full bg-violet-500/[0.08] blur-[140px]"
+        className="pointer-events-none absolute left-1/2 top-1/3 -z-10 h-[30rem] w-[50rem] -translate-x-1/2 rounded-full bg-turquoise/[0.08] blur-[140px]"
       />
       <div className="container-luxe">
         <motion.div
@@ -336,13 +319,13 @@ export function SiteProcess() {
           transition={{ duration: 0.55 }}
           className="mx-auto mb-14 max-w-3xl text-center sm:mb-20"
         >
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-400/[0.06] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-violet-200">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-turquoise/40 bg-turquoise/[0.06] px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-ice">
             <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
             Processo transparente, do início ao lançamento
           </div>
           <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
             Do primeiro contato ao site publicado,{" "}
-            <span className="text-violet-gradient">com etapas claras.</span>
+            <span className="text-brand-gradient">com etapas claras.</span>
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
             Você sabe o que acontece em cada fase e o que precisamos para tirar
@@ -353,7 +336,7 @@ export function SiteProcess() {
         <div className="relative">
           <div
             aria-hidden
-            className="absolute left-[12%] right-[12%] top-8 hidden h-px bg-gradient-to-r from-violet-400/10 via-violet-300/40 to-violet-400/10 lg:block"
+            className="absolute left-[12%] right-[12%] top-8 hidden h-px bg-gradient-to-r from-turquoise/10 via-turquoise/40 to-turquoise/10 lg:block"
           />
           <ol className="relative grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map((step, index) => {
@@ -365,26 +348,24 @@ export function SiteProcess() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative rounded-[1.6rem] border border-white/[0.08] bg-[#0d0c14]/80 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-violet-300/25 hover:bg-[#12101c] sm:p-7"
+                  className="group relative rounded-[1.6rem] border border-turquoise/40 bg-ocean/80 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/40 hover:bg-ocean sm:p-7"
                 >
                   <div className="relative z-10 flex items-center justify-between">
-                    <span className="grid h-16 w-16 place-items-center rounded-2xl border border-violet-300/20 bg-[#171322] text-violet-200 shadow-[0_0_30px_rgba(139,92,246,0.12)] transition-all duration-300 group-hover:border-violet-300/40 group-hover:bg-violet-500/15 group-hover:shadow-[0_0_36px_rgba(139,92,246,0.22)]">
+                    <span className="grid h-16 w-16 place-items-center rounded-2xl border border-turquoise/40 bg-ocean text-ice shadow-[0_0_30px_rgba(212,255,56,0.12)] transition-all duration-300 group-hover:border-turquoise/40 group-hover:bg-turquoise/15 group-hover:shadow-[0_0_36px_rgba(212,255,56,0.22)]">
                       <Icon className="h-6 w-6" aria-hidden="true" />
                     </span>
-                    <span className="font-mono text-xs tracking-widest text-violet-200/60">
+                    <span className="font-mono text-xs tracking-widest text-ice/60">
                       ETAPA 0{index + 1}
                     </span>
                   </div>
-                  <h3 className="mt-7 font-display text-xl font-semibold leading-snug">
-                    {step.title}
-                  </h3>
+                  <h3 className="mt-7 font-display text-xl font-semibold leading-snug"><AccentText text={step.title} /></h3>
                   <p className="mt-3 text-sm leading-6 text-muted-foreground">
                     {step.body}
                   </p>
                   {index < steps.length - 1 && (
                     <ArrowRight
                       aria-hidden="true"
-                      className="absolute -bottom-3.5 left-1/2 z-10 hidden h-7 w-7 -translate-x-1/2 rounded-full border border-violet-300/20 bg-[#171322] p-1.5 text-violet-200 sm:block lg:hidden"
+                      className="absolute -bottom-3.5 left-1/2 z-10 hidden h-7 w-7 -translate-x-1/2 rounded-full border border-turquoise/40 bg-ocean p-1.5 text-ice sm:block lg:hidden"
                     />
                   )}
                 </motion.li>

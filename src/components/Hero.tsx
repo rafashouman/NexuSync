@@ -1,47 +1,52 @@
 import { QuoteLink } from "@/components/QuoteLink";
 import { HeroTemplatePreview } from "@/components/HeroTemplatePreview";
+import { ChartNoAxesColumnIncreasing, Gem, Rocket } from "lucide-react";
 
 export function Hero() {
-  return <section id="hero" className="relative overflow-hidden pb-16 pt-32 sm:pb-24 sm:pt-40">
-    <div aria-hidden className="pointer-events-none absolute right-0 top-20 h-96 w-96 rounded-full bg-violet-500/15 blur-[100px]" />
-    <div className="container-luxe relative grid items-start gap-12 lg:grid-cols-[1.15fr_0.85fr]">
-      <div>
-        <p className="mb-6 text-xs font-bold uppercase tracking-[0.16em] text-violet-200">
-          Criação de sites, lojas virtuais e sistemas web
-        </p>
-        <h1 className="max-w-3xl font-display text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.12] tracking-tight">
-          Criação de sites e soluções digitais para{" "}
-          <span className="text-violet-gradient">fazer seu negócio crescer</span>
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-          Sua empresa tem muito a oferecer. Que tal mostrar isso também na
-          internet?
-        </p>
-        <p className="mt-4 max-w-2xl text-base leading-7 text-violet-100">
-          Na NexuSync, criamos sites profissionais, lojas virtuais, sistemas
-          web e automações para ajudar pequenos negócios a conquistar
-          credibilidade, facilitar vendas e simplificar o dia a dia.
-        </p>
-        <div className="mt-8 flex flex-wrap items-center gap-5">
-          <QuoteLink
-            interest="nao-sei"
-            section="hero"
-            className="rounded-full bg-violet-gradient px-7 py-4 font-bold text-white shadow-violet-glow"
-          >
-            Solicitar um orçamento
-          </QuoteLink>
-          <a
-            href="#servicos"
-            className="text-sm font-semibold text-violet-200"
-          >
-            Conhecer nossos serviços
-          </a>
+  return (
+    <section
+      id="hero"
+      className="home-hero relative isolate overflow-hidden pb-12 pt-32 sm:pb-16 sm:pt-36 lg:pb-14"
+    >
+      <div aria-hidden className="home-hero-glow pointer-events-none absolute inset-0 -z-10" />
+      <div className="container-luxe relative grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(220px,0.72fr)] lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
+        <div className="relative z-10">
+          <p className="mb-4 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8be7c5]">
+            Agência digital NexuSync
+            <span aria-hidden className="h-px w-8 bg-[#d4ff38]" />
+          </p>
+          <h1 className="max-w-2xl font-display text-[clamp(2.5rem,4.2vw,3.8rem)] leading-[1.04] tracking-tight">
+            Seu negócio merece{" "}
+            <span className="block text-brand-gradient">ir mais longe.</span>
+          </h1>
+          <p className="mt-5 max-w-xl text-base leading-7 text-[#f4f4e9] sm:text-lg sm:leading-8">
+            Sites, aplicativos e estratégias para atrair mais clientes,
+            fortalecer sua marca e gerar resultados reais no digital.
+          </p>
+          <div className="mt-7 flex flex-wrap items-center gap-3">
+            <QuoteLink
+              interest="nao-sei"
+              section="hero"
+              className="inline-flex min-h-12 items-center rounded-full bg-brand-gradient px-6 py-3 font-bold text-abyss shadow-brand-glow transition-transform hover:-translate-y-0.5"
+            >
+              Solicitar orçamento <span aria-hidden className="ml-2">→</span>
+            </QuoteLink>
+            <a
+              href="#servicos"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full border border-[#10b981] px-5 py-3 text-sm font-semibold text-[#f4f4e9] transition-colors hover:bg-[#2032a6]"
+            >
+              <span aria-hidden className="grid h-5 w-5 place-items-center rounded-full bg-[#d4ff38] text-xs text-abyss">▶</span>
+              Conhecer soluções
+            </a>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-x-5 gap-y-3 border-t border-[#10b981]/30 pt-4 text-[11px] leading-4 text-[#c8d2eb] sm:gap-x-6">
+            <span className="inline-flex items-center gap-2"><Rocket className="h-4 w-4 text-[#d4ff38]" aria-hidden /> Tecnologia de ponta</span>
+            <span className="inline-flex items-center gap-2"><Gem className="h-4 w-4 text-[#d4ff38]" aria-hidden /> Design estratégico</span>
+            <span className="inline-flex items-center gap-2"><ChartNoAxesColumnIncreasing className="h-4 w-4 text-[#d4ff38]" aria-hidden /> Foco em resultados</span>
+          </div>
         </div>
-        <p className="mt-6 text-xs leading-6 text-muted-foreground">
-          Sites profissionais · Lojas virtuais · Sistemas web · Automações
-        </p>
+        <HeroTemplatePreview presentation="home" />
       </div>
-      <HeroTemplatePreview />
-    </div>
-  </section>;
+    </section>
+  );
 }

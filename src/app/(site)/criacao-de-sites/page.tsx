@@ -1,3 +1,4 @@
+import { AccentText } from "@/components/AccentText";
 import Link from "next/link";
 import { ServiceHero, ServiceJourney } from "@/components/ServiceJourney";
 import { ServiceSectionNav } from "@/components/ServiceSectionNav";
@@ -31,16 +32,14 @@ export default function SitesPage() {
       <ServiceJourney kind="sites" />
       <section
         id="lojas-virtuais"
-        className="scroll-mt-32 border-y border-border bg-white/[0.015] py-16 sm:py-24"
+        className="scroll-mt-32 border-y border-border bg-ocean/65 py-16 sm:py-24"
       >
         <div className="container-luxe grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-violet-200">
+            <p className="text-xs font-bold uppercase tracking-widest text-ice">
               Lojas virtuais e catálogos digitais
             </p>
-            <h2 className="mt-4 max-w-3xl font-display text-3xl leading-tight sm:text-4xl">
-              Seus produtos também podem ter uma vitrine própria na internet.
-            </h2>
+            <h2 className="mt-4 max-w-3xl font-display text-3xl leading-tight sm:text-4xl"><AccentText text={"Seus produtos também podem ter uma vitrine própria na internet."} /></h2>
             <p className="mt-4 max-w-3xl leading-7 text-muted-foreground">
               Reúna produtos, preços e formas de pedido em um catálogo, cardápio
               digital ou loja virtual. O formato depende de como sua empresa
@@ -49,7 +48,7 @@ export default function SitesPage() {
           </div>
           <Link
             href="/lojas-virtuais"
-            className="inline-flex items-center justify-center rounded-xl border border-violet-300/30 px-5 py-3 font-semibold text-violet-200 transition-colors hover:bg-violet-400/10"
+            className="inline-flex items-center justify-center rounded-xl border border-turquoise/30 px-5 py-3 font-semibold text-ice transition-colors hover:bg-turquoise/10"
           >
             Ver opções de loja virtual
           </Link>

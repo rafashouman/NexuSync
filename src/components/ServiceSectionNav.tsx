@@ -21,7 +21,7 @@ export function ServiceSectionNav({
           <li key={item.href}>
             <a
               href={item.href}
-              className="block whitespace-nowrap rounded-full border border-white/10 px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-violet-300/30 hover:text-violet-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300"
+              className="block whitespace-nowrap rounded-full border border-turquoise/25 px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-turquoise/30 hover:text-ice focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise"
             >
               {item.label}
             </a>

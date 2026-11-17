@@ -1,5 +1,6 @@
 "use client";
 
+import { AccentText } from "@/components/AccentText";
 import { motion } from "framer-motion";
 import {
   LayoutTemplate,
@@ -37,7 +38,7 @@ const services: {
     span: "lg:col-span-7",
     tag: "Foco em contatos",
     metrics: ["Captação de contatos", "Oferta clara", "Foco no próximo passo"],
-    accent: "from-violet-500/20 via-fuchsia-500/5 to-transparent",
+    accent: "from-turquoise/20 via-turquoise/5 to-transparent",
     featured: true,
   },
   {
@@ -47,7 +48,7 @@ const services: {
     span: "lg:col-span-5",
     tag: "Autoridade Digital",
     metrics: ["Design Exclusivo", "CMS Integrado"],
-    accent: "from-indigo-500/15 via-transparent to-transparent",
+    accent: "from-turquoise/15 via-transparent to-transparent",
     featured: false,
   },
   {
@@ -57,7 +58,7 @@ const services: {
     span: "lg:col-span-4",
     tag: "Projetos em destaque",
     metrics: ["Animações fluidas", "Imagens bem apresentadas"],
-    accent: "from-purple-500/15 via-transparent to-transparent",
+    accent: "from-turquoise/15 via-transparent to-transparent",
     featured: false,
   },
   {
@@ -67,7 +68,7 @@ const services: {
     span: "lg:col-span-8",
     tag: "Venda online",
     metrics: ["Checkout Sem Atrito", "Catálogo Dinâmico", "Pagamentos Pix/Cartão"],
-    accent: "from-fuchsia-500/20 via-violet-500/5 to-transparent",
+    accent: "from-turquoise/20 via-turquoise/5 to-transparent",
     featured: true,
   },
   {
@@ -87,7 +88,7 @@ const services: {
     span: "lg:col-span-6",
     tag: "Estabilidade 24/7",
     metrics: ["Monitoramento do site", "Cópias de segurança e certificado", "Evolução Contínua"],
-    accent: "from-cyan-500/15 via-transparent to-transparent",
+    accent: "from-turquoise/15 via-transparent to-transparent",
     featured: false,
   },
   {
@@ -97,7 +98,7 @@ const services: {
     span: "lg:col-span-6",
     tag: "Anúncios",
     metrics: ["Meta Ads", "Google Ads", "Acompanhamento"],
-    accent: "from-orange-500/15 via-transparent to-transparent",
+    accent: "from-champagne/15 via-transparent to-transparent",
     featured: false,
     waMessage: "Olá! Quero atrair clientes com tráfego pago. Meu negócio é [segmento] e meu principal objetivo é [objetivo].",
   },
@@ -108,7 +109,7 @@ const services: {
     span: "lg:col-span-6",
     tag: "Conteúdo",
     metrics: ["Planejamento", "Conteúdo", "Publicação"],
-    accent: "from-pink-500/15 via-transparent to-transparent",
+    accent: "from-turquoise/15 via-transparent to-transparent",
     featured: false,
     waMessage: "Olá! Quero fortalecer minha marca nas redes sociais. Meu negócio é [segmento] e meu principal objetivo é [objetivo].",
   },
@@ -119,7 +120,7 @@ const services: {
     span: "lg:col-span-6",
     tag: "Oportunidades",
     metrics: ["Landing pages", "Formulários", "CRM"],
-    accent: "from-sky-500/15 via-transparent to-transparent",
+    accent: "from-turquoise/15 via-transparent to-transparent",
     featured: false,
     waMessage: "Olá! Quero organizar os contatos que recebo. Meu negócio é [segmento] e meu principal objetivo é [objetivo].",
   },
@@ -157,16 +158,16 @@ export function Services() {
   return (
     <section
       id="servicos"
-      className="relative isolate overflow-hidden border-y border-violet-200/[0.08] bg-[#110d18]/65 py-24 backdrop-blur-2xl sm:py-32"
+      className="relative isolate overflow-hidden border-y border-turquoise/40 bg-ocean/65 py-24 backdrop-blur-2xl sm:py-32"
     >
       {/* Glows Ambientais */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-40 top-0 -z-10 h-[34rem] w-[34rem] rounded-full bg-violet-500/[0.09] blur-[130px]"
+        className="pointer-events-none absolute -right-40 top-0 -z-10 h-[34rem] w-[34rem] rounded-full bg-turquoise/[0.09] blur-[130px]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-40 bottom-0 -z-10 h-[28rem] w-[28rem] rounded-full bg-fuchsia-500/[0.06] blur-[120px]"
+        className="pointer-events-none absolute -left-40 bottom-0 -z-10 h-[28rem] w-[28rem] rounded-full bg-turquoise/[0.06] blur-[120px]"
       />
 
       <div className="container-luxe">
@@ -178,9 +179,9 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="mb-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-violet-200"
+              className="mb-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-ice"
             >
-              <span className="h-px w-7 bg-fuchsia-300/80" />
+              <span className="h-px w-7 bg-turquoise/80" />
               Nossas Especialidades
             </motion.div>
 
@@ -193,7 +194,7 @@ export function Services() {
             >
               Da primeira impressão
               <br />
-              <span className="text-violet-gradient">ao próximo contato.</span>
+              <span className="text-brand-gradient">ao próximo contato.</span>
             </motion.h2>
           </div>
 
@@ -207,7 +208,7 @@ export function Services() {
             Sua presença digital precisa trabalhar junto. Escolha o serviço de
             que precisa agora ou conecte conteúdo, anúncios e atendimento em um
             plano integrado.
-            <span className="mt-3 block font-medium text-violet-100">
+            <span className="mt-3 block font-medium text-ice">
               Estratégia, design e tecnologia em cada detalhe.
             </span>
           </motion.p>
@@ -232,7 +233,7 @@ export function Services() {
               <motion.article
                 key={service.title}
                 variants={itemVariants}
-                className={`${service.span} group relative flex flex-col justify-between overflow-hidden rounded-[2rem] border border-white/[0.09] bg-[#0c0e14]/80 p-7 shadow-2xl shadow-black/30 backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-violet-300/30 sm:p-8`}
+                className={`${service.span} group relative flex flex-col justify-between overflow-hidden rounded-[2rem] border border-turquoise/40 bg-ocean/80 p-7 shadow-2xl shadow-black/30 backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-turquoise/30 sm:p-8`}
               >
                 {/* Gradiente Interno no Hover */}
                 <div
@@ -259,18 +260,18 @@ export function Services() {
                 <div className="relative z-10">
                   <div className="mb-8 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3.5">
-                      <div className="grid h-12 w-12 place-items-center rounded-2xl border border-violet-300/20 bg-violet-400/[0.08] text-violet-200 shadow-inner transition-all duration-300 group-hover:scale-105 group-hover:border-violet-300/40 group-hover:bg-violet-500/20 group-hover:text-white">
+                      <div className="grid h-12 w-12 place-items-center rounded-2xl border border-turquoise/40 bg-turquoise/[0.08] text-ice shadow-inner transition-all duration-300 group-hover:scale-105 group-hover:border-turquoise/40 group-hover:bg-turquoise/20 group-hover:text-ivory">
                         <Icon className="h-5 w-5" />
                       </div>
-                      <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-violet-200/80">
+                      <span className="rounded-full border border-turquoise/40 bg-ocean/65 px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-ice/80">
                         {service.tag}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <span className="font-mono text-xs tracking-[0.16em] text-white/30">
+                      <span className="font-mono text-xs tracking-[0.16em] text-ivory/85">
                         {String(idx + 1).padStart(2, "0")}{" "}
-                        <span className="text-violet-300/50">
+                        <span className="text-ice">
                           / {String(services.length).padStart(2, "0")}
                         </span>
                       </span>
@@ -279,7 +280,7 @@ export function Services() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`Conversar sobre ${service.title}`}
-                        className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-white/50 transition-all duration-300 group-hover:border-violet-300/40 group-hover:bg-violet-500 group-hover:text-white"
+                        className="grid h-9 w-9 place-items-center rounded-full border border-turquoise/40 bg-ocean/65 text-ivory/85 transition-all duration-300 group-hover:border-turquoise/40 group-hover:bg-turquoise group-hover:text-abyss"
                       >
                         <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                       </a>
@@ -288,9 +289,7 @@ export function Services() {
 
                   {/* Conteúdo Central */}
                   <div className="max-w-xl">
-                    <h3 className="font-display text-2xl font-semibold tracking-tight text-foreground transition-colors group-hover:text-violet-100 sm:text-3xl">
-                      {service.title}
-                    </h3>
+                    <h3 className="font-display text-2xl font-semibold tracking-tight text-foreground transition-colors group-hover:text-ice sm:text-3xl"><AccentText text={service.title} /></h3>
                     <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
                       {service.desc}
                     </p>
@@ -298,14 +297,14 @@ export function Services() {
                 </div>
 
                 {/* Rodapé com Pills de Especificações & Micro-UI */}
-                <div className="relative z-10 mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.07] pt-5">
+                <div className="relative z-10 mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-turquoise/40 pt-5">
                   <div className="flex flex-wrap items-center gap-2">
                     {service.metrics.map((metric) => (
                       <span
                         key={metric}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.07] bg-white/[0.025] px-2.5 py-1 font-mono text-[11px] text-white/70 transition-colors group-hover:border-violet-300/20 group-hover:text-violet-100"
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-turquoise/40 bg-ocean/65 px-2.5 py-1 font-mono text-[11px] text-ivory/85 transition-colors group-hover:border-turquoise/40 group-hover:text-ice"
                       >
-                        <Sparkles className="h-2.5 w-2.5 text-fuchsia-300" />
+                        <Sparkles className="h-2.5 w-2.5 text-ice" />
                         {metric}
                       </span>
                     ))}

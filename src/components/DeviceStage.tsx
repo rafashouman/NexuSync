@@ -57,7 +57,7 @@ function ScaledFrame({
   return (
     <div
       ref={boxRef}
-      className="relative w-full overflow-hidden bg-[#0b0d10]"
+      className="relative w-full overflow-hidden bg-ocean"
       style={{ aspectRatio: `${width} / ${height}` }}
     >
       {scale > 0 && (
@@ -100,12 +100,12 @@ export function DeviceStage({
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="flex w-full flex-wrap items-center justify-center gap-2">
+      <div className="order-last mt-2 flex w-full flex-wrap items-center justify-center gap-2">
         {available.length > 1 && (
           <div
             role="group"
             aria-label="Versão do site"
-            className="inline-flex rounded-xl border border-white/10 bg-black/50 p-1"
+            className="inline-flex rounded-xl border border-turquoise/25 bg-abyss/50 p-1"
           >
             {available.map((id) => (
               <button
@@ -115,8 +115,8 @@ export function DeviceStage({
                 aria-pressed={device === id}
                 className={`rounded-lg px-3 py-1.5 font-mono text-[10px] font-bold uppercase transition-all ${
                   device === id
-                    ? "bg-violet-600 text-white shadow"
-                    : "text-white/50 hover:text-white"
+                    ? "bg-champagne text-abyss shadow"
+                    : "text-ivory/50 hover:text-ivory"
                 }`}
               >
                 {deviceLabels[id]}
@@ -131,7 +131,7 @@ export function DeviceStage({
           className={`rounded-xl border px-3 py-2 font-mono text-[10px] font-bold uppercase transition-colors ${
             interactive
               ? "border-emerald-400/40 bg-emerald-500/15 text-emerald-300"
-              : "border-white/10 bg-white/5 text-white/50"
+              : "border-turquoise/25 bg-ocean/65 text-ivory/50"
           }`}
         >
           {interactive ? "● Interação ativa" : "Interação pausada"}
@@ -139,7 +139,7 @@ export function DeviceStage({
         <button
           type="button"
           onClick={onFullscreen}
-          className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-3 py-2 font-mono text-[10px] font-bold uppercase text-white transition-colors hover:border-violet-400 hover:text-violet-200"
+          className="inline-flex items-center gap-1.5 rounded-xl border border-turquoise/25 bg-ocean/65 px-3 py-2 font-mono text-[10px] font-bold uppercase text-ivory transition-colors hover:border-turquoise hover:text-ice"
         >
           <Maximize2 className="h-3.5 w-3.5" />
           Tela cheia
@@ -147,7 +147,7 @@ export function DeviceStage({
         <Link
           href={href}
           target="_blank"
-          className="inline-flex items-center gap-1.5 rounded-xl bg-white px-4 py-2 text-xs font-black uppercase text-slate-950 transition-colors hover:bg-violet-300"
+          className="inline-flex items-center gap-1.5 rounded-xl bg-ice px-4 py-2 text-xs font-black uppercase text-abyss transition-colors hover:bg-turquoise"
         >
           Abrir template
           <ArrowUpRight className="h-3.5 w-3.5" />
@@ -156,13 +156,13 @@ export function DeviceStage({
 
       {device === "laptop" && (
         <div className="w-full max-w-[980px]">
-          <div className="rounded-t-2xl border border-white/15 bg-[#05060a] p-2.5 pb-2 shadow-2xl">
+          <div className="rounded-t-2xl border border-turquoise/25 bg-ocean p-[3px] pb-[3px] shadow-2xl">
             <div className="overflow-hidden rounded-lg">
-              <div className="flex h-8 items-center gap-1.5 border-b border-white/[0.08] bg-[#0b0e13] px-4">
+              <div className="flex h-8 items-center gap-1.5 border-b border-turquoise/25 bg-ocean px-4">
                 <span aria-hidden className="h-2 w-2 rounded-full bg-[#ff6b61]" />
                 <span aria-hidden className="h-2 w-2 rounded-full bg-[#ffc14f]" />
                 <span aria-hidden className="h-2 w-2 rounded-full bg-[#49c781]" />
-                <span className="ml-3 min-w-0 truncate rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-0.5 font-mono text-[10px] text-white/50">
+                <span className="ml-3 min-w-0 truncate rounded-full border border-turquoise/25 bg-ocean/65 px-3 py-0.5 font-mono text-[10px] text-ivory/50">
                   nexusync.online{href}
                 </span>
               </div>
@@ -177,13 +177,13 @@ export function DeviceStage({
           </div>
           <div
             aria-hidden
-            className="mx-auto h-3 w-[108%] -translate-x-[3.7%] rounded-b-[1.2rem] border border-t-0 border-white/15 bg-gradient-to-b from-[#2a2b33] to-[#14151a]"
+            className="mx-auto h-3 w-[108%] -translate-x-[3.7%] rounded-b-[1.2rem] border border-t-0 border-turquoise/25 bg-gradient-to-b from-ocean to-petroleum"
           />
         </div>
       )}
 
       {device === "tablet" && (
-        <div className="w-full max-w-[520px] rounded-[2rem] border border-white/15 bg-[#05060a] p-3.5 shadow-2xl">
+        <div className="w-full max-w-[520px] rounded-[2rem] border border-turquoise/25 bg-ocean p-1.5 shadow-2xl">
           <div className="overflow-hidden rounded-xl">
             <ScaledFrame
               href={href}
@@ -197,11 +197,11 @@ export function DeviceStage({
       )}
 
       {device === "phone" && (
-        <div className="relative w-[min(100%,300px)] rounded-[2.75rem] border border-white/15 bg-[#05060a] p-3 shadow-2xl">
-          <div className="relative overflow-hidden rounded-[2.1rem]">
+        <div className="relative w-[min(100%,300px)] rounded-[2.75rem] border border-turquoise/25 bg-ocean p-1.5 shadow-2xl">
+          <div className="relative overflow-hidden rounded-[2.35rem]">
             <span
               aria-hidden
-              className="pointer-events-none absolute left-1/2 top-2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-black"
+              className="pointer-events-none absolute left-1/2 top-2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-abyss"
             />
             <ScaledFrame
               href={href}
