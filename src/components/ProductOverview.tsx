@@ -1,4 +1,6 @@
-import { AccentText } from "@/components/AccentText";
+import { ProductDemo } from "@/components/home/ProductDemo";
+import s from "@/components/home/SitesExperience.module.css";
+import c from "@/components/home/ProductExperience.module.css";
 import Link from "next/link";
 import { ArrowUpRight, Check, MessageCircle } from "lucide-react";
 import { waLink } from "@/lib/site-config";
@@ -30,14 +32,14 @@ const products = {
 
 export function ProductOverview({ product }: { product: keyof typeof products }) {
   const item = products[product];
-  return <>
-    <section className="container-luxe pb-20 pt-36 sm:pt-44">
-      <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
-        <div className="min-w-0"><p className="mb-5 text-xs font-bold uppercase tracking-widest text-ice">{item.name} · {item.category}</p><h1 className="font-display text-4xl font-semibold leading-tight sm:text-5xl">{item.name}: {item.title}</h1><p className="mt-6 text-lg leading-8 text-muted-foreground">{item.description}</p><a href={item.url} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center gap-3 rounded-xl bg-brand-gradient px-6 py-4 font-semibold text-abyss focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise">Acessar o {item.name}<ArrowUpRight className="h-5 w-5" aria-hidden /></a><p className="mt-3 text-xs text-muted-foreground">Abre o aplicativo em uma nova aba.</p></div>
-        <aside className="rounded-3xl border border-turquoise/40 bg-turquoise/[0.04] p-6 sm:p-10"><span className="font-display text-4xl text-ice">{item.name}</span><h2 className="mt-8 text-xl font-semibold"><AccentText text={"Faz sentido para sua rotina?"} /></h2><p className="mt-4 leading-7 text-muted-foreground">{item.audience}</p><p className="mt-6 border-t border-turquoise/40 pt-6 text-sm leading-7 text-muted-foreground">{item.note}</p></aside>
-      </div>
+  return <div className={`${s.page} ${c.product}`}>
+    <section className={s.section}>
+      <div className={s.eyebrow}><Link href="/apps">NEXUSYNC / PRODUTOS</Link><span>{item.name.toUpperCase()}</span><span>{item.category.toUpperCase()}</span></div>
+      <div className={c.hero}><div><p className={s.kicker}>{item.category}</p><span className={c.wordmark}>{item.name}<i>↗</i></span><h1>{item.title}</h1><p>{item.description}</p><div className={s.actions}><a href={item.url} target="_blank" rel="noopener noreferrer" className={s.button}>Acessar o {item.name}<ArrowUpRight size={18} /></a><a href="#recursos" className={s.textLink}>Explore a rotina ↓</a></div><small>O aplicativo abre em uma nova aba.</small></div><ProductDemo product={product} /></div>
     </section>
-    <section className="border-y border-border py-16 sm:py-24"><div className="container-luxe"><h2 className="font-display text-3xl sm:text-4xl"><AccentText text={"Uma rotina mais fácil de acompanhar."} /></h2><div className="mt-10 grid gap-8 md:grid-cols-3">{item.features.map(([title, description]) => <article key={title} className="border-l border-turquoise/40 pl-6"><Check className="h-5 w-5 text-ice" aria-hidden /><h3 className="mt-5 text-2xl font-semibold"><AccentText text={title} /></h3><p className="mt-3 leading-7 text-muted-foreground">{description}</p></article>)}</div></div></section>
-    <section className="container-luxe py-16 sm:py-24"><h2 className="font-display text-3xl"><AccentText text={"Antes de começar"} /></h2><div className="mt-8 max-w-4xl space-y-3">{item.faq.map(([q, a]) => <details key={q} className="rounded-2xl border border-turquoise/40 p-5"><summary className="cursor-pointer font-semibold text-ice">{q}</summary><p className="mt-4 leading-7 text-muted-foreground">{a}</p></details>)}</div><a href={waLink(`Olá! Quero conhecer o ${item.name} e confirmar as condições de acesso para meu negócio.`)} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center gap-2 rounded-xl border border-turquoise/30 px-5 py-3 font-semibold text-ice"><MessageCircle className="h-4 w-4" aria-hidden />Conversar sobre o {item.name}</a><p className="mt-8 max-w-3xl text-sm leading-7 text-muted-foreground"><Link href={item.alternative[0]} className="text-ice underline underline-offset-4">{item.alternative[1]}</Link></p></section>
-  </>;
+    <section className={c.audience}><span>FEITO PARA SUA ROTINA.</span><p>{item.audience}</p><ArrowUpRight size={45} aria-hidden="true" /></section>
+    <section className={s.section} id="recursos"><p className={s.kicker}>01 / DA IDEIA AO PRÓXIMO PASSO</p><div className={s.heading}><h2>Uma rotina mais fácil<br /><em>de acompanhar.</em></h2><p>{item.note}</p></div><div className={c.features}>{item.features.map(([title, description], index) => <article key={title}><span>0{index + 1}<Check size={19} /></span><h3>{title}</h3><p>{description}</p></article>)}</div></section>
+    <section className={`${s.section} ${s.faq}`}><div><p className={s.kicker}>02 / ANTES DE COMEÇAR</p><h2>Boas perguntas.<br /><em>Escolhas claras.</em></h2><p>Entenda como o {item.name} se encaixa no seu dia a dia.</p></div><div>{item.faq.map(([q, a]) => <details key={q}><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div></section>
+    <section className={s.finalCta}><div><p className={s.kicker}>VAMOS CONECTAR AS IDEIAS?</p><h2>Seu próximo passo.<br /><em>Com mais clareza.</em></h2><Link href={item.alternative[0]} className={s.textLink}>{item.alternative[1]}<ArrowUpRight size={18} /></Link></div><a href={waLink(`Olá! Quero conhecer o ${item.name} e confirmar as condições de acesso para meu negócio.`)} target="_blank" rel="noopener noreferrer" aria-label={`Conversar sobre o ${item.name}`}><MessageCircle size={55} /></a></section>
+  </div>;
 }

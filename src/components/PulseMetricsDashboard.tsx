@@ -521,7 +521,7 @@ export default function PulseMetricsDashboard() {
               <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
                 <div>
                   <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 block">
-                    // TELEMETRIA DE TRÁFEGO & CONVERSÃO
+                    {"// TELEMETRIA DE TRÁFEGO & CONVERSÃO"}
                   </span>
                   <h3 className="text-lg font-black uppercase text-white">
                     Curva de Demanda & Eventos ({range})
@@ -616,7 +616,7 @@ export default function PulseMetricsDashboard() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <span className="text-[10px] font-mono uppercase tracking-widest text-teal-400 block">
-                    // FUNIL DE ATRIBUIÇÃO
+                    {"// FUNIL DE ATRIBUIÇÃO"}
                   </span>
                   <h3 className="text-lg font-black uppercase text-white">
                     Jornada de Eventos do Pixel

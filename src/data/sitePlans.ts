@@ -1,0 +1,100 @@
+export const sitePlans = [
+  {
+    id: "01",
+    name: "Go",
+    price: "297,00",
+    originalPrice: "399,00",
+    promoKey: "sites-presence" as const,
+    deliveryTime: "Entrega estimada: 3 a 5 dias úteis",
+    idealFor: "Comece sua presença digital",
+    description:
+      "Para quem precisa de um endereço profissional para divulgar serviços e receber contatos, sem começar com uma estrutura maior do que precisa.",
+    highlight: false,
+    features: [
+      "Landing pages para divulgação de serviços ou campanhas",
+      "Portfólios profissionais",
+      "Sites institucionais compactos",
+      "Estrutura de até 3 páginas ou seções principais",
+      "Design responsivo para celular, tablet e desktop",
+      "Mini catálogo ou mini cardápio",
+      "Agendamento pelo WhatsApp",
+      "Botão de contato pelo WhatsApp",
+      "Formulário de contato",
+      "Configuração básica de SEO",
+      "Publicação e configuração inicial do site",
+      "1 rodada de ajustes após a apresentação",
+    ],
+    scope:
+      "Ideal para projetos compactos. Funcionalidades adicionais, domínio e hospedagem são orçados separadamente quando aplicável.",
+    buttonText: "Escolher Go",
+    waMessage:
+      "Olá! Tenho interesse na oferta de lançamento do plano Go para criar meu site profissional.",
+  },
+
+  {
+    id: "02",
+    name: "Presence",
+    price: "499,00",
+    originalPrice: "599,00",
+    promoKey: "sites-pulse" as const,
+    deliveryTime: "Entrega estimada: 5 a 10 dias úteis",
+    idealFor: "Mais estrutura para seu negócio",
+    description:
+      "Para quem precisa explicar melhor seus serviços, organizar um catálogo e facilitar pedidos pelo WhatsApp em um só lugar.",
+    highlight: true,
+    badge: "Recomendado",
+    features: [
+      "Tudo o que está incluído no Go",
+      "Site com múltiplas páginas",
+      "Layout personalizado para sua marca",
+      "Catálogo de produtos ou serviços",
+      "Cardápio ou menu digital",
+      "Pedidos de delivery via WhatsApp",
+      "Páginas para serviços, produtos e informações",
+      "Configuração de domínio próprio",
+      "SEO básico para mecanismos de busca",
+      "Integração com Google Analytics",
+      "Formulários e chamadas para ação estratégicas",
+      "2 rodadas de ajustes",
+      "Orientação para atualização do conteúdo",
+    ],
+    scope:
+      "Catálogos e menus não incluem automaticamente estoque, checkout, pagamentos online ou gestão de pedidos. Essas funções são avaliadas à parte.",
+    buttonText: "Escolher Presence",
+    waMessage:
+      "Olá! Tenho interesse na oferta de lançamento do plano Presence para minha empresa.",
+  },
+
+  {
+    id: "03",
+    name: "Pulse",
+    price: "1.599,00",
+    originalPrice: "1.999,00",
+    promoKey: "sites-premium" as const,
+    deliveryTime: "Prazo definido após análise do projeto",
+    idealFor: "E-commerce e projetos completos",
+    description:
+      "Para quem quer vender com pagamento online ou precisa de recursos sob medida. Definimos a estrutura conforme sua operação.",
+    highlight: false,
+    features: [
+      "Tudo o que está incluído no Presence, conforme o escopo",
+      "Pequenos e-commerces",
+      "Configuração inicial da loja virtual",
+      "Cadastro inicial de produtos com limite definido no orçamento",
+      "Configuração de categorias e páginas de produto",
+      "Integração com meios de pagamento compatíveis",
+      "Configuração de frete ou entrega, quando aplicável",
+      "Layout adaptado à identidade da marca",
+      "Configuração de métricas e eventos de conversão compatíveis",
+      "SEO técnico básico",
+      "Testes de navegação e compra",
+      "Orientação para administrar produtos e pedidos",
+      "Cronograma e escopo definidos antes do início",
+    ],
+    scope:
+      "O valor promocional contempla lojas de escopo reduzido e plataforma compatível. Projetos com integrações especiais, grande volume de produtos ou funcionalidades personalizadas recebem orçamento próprio.",
+    buttonText: "Consultar Pulse",
+    waMessage:
+      "Olá! Quero avaliar o plano Pulse para desenvolver meu e-commerce ou projeto web.",
+  },
+];

@@ -16,6 +16,25 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Validar antes de publicar
+        run: |
+          npm run lint
+          npx tsc --noEmit
+          node scripts/test-quote-validation.cjs
+          npm run build
+
       - name: Preparar SSH
         shell: bash
         run: |

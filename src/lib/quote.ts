@@ -70,5 +70,5 @@ export function isQuoteSection(value: unknown): value is QuoteSection {
 // Pré-seleciona o interesse no formulário de orçamento e leva o visitante até ele.
 export function selectInterest(id: string | null, source: QuoteSection = "form") {
   window.dispatchEvent(new CustomEvent(INTEREST_EVENT, { detail: { id, source } }));
-  document.getElementById("orcamento")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  document.getElementById("orcamento")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
 }

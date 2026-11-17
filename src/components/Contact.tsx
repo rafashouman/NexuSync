@@ -1,8 +1,10 @@
-﻿"use client";
+"use client";
 
+import studio from "@/components/home/StudioExperience.module.css";
 import { AccentText } from "@/components/AccentText";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -32,9 +34,17 @@ const FIELD =
   "w-full rounded-xl border border-turquoise/40 bg-ocean/65 px-4 py-3.5 text-foreground backdrop-blur-xl transition-all focus:border-turquoise/50 focus:outline-none focus:ring-1 focus:ring-turquoise/30";
 const LABEL = "text-xs font-bold uppercase tracking-widest text-muted-foreground";
 
-export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }) {
+type ContactProps = { homeOffersOnly?: boolean; presentation?: "default" | "chaos" };
+export function Contact(props: ContactProps) {
+  return <Suspense fallback={<p role="status" className="p-8">Carregando formulário de orçamento…</p>}><ContactForm {...props} /></Suspense>;
+}
+function ContactForm({ homeOffersOnly = false, presentation = "default" }: ContactProps) {
+  const queryString = useSearchParams().toString();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [interest, setInterest] = useState<string>("nao-sei");
+  const [interest, setInterest] = useState<string>(() => {
+    const selected = new URLSearchParams(queryString).get("interest");
+    return selected && QUOTE_INTERESTS.some(item => item.id === selected) ? selected : "nao-sei";
+  });
   const visibleInterests = useMemo(() => {
     if (!homeOffersOnly) return QUOTE_INTERESTS;
     const selected = QUOTE_INTERESTS.find(item => item.id === interest);
@@ -67,7 +77,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
     };
     window.addEventListener(INTEREST_EVENT, onInterest);
 
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(queryString);
     const initialInterest = params.get("interest");
     const initialSource = params.get("source");
     if (isQuoteSection(initialSource)) {
@@ -87,7 +97,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
     }
 
     return () => window.removeEventListener(INTEREST_EVENT, onInterest);
-  }, []);
+  }, [queryString]);
 
   const handleFormStart = () => {
     if (formStarted.current) return;
@@ -95,11 +105,15 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
     trackAnalyticsEvent({ eventName: "quote_form_start", section: interestSource });
   };
 
-  const handleCopyEmail = (e: React.MouseEvent) => {
+  const handleCopyEmail = async (e: React.MouseEvent) => {
     e.preventDefault();
-    navigator.clipboard.writeText("contato@nexusync.online");
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2500);
+    try {
+      await navigator.clipboard.writeText("contato@nexusync.online");
+      setCopiedEmail(true);
+      setTimeout(() => setCopiedEmail(false), 2500);
+    } catch {
+      setError("Copie o e-mail exibido ao lado: contato@nexusync.online");
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -173,23 +187,24 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
   return (
     <section
       id="contato"
-      className="relative overflow-hidden bg-background py-24 sm:py-32"
+      className={presentation === "chaos" ? studio.contactForm : "relative overflow-hidden bg-background py-24 sm:py-32"}
     >
       {/* Glow de fundo */}
       <div
         aria-hidden
+        data-contact-glow
         className="pointer-events-none absolute right-0 top-0 h-[600px] w-[600px] -translate-y-12 translate-x-1/3 rounded-full bg-turquoise/10 blur-[130px]"
       />
 
-      <div className="container-luxe relative z-10">
-        <div className="grid min-w-0 grid-cols-1 items-start gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+      <div data-contact-container className="container-luxe relative z-10">
+        <div data-contact-layout className="grid min-w-0 grid-cols-1 items-start gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
           {/* Coluna da Esquerda: Configurador + Formulário */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="min-w-0 rounded-[2rem] border border-turquoise/40 bg-ocean/80 p-7 shadow-2xl backdrop-blur-2xl sm:p-10"
+            data-contact-panel className="min-w-0 rounded-[2rem] border border-turquoise/40 bg-ocean/80 p-7 shadow-2xl backdrop-blur-2xl sm:p-10"
           >
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-turquoise/40 bg-turquoise/[0.06] px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-ice">
               <Sparkles className="h-3.5 w-3.5 text-ice" />
@@ -338,7 +353,7 @@ export function Contact({ homeOffersOnly = false }: { homeOffersOnly?: boolean }
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            className="flex min-w-0 flex-col gap-6"
+            data-contact-aside className="flex min-w-0 flex-col gap-6"
           >
             {/* Card de Status Online + Contatos Diretos */}
             <div className="rounded-[2rem] border border-turquoise/40 bg-ocean/65 p-5 backdrop-blur-xl sm:p-8 lg:p-9">

@@ -169,7 +169,7 @@ export default function MemoryMatrix() {
   useEffect(() => {
     if (isVictory || moves === 0) return;
     const interval = setInterval(() => {
-      setElapsedSeconds(Math.max(1, Math.floor((Date.now() - gameStartedAt.current) / 1000)));
+      setElapsedSeconds(Math.max(1, Math.floor((performance.now() - gameStartedAt.current) / 1000)));
     }, 1000);
     return () => clearInterval(interval);
   }, [isVictory, moves]);
@@ -217,7 +217,7 @@ export default function MemoryMatrix() {
     setSavedScore(null);
     setSaveError("");
     setFeedbackBanner("MATRIZ CRIPTOGRAFADA • SELECIONE DOIS NÓS");
-    gameStartedAt.current = Date.now();
+    gameStartedAt.current = performance.now();
   }, []);
 
   useEffect(() => {
@@ -225,11 +225,11 @@ export default function MemoryMatrix() {
     return () => cancelAnimationFrame(frameId);
   }, [initializeGame]);
 
-  const handleCardClick = (index: number) => {
+  const handleCardClick = useCallback((index: number, timestamp: number) => {
     if (isLocked || cards[index].isFlipped || cards[index].isMatched) return;
 
     if (moves === 0 && flippedIndices.length === 0) {
-      gameStartedAt.current = Date.now();
+      gameStartedAt.current = timestamp;
     }
 
     soundRef.current?.playFlip();
@@ -298,7 +298,7 @@ export default function MemoryMatrix() {
         }, 850);
       }
     }
-  };
+  }, [isLocked, cards, moves, flippedIndices, matches, streak]);
 
   const handleVictory = async () => {
     if (!user) {
@@ -482,7 +482,7 @@ export default function MemoryMatrix() {
           <div data-tour="card"
             key={card.id}
             className="relative w-full h-full aspect-square [perspective:1000px] cursor-pointer group"
-            onClick={() => handleCardClick(index)}
+            onClick={event => handleCardClick(index, event.timeStamp)}
           >
             <motion.div
               animate={{

@@ -1,8 +1,8 @@
-﻿import { AccentText } from "@/components/AccentText";
-import { Suspense } from "react";
+import { AccentText } from "@/components/AccentText";
+
 import Link from "next/link";
 import Image from "next/image";
-import { io } from "next/cache";
+
 
 export function Footer() {
   return (
@@ -61,15 +61,10 @@ export function Footer() {
         </div>
 
         <div className="border-t border-border/50 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-          <p>© <Suspense fallback={null}><CurrentYear /></Suspense> NexuSync. Todos os direitos reservados.</p>
+          <p>© 2026 NexuSync. Todos os direitos reservados.</p>
           <p>Desenvolvido com foco em performance e experiência do utilizador.</p>
         </div>
       </div>
     </footer>
   );
-}
-
-async function CurrentYear() {
-  await io();
-  return 2026;
 }

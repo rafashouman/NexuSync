@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  distDir: process.env.NEXT_BUILD_DIR || ".next",
   async redirects() {
     return [
       {
@@ -20,12 +21,18 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     agentUpgrade: "security",
+    cpus: 1,
+  },
+  webpack(config) {
+    config.module.rules.push({ test: /[\\/]globals\.css$/, enforce: "pre", use: ["@tailwindcss/turbopack"] });
+    return config;
   },
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
     rules: {
-      "*.css": {
+      // CSS Modules use the native pipeline; only this file contains Tailwind directives.
+      "globals.css": {
         loaders: ["@tailwindcss/turbopack"],
         as: "*.css",
       },

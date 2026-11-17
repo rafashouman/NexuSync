@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -360,7 +361,7 @@ export default function PulseSpinRoulette() {
           {history.length > 0 && (
             <div className="p-4 rounded-2xl bg-[#0B132B]/40 border border-[#1C2541]">
               <span className="font-mono text-[10px] uppercase tracking-widest text-slate-400 block mb-2">
-                // ÚLTIMOS GIROS NESTA SESSÃO
+                {"// ÚLTIMOS GIROS NESTA SESSÃO"}
               </span>
               <div className="flex flex-wrap gap-2">
                 {history.map((h, i) => (
@@ -431,14 +432,14 @@ export default function PulseSpinRoulette() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-2.5">
-                <a
-                  href="/#contato"
+                <Link
+                  href="/contato#orcamento"
                   onClick={() => setWonPrize(null)}
                   className="flex-1 py-3.5 rounded-xl bg-gradient-to-r from-[#00F0FF] to-cyan-400 text-slate-950 font-mono text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5"
                 >
                   <span>Usar no Orçamento</span>
                   <ArrowUpRight className="w-4 h-4" />
-                </a>
+                </Link>
                 <button
                   type="button"
                   onClick={() => setWonPrize(null)}

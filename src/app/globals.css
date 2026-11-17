@@ -491,3 +491,9 @@
 .nexusync-site p {
   text-wrap: pretty;
 }
+
+/* Keep the mobile navigation unobstructed. */
+body:has(#home-menu) [data-analytics-section="floating"] { visibility: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  html.scroll-smooth { scroll-behavior: auto; }
+}

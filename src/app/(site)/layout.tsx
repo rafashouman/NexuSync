@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { FloatingWA } from "@/components/FloatingWA";
+import { SiteChrome } from "@/components/home/SiteChrome";
+
+
 import DemoShell from "@/components/ui/DemoShell";
-import { ScrollProgress } from "@/components/ui/MotionKit";
+
 
 export const metadata: Metadata = {
   title: "NexuSync | Tráfego Pago e SEO, Sites e Automações",
@@ -76,13 +76,7 @@ export default function RootLayout({
       />
       <div className="nexusync-site">
       <DemoShell>
-        <ScrollProgress className="from-turquoise via-ice to-champagne" />
-        <Navbar />
-        <main id="conteudo" className="relative flex min-h-screen flex-col overflow-hidden">
-          {children}
-        </main>
-        <Footer />
-        <FloatingWA />
+        <SiteChrome>{children}</SiteChrome>
       </DemoShell>
       </div>
     </>
