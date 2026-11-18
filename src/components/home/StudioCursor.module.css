@@ -1,0 +1,6 @@
+.cursor{position:fixed;left:0;top:0;z-index:10000;width:0;height:0;pointer-events:none;visibility:hidden;--cursor-color:#d4ff38}
+.cursor[data-visible="true"]{visibility:visible}
+.mark{position:absolute;left:0;top:0;display:block;width:7px;height:7px;border:0 solid var(--cursor-color);border-radius:50%;background:var(--cursor-color);transform:translate(-50%,-50%);transition:width .18s ease,height .18s ease,background .18s ease,border-width .18s ease,transform .12s ease}
+.cursor[data-interactive="true"] .mark{width:58px;height:58px;border-width:1px;background:color-mix(in srgb,var(--cursor-color) 12%,transparent)}
+.cursor[data-pressed="true"] .mark{transform:translate(-50%,-50%) scale(.75)}
+@media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){.cursor{display:none}}

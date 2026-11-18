@@ -2,16 +2,19 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import Image from "next/image";
 import { ChaosHeader, ChaosFooter } from "./ChaosChrome";
+import { ReactiveField } from "./ReactiveField";
 import { Component, useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowUpRight, ArrowDown, Plus, Pause, Play } from "lucide-react";
 import { waLink } from "@/lib/site-config";
 import s from "./ControlledChaos.module.css";
 
 const Scene = dynamic(() => import("./ChaosScene"), { ssr: false });
-class SceneBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+class SceneBoundary extends Component<{ children: ReactNode; onReady?: (ready: boolean) => void }, { failed: boolean }> {
   state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
+  componentDidCatch() { this.props.onReady?.(false); }
   render() { return this.state.failed ? null : this.props.children; }
 }
 const contact = "/contato?interest=nao-sei&source=hero#orcamento";
@@ -49,8 +52,10 @@ function ServiceArt({ kind }: { kind: string }) {
 export default function ControlledChaos() {
   const [paused, setPaused] = useState(false);
   const [render3d, setRender3d] = useState(false);
+  const [sceneReady, setSceneReady] = useState(false);
   const [inView, setInView] = useState(true);
   const hero = useRef<HTMLDivElement>(null);
+  const heroPointer = useRef({ x: 0, y: 0 });
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     let timer: ReturnType<typeof setTimeout>;
@@ -68,14 +73,19 @@ export default function ControlledChaos() {
   return <div className={s.home} data-paused={paused}>
     <ChaosHeader />
 
-    <section className={s.hero} ref={hero}>
+    <section className={s.hero} ref={hero} onPointerMove={event => {
+      if (event.pointerType !== "mouse" || paused) return;
+      const bounds = event.currentTarget.getBoundingClientRect();
+      heroPointer.current.x = Math.max(-1, Math.min(1, (event.clientX - bounds.left) / bounds.width * 2 - 1));
+      heroPointer.current.y = Math.max(-1, Math.min(1, 1 - (event.clientY - bounds.top) / bounds.height * 2));
+    }} onPointerLeave={() => { heroPointer.current.x = 0; heroPointer.current.y = 0; }}>
       <div className={s.heroGrid} aria-hidden="true" />
       <div className={s.heroTop}><span><i /> AGÊNCIA DIGITAL / NEXUSYNC</span><span>ESTRATÉGIA. DESIGN. TECNOLOGIA.</span></div>
       <div className={s.heroCopy}><h1>Seu negócio<br />merece <span>ir mais<br /><em>longe.</em><svg viewBox="0 0 310 26" aria-hidden="true"><path d="M3 20Q155 -7 305 10" /></svg></span></h1>
         <p>Sites, aplicativos e estratégias para atrair mais clientes, fortalecer sua marca e gerar resultados reais no digital.</p>
         <div className={s.heroActions}><Link href={contact} className={s.primary}>Tirar meu projeto do papel <ArrowUpRight size={20} /></Link><a href="#servicos" className={s.textLink}>Conhecer soluções <ArrowDown size={16} /></a></div>
       </div>
-      <div className={s.heroVisual} aria-hidden="true"><div className={s.orbitFallback}><Signal /></div>{render3d && <div className={s.canvas}><SceneBoundary><Scene active={inView && !paused} /></SceneBoundary></div>}<span className={s.visualTag}>IDEIAS EM ÓRBITA.<br /><b>RESULTADOS NA TERRA.</b></span><span className={s.cross}>+</span><span className={s.verticalLabel}>CREATIVE SYSTEM / 001</span><span className={s.heroSticker}>FORA<br />DO ÓBVIO. <ArrowUpRight /></span></div>
+      <div className={s.heroVisual} aria-hidden="true"><div className={s.templateFallback} data-ready={sceneReady}>{["imobiliaria", "cardapio", "academias", "streetwear", "arquitetura", "dog-e-acai"].map((slug, i) => <div key={slug} style={{ transform: `rotateY(${i * 60}deg) translateZ(155px)` }}><Image src={`/images/hero-templates/${slug}.jpg`} fill sizes="110px" alt="" /></div>)}</div>{render3d && <div className={s.canvas}><SceneBoundary onReady={setSceneReady}><Scene active={inView && !paused} onReady={setSceneReady} input={heroPointer} /></SceneBoundary></div>}<span className={s.visualTag}>PROJETOS EM ÓRBITA.<br /><b>SUA MARCA NO PRÓXIMO.</b></span><span className={s.cross}>+</span><span className={s.verticalLabel}>CREATIVE SYSTEM / 001</span><span className={s.heroSticker}>FORA<br />DO ÓBVIO. <ArrowUpRight /></span></div>
       <div className={s.heroBottom}><span>Tecnologia de ponta <i /> Design estratégico <i /> Foco em resultados</span><button onClick={() => { setPaused(!paused); setRender3d(true); }} aria-label={paused ? "Ativar animações" : "Pausar animações"}>{paused ? <Play size={14} /> : <Pause size={14} />} {paused ? "Ativar movimento" : "Pausar movimento"}</button></div>
     </section>
 
@@ -85,7 +95,7 @@ export default function ControlledChaos() {
       <div className={s.serviceGrid}>{services.map(service => <Link href={service.href} className={s.serviceCard} key={service.n} id={service.n === "02" ? "aplicacoes" : service.n === "03" ? "midias-digitais" : service.n === "04" ? "planos-marketing" : undefined}><ServiceArt kind={service.art} /><div className={s.serviceInfo}><div className={s.serviceMeta}><span>{service.n} / {service.tag}</span><ArrowUpRight /></div><h3>{service.title}</h3><h4>{service.copy}</h4><p>{service.text}</p></div></Link>)}</div>
     </section>
 
-    <section className={s.manifesto}><span className={s.sectionLabel}>PRESENÇA É MAIS DO QUE ESTAR ONLINE.</span><h2>Seu negócio tem<br />personalidade.<br />Sua presença digital<br />também <em>precisa ter.</em><ArrowUpRight /></h2><div><p>Facilite o caminho entre conhecer sua empresa e falar com você. Um bom site combina informação, confiança e caminhos claros para o cliente dar o próximo passo.</p><Link href="/templates" className={s.darkButton}>Explore nossos projetos <ArrowUpRight size={20} /></Link></div><span aria-hidden="true" className={s.manifestoStar}>✳</span></section>
+    <section className={s.manifesto} data-cursor-tone="ink"><span className={s.sectionLabel}>PRESENÇA É MAIS DO QUE ESTAR ONLINE.</span><h2>Seu negócio tem<br />personalidade.<br />Sua presença digital<br />também <em>precisa ter.</em><ArrowUpRight /></h2><div><p>Facilite o caminho entre conhecer sua empresa e falar com você. Um bom site combina informação, confiança e caminhos claros para o cliente dar o próximo passo.</p><Link href="/templates" className={s.darkButton}>Explore nossos projetos <ArrowUpRight size={20} /></Link></div><span className={s.manifestoField}><ReactiveField paused={paused} /></span></section>
 
     <section className={s.section} id="como-funciona"><div className={s.sectionLabel}><span>02 / DA IDEIA AO MUNDO</span><span>SEM COMPLICAÇÃO.</span></div><div className={s.sectionHeading}><h2>Processo claro.<br /><span>Próximo passo certo.</span></h2><p>Do primeiro contato ao site publicado, com etapas claras. Você sabe o que acontece em cada fase e o que precisamos para tirar o projeto do papel.</p></div><ol className={s.steps}>{steps.map(([title, body], i) => <li key={title}><span>0{i + 1}<ArrowUpRight /></span><h3>{title}</h3><p>{body}</p></li>)}</ol></section>
 
@@ -93,7 +103,7 @@ export default function ControlledChaos() {
 
     <section className={`${s.section} ${s.faq}`} id="faq"><div><span className={s.sectionLabel}>03 / VAMOS SIMPLIFICAR</span><h2>Boas perguntas.<br /><span>Respostas claras.</span></h2><p>Confira prazos, investimento e o que cada serviço inclui. A proposta define as entregas e as condições antes de começarmos.</p></div><div>{faqs.map(([q, a]) => <details key={q}><summary>{q}<Plus size={20} /></summary><p>{a}</p></details>)}<Link href="/contato" className={s.textLink}>Ainda tem uma dúvida? Fale com a gente <ArrowUpRight size={16} /></Link></div></section>
 
-    <section className={s.contact} id="contato"><span className={s.sectionLabel}>A PRÓXIMA CONEXÃO COMEÇA COM UMA CONVERSA.</span><Link href={contact}><h2>Vamos criar<br /><em>algo grande?</em></h2><span className={s.contactArrow}><ArrowUpRight /></span></Link><div><p>O que falta para seu cliente chamar você?</p><a href={waLink("Olá! Vim pelo site da NexuSync e gostaria de falar sobre um projeto.")}>Fale pelo WhatsApp <ArrowUpRight size={18} /></a></div></section>
+    <section className={s.contact} id="contato"><ReactiveField shape="weave" paused={paused} className={s.contactField} /><span className={s.sectionLabel}>A PRÓXIMA CONEXÃO COMEÇA COM UMA CONVERSA.</span><Link href={contact}><h2>Vamos criar<br /><em>algo grande?</em></h2><span className={s.contactArrow}><ArrowUpRight /></span></Link><div><p>O que falta para seu cliente chamar você?</p><a href={waLink("Olá! Vim pelo site da NexuSync e gostaria de falar sobre um projeto.")}>Fale pelo WhatsApp <ArrowUpRight size={18} /></a></div></section>
     <ChaosFooter />
   </div>;
 }

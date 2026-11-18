@@ -9,3 +9,31 @@
 @media(min-width:761px){.mobileNav{display:none}}
 
 .chrome{overflow:visible;position:relative;z-index:30}
+
+/* Preview ring remains visible until WebGL and its screenshots are ready. */
+.templateFallback{position:absolute;left:50%;top:44%;width:105px;height:250px;transform-style:preserve-3d;transform:translate(-50%,-50%) perspective(750px) rotateX(-18deg) rotateY(-22deg);transition:opacity .3s;pointer-events:none}
+.templateFallback[data-ready="true"]{opacity:0}
+.templateFallback>div{position:absolute;inset:0;border:2px solid #3459ff;border-radius:4px;overflow:hidden;backface-visibility:visible;background:#111b31}
+.templateFallback img{object-fit:cover}
+@media(max-width:760px){.templateFallback{width:90px;height:225px;top:48%;transform:translate(-50%,-50%) perspective(750px) rotateX(-18deg) rotateY(-22deg) scale(.8)}}
+
+/* The ring sits beside the opening line, with room between every screen. */
+.heroVisual{top:-8px;right:-10px;width:56%;height:600px}
+.visualTag{bottom:28px;left:24%}
+.heroSticker{bottom:100px;right:65px}
+.manifestoField{position:absolute;right:2.5%;top:49%;width:clamp(350px,34vw,590px);aspect-ratio:1;transform:translateY(-50%);color:#304612;pointer-events:none;opacity:.65}
+.manifestoField>svg{width:100%;height:100%;overflow:visible}
+.manifestoField path:nth-child(3n){stroke:#3459ff;opacity:.6}
+.manifestoField path:nth-child(4n){stroke-dasharray:2 5;opacity:.45}
+.manifesto h2{max-width:1050px}
+.manifesto h2 em{color:#344515}
+.manifesto>div{gap:45px}
+.contact{position:relative;isolation:isolate;overflow:hidden}
+.contactField{position:absolute;right:160px;top:-20px;width:400px;height:400px;color:#4f70ff;opacity:.55;pointer-events:none;z-index:0}
+.contactField path:nth-child(3n){stroke:#d4ff38;opacity:.35}
+.contact>.sectionLabel,.contact>a,.contact>div{position:relative;z-index:1}
+@media(min-width:1600px){.heroVisual{top:-28px;height:650px}}
+@media(min-width:1001px) and (max-width:1100px){.heroVisual{top:25px;right:-20px;width:51%;height:500px}}
+@media(min-width:761px) and (max-width:1000px){.hero{min-height:auto}.heroVisual{position:relative;top:auto;right:auto;width:min(680px,100%);height:460px;margin:0 0 0 auto}.heroBottom{margin-top:0}.heroSticker{right:50px;bottom:50px}.visualTag{bottom:20px;left:12%}}
+@media(max-width:1100px){.manifestoField{width:430px;right:-60px;opacity:.4}.contactField{right:65px;width:330px;height:330px}}
+@media(max-width:760px){.heroVisual{position:relative;top:auto;right:auto;width:100%;height:360px;margin-top:0}.visualTag{bottom:12px;left:0}.heroSticker{right:20px;bottom:40px}.manifestoField{right:-130px;top:45%;width:330px;opacity:.23}.manifesto>div{gap:24px}.contactField{right:-90px;top:5px;width:280px;height:280px;opacity:.3}}

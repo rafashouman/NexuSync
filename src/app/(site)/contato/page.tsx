@@ -1,3 +1,4 @@
+import AboutExperience from "@/components/home/AboutExperience";
 import ContactExperience from "@/components/home/ContactExperience";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
@@ -7,4 +8,12 @@ export const metadata = nexuSyncMetadata({
   path: "/contato",
 });
 
-export default function ContactPage() { return <ContactExperience />; }
+export default function ContactPage() {
+  return (
+    <>
+      <ContactExperience /> 
+      <AboutExperience />
+    </>
+  );
+
+}
