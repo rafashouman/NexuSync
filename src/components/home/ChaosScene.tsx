@@ -6,7 +6,14 @@ import { Suspense, useEffect, useRef, type RefObject } from "react";
 import { AdditiveBlending, Shape, SRGBColorSpace, type Group, type Texture } from "three";
 import { heroScreenshots, type HeroDeviceMode } from "./hero-templates";
 
-type HeroPointer = RefObject<{ x: number; y: number; inside: boolean }>;
+export type HeroPointer = RefObject<{
+  x: number;
+  y: number;
+  inside: boolean;
+  dragging: boolean;
+  dragDelta: number;
+  throwVelocity: number;
+}>;
 
 function roundedShape(width: number, height: number, radius: number) {
   const shape = new Shape();
@@ -51,19 +58,20 @@ function NotebookMockup({ texture }: { texture: Texture }) {
   </group>;
 }
 
-function CameraRig({ mode }: { mode: HeroDeviceMode }) {
+function CameraRig({ mode, maximized = false }: { mode: HeroDeviceMode; maximized?: boolean }) {
   const { camera, invalidate, size } = useThree();
   useEffect(() => {
     const fit = Math.max(1, 1.08 / (Math.max(size.width, 1) / Math.max(size.height, 1)));
-    camera.position.set(0, (mode === "notebook" ? 4.3 : 3.6) * fit, (mode === "notebook" ? 11.6 : 9.8) * fit);
+    const zoom = maximized ? 0.8 : 1;
+    camera.position.set(0, (mode === "notebook" ? 4.3 : 3.6) * fit * zoom, (mode === "notebook" ? 11.6 : 9.8) * fit * zoom);
     camera.lookAt(0, 0, 0);
     camera.updateProjectionMatrix();
     invalidate();
-  }, [camera, invalidate, mode, size.width, size.height]);
+  }, [camera, invalidate, mode, maximized, size.width, size.height]);
   return null;
 }
 
-function TemplateRing({ active, mode, onReady, input }: { active: boolean; mode: HeroDeviceMode; onReady?: (ready: boolean) => void; input?: HeroPointer }) {
+function TemplateRing({ active, mode, maximized = false, onReady, input }: { active: boolean; mode: HeroDeviceMode; maximized?: boolean; onReady?: (ready: boolean) => void; input?: HeroPointer }) {
   const group = useRef<Group>(null);
   const textures = useTexture(heroScreenshots(mode), maps => {
     for (const texture of maps) {
@@ -86,40 +94,68 @@ function TemplateRing({ active, mode, onReady, input }: { active: boolean; mode:
   const rotation = useRef(-.28);
   const speed = useRef(.13);
   const follow = useRef({ x: 0, y: 0 });
-  useEffect(() => { onReady?.(true); return () => onReady?.(false); }, [onReady, mode]);
+  const count = mode === "notebook" ? 6 : 10;
+  const radius = mode === "notebook" ? 3.12 : 2.85;
+  useEffect(() => {
+    onReady?.(true);
+    if (group.current) {
+      group.current.updateMatrixWorld();
+      for (const child of group.current.children) {
+        child.quaternion.copy(group.current.quaternion).invert();
+      }
+    }
+    return () => onReady?.(false);
+  }, [onReady, mode]);
   useFrame(({ pointer }, delta) => {
     if (!group.current || !active) return;
     const dt = Math.min(delta, .05);
-    const target = input?.current ?? pointer;
+    const inputState = input?.current;
+    const target = inputState ?? pointer;
     const ease = 1 - Math.exp(-dt * 4.5);
     follow.current.x += (target.x - follow.current.x) * ease;
     follow.current.y += (target.y - follow.current.y) * ease;
-    const targetSpeed = input?.current.inside ? (Math.abs(target.x) < .06 ? 0 : target.x * .65) : .13;
-    speed.current += (targetSpeed - speed.current) * (1 - Math.exp(-dt * 3));
-    rotation.current += dt * speed.current;
+    if (inputState) {
+      if (inputState.dragDelta !== 0) {
+        rotation.current += inputState.dragDelta;
+        inputState.dragDelta = 0;
+      }
+      if (inputState.throwVelocity !== 0) {
+        speed.current = inputState.throwVelocity;
+        inputState.throwVelocity = 0;
+      }
+    }
+    if (inputState?.dragging) {
+      speed.current = 0;
+    } else {
+      const targetSpeed = inputState?.inside ? (Math.abs(target.x) < .06 ? 0 : target.x * .65) : .13;
+      const decay = Math.abs(speed.current) > .8 ? 1.65 : 3;
+      speed.current += (targetSpeed - speed.current) * (1 - Math.exp(-dt * decay));
+      rotation.current += dt * speed.current;
+    }
     group.current.rotation.set(follow.current.y * .2, rotation.current + follow.current.x * .18, .025 - follow.current.x * .06);
     group.current.position.set(follow.current.x * .14, follow.current.y * .08, 0);
+    for (const child of group.current.children) {
+      child.quaternion.copy(group.current.quaternion).invert();
+    }
   });
-  const count = mode === "notebook" ? 6 : 10;
-  const radius = mode === "notebook" ? 3.12 : 2.85;
   return <>
-    <CameraRig mode={mode} />
+    <CameraRig mode={mode} maximized={maximized} />
     <sprite position={[0, 1.02, 0]} scale={[4.5, 4.5, 1]}><spriteMaterial map={glow} blending={AdditiveBlending} transparent depthWrite={false} toneMapped={false} /></sprite>
     <pointLight position={[0, .7, 0]} intensity={22} distance={7} color="#9aeaff" />
     <group ref={group} rotation={[0, -.28, .025]}>{Array.from({ length: count }, (_, i) => {
       const angle = i / count * Math.PI * 2;
-      return <group key={`${mode}-${i}`} position={[Math.sin(angle) * radius, 0, Math.cos(angle) * radius]} rotation={[0, angle, 0]}>
+      return <group key={`${mode}-${i}`} position={[Math.sin(angle) * radius, 0, Math.cos(angle) * radius]}>
         {mode === "phone" ? <PhoneMockup texture={textures[i % textures.length]} mask={mask} /> : <NotebookMockup texture={textures[i % textures.length]} />}
       </group>;
     })}</group>
   </>;
 }
 
-export default function ChaosScene({ active = true, mode = "phone", onReady, input }: { active?: boolean; mode?: HeroDeviceMode; onReady?: (ready: boolean) => void; input?: HeroPointer }) {
+export default function ChaosScene({ active = true, mode = "notebook", maximized = false, onReady, input }: { active?: boolean; mode?: HeroDeviceMode; maximized?: boolean; onReady?: (ready: boolean) => void; input?: HeroPointer }) {
   return <Canvas frameloop={active ? "always" : "demand"} dpr={[1, 1.5]} camera={{ position: [0, 3.6, 9.8], fov: 39 }} gl={{ alpha: true, antialias: true }} onCreated={({ camera }) => camera.lookAt(0, 0, 0)} fallback={<span />}>
     <ambientLight intensity={1.4} />
     <directionalLight position={[3, 5, 5]} intensity={4} color="#d8e5ff" />
     <pointLight position={[-4, 1, -2]} intensity={14} color="#3459ff" />
-    <Suspense fallback={null}><TemplateRing active={active} mode={mode} onReady={onReady} input={input} /></Suspense>
+    <Suspense fallback={null}><TemplateRing active={active} mode={mode} maximized={maximized} onReady={onReady} input={input} /></Suspense>
   </Canvas>;
 }
