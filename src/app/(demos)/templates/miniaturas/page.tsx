@@ -4,6 +4,7 @@ import { priceInReais } from "@/lib/site-config";
 
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import Image from "next/image";
+import { TemplateField, TemplateTicker, templateStyles as visual } from "@/components/templates/TemplateVisuals";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -146,54 +147,42 @@ interface StageSpec {
 const WORKBENCH_STAGES: StageSpec[] = [
   {
     id: "mesh",
-    step: "ESTÁGIO 01 // ZBRUSH & BLENDER",
-    title: "Escultura Digital & Suportes Táticos",
-    subtitle: "Malha High-Poly de 18 Milhões de Polígonos",
+    step: "ETAPA 01 // PREPARAÇÃO DO MODELO",
+    title: "Modelo pronto para imprimir",
+    subtitle: "Ajustes de tamanho, encaixes e apoios",
     description:
-      "Preparamos cada modelo com escavação inteligente (hollowing de 1.8mm), furos de drenagem ocultos nos encaixes e suportes micro-esféricos posicionados manualmente para zero marcas nas áreas visíveis.",
+      "Conferimos o arquivo, combinamos o tamanho da peça e preparamos os apoios de impressão para preservar os detalhes.",
     image:
       "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=85",
-    techSpecs: [
-      { label: "Altura de Camada", value: "0.018 mm (18µm)" },
-      { label: "Anti-Aliasing", value: "8x Sub-Pixel Grey" },
-      { label: "Suportes", value: "Micro-Tip 0.22mm" },
-    ],
+    techSpecs: [{"label":"Tamanho","value":"Conforme a encomenda"},{"label":"Arquivo","value":"Conferido antes de imprimir"},{"label":"Apoios","value":"Removidos no acabamento"}],
   },
   {
     id: "resin",
-    step: "ESTÁGIO 02 // CURA UV 405nm & PRIMER",
-    title: "Resina 12K Curada & Pré-Sombreamento",
-    subtitle: "Lavagem Ultrassônica + Zenithal Highlighting",
+    step: "ETAPA 02 // IMPRESSÃO E ACABAMENTO",
+    title: "Peça impressa em resina",
+    subtitle: "Limpeza, cura e preparação da superfície",
     description:
-      "Após o banho duplo em álcool isopropílico pureza 99.8% e cura térmica controlada, aplicamos o primer acrílico de poliuretano em aerógrafo com iluminação zenital para revelar cada textura de armadura, pele e tecido.",
+      "Depois da impressão, a peça é limpa, recebe cura em luz UV e passa por lixamento nos pontos necessários. Ela pode ser entregue sem pintura ou seguir para a bancada.",
     image:
       "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1200&q=85",
-    techSpecs: [
-      { label: "Resina Base", value: "Conjure / Phrozen Aqua 8K" },
-      { label: "Pós-Cura", value: " Câmara UV 360° Aquecida" },
-      { label: "Pré-Sombra", value: "Zenithal Black/Grey/White" },
-    ],
+    techSpecs: [{"label":"Material","value":"Resina para impressão 3D"},{"label":"Acabamento","value":"Limpeza e lixamento"},{"label":"Entrega","value":"Sem pintura ou com preparação"}],
   },
   {
     id: "painted",
-    step: "ESTÁGIO 03 // PINTURA MASTERPIECE",
-    title: "Acabamento NMM, OSL & Weathering",
-    subtitle: "35 Horas de Pincel Kolinsky & Aerógrafo",
+    step: "ETAPA 03 // PINTURA À MÃO",
+    title: "Cores e detalhes do seu jeito",
+    subtitle: "Pintura conforme a referência combinada",
     description:
-      "Camadas translúcidas (glazing), metal não-metálico (NMM) pintado à mão para simular reflexos hiper-realistas, efeitos de iluminação direcionada (OSL) de plasma/fogo e verniz fosco protetor UV.",
+      "Pintamos os detalhes à mão, aplicamos luz e sombra e finalizamos com verniz. As cores e o nível de acabamento são combinados antes de começar.",
     image:
       "https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=1200&q=85",
-    techSpecs: [
-      { label: "Técnicas", value: "NMM + OSL + Wet Blending" },
-      { label: "Tintas", value: "Vallejo / AK 3Gen / Citadel" },
-      { label: "Proteção", value: "Duplo Verniz Matte Ultra" },
-    ],
+    techSpecs: [{"label":"Pintura","value":"Pincel e aerógrafo"},{"label":"Cores","value":"Conforme a referência"},{"label":"Proteção","value":"Acabamento com verniz"}],
     swatches: [
-      { name: "Obsidian Shadow", hex: "#14111F" },
-      { name: "Plasma Magenta OSL", hex: "#E11D48" },
-      { name: "Cyber Cyan Glow", hex: "#06B6D4" },
-      { name: "NMM Gold Ochre", hex: "#F59E0B" },
-      { name: "Bone Highlight", hex: "#FEF3C7" },
+      { name: "Preto", hex: "#14111F" },
+      { name: "Vermelho", hex: "#E11D48" },
+      { name: "Azul-turquesa", hex: "#06B6D4" },
+      { name: "Dourado", hex: "#F59E0B" },
+      { name: "Marfim", hex: "#FEF3C7" },
     ],
   },
 ];
@@ -223,140 +212,140 @@ interface MiniatureWork {
 const GALLERY_WORKS: MiniatureWork[] = [
   {
     id: "mini-01",
-    title: "Valkyrie of the Astral Eclipse",
-    characterClass: "Dark Fantasy • Boss Scale",
+    title: "Guerreira de fantasia",
+    characterClass: "Personagem para coleção ou RPG",
     category: "fantasy",
-    scale: "75mm (1/24)",
-    layerHeight: "18µm (Resina 12K)",
+    scale: "75 mm de altura",
+    layerHeight: "Impressão em resina",
     paintHours: "42h de Pintura",
     priceRaw: 210,
     pricePainted: 1180,
     image:
       "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1000&q=85",
-    badge: "Ouro NMM & OSL",
-    techniques: ["Non-Metallic Metal (NMM)", "Object Source Lighting", "Micro-Freehand na Capa"],
+    badge: "Pintura à mão",
+    techniques: ["Pintura de armadura","Detalhes de luz e sombra","Desenho na capa"],
     paintsUsed: [
-      { name: "Deep Violet", hex: "#3B0764" },
-      { name: "Crimson Glaze", hex: "#BE123C" },
-      { name: "NMM Solar Gold", hex: "#FBBF24" },
-      { name: "Ice Yellow", hex: "#FEF08A" },
+      { name: "Roxo-escuro", hex: "#3B0764" },
+      { name: "Vermelho-escuro", hex: "#BE123C" },
+      { name: "Dourado", hex: "#FBBF24" },
+      { name: "Amarelo-claro", hex: "#FEF08A" },
     ],
     story:
-      "Escultura impressa em 7 partes com encaixes magnéticos de neodímio. Asas translúcidas graduadas no aerógrafo e armadura inteiramente executada em técnica de metal não-metálico.",
+      "Miniatura de guerreira com armadura e capa, montada sobre uma base. Escolha a peça sem pintura ou com as cores que preferir para sua coleção.",
   },
   {
     id: "mini-02",
-    title: "Nyx-09 // Sprawl Netrunner",
-    characterClass: "Cyberpunk Edgerunner",
+    title: "Busto futurista",
+    characterClass: "Personagem de ficção científica",
     category: "cyberpunk",
-    scale: "1/10 Display Bust",
-    layerHeight: "16µm Ultra-Detail",
+    scale: "Busto na escala 1:10",
+    layerHeight: "Impressão em resina",
     paintHours: "28h de Pintura",
     priceRaw: 185,
     pricePainted: 890,
     image:
       "https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=1000&q=85",
-    badge: "Fluorescente UV",
-    techniques: ["Pigmento Fluor Reativo UV", "Couro Desgastado", "Cromado Cibernético"],
+    badge: "Cores vibrantes",
+    techniques: ["Tinta fluorescente","Efeito de desgaste","Detalhes metálicos"],
     paintsUsed: [
-      { name: "Neon Magenta", hex: "#EC4899" },
-      { name: "Electric Cyan", hex: "#06B6D4" },
-      { name: "Carbon Black", hex: "#18181B" },
-      { name: "Chrome Silver", hex: "#E4E4E7" },
+      { name: "Rosa", hex: "#EC4899" },
+      { name: "Azul-turquesa", hex: "#06B6D4" },
+      { name: "Preto", hex: "#18181B" },
+      { name: "Prateado", hex: "#E4E4E7" },
     ],
     story:
-      "Busto de colecionador com circuitos pintados com tinta fluorescente que brilha intensamente sob luz negra ou iluminação RGB de setup.",
+      "Busto decorativo com detalhes de roupa, rosto e acessórios. A pintura pode incluir cores fluorescentes para quem gosta de um visual futurista.",
   },
   {
     id: "mini-03",
-    title: "Inquisitor Malakor & Diorama",
-    characterClass: "Grimdark Sci-Fi Tabletop",
+    title: "Soldado para RPG",
+    characterClass: "Miniatura para jogos de mesa",
     category: "fantasy",
-    scale: "32mm Heroic",
-    layerHeight: "20µm ABS-Like Tough",
+    scale: "32 mm de altura",
+    layerHeight: "Resina reforçada",
     paintHours: "16h de Pintura",
     priceRaw: 75,
     pricePainted: 420,
     image:
       "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1000&q=85",
-    badge: "Resina Anti-Queda",
-    techniques: ["Oil Wash Grimdark", "Pigmento de Ferrugem Real", "Efeito de Plasma"],
+    badge: "Para sua mesa de jogo",
+    techniques: ["Sombreamento","Efeito de ferrugem","Detalhes na armadura"],
     paintsUsed: [
-      { name: "Burnt Umber", hex: "#451A03" },
-      { name: "Rust Orange", hex: "#EA580C" },
-      { name: "Plasma Green", hex: "#22C55E" },
-      { name: "Steel Grey", hex: "#71717A" },
+      { name: "Marrom", hex: "#451A03" },
+      { name: "Laranja", hex: "#EA580C" },
+      { name: "Verde", hex: "#22C55E" },
+      { name: "Cinza", hex: "#71717A" },
     ],
     story:
-      "Impresso em blend de resina Tough ABS-Like flexível, resistente a quedas durante partidas de RPG de mesa e wargames.",
+      "Miniatura de soldado com base para partidas de RPG e outros jogos de mesa. Disponível sem pintura ou pronta para usar na sua campanha.",
   },
   {
     id: "mini-04",
-    title: "Oni Mecha Keycap // Cherry MX",
-    characterClass: "Artisan Keycap Colecionável",
+    title: "Tecla decorativa de robô",
+    characterClass: "Acessório para teclado mecânico",
     category: "keycaps",
-    scale: "1U Esc / Função",
-    layerHeight: "14µm Micro-Precision",
+    scale: "Tecla de tamanho padrão (1U)",
+    layerHeight: "Impressão em resina",
     paintHours: "8h + Encapsulamento",
     priceRaw: 95,
     pricePainted: 260,
     image:
       "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=1000&q=85",
-    badge: "Backlit Translúcido",
-    techniques: ["Olhos Translúcidos p/ LED", "Verniz Automotivo 2K", "Encaixe Cruzado Reforçado"],
+    badge: "Detalhes translúcidos",
+    techniques: ["Passagem de luz do teclado","Acabamento com verniz","Encaixe para tecla"],
     paintsUsed: [
-      { name: "Oni Red", hex: "#DC2626" },
-      { name: "Ivory Fang", hex: "#FDE68A" },
-      { name: "Clear Cyan", hex: "#22D3EE" },
+      { name: "Vermelho", hex: "#DC2626" },
+      { name: "Marfim", hex: "#FDE68A" },
+      { name: "Azul-claro", hex: "#22D3EE" },
     ],
     story:
-      "Keycap artesanal para teclados mecânicos (switches estilo Cherry MX). Os olhos e chifres permitem a passagem do LED RGB do próprio teclado.",
+      "Tecla decorativa para dar personalidade ao teclado. Compatível com encaixe Cherry MX; confira o modelo do seu teclado antes de pedir.",
   },
   {
     id: "mini-05",
-    title: "Ancient Dragon Lord (280mm)",
-    characterClass: "Colossal Centerpiece",
+    title: "Dragão com base de cenário",
+    characterClass: "Peça decorativa de fantasia",
     category: "fantasy",
-    scale: "280mm Wingspan",
-    layerHeight: "22µm High-Speed",
+    scale: "28 cm de ponta a ponta das asas",
+    layerHeight: "Impressão em resina",
     paintHours: "65h de Pintura",
     priceRaw: 490,
     pricePainted: 2450,
     image:
       "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1000&q=85",
-    badge: "Peça de Museu",
-    techniques: ["Transição de Aerógrafo em Escamas", "Base de Lava com Resina Epóxi", "Olhos Vítreos"],
+    badge: "Base decorada",
+    techniques: ["Pintura das escamas","Base com efeito de lava","Detalhes nos olhos"],
     paintsUsed: [
-      { name: "Magma Red", hex: "#EF4444" },
-      { name: "Volcanic Ash", hex: "#27272A" },
-      { name: "Sulfur Yellow", hex: "#FACC15" },
-      { name: "Drake Teal", hex: "#0D9488" },
+      { name: "Vermelho", hex: "#EF4444" },
+      { name: "Cinza-escuro", hex: "#27272A" },
+      { name: "Amarelo", hex: "#FACC15" },
+      { name: "Verde-azulado", hex: "#0D9488" },
     ],
     story:
-      "Peça monumental para centro de mesa ou vitrine. A base inclui efeito de magma fluindo com resina cristal pigmentada e iluminação interna opcional.",
+      "Dragão com asas abertas e base decorada, para sua coleção ou cenário de RPG. O tamanho e as cores podem ser ajustados no orçamento.",
   },
   {
     id: "mini-06",
-    title: "Ronin Cyber-Samurai Bust",
-    characterClass: "Busto de Exposição 1/6",
+    title: "Busto de samurai",
+    characterClass: "Busto para coleção",
     category: "bustos",
-    scale: "1/6 (150mm Altura)",
-    layerHeight: "16µm Skin-Texture",
+    scale: "15 cm de altura",
+    layerHeight: "Impressão em resina",
     paintHours: "38h de Pintura",
     priceRaw: 290,
     pricePainted: 1390,
     image:
       "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=85",
-    badge: "Textura de Pele Real",
-    techniques: ["Micro-pontilhismo de Pele", "Laca Japonesa Urushi Simulada", "Damasco na Lâmina"],
+    badge: "Detalhes na armadura",
+    techniques: ["Pintura do rosto","Acabamento da armadura","Detalhes da espada"],
     paintsUsed: [
-      { name: "Lacquer Red", hex: "#991B1B" },
-      { name: "Warm Flesh", hex: "#FDBA74" },
-      { name: "Cold Steel", hex: "#94A3B8" },
-      { name: "Jade Accent", hex: "#10B981" },
+      { name: "Vermelho-escuro", hex: "#991B1B" },
+      { name: "Tom de pele", hex: "#FDBA74" },
+      { name: "Prateado", hex: "#94A3B8" },
+      { name: "Verde", hex: "#10B981" },
     ],
     story:
-      "Foco absoluto em sub-surface scattering (translucidez da pele humana) pintado à mão com dezenas de veladuras finíssimas.",
+      "Busto de samurai para decorar a mesa ou a estante. A pintura destaca o rosto, a armadura e a espada nas cores combinadas com você.",
   },
 ];
 
@@ -364,54 +353,54 @@ const GALLERY_WORKS: MiniatureWork[] = [
 // OPÇÕES DA CALCULADORA DE ENCOMENDAS (FORGE)
 // ==========================================
 const SCALE_OPTIONS = [
-  { id: "keycap", label: "Artisan Keycap (1U)", basePrice: 90, time: "3 a 5 dias" },
-  { id: "32mm", label: "Miniatura RPG 32mm–40mm", basePrice: 65, time: "3 a 5 dias" },
-  { id: "75mm", label: "Colecionável / Busto 75mm", basePrice: 175, time: "5 a 8 dias" },
-  { id: "150mm", label: "Estátua 1/8 ou 1/6 (15cm–22cm)", basePrice: 380, time: "10 a 15 dias" },
+  { id: "keycap", label: "Tecla decorativa para teclado", basePrice: 90, time: "3 a 5 dias" },
+  { id: "32mm", label: "Miniatura para RPG (32 a 40 mm)", basePrice: 65, time: "3 a 5 dias" },
+  { id: "75mm", label: "Miniatura ou busto (75 mm)", basePrice: 175, time: "5 a 8 dias" },
+  { id: "150mm", label: "Estátua decorativa (15 a 22 cm)", basePrice: 380, time: "10 a 15 dias" },
 ];
 
 const RESIN_OPTIONS = [
-  { id: "12k-grey", label: "Resina 12K Matte Grey (Máximo Detalhe)", mult: 1.0 },
-  { id: "abs-tough", label: "Resina ABS-Like Tough (Flexível p/ Jogo)", mult: 1.15 },
-  { id: "clear-uv", label: "Resina Translúcida / Cristal (Magias & LED)", mult: 1.2 },
+  { id: "12k-grey", label: "Resina cinza para peças decorativas", mult: 1.0 },
+  { id: "abs-tough", label: "Resina reforçada para miniaturas de jogo", mult: 1.15 },
+  { id: "clear-uv", label: "Resina transparente para efeitos de luz", mult: 1.2 },
 ];
 
 const FINISH_TIERS = [
   {
     id: "raw",
-    label: "01. Apenas Impressão 3D (Lavada, Curada & Sem Suportes)",
+    label: "01. Sem pintura",
     mult: 1.0,
-    badge: "DIY Painter",
-    desc: "Peça pronta para receber primer na sua casa, lixada nos pontos críticos.",
+    badge: "Para pintar em casa",
+    desc: "Peça limpa, curada e com os apoios removidos.",
   },
   {
     id: "zenithal",
-    label: "02. Pré-Sombreada (Primer + Zenithal Highlight no Aerógrafo)",
+    label: "02. Com base para pintura",
     mult: 1.45,
-    badge: "Pronta p/ Contrast",
-    desc: "Volume de luz e sombra já aplicado em aerógrafo + base colada.",
+    badge: "Pronta para pintar",
+    desc: "Aplicação de fundo e marcação de luz e sombra para você continuar a pintura.",
   },
   {
     id: "tabletop",
-    label: "03. Pintura Tabletop Pro (Pronta para a Mesa de Jogo)",
+    label: "03. Pintura para jogos de mesa",
     mult: 2.8,
-    badge: "Mais Pedido RPG",
-    desc: "Cores vibrantes, sombreamento rico, destaques precisos e verniz fosco.",
+    badge: "Mais pedida para RPG",
+    desc: "Cores, sombras e detalhes para levar a miniatura pronta para a partida.",
   },
   {
     id: "masterpiece",
-    label: "04. Pintura Display Masterpiece (NMM, OSL & Nível Competição)",
+    label: "04. Pintura detalhada para coleção",
     mult: 5.2,
-    badge: "Colecionador VIP",
-    desc: "Nível máximo de vitrine: metais não-metálicos, luz direcional e diorama.",
+    badge: "Acabamento detalhado",
+    desc: "Mais trabalho nos detalhes, efeitos e cores, conforme a referência escolhida.",
   },
 ];
 
 const BASE_STYLES = [
-  { id: "simple", label: "Pedestal Clássico Preto Matte", addPrice: 0 },
-  { id: "dungeon", label: "Ruínas Góticas & Pedras Esculpidas", addPrice: 45 },
-  { id: "cyber", label: "Asfalto Cyberpunk + Poças Neon UV", addPrice: 65 },
-  { id: "magma", label: "Diorama de Lava / Cristal em Epóxi", addPrice: 95 },
+  { id: "simple", label: "Base preta simples", addPrice: 0 },
+  { id: "dungeon", label: "Base com pedras e ruínas", addPrice: 45 },
+  { id: "cyber", label: "Base de rua futurista", addPrice: 65 },
+  { id: "magma", label: "Base com efeito de lava ou cristais", addPrice: 95 },
 ];
 
 export default function ResinAndMiniatureStudioPage() {
@@ -503,40 +492,44 @@ export default function ResinAndMiniatureStudioPage() {
     }\n*Resina:* ${selectedResin.label}\n*Acabamento:* ${
       selectedFinish.label
     }\n*Base Cenográfica:* ${selectedBase.label}\n${
-      customModelNote ? `*Personagem / Link STL:* ${customModelNote}\n` : ""
+      customModelNote ? `*Personagem ou referência:* ${customModelNote}\n` : ""
     }----------------------------------\n*Investimento Estimado: R$ ${estimatedTotal},00*\n_Gostaria de verificar a fila de produção e enviar meu arquivo/referência!_`;
 
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   return (
-    <main id="conteudo" className="demo-dark min-h-screen bg-[#08060C] text-zinc-100 selection:bg-fuchsia-500 selection:text-white font-sans antialiased overflow-x-hidden">
+    <main
+      id="conteudo"
+      data-template="miniaturas"
+      className={`${visual.root} demo-dark template-visual-system min-h-screen bg-[#08060C] text-zinc-100 selection:bg-fuchsia-500 selection:text-white font-sans antialiased overflow-x-hidden`}
+    >
       <ScrollProgress />
       {/* ==========================================
           1. FLOATING ATELIER NAVBAR
       ========================================== */}
       <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 pt-4 pointer-events-none">
-        <div className="max-w-7xl mx-auto bg-[#0E0A16]/85 backdrop-blur-xl border border-fuchsia-500/20 rounded-2xl px-4 sm:px-6 py-3.5 shadow-[0_20px_60px_rgba(0,0,0,0.8)] pointer-events-auto flex items-center justify-between gap-4">
-          <a href="#" className="flex items-center gap-3.5 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-fuchsia-500 via-purple-600 to-indigo-500 flex items-center justify-center text-white shadow-[0_0_25px_rgba(217,70,239,0.4)]">
+        <div className={`${visual.navPanel} max-w-7xl mx-auto bg-[#0E0A16]/85 backdrop-blur-xl border border-fuchsia-500/20 rounded-2xl px-4 sm:px-6 py-3.5 shadow-[0_20px_60px_rgba(0,0,0,0.8)] pointer-events-auto flex items-center justify-between gap-4`}>
+          <a href="#" className="flex min-w-0 items-center gap-2 sm:gap-3.5 group">
+            <div className="hidden sm:flex w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-fuchsia-500 via-purple-600 to-indigo-500 flex items-center justify-center text-white shadow-[0_0_25px_rgba(217,70,239,0.4)]">
               <Palette className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-lg font-black tracking-tight text-white block leading-none">
+              <span className="text-sm sm:text-lg font-black tracking-tight text-white block leading-none">
                 ALCHEMIST<span className="text-fuchsia-400">.VOXEL</span>
               </span>
               <span className="text-[9px] font-mono uppercase tracking-[0.22em] text-zinc-400">
-                12K Resin & Miniature Art
+                Impressão 3D e pintura
               </span>
             </div>
           </a>
 
           <nav className="hidden lg:flex items-center gap-1 bg-zinc-950/70 border border-white/10 rounded-xl p-1">
             {[
-              { label: "O Processo (Raio-X)", href: "#processo" },
-              { label: "Galeria & Receitas", href: "#galeria" },
+              { label: "Como fazemos", href: "#processo" },
+              { label: "Galeria e cores", href: "#galeria" },
               { label: "Simulador de Encomenda", href: "#forja" },
-              { label: "Especificações 12K", href: "#tecnologia" },
+              { label: "Materiais e acabamento", href: "#tecnologia" },
               { label: "Contato", href: "#contato" },
             ].map((item) => (
               <a
@@ -597,10 +590,10 @@ export default function ResinAndMiniatureStudioPage() {
               className="lg:hidden max-w-7xl mx-auto mt-2 bg-[#0E0A16]/95 backdrop-blur-xl border border-fuchsia-500/30 rounded-2xl p-4 pointer-events-auto flex flex-col gap-2"
             >
               {[
-                { label: "O Processo (Raio-X)", href: "#processo" },
-                { label: "Galeria & Receitas de Tinta", href: "#galeria" },
+                { label: "Como fazemos", href: "#processo" },
+                { label: "Galeria e cores", href: "#galeria" },
                 { label: "Simulador de Encomenda", href: "#forja" },
-                { label: "Especificações 12K", href: "#tecnologia" },
+                { label: "Materiais e acabamento", href: "#tecnologia" },
                 { label: "Contato Direto", href: "#contato" },
               ].map((item) => (
                 <a
@@ -620,7 +613,8 @@ export default function ResinAndMiniatureStudioPage() {
       {/* ==========================================
           2. HERO SECTION (CREATIVE ATELIER + UV GLOW)
       ========================================== */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden border-b border-white/10">
+      <section className={`${visual.hero} relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden border-b border-white/10`}>
+        <TemplateField variant="voxel" />
         {/* Ambient UV 405nm & Magenta Glows */}
         <div className="absolute top-20 left-1/4 w-[550px] h-[550px] bg-fuchsia-600/15 rounded-full blur-[160px] pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-[480px] h-[480px] bg-indigo-600/15 rounded-full blur-[150px] pointer-events-none" />
@@ -638,27 +632,27 @@ export default function ResinAndMiniatureStudioPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left 7 Cols */}
             <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/30 mb-6">
+              <div className={`${visual.heroBadge} inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/30 mb-6`}>
                 <span className="px-2 py-0.5 rounded-full bg-fuchsia-500 text-zinc-950 font-mono text-[10px] font-black uppercase">
-                  405nm SLA // 18µm
+                  IMPRESSÃO 3D
                 </span>
                 <span className="text-xs text-fuchsia-200 font-medium">
-                  Estúdio de Impressão 3D em Resina & Pintura de Miniaturas
+                  Miniaturas e pintura à mão
                 </span>
               </div>
 
-              <h1 className="text-4xl sm:text-6xl xl:text-7xl font-black uppercase tracking-tighter leading-[0.94] text-white mb-6">
+              <h1 className={`${visual.heroTitle} text-4xl sm:text-6xl xl:text-7xl font-black uppercase tracking-tighter leading-[0.94] text-white mb-6`}>
                 Da luz líquida <br />
                 ao <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-amber-300 to-indigo-400 italic">pincel vivo.</span>
               </h1>
 
-              <p className="text-zinc-300 text-base sm:text-lg max-w-xl leading-relaxed mb-8 border-l-2 border-fuchsia-500 pl-5">
-                Materializamos personagens de RPG, bustos colecionáveis, dioramas e artisan keycaps
-                com precisão microscópica de resina 12K e pintura artística feita à mão com
-                técnicas de exposição internacional.
+              <p className={`${visual.heroDescription} text-zinc-300 text-base sm:text-lg max-w-xl leading-relaxed mb-8 border-l-2 border-fuchsia-500 pl-5`}>
+                Miniaturas para RPG, personagens para sua coleção e peças decorativas.
+                Escolha um modelo do catálogo ou mande sua ideia e receba um orçamento
+                para impressão e pintura.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4">
+              <div className={`${visual.heroActions} flex flex-wrap items-center gap-4`}>
                 <a
                   href="#galeria"
                   onClick={() => soundRef.current?.playUvCurePulse()}
@@ -674,33 +668,33 @@ export default function ResinAndMiniatureStudioPage() {
                   className="px-6 py-4 rounded-2xl bg-zinc-900/90 hover:bg-zinc-800 border border-white/15 text-zinc-200 font-bold text-xs sm:text-sm transition-all flex items-center gap-2.5"
                 >
                   <Layers className="w-4 h-4 text-amber-300" />
-                  <span>Inspecionar Raio-X (3 Estágios)</span>
+                  <span>Ver como fazemos</span>
                 </a>
               </div>
 
               {/* Telemetry Strip */}
               <div className="mt-12 pt-8 border-t border-white/10 grid grid-cols-3 gap-6 max-w-lg">
                 <div>
-                  <span className="text-[10px] font-mono text-fuchsia-400 block">{"// RESOLUÇÃO"}</span>
-                  <span className="text-xl sm:text-2xl font-black text-white">12K MSLA</span>
-                  <span className="text-xs text-zinc-400 block">Zero linhas de camada</span>
+                  <span className="text-[10px] font-mono text-fuchsia-400 block">{"// IMPRESSÃO"}</span>
+                  <span className="text-xl sm:text-2xl font-black text-white">Em resina</span>
+                  <span className="text-xs text-zinc-400 block">Cuidado com os detalhes</span>
                 </div>
                 <div>
                   <span className="text-[10px] font-mono text-amber-300 block">{"// PINTURA"}</span>
-                  <span className="text-xl sm:text-2xl font-black text-white">NMM & OSL</span>
-                  <span className="text-xs text-zinc-400 block">Kolinsky & Aerógrafo</span>
+                  <span className="text-xl sm:text-2xl font-black text-white">Feita à mão</span>
+                  <span className="text-xs text-zinc-400 block">Cores combinadas com você</span>
                 </div>
                 <div>
                   <span className="text-[10px] font-mono text-indigo-400 block">{"// ARQUIVOS"}</span>
-                  <span className="text-xl sm:text-2xl font-black text-white">Seu STL ou Nosso</span>
-                  <span className="text-xs text-zinc-400 block">Suporte tático incluso</span>
+                  <span className="text-xl sm:text-2xl font-black text-white">Seu modelo ou nosso</span>
+                  <span className="text-xs text-zinc-400 block">Ajuda para escolher</span>
                 </div>
               </div>
             </div>
 
             {/* Right 5 Cols: Interactive Hero Showcase */}
             <div className="lg:col-span-5">
-              <div className="relative rounded-[2.5rem] overflow-hidden border border-fuchsia-500/30 bg-[#110C1D] aspect-[4/4.4] group shadow-[0_0_80px_rgba(217,70,239,0.15)]">
+              <div className={`${visual.heroArt} relative rounded-[2.5rem] overflow-hidden border border-fuchsia-500/30 bg-[#110C1D] aspect-[4/4.4] group shadow-[0_0_80px_rgba(217,70,239,0.15)]`}>
                 <Image
                   src={GALLERY_WORKS[0].image}
                   alt={GALLERY_WORKS[0].title}
@@ -765,6 +759,7 @@ export default function ResinAndMiniatureStudioPage() {
       {/* ==========================================
           3. INSPEKTOR INTERATIVO DE 3 ESTÁGIOS (RAIO-X)
       ========================================== */}
+      <TemplateTicker items={["Da ideia à matéria", "Impressão em resina", "Pintura à mão", "Peças com personalidade"]} />
       <section
         id="processo"
         className="py-24 bg-[#0B0812] border-b border-white/10 scroll-mt-20 relative"
@@ -773,19 +768,19 @@ export default function ResinAndMiniatureStudioPage() {
           <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-6">
             <div>
               <span className="font-mono text-xs uppercase tracking-[0.25em] text-fuchsia-400 block mb-2">
-                {"// 01. ALQUIMIA DE PRODUÇÃO INTERATIVA"}
+                {"// 01. DA IDEIA À PEÇA PRONTA"}
               </span>
-              <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tighter text-white">
-                Etapas de <span className="text-amber-300 italic">Bancada (3 Estágios)</span>
+              <h2 className={`${visual.sectionHeading} text-3xl sm:text-5xl font-black uppercase tracking-tighter text-white`}>
+                Etapas de <span className="text-amber-300 italic">produção</span>
               </h2>
             </div>
 
             {/* Stage Selector Buttons */}
             <div className="flex flex-wrap items-center gap-2 bg-zinc-950 p-1.5 rounded-2xl border border-white/10">
               {[
-                { idx: 0, label: "1. Malha 3D & Suportes", icon: Box },
-                { idx: 1, label: "2. Resina 12K Curada", icon: Droplets },
-                { idx: 2, label: "3. Pintura Final Master", icon: Palette },
+                { idx: 0, label: "1. Preparação do modelo", icon: Box },
+                { idx: 1, label: "2. Impressão e acabamento", icon: Droplets },
+                { idx: 2, label: "3. Pintura à mão", icon: Palette },
               ].map((btn) => {
                 const Icon = btn.icon;
                 const active = activeStageIdx === btn.idx;
@@ -809,8 +804,8 @@ export default function ResinAndMiniatureStudioPage() {
           </div>
 
           {/* Interactive Stage Viewer */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-[2.5rem] bg-[#120D1E]/90 border border-fuchsia-500/25 p-6 sm:p-10 shadow-2xl">
-            <div className="lg:col-span-6 relative aspect-[4/3] rounded-3xl overflow-hidden border border-white/15 bg-zinc-950">
+          <div className={`${visual.panel} grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-[2.5rem] bg-[#120D1E]/90 border border-fuchsia-500/25 p-6 sm:p-10 shadow-2xl`}>
+            <div className={`${visual.panel} lg:col-span-6 relative aspect-[4/3] rounded-3xl overflow-hidden border border-white/15 bg-zinc-950`}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStage.id}
@@ -864,7 +859,7 @@ export default function ResinAndMiniatureStudioPage() {
                 <span className="font-mono text-xs uppercase tracking-widest text-amber-300 block mb-1">
                   {activeStage.subtitle}
                 </span>
-                <h3 className="text-2xl sm:text-4xl font-black uppercase text-white tracking-tight">
+                <h3 className={`${visual.sectionHeading} text-2xl sm:text-4xl font-black uppercase text-white tracking-tight`}>
                   {activeStage.title}
                 </h3>
                 <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mt-3">
@@ -893,7 +888,7 @@ export default function ResinAndMiniatureStudioPage() {
               {activeStage.swatches && (
                 <div className="p-4 rounded-2xl bg-zinc-950/90 border border-amber-400/30">
                   <span className="font-mono text-[10px] uppercase tracking-widest text-amber-300 block mb-2.5">
-                    {"// RECEITA CROMÁTICA APLICADA NO ESTÁGIO 03"}
+                    {"// CORES USADAS NESTA PINTURA"}
                   </span>
                   <div className="flex flex-wrap gap-2.5">
                     {activeStage.swatches.map((sw, i) => (
@@ -925,7 +920,7 @@ export default function ResinAndMiniatureStudioPage() {
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-fuchsia-400 block mb-2">
               {"// 02. PORTFÓLIO DE PEÇAS & COLEÇÕES"}
             </span>
-            <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tighter text-white">
+            <h2 className={`${visual.sectionHeading} text-3xl sm:text-5xl font-black uppercase tracking-tighter text-white`}>
               Galeria de <span className="text-fuchsia-400 italic">Miniaturas & Resina</span>
             </h2>
           </div>
@@ -944,7 +939,7 @@ export default function ResinAndMiniatureStudioPage() {
                   : "text-zinc-400 hover:text-white"
               }`}
             >
-              Ver Valor Pintada
+              Com pintura
             </button>
             <button
               type="button"
@@ -958,7 +953,7 @@ export default function ResinAndMiniatureStudioPage() {
                   : "text-zinc-400 hover:text-white"
               }`}
             >
-              Apenas Impressão 3D (Crua)
+              Sem pintura
             </button>
           </div>
         </div>
@@ -968,10 +963,10 @@ export default function ResinAndMiniatureStudioPage() {
           <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
             {[
               { id: "todos", label: "Todas as Obras (6)" },
-              { id: "fantasy", label: "Dark Fantasy & RPG" },
-              { id: "cyberpunk", label: "Cyberpunk & Sci-Fi" },
-              { id: "bustos", label: "Bustos 1/6 & 1/10" },
-              { id: "keycaps", label: "Artisan Keycaps" },
+              { id: "fantasy", label: "Fantasia e RPG" },
+              { id: "cyberpunk", label: "Ficção científica" },
+              { id: "bustos", label: "Bustos" },
+              { id: "keycaps", label: "Teclas decorativas" },
             ].map((cat) => (
               <button
                 key={cat.id}
@@ -998,8 +993,8 @@ export default function ResinAndMiniatureStudioPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              aria-label="Buscar técnica"
-              placeholder="Buscar técnica (NMM, OSL, Keycap)..."
+              aria-label="Buscar peça ou acabamento"
+              placeholder="Buscar peça ou acabamento..."
               className="w-full pl-10 pr-9 py-2 rounded-xl bg-zinc-950 border border-white/10 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-fuchsia-400"
             />
             {searchQuery && (
@@ -1020,10 +1015,10 @@ export default function ResinAndMiniatureStudioPage() {
         </p>
 
         {filteredGallery.length === 0 && (
-          <div className="rounded-3xl border border-dashed border-white/15 bg-zinc-900/30 py-16 text-center">
+          <div className={`${visual.panel} rounded-3xl border border-dashed border-white/15 bg-zinc-900/30 py-16 text-center`}>
             <Search className="mx-auto mb-4 h-8 w-8 text-fuchsia-400" />
             <p className="mb-1 text-lg font-black uppercase text-white">Nenhuma peça encontrada</p>
-            <p className="mb-5 text-sm text-zinc-400">Tente outra técnica ou categoria.</p>
+            <p className="mb-5 text-sm text-zinc-400">Tente outro nome ou categoria.</p>
             <button
               type="button"
               onClick={() => {
@@ -1049,7 +1044,7 @@ export default function ResinAndMiniatureStudioPage() {
                 key={work.id}
                 role="button"
                 tabIndex={0}
-                aria-label={`${work.title}. Abrir inspeção e receita`}
+                aria-label={`${work.title}. Ver detalhes e cores`}
                 onClick={() => {
                   soundRef.current?.playAirbrushSpray();
                   setLightboxWork(work);
@@ -1064,7 +1059,7 @@ export default function ResinAndMiniatureStudioPage() {
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                className="group cursor-pointer rounded-3xl bg-[#110C1D]/70 border border-white/10 hover:border-fuchsia-400/60 hover:-translate-y-1 overflow-hidden flex flex-col justify-between transition-all hover:shadow-[0_15px_50px_rgba(217,70,239,0.15)]"
+                className={`${visual.editorialCard} group cursor-pointer rounded-3xl bg-[#110C1D]/70 border border-white/10 hover:border-fuchsia-400/60 hover:-translate-y-1 overflow-hidden flex flex-col justify-between transition-all hover:shadow-[0_15px_50px_rgba(217,70,239,0.15)]`}
               >
                 <div>
                   <div className="relative h-64 w-full overflow-hidden bg-zinc-950">
@@ -1132,8 +1127,8 @@ export default function ResinAndMiniatureStudioPage() {
                   <div>
                     <span className="text-[10px] font-mono uppercase text-zinc-400 block">
                       {viewPriceMode === "painted"
-                        ? "Obra Pintada Master"
-                        : "Apenas Resina 12K Curada"}
+                        ? "Peça pintada à mão"
+                        : "Peça em resina, sem pintura"}
                     </span>
                     <span className="text-xl font-black text-white">
                       R$ {priceInReais.format(displayPrice)}
@@ -1157,19 +1152,18 @@ export default function ResinAndMiniatureStudioPage() {
         className="py-24 bg-[#0B0812] border-y border-white/10 scroll-mt-20"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[2.5rem] bg-gradient-to-br from-[#150E24] via-[#0D0916] to-[#08060C] border border-fuchsia-500/35 p-6 sm:p-10 lg:p-12 shadow-[0_0_90px_rgba(217,70,239,0.1)]">
+          <div className={`${visual.panel} rounded-[2.5rem] bg-gradient-to-br from-[#150E24] via-[#0D0916] to-[#08060C] border border-fuchsia-500/35 p-6 sm:p-10 lg:p-12 shadow-[0_0_90px_rgba(217,70,239,0.1)]`}>
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 mb-10 border-b border-white/10">
               <div>
                 <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-amber-300 mb-2">
-                  <Wand2 className="w-4 h-4" /> 03. Custom Commission Calculator
+                  <Wand2 className="w-4 h-4" /> 03. MONTE SUA ENCOMENDA
                 </span>
-                <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white">
-                  Forje sua <span className="text-fuchsia-400 italic">Miniatura Sob Medida</span>
+                <h2 className={`${visual.sectionHeading} text-2xl sm:text-4xl font-black uppercase tracking-tight text-white`}>
+                  Personalize sua <span className="text-fuchsia-400 italic">Miniatura Sob Medida</span>
                 </h2>
               </div>
               <p className="text-xs sm:text-sm text-zinc-300 max-w-md">
-                Você pode nos enviar seu próprio arquivo `.STL` (Loot Studios, Archvillain,
-                Nomnom, HeroForge) ou escolher uma escultura do nosso catálogo licenciado.
+                Escolha um modelo do catálogo ou envie uma referência. Se já tiver um arquivo para impressão 3D, pode mandar também. Combinamos tamanho, cores e acabamento antes de produzir.
               </p>
             </div>
 
@@ -1179,7 +1173,7 @@ export default function ResinAndMiniatureStudioPage() {
                 {/* 1. Escala */}
                 <div>
                   <label className="block text-xs font-mono uppercase tracking-wider text-fuchsia-300 font-bold mb-3">
-                    01. Escala & Porte da Peça
+                    01. Tamanho da peça
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {SCALE_OPTIONS.map((sc) => (
@@ -1213,7 +1207,7 @@ export default function ResinAndMiniatureStudioPage() {
                 {/* 2. Composto de Resina */}
                 <div>
                   <label className="block text-xs font-mono uppercase tracking-wider text-fuchsia-300 font-bold mb-3">
-                    02. Composto Químico da Resina
+                    02. Tipo de resina
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                     {RESIN_OPTIONS.map((res) => (
@@ -1239,7 +1233,7 @@ export default function ResinAndMiniatureStudioPage() {
                 {/* 3. Nível de Pintura */}
                 <div>
                   <label className="block text-xs font-mono uppercase tracking-wider text-fuchsia-300 font-bold mb-3">
-                    03. Nível de Acabamento & Pintura Artística
+                    03. Como quer o acabamento?
                   </label>
                   <div className="space-y-2.5">
                     {FINISH_TIERS.map((tier) => (
@@ -1276,7 +1270,7 @@ export default function ResinAndMiniatureStudioPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-mono uppercase text-zinc-300 font-bold mb-2">
-                      04. Diorama / Base Cenográfica
+                      04. Base da peça
                     </label>
                     <select
                       value={selectedBase.id}
@@ -1296,13 +1290,13 @@ export default function ResinAndMiniatureStudioPage() {
 
                   <div>
                     <label className="block text-xs font-mono uppercase text-zinc-300 font-bold mb-2">
-                      05. Qual o Personagem ou Link STL?
+                      05. Qual peça você quer encomendar?
                     </label>
                     <input
                       type="text"
                       value={customModelNote}
                       onChange={(e) => setCustomModelNote(e.target.value)}
-                      placeholder="Ex: Malenia 1/8, Personagem D&D..."
+                      placeholder="Ex.: guerreiro para RPG, busto ou link do modelo..."
                       className="w-full px-3.5 py-3 rounded-xl bg-zinc-950 border border-white/15 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-fuchsia-400"
                     />
                   </div>
@@ -1310,11 +1304,11 @@ export default function ResinAndMiniatureStudioPage() {
               </div>
 
               {/* Right 5 Cols: Live Order Summary Ticket */}
-              <div className="lg:col-span-5 rounded-3xl bg-zinc-950 border border-fuchsia-500/30 p-6 sm:p-8 space-y-6 sticky top-28 shadow-2xl">
+              <div className={`${visual.panel} lg:col-span-5 rounded-3xl bg-zinc-950 border border-fuchsia-500/30 p-6 sm:p-8 space-y-6 sticky top-28 shadow-2xl`}>
                 <div className="flex items-center justify-between pb-4 border-b border-white/10">
                   <div>
                     <span className="font-mono text-[10px] uppercase tracking-widest text-fuchsia-400 block">
-                      FICHA TÉCNICA DE BANCADA
+                      DETALHES DA SUA ENCOMENDA
                     </span>
                     <h3 className="text-lg font-black uppercase text-white">
                       Resumo da Encomenda
@@ -1363,7 +1357,7 @@ export default function ResinAndMiniatureStudioPage() {
                   className="w-full py-4 rounded-xl bg-gradient-to-r from-fuchsia-600 via-purple-600 to-indigo-600 hover:from-fuchsia-500 hover:to-indigo-500 text-white font-black uppercase tracking-wider text-xs flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(217,70,239,0.4)] transition-all"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  <span>Enviar Projeto p/ o Artista no WhatsApp</span>
+                  <span>Pedir orçamento pelo WhatsApp</span>
                 </button>
               </div>
             </form>
@@ -1379,15 +1373,15 @@ export default function ResinAndMiniatureStudioPage() {
           {[
             {
               icon: Cpu,
-              badge: "PRECISÃO ÓPTICA 12K",
-              title: "Impressão MSLA Sem Marcas",
-              desc: "Tanques calibrados com filme ACF e exposição em mícrons para preservar poros de pele, costuras de roupas e runas milimétricas.",
+              badge: "IMPRESSÃO EM RESINA",
+              title: "Cuidado com o acabamento",
+              desc: "Impressão e preparação da peça com atenção aos detalhes do modelo, aos encaixes e à remoção dos apoios.",
             },
             {
               icon: Flame,
-              badge: "PIGMENTOS EUROPEUS",
-              title: "Tintas Acrílicas de Alta Densidade",
-              desc: "Trabalhamos exclusivamente com Vallejo Model/Game Color, AK Interactive 3rd Gen, Scale75 e vernizes com filtro UV anti-amarelamento.",
+              badge: "PINTURA À MÃO",
+              title: "Cores escolhidas com você",
+              desc: "Usamos tintas próprias para miniaturas e aplicamos verniz no acabamento. As cores são combinadas de acordo com sua referência.",
             },
             {
               icon: ShieldCheck,
@@ -1400,7 +1394,7 @@ export default function ResinAndMiniatureStudioPage() {
             return (
               <div
                 key={i}
-                className="p-8 rounded-3xl bg-[#110C1D]/50 border border-white/10 hover:border-fuchsia-500/40 transition-all flex flex-col justify-between"
+                className={`${visual.panel} p-8 rounded-3xl bg-[#110C1D]/50 border border-white/10 hover:border-fuchsia-500/40 transition-all flex flex-col justify-between`}
               >
                 <div className="flex items-center justify-between mb-6">
                   <div className="w-12 h-12 rounded-2xl bg-fuchsia-500/10 border border-fuchsia-500/30 flex items-center justify-center text-fuchsia-400">
@@ -1434,7 +1428,7 @@ export default function ResinAndMiniatureStudioPage() {
                 ALCHEMIST<span className="text-fuchsia-400">.VOXEL</span>
               </span>
               <span className="text-[10px] font-mono text-zinc-500">
-                Low Poly Comfort • High Detail Resin Art
+                Miniaturas, decoração e presentes personalizados
               </span>
             </div>
           </div>
@@ -1497,7 +1491,7 @@ export default function ResinAndMiniatureStudioPage() {
                   </div>
                   <div className="text-right">
                     <span className="text-[10px] font-mono text-zinc-400 block">
-                      PINTADA MASTER / CRUA
+                      COM PINTURA / SEM PINTURA
                     </span>
                     <span className="text-xl font-black text-amber-300">
                       R$ {lightboxWork.pricePainted} / R$ {lightboxWork.priceRaw}
@@ -1512,7 +1506,7 @@ export default function ResinAndMiniatureStudioPage() {
                 {/* Paint Swatches Recipe */}
                 <div className="p-4 rounded-2xl bg-zinc-950 border border-white/10">
                   <span className="font-mono text-[10px] uppercase tracking-widest text-amber-300 block mb-3">
-                    {"// PALETA DE PIGMENTOS USADOS NESTA OBRA"}
+                    {"// CORES USADAS NESTA PEÇA"}
                   </span>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                     {lightboxWork.paintsUsed.map((sw, i) => (
@@ -1541,7 +1535,7 @@ export default function ResinAndMiniatureStudioPage() {
                     }}
                     className="flex-1 py-4 rounded-xl bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-black uppercase tracking-wider text-xs text-center"
                   >
-                    Encomendar Esta Peça na Forja
+                    Pedir orçamento desta peça
                   </a>
                   <button
                     type="button"

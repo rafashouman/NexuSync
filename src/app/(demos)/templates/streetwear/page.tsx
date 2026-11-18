@@ -74,120 +74,104 @@ const PRODUCTS: ProductItem[] = [
   {
     id: "vx-01",
     code: "ARCH-001",
-    name: "Atelier Heavy Boxy Tee",
-    subtitle: "320 GSM • Algodão Pima Peruano",
+    name: "Camiseta básica de algodão",
+    subtitle: "100% algodão • Gola redonda",
     price: 169.9,
     originalPrice: 219.9,
     category: "heavy-tees",
-    gsm: "320 GSM",
-    fit: "Boxy Oversized",
+    gsm: "Malha de algodão",
+    fit: "Modelagem ampla",
     image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1000&q=85",
     backImage: "https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=1000&q=85",
-    colors: [
-      { name: "Raw Ecru (Cru)", hex: "#E6E2D8" },
-      { name: "Cobalt Blue", hex: "#1D4ED8" },
-      { name: "Onyx Black", hex: "#18181B" },
-    ],
-    badge: "DROP #04 • DESTAQUE",
+    colors: [{"name":"Cru","hex":"#E6E2D8"},{"name":"Azul","hex":"#1D4ED8"},{"name":"Preto","hex":"#18181B"}],
+    badge: "Mais vendida",
     stockLeft: 7,
     description:
-      "Modelagem quadrada arquitetônica (Boxy) desenvolvida em nosso ateliê. Gola canelada de 3.2cm indeformável, toque aveludado e caimento estruturado que não marca o corpo.",
+      "Camiseta lisa de algodão, com gola redonda e costura reforçada. Uma peça confortável para combinar com jeans, bermuda ou calça de moletom.",
   },
   {
     id: "vx-02",
     code: "ARCH-002",
-    name: "Botanical Pigment Dyed Tee",
-    subtitle: "Tingimento Mineral Artesanal • Peça Única",
+    name: "Camiseta estonada",
+    subtitle: "Malha macia • Efeito lavado",
     price: 189.9,
     category: "acid-wash",
-    gsm: "300 GSM",
-    fit: "Drop Shoulder",
+    gsm: "Malha de algodão",
+    fit: "Ombro levemente caído",
     image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=1000&q=85",
     backImage: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1000&q=85",
-    colors: [
-      { name: "Washed Slate", hex: "#475569" },
-      { name: "Terracotta Fade", hex: "#C2410C" },
-    ],
-    badge: "TIRAGEM LIMITADA",
+    colors: [{"name":"Cinza","hex":"#475569"},{"name":"Terracota","hex":"#C2410C"}],
+    badge: "Novidade",
     stockLeft: 4,
     description:
-      "Submetida a banho de pigmentos minerais e amaciamento natural, garantindo que nenhuma camiseta seja idêntica à outra. Costuras externas aparentes e etiqueta em sarja.",
+      "Camiseta de algodão com lavagem estonada e visual despojado. O acabamento pode apresentar pequenas variações de tom entre as peças.",
   },
   {
     id: "vx-03",
     code: "ARCH-003",
-    name: "Bauhaus Exhibition Graphic Tee",
-    subtitle: "Serigrafia Base D'água • Toque Zero",
+    name: "Camiseta com estampa",
+    subtitle: "Estampa na frente • Toque macio",
     price: 159.9,
     category: "heavy-tees",
-    gsm: "290 GSM",
-    fit: "Relaxed Fit",
+    gsm: "Malha de algodão",
+    fit: "Modelagem reta",
     image: "https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=1000&q=85",
     backImage: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1000&q=85",
-    colors: [
-      { name: "Pure Gallery White", hex: "#FFFFFF" },
-      { name: "Cobalt Blue", hex: "#1D4ED8" },
-    ],
+    colors: [{"name":"Branco","hex":"#FFFFFF"},{"name":"Azul","hex":"#1D4ED8"}],
     stockLeft: 12,
     description:
-      "Inspirada nos pôsteres de exposições suíças dos anos 70. Arte aplicada com tintas ecológicas que penetram na fibra sem deixar relevo plástico.",
+      "Camiseta de algodão com estampa frontal e gola redonda. Fácil de combinar para sair, trabalhar ou usar no fim de semana.",
   },
   {
     id: "vx-04",
     code: "ARCH-004",
-    name: "Knit-Ribbed Heavy Longsleeve",
-    subtitle: "Manga Longa Estruturada • Punho Canelado",
+    name: "Camiseta manga longa",
+    subtitle: "Manga longa • Punho canelado",
     price: 219.9,
     originalPrice: 259.9,
     category: "longsleeve",
-    gsm: "340 GSM",
-    fit: "Boxy Heavy",
+    gsm: "Malha encorpada",
+    fit: "Modelagem ampla",
     image: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=1000&q=85",
     backImage: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=1000&q=85",
-    colors: [
-      { name: "Onyx Black", hex: "#18181B" },
-      { name: "Alabaster Cream", hex: "#F5F5F0" },
-    ],
-    badge: "ALTA GRAMATURA",
+    colors: [{"name":"Preto","hex":"#18181B"},{"name":"Creme","hex":"#F5F5F0"}],
+    badge: "Para dias mais frescos",
     stockLeft: 5,
     description:
-      "A fronteira perfeita entre camiseta e suéter leve. Algodão encorpado de 340g/m² com bordado minimalista tom-sobre-tom no peito.",
+      "Camiseta de manga longa em malha encorpada, com punhos canelados. Vai bem sozinha nos dias amenos ou por baixo de uma jaqueta.",
   },
   {
     id: "vx-05",
     code: "ARCH-005",
-    name: "Mediterranean Sun Washed Tee",
-    subtitle: "Estonada a Sol • Pré-Encolhida",
+    name: "Camiseta lisa conforto",
+    subtitle: "100% algodão • Para o dia a dia",
     price: 174.9,
     category: "acid-wash",
-    gsm: "310 GSM",
-    fit: "Boxy Oversized",
+    gsm: "Malha de algodão",
+    fit: "Modelagem ampla",
     image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1000&q=85",
     backImage: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=1000&q=85",
-    colors: [
-      { name: "Sage Olive", hex: "#65A30D" },
-      { name: "Raw Ecru (Cru)", hex: "#E6E2D8" },
-    ],
+    colors: [{"name":"Verde","hex":"#65A30D"},{"name":"Cru","hex":"#E6E2D8"}],
     stockLeft: 9,
     description:
-      "Pré-lavada industrialmente em tambor com pedras vulcânicas para zero encolhimento pós-compra e maciez imediata no primeiro uso.",
+      "Camiseta lisa com toque macio e caimento solto. Uma opção básica para quem prefere conforto e combinações simples.",
   },
   {
     id: "vx-06",
     code: "ARCH-006",
-    name: "Canvas Tote 16oz + Cap",
-    subtitle: "Kit Utilitário Lona Crua",
+    name: "Kit bolsa de lona e boné",
+    subtitle: "Dois acessórios para o dia a dia",
     price: 139.9,
     category: "accessories",
-    gsm: "480 GSM Canvas",
-    fit: "Tamanho Único Ajustável",
+    gsm: "Lona de algodão",
+    fit: "Boné com regulagem",
     image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1000&q=85",
     backImage: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1000&q=85",
-    colors: [{ name: "Raw Canvas", hex: "#D6D3C9" }],
-    badge: "ARCHIVE PACK",
+    colors: [{"name":"Cru","hex":"#D6D3C9"}],
+    badge: "Kit de acessórios",
     stockLeft: 3,
     description:
-      "Tote bag estruturada em lona de algodão 16oz com bolso interno para notebook de 16', acompanhada de boné desestruturado 6-panel.",
+      "Bolsa de lona com alças reforçadas e bolso interno, acompanhada de boné com regulagem. Um kit prático para passeios, compras e uso diário.",
   },
 ];
 
@@ -199,7 +183,7 @@ const SIZES: SizeType[] = ["P", "M", "G", "GG", "XGG"];
 const FloatingWhatsApp = () => (
   <a
     href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-      "Olá! Estou na loja online da VORTEX // ARCHIVE e gostaria de ajuda com um tamanho ou pedido."
+      "Olá! Estou na loja online da VORTEX e gostaria de ajuda com um tamanho ou pedido."
     )}`}
     target="_blank"
     rel="noopener noreferrer"
@@ -212,7 +196,7 @@ const FloatingWhatsApp = () => (
     </span>
     <MessageCircle className="w-4 h-4" />
     <span className="hidden sm:inline text-xs font-mono font-bold uppercase tracking-wider">
-      Personal Stylist
+      Fale com a loja
     </span>
   </a>
 );
@@ -368,7 +352,7 @@ export default function StreetwearEcommerceLightPage() {
       )
       .join("\n\n");
 
-    const msg = `*NOVO PEDIDO — VORTEX // ARCHIVE DROP #04*\n----------------------------------\n*Cliente:* ${customerName}\n*CEP:* ${customerZip}\n*Endereço:* ${customerAddress}\n----------------------------------\n\n${lines}\n\n----------------------------------\n*Subtotal:* R$ ${priceInReais.format(subtotal)}\n${
+    const msg = `*NOVO PEDIDO — VORTEX • COLEÇÃO ATUAL*\n----------------------------------\n*Cliente:* ${customerName}\n*CEP:* ${customerZip}\n*Endereço:* ${customerAddress}\n----------------------------------\n\n${lines}\n\n----------------------------------\n*Subtotal:* R$ ${priceInReais.format(subtotal)}\n${
       paymentType === "pix" ? `*Desconto PIX (8%):* -R$ ${priceInReais.format(pixDiscount)}\n` : ""
     }*Frete expresso:* ${
       hasFreeShipping ? "GRÁTIS (+ pacote de adesivos)" : `R$ ${priceInReais.format(shippingCost)}`
@@ -421,7 +405,7 @@ export default function StreetwearEcommerceLightPage() {
                 VORTEX<span className="text-blue-600">{"//"}</span>ATELIER
               </span>
               <span className="text-[9px] font-mono uppercase tracking-[0.22em] text-zinc-500">
-                Heavyweight Garments
+                Roupas e acessórios
               </span>
             </div>
           </a>
@@ -429,10 +413,10 @@ export default function StreetwearEcommerceLightPage() {
           {/* Center Links */}
           <nav className="hidden md:flex items-center gap-1 bg-zinc-100/90 border border-zinc-200/70 rounded-full p-1">
             {[
-              { label: "Coleção #04", href: "#vitrine" },
-              { label: "Simulador de Caimento", href: "#fit-finder" },
+              { label: "Nossa coleção", href: "#vitrine" },
+              { label: "Guia de tamanhos", href: "#fit-finder" },
               { label: "Editorial", href: "#lookbook" },
-              { label: "Lista Privada", href: "#contato" },
+              { label: "Ofertas", href: "#contato" },
             ].map((link) => (
               <a
                 key={link.label}
@@ -449,7 +433,7 @@ export default function StreetwearEcommerceLightPage() {
             <div className="hidden xl:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-[11px] font-mono text-blue-700 font-bold">
               <Sparkles className="w-3.5 h-3.5 text-blue-600" />
               <span>
-                DROP ENCERRA EM {String(timeLeft.hours).padStart(2, "0")}:
+                OFERTA ENCERRA EM {String(timeLeft.hours).padStart(2, "0")}:
                 {String(timeLeft.minutes).padStart(2, "0")}:
                 {String(timeLeft.seconds).padStart(2, "0")}
               </span>
@@ -486,7 +470,7 @@ export default function StreetwearEcommerceLightPage() {
           {/* Background Editorial Photography */}
           <Image
             src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=2000&q=90"
-            alt="Vortex Atelier Editorial Campaign"
+            alt="Coleção de roupas Vortex"
             fill
             priority
             unoptimized
@@ -500,15 +484,15 @@ export default function StreetwearEcommerceLightPage() {
           <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pt-4">
             <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/90 backdrop-blur-md text-zinc-950 text-xs font-mono font-bold uppercase tracking-wider shadow-sm">
               <span className="w-2 h-2 rounded-full bg-blue-600 animate-ping" />
-              ARCHIVAL RELEASE 04 // PRIMAVERA-VERÃO
+              COLEÇÃO PRIMAVERA-VERÃO
             </div>
 
             <div className="hidden sm:flex items-center gap-6 px-5 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/15 text-white/90 text-xs font-mono">
-              <span>ALGODÃO PIMA 320 GSM</span>
+              <span>MALHA DE ALGODÃO</span>
               <span>•</span>
-              <span>TIRAGEM NUMERADA</span>
+              <span>DO P AO XGG</span>
               <span>•</span>
-              <span>0% ENCOLHIMENTO</span>
+              <span>CONFORTO NO DIA A DIA</span>
             </div>
           </div>
 
@@ -522,7 +506,7 @@ export default function StreetwearEcommerceLightPage() {
                 transition={{ duration: 0.5 }}
                 className="text-xs sm:text-sm font-mono uppercase tracking-[0.3em] text-blue-300 mb-3"
               >
-                [ ENGENHARIA TÊXTIL & DESIGN INDEPENDENTE ]
+                [ ROUPAS PARA O SEU DIA A DIA ]
               </motion.p>
 
               <motion.h1
@@ -531,8 +515,8 @@ export default function StreetwearEcommerceLightPage() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="mb-6 text-4xl font-black uppercase leading-[0.88] tracking-tighter sm:text-7xl xl:text-8xl"
               >
-                Forma Pura. <br />
-                <span className="italic font-light text-[#FAF9F5]/90">Peso</span> Absoluto.
+                Seu estilo. <br />
+                <span className="italic font-light text-[#FAF9F5]/90">Seu</span> jeito.
               </motion.h1>
 
               <motion.p
@@ -541,8 +525,8 @@ export default function StreetwearEcommerceLightPage() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-sm sm:text-base text-zinc-200 max-w-lg leading-relaxed mb-8"
               >
-                Redefinimos a camiseta essencial através da gramatura extrema (320g/m²), tingimento
-                mineral botânico e corte quadrado arquitetônico. Feita para durar décadas.
+                Camisetas, manga longa e acessórios para montar suas combinações. Escolha a cor,
+                confira o tamanho e faça seu pedido direto com a loja.
               </motion.p>
 
               <motion.div
@@ -589,7 +573,7 @@ export default function StreetwearEcommerceLightPage() {
                   </div>
                   <div>
                     <span className="text-[10px] font-mono uppercase tracking-widest text-blue-600 font-bold block">
-                      PEÇA CHAVE DA CAMPANHA
+                      DESTAQUE DA COLEÇÃO
                     </span>
                     <h2 className="text-lg font-black uppercase tracking-tight text-zinc-950">
                       {PRODUCTS[0].name}
@@ -639,10 +623,10 @@ export default function StreetwearEcommerceLightPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
           <div>
             <span className="text-xs font-mono uppercase tracking-widest text-blue-600 font-bold block mb-2">
-              {"// ARQUIVO TÊXTIL 2026 • TIRAGEM LIMITADA"}
+              {"// CAMISETAS E ACESSÓRIOS"}
             </span>
             <h2 className="text-4xl sm:text-5xl font-black uppercase tracking-tighter text-zinc-950">
-              Peças do <span className="italic font-light text-blue-600">Drop #04</span>
+              Peças da <span className="italic font-light text-blue-600">coleção</span>
             </h2>
           </div>
 
@@ -650,8 +634,8 @@ export default function StreetwearEcommerceLightPage() {
           <div className="flex flex-wrap gap-2">
             {[
               { id: "all", label: "Todas as Peças (6)" },
-              { id: "heavy-tees", label: "Heavyweight 320g" },
-              { id: "acid-wash", label: "Tingimento Mineral" },
+              { id: "heavy-tees", label: "Camisetas" },
+              { id: "acid-wash", label: "Estonadas" },
               { id: "longsleeve", label: "Manga Longa" },
               { id: "accessories", label: "Acessórios" },
             ].map((cat) => (
@@ -829,14 +813,14 @@ export default function StreetwearEcommerceLightPage() {
               <div className="lg:col-span-7 space-y-6">
                 <div>
                   <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-blue-600 font-bold mb-2">
-                    <Sliders className="w-3.5 h-3.5" /> Provador Biométrico • Precisão de Ateliê
+                    <Sliders className="w-3.5 h-3.5" /> Guia de tamanhos • Sugestão de caimento
                   </span>
                   <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-zinc-950">
-                    Calculadora de <span className="italic font-light text-blue-600">Proporção Boxy</span>
+                    Encontre <span className="italic font-light text-blue-600">seu tamanho</span>
                   </h2>
                   <p className="text-zinc-600 text-sm mt-2">
-                    Informe sua estrutura corporal abaixo para descobrir qual tamanho entregará o
-                    caimento exato que você prefere.
+                    Informe sua altura, seu peso e como prefere vestir a peça. A sugestão é aproximada;
+                    se tiver dúvida, fale com a loja antes de pedir.
                   </p>
                 </div>
 
@@ -874,13 +858,13 @@ export default function StreetwearEcommerceLightPage() {
 
                 <div>
                   <span className="text-xs font-mono uppercase text-zinc-500 font-bold block mb-2.5">
-                    Estética de Caimento Desejada:
+                    Como prefere vestir?
                   </span>
                   <div className="grid grid-cols-3 gap-3">
                     {[
-                      { id: "regular", label: "Alinhado", desc: "Corte reto clássico" },
-                      { id: "oversized", label: "Boxy Original", desc: "Ombro estruturado" },
-                      { id: "baggy", label: "Drapeado Amplo", desc: "Silhueta editorial" },
+                      { id: "regular", label: "Mais justo", desc: "Próximo ao corpo" },
+                      { id: "oversized", label: "Soltinho", desc: "Com folga confortável" },
+                      { id: "baggy", label: "Bem largo", desc: "Caimento mais amplo" },
                     ].map((style) => (
                       <button
                         key={style.id}
@@ -908,14 +892,14 @@ export default function StreetwearEcommerceLightPage() {
               <div className="lg:col-span-5">
                 <div className="p-8 rounded-3xl bg-[#FAF9F5] border border-zinc-200 text-center">
                   <span className="text-[10px] font-mono uppercase tracking-widest text-blue-600 font-bold block mb-2">
-                    TAMANHO RECOMENDADO PELO ATELIÊ
+                    SUGESTÃO DE TAMANHO
                   </span>
                   <div className="text-7xl font-black text-zinc-950 my-3">{recommendedSize}</div>
                   <p className="text-xs text-zinc-600 max-w-xs mx-auto mb-6 leading-relaxed">
                     Para <strong>{userHeight}cm</strong> e <strong>{userWeight}kg</strong> com
-                    caimento <strong className="uppercase">{fitPreference}</strong>, o tamanho{" "}
-                    <strong className="text-blue-600">{recommendedSize}</strong> oferece a proporção
-                    áurea de ombro e tórax.
+                    caimento <strong className="uppercase">{{ regular: "mais justo", oversized: "soltinho", baggy: "bem largo" }[fitPreference]}</strong>, o tamanho{" "}
+                    <strong className="text-blue-600">{recommendedSize}</strong> é uma referência
+                    inicial para sua escolha.
                   </p>
                   <a
                     href="#vitrine"
@@ -937,7 +921,7 @@ export default function StreetwearEcommerceLightPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
             <span className="text-xs font-mono uppercase tracking-widest text-blue-600 font-bold block mb-2">
-              {"// CAMPANHA ARQUITETURA SOLAR 2026"}
+              {"// IDEIAS PARA COMBINAR"}
             </span>
             <h2 className="text-4xl sm:text-5xl font-black uppercase tracking-tighter text-zinc-950">
               Catálogo <span className="italic font-light text-blue-600">Interativo</span>
@@ -952,7 +936,7 @@ export default function StreetwearEcommerceLightPage() {
           <div className="lg:col-span-7 relative aspect-[16/11] rounded-[2.5rem] overflow-hidden border border-zinc-200 bg-zinc-100 shadow-lg">
             <Image
               src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1400&q=85"
-              alt="Lookbook Editorial"
+              alt="Sugestões de combinações da loja"
               fill
               unoptimized
               className="object-cover"
@@ -961,7 +945,7 @@ export default function StreetwearEcommerceLightPage() {
             {/* Hotspot 1 */}
             <button
               onClick={() => setActiveHotspot(0)}
-              aria-label="Ver peça 1 do lookbook"
+              aria-label="Ver peça 1 da combinação"
               aria-pressed={activeHotspot === 0}
               className={`absolute top-[38%] left-[45%] w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-lg ${
                 activeHotspot === 0
@@ -975,7 +959,7 @@ export default function StreetwearEcommerceLightPage() {
             {/* Hotspot 2 */}
             <button
               onClick={() => setActiveHotspot(1)}
-              aria-label="Ver peça 2 do lookbook"
+              aria-label="Ver peça 2 da combinação"
               aria-pressed={activeHotspot === 1}
               className={`absolute top-[62%] left-[58%] w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-lg ${
                 activeHotspot === 1
@@ -987,7 +971,7 @@ export default function StreetwearEcommerceLightPage() {
             </button>
 
             <div className="absolute bottom-4 left-4 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-[11px] font-mono font-bold text-zinc-900">
-               FOTOGRAFADO EM 120MM • LUZ NATURAL
+               COMBINE AS PEÇAS DO SEU JEITO
             </div>
           </div>
 
@@ -1047,16 +1031,14 @@ export default function StreetwearEcommerceLightPage() {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6 space-y-5">
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-mono font-bold uppercase tracking-widest">
-                <QrCode className="w-3.5 h-3.5" /> Private Atelier List
+                <QrCode className="w-3.5 h-3.5" /> Novidades e promoções
               </span>
               <h2 className="text-4xl sm:text-5xl font-black uppercase tracking-tighter text-zinc-950 leading-none">
-                Acesso Antecipado <br />
-                <span className="italic font-light text-blue-600">ao Drop #05.</span>
+                Receba novidades <br />
+                <span className="italic font-light text-blue-600">da próxima coleção.</span>
               </h2>
               <p className="text-zinc-600 text-sm sm:text-base leading-relaxed max-w-lg">
-                Nossas tiragens são limitadas a 150 peças por modelo. Inscreva seu contato para
-                receber o link privado 1 hora antes da abertura geral + **15% OFF na sua primeira
-                compra**.
+                Cadastre seu contato para receber novidades da coleção e cupons da loja. Na primeira compra, use o cupom de 15% de desconto.
               </p>
 
               <div className="pt-4 flex flex-wrap gap-6 text-xs font-mono text-zinc-500 font-semibold">
@@ -1079,10 +1061,10 @@ export default function StreetwearEcommerceLightPage() {
               >
                 <div className="flex items-center justify-between border-b border-zinc-200 pb-4 mb-2">
                   <span className="text-xs font-mono uppercase text-zinc-900 font-bold">
-                    CREDENCIAL DE MEMBRO // VORTEX
+                    NOVIDADES DA LOJA • VORTEX
                   </span>
                   <span className="text-[10px] font-mono font-bold text-blue-700 bg-blue-100 px-3 py-1 rounded-full">
-                    VOUCHER: ATELIER15
+                    CUPOM: BEMVINDO15
                   </span>
                 </div>
 
@@ -1093,7 +1075,7 @@ export default function StreetwearEcommerceLightPage() {
                       Inscrição Confirmada!
                     </h4>
                     <p className="text-xs text-zinc-600">
-                      Utilize o código <strong className="text-blue-600 font-mono">ATELIER15</strong>{" "}
+                      Utilize o código <strong className="text-blue-600 font-mono">BEMVINDO15</strong>{" "}
                       no seu pedido de hoje.
                     </p>
                   </div>
@@ -1114,7 +1096,7 @@ export default function StreetwearEcommerceLightPage() {
                     </div>
                     <div>
                       <label className="block text-[11px] font-mono uppercase text-zinc-600 font-bold mb-1.5">
-                        WhatsApp (Para receber a Senha do Drop)
+                        WhatsApp com DDD
                       </label>
                       <input
                         type="tel"
@@ -1129,7 +1111,7 @@ export default function StreetwearEcommerceLightPage() {
                       type="submit"
                       className="w-full py-4 rounded-full bg-blue-600 hover:bg-zinc-950 text-white font-black uppercase tracking-wider text-xs transition-all flex items-center justify-center gap-2 shadow-md"
                     >
-                      <span>Receber 15% de desconto e acesso antecipado</span>
+                      <span>Quero receber novidades e desconto</span>
                       <Send className="w-4 h-4" />
                     </button>
                   </>
@@ -1151,14 +1133,13 @@ export default function StreetwearEcommerceLightPage() {
                 VORTEX<span className="text-blue-600">{"//"}</span>ATELIER
               </span>
               <p className="text-xs text-zinc-600 mt-1 max-w-sm">
-                Estúdio independente de engenharia têxtil e vestuário pesado. Produzido eticamente
-                em lotes numerados no Brasil.
+                Roupas confortáveis e acessórios para o dia a dia. Escolha suas peças e conte com nosso atendimento para tirar dúvidas antes da compra.
               </p>
             </div>
 
             <div className="flex flex-wrap gap-6 text-xs font-mono font-bold uppercase text-zinc-600">
               <a href="#vitrine" className="hover:text-blue-600 transition-colors">
-                Coleção #04
+                Nossa coleção
               </a>
               <a href="#fit-finder" className="hover:text-blue-600 transition-colors">
                 Guia de Medidas
@@ -1520,7 +1501,7 @@ export default function StreetwearEcommerceLightPage() {
         )}
       </AnimatePresence>
       <StickyMobileCta
-        label="Ver peças do Drop #04"
+        label="Ver nossa coleção"
         href="#vitrine"
         hideWhenVisibleId="vitrine"
         className="bg-zinc-950 text-white"

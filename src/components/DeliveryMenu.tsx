@@ -4,6 +4,7 @@ import { priceInReais } from "@/lib/site-config";
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import Image from "next/image";
+import { TemplateField, TemplateTicker, templateStyles as visual } from "@/components/templates/TemplateVisuals";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ShoppingBag,
@@ -75,142 +76,142 @@ interface CartItem {
 }
 
 const ADDONS_LIST: Addon[] = [
-  { id: "add-bacon", name: "Duplo Bacon Defumado em Macieira", price: 8.0 },
-  { id: "add-cheddar", name: "Pool de Cheddar Inglês Derretido", price: 9.0 },
-  { id: "add-patty", name: "Smash Extra 100g (Blend Wagyu)", price: 14.0 },
-  { id: "add-truffle", name: "Maionese de Trufas Negras (Pote)", price: 6.0 },
+  { id: "add-bacon", name: "Bacon extra", price: 8.0 },
+  { id: "add-cheddar", name: "Cheddar extra", price: 9.0 },
+  { id: "add-patty", name: "Hambúrguer extra (100 g)", price: 14.0 },
+  { id: "add-truffle", name: "Maionese verde (potinho)", price: 6.0 },
 ];
 
 const burgerItems: MenuItem[] = [
   {
     id: "b-01",
-    name: "Wagyu Truffle Melt",
-    tagline: "A Obra-Prima da Casa",
+    name: "X-bacon da casa",
+    tagline: "Carne, queijo e bacon caprichado",
     description:
-      "Duplo blend Wagyu 180g selado na manteiga clarificada, queijo Gruyère derretido, cebola caramelizada no Bourbon e aioli de trufas negras no brioche artesanal.",
+      "Hambúrguer de carne bovina de 180 g, queijo cheddar, bacon crocante, alface, tomate e maionese da casa no pão de brioche.",
     price: 48.9,
     category: "artesanais",
     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80",
-    calories: "780 kcal",
+    calories: "180 g de carne",
     prepTime: "18 min",
-    badge: "Chef's Signature",
+    badge: "Favorito da casa",
     featured: true,
     allowDoneness: true,
   },
   {
     id: "b-02",
-    name: "Diablo Jalapeño Smash",
-    tagline: "Crosta Perfeita & Picância na Medida",
+    name: "Smash duplo com cheddar",
+    tagline: "Duas carnes e queijo derretido",
     description:
-      "Dois discos de 90g ultra-prensados com borda rendada crocante, American Cheese duplo, picles de jalapeño artesanal, bacon crispy e molho Kobra Fire.",
+      "Dois hambúrgueres de 90 g feitos na chapa, cheddar, cebola, picles e molho da casa no pão macio.",
     price: 38.9,
     category: "smash",
     image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=900&q=80",
-    calories: "640 kcal",
+    calories: "2 carnes de 90 g",
     prepTime: "12 min",
-    spicy: 2,
-    badge: "Top #1 Vendas",
+    spicy: 0,
+    badge: "Mais pedido",
     featured: true,
     allowDoneness: false,
   },
   {
     id: "b-03",
-    name: "Smoked Brisket Monster",
-    tagline: "12 Horas de Defumação",
+    name: "X-salada artesanal",
+    tagline: "O clássico com tudo no lugar",
     description:
-      "Hambúrguer alto de 180g coberto com 100g de peito bovino desfiado defumado em lenha frutífera, anéis de cebola empanados na cerveja e barbecue de café.",
+      "Hambúrguer de carne bovina de 180 g, queijo prato, alface, tomate e maionese verde no pão de brioche.",
     price: 52.9,
     category: "artesanais",
     image: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80",
-    calories: "890 kcal",
+    calories: "180 g de carne",
     prepTime: "20 min",
-    badge: "Edição Limitada",
+    badge: "Clássico da casa",
     allowDoneness: true,
   },
   {
     id: "b-04",
-    name: "Oklahoma Onion Ultra",
-    tagline: "Clássico Americano Executado à Perfeição",
+    name: "Smash com cebola",
+    tagline: "Simples e bem servido",
     description:
-      "Dois smash burgers prensados diretamente sobre uma cama generosa de cebolas fatiadas finíssimas, queijo prato derretido, picles da casa e mostarda Dijon.",
+      "Dois hambúrgueres de 90 g na chapa com cebola dourada, queijo prato e maionese da casa.",
     price: 34.9,
     category: "smash",
     image: "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=900&q=80",
-    calories: "590 kcal",
+    calories: "2 carnes de 90 g",
     prepTime: "10 min",
     allowDoneness: false,
   },
   {
     id: "s-01",
-    name: "Truffle Parmesan Fries",
-    tagline: "Crocância Tripla",
+    name: "Batata frita da casa",
+    tagline: "Para dividir ou acompanhar",
     description:
-      "Batatas corte rústico fritas em três tempos, finalizadas com azeite trufado, chuva de grana padano ralado na hora e alecrim fresco.",
+      "Porção de batata frita crocante com sal e molho da casa à parte. Serve até duas pessoas.",
     price: 24.9,
     category: "sides",
     image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80",
-    calories: "420 kcal",
+    calories: "Porção de 300 g",
     prepTime: "8 min",
     badge: "Imperdível",
   },
   {
     id: "s-02",
-    name: "Nashville Hot Tenders",
-    tagline: "Frango Crocante Picante",
+    name: "Iscas de frango empanadas",
+    tagline: "Crocantes por fora, macias por dentro",
     description:
-      "Tiras de peito de frango marinadas no buttermilk, empanadas na farinha Panko com especiarias de Nashville. Acompanha molho Ranch de ervas.",
+      "Tiras de frango temperadas e empanadas, servidas com maionese verde. Uma porção para compartilhar.",
     price: 29.9,
     category: "sides",
     image: "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=900&q=80",
-    calories: "480 kcal",
+    calories: "Porção de 300 g",
     prepTime: "12 min",
-    spicy: 2,
+    spicy: 0,
   },
   {
     id: "d-01",
-    name: "Crimson Berry Craft Soda",
-    tagline: "Fermentação Natural da Casa",
+    name: "Suco de laranja",
+    tagline: "Feito na hora",
     description:
-      "Soda artesanal feita com redução de frutas vermelhas silvestres, toque de gengibre fresco, limão siciliano e água intensamente gaseificada (350ml).",
+      "Suco de laranja espremida, servido gelado no copo de 400 ml. Peça com ou sem açúcar.",
     price: 16.9,
     category: "drinks",
     image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
-    calories: "110 kcal",
+    calories: "400 ml",
     prepTime: "3 min",
   },
   {
     id: "d-02",
-    name: "Salted Caramel Bourbon Shake",
-    tagline: "Ultra Cremoso",
+    name: "Milk-shake de chocolate",
+    tagline: "Cremoso e bem gelado",
     description:
-      "Sorvete artesanal de fava de baunilha batido com caramelo salgado puxado na manteiga, flor de sal e chantilly tostado no maçarico (400ml).",
+      "Sorvete batido com leite e calda de chocolate, servido no copo de 400 ml.",
     price: 26.9,
     category: "drinks",
     image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=900&q=80",
-    calories: "610 kcal",
+    calories: "400 ml",
     prepTime: "5 min",
-    badge: "Best Seller",
+    badge: "Mais pedido",
   },
   {
     id: "ds-01",
-    name: "Basque Burnt Cheesecake",
-    tagline: "Interior Cremoso & Topo Caramelizado",
+    name: "Torta de morango",
+    tagline: "Para fechar o pedido",
     description:
-      "Cheesecake ao estilo de San Sebastián, assado em altíssima temperatura para criar uma casca caramelizada única e centro fluído. Acompanha calda de frutas vermelhas.",
+      "Fatia de torta com base de biscoito, recheio cremoso e cobertura de morango.",
     price: 28.9,
     category: "desserts",
     image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=900&q=80",
-    calories: "490 kcal",
+    calories: "1 fatia",
     prepTime: "5 min",
   },
 ];
 
 const burgerCategories: { id: CategoryId; label: string; count: number }[] = [
-  { id: "todos", label: "Vitrine Completa", count: burgerItems.length },
-  { id: "artesanais", label: "Hambúrgueres Altos", count: 2 },
-  { id: "smash", label: "Ultra Smash", count: 2 },
-  { id: "sides", label: "Para Compartilhar", count: 2 },
-  { id: "drinks", label: "Sodas & Shakes", count: 2 },
+  { id: "todos", label: "Todo o cardápio", count: burgerItems.length },
+  { id: "artesanais", label: "Hambúrgueres artesanais", count: 2 },
+  { id: "smash", label: "Smash na chapa", count: 2 },
+  { id: "sides", label: "Porções", count: 2 },
+  { id: "drinks", label: "Bebidas", count: 2 },
   { id: "desserts", label: "Sobremesas", count: 1 },
 ];
 
@@ -243,15 +244,15 @@ const dogPhoto = "/images/dog-acai/dog.webp";
 const bowlPhoto = "/images/dog-acai/acai.webp";
 
 const dogItems: MenuItem[] = [
-  { id: "dog-classico", name: "Dog clássico", category: "dogs", price: 16.9, image: dogPhoto,
-    tagline: "O favorito da esquina", description: "Pão macio, salsicha ao molho de tomate, milho e batata palha.", calories: "1 unidade", prepTime: "10 min" },
-  { id: "dog-prensado", name: "Prensado com bacon", category: "dogs", price: 22.9, image: dogPhoto,
-    tagline: "Direto da chapa", description: "Cachorro-quente prensado com queijo derretido, bacon crocante e maionese verde.", calories: "1 unidade", prepTime: "12 min" },
+  { id: "dog-classico", name: "Cachorro-quente tradicional", category: "dogs", price: 16.9, image: dogPhoto,
+    tagline: "O favorito da esquina", description: "Pão macio, salsicha ao molho de tomate, milho, batata palha, maionese e ketchup.", calories: "1 unidade", prepTime: "10 min" },
+  { id: "dog-prensado", name: "Cachorro-quente com bacon", category: "dogs", price: 22.9, image: dogPhoto,
+    tagline: "Direto da chapa", description: "Cachorro-quente prensado na chapa com salsicha, queijo derretido, bacon crocante e maionese verde.", calories: "1 unidade", prepTime: "12 min" },
   { id: "acai-banana", name: "Açaí com banana", category: "acai", price: 17.9, image: bowlPhoto,
     tagline: "Açaí no copo", description: "Açaí gelado em camadas com banana fatiada e granola.", calories: "300 ml", prepTime: "5 min" },
   { id: "acai-morango", name: "Açaí com morango", category: "acai", price: 24.9, image: bowlPhoto,
     tagline: "Caprichado na fruta", description: "Açaí com morangos, leite em pó e um fio de leite condensado.", calories: "500 ml", prepTime: "5 min" },
-  { id: "fritas", name: "Fritas da casa", category: "sides", price: 10.9, image: burgerItems[4].image,
+  { id: "fritas", name: "Porção de batata frita", category: "sides", price: 10.9, image: burgerItems[4].image,
     tagline: "Para acompanhar", description: "Batatas fritas com sal e orégano.", calories: "150 g", prepTime: "8 min" },
 ];
 
@@ -272,7 +273,7 @@ const savoryExtras: Addon[] = [
 export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean }) {
   const menuItems = dogAcai ? dogItems : burgerItems;
   const categories = dogAcai ? dogCategories : burgerCategories;
-  const boxName = dogAcai ? "Combo da Esquina" : "Kobra Box";
+  const boxName = dogAcai ? "Combo da Esquina" : "Combo da Casa";
   const restaurant = dogAcai ? "Dog & Açaí" : "Kobra Burger";
   const [orderPreview, setOrderPreview] = useState("");
   const phone = dogAcai ? process.env.NEXT_PUBLIC_DOG_ACAI_WHATSAPP : WHATSAPP_NUMBER;
@@ -284,7 +285,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
   const [selectedProduct, setSelectedProduct] = useState<MenuItem | null>(null);
 
   const [modalQty, setModalQty] = useState(1);
-  const [modalDoneness, setModalDoneness] = useState("Ao Ponto do Chef (Rosado)");
+  const [modalDoneness, setModalDoneness] = useState("Ao ponto");
   const [modalAddons, setModalAddons] = useState<Addon[]>([]);
   const [modalNotes, setModalNotes] = useState("");
 
@@ -330,7 +331,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
   const openProductModal = (item: MenuItem) => {
     setSelectedProduct(item);
     setModalQty(1);
-    setModalDoneness("Ao Ponto do Chef (Rosado)");
+    setModalDoneness("Ao ponto");
     setModalAddons([]);
     setModalNotes("");
   };
@@ -409,7 +410,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
     const comboVirtualItem: MenuItem = {
       id: `combo-${Date.now()}`,
       name: `${boxName}: ${comboBurger.name}`,
-      tagline: "Combo Exclusivo (-18% OFF)",
+      tagline: "Combo com 18% de desconto",
       description: `Inclui: 1x ${comboBurger.name} + 1x ${comboSide.name} + 1x ${comboDrink.name}`,
       price: discountedPrice,
       category: "todos",
@@ -486,7 +487,11 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
   };
   return (
-    <main id="conteudo" className="demo-dark min-h-screen bg-[#080606] text-zinc-100 selection:bg-orange-500 selection:text-white font-sans antialiased pb-20 sm:pb-0">
+    <main
+      id="conteudo"
+      data-template={dogAcai ? "dog-e-acai" : "cardapio"}
+      className={`${visual.root} demo-dark template-visual-system min-h-screen bg-[#080606] text-zinc-100 selection:bg-orange-500 selection:text-white font-sans antialiased pb-20 sm:pb-0`}
+    >
       <ScrollProgress />
       {!dogAcai && <FloatingWhatsApp />}
       <div aria-live="polite" className="pointer-events-none fixed inset-x-0 top-24 z-[70] flex justify-center px-4">
@@ -516,7 +521,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
           1. HEADER TELEMETRY (FIRE & EMBER THEME)
       ========================================== */}
       <header className="fixed top-0 left-0 right-0 z-40 px-4 sm:px-6 pt-4 pointer-events-none">
-        <div className="max-w-7xl mx-auto bg-[#0E0A09]/85 backdrop-blur-xl border border-zinc-800/90 rounded-2xl px-4 sm:px-6 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.6)] pointer-events-auto flex items-center justify-between gap-4">
+        <div className={`${visual.navPanel} max-w-7xl mx-auto bg-[#0E0A09]/85 backdrop-blur-xl border border-zinc-800/90 rounded-2xl px-4 sm:px-6 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.6)] pointer-events-auto flex items-center justify-between gap-4`}>
           <div className="flex items-center gap-2 sm:gap-4">
             <a href="#" className="flex items-center gap-3 group">
               <div className="hidden sm:flex w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 items-center justify-center text-white shadow-[0_0_20px_rgba(234,88,12,0.4)]">
@@ -527,7 +532,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                   {dogAcai ? <>DOG<span className="text-fuchsia-400"> &amp; AÇAÍ</span></> : <>KOBRA<span className="text-orange-500">.FIRE</span></>}
                 </span>
                 <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">
-                  {dogAcai ? "Lanches da esquina" : "Smash & Smokehouse"}
+                  {dogAcai ? "Lanches da esquina" : "Hambúrgueres e porções"}
                 </span>
               </div>
             </a>
@@ -571,7 +576,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
               href={dogAcai ? "#cardapio" : "#app-vendas"}
               className="hidden md:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-orange-500/15 border border-orange-500/30 text-orange-400 hover:bg-orange-500 hover:text-zinc-950 font-black text-xs uppercase tracking-wider transition-all"
             >
-              <Flame className="w-4 h-4" /> {dogAcai ? "Ver cardápio" : "Abrir App KDS"}
+              <Flame className="w-4 h-4" /> {dogAcai ? "Ver cardápio" : "Painel de pedidos"}
             </a>
 
             <button data-tour="bag"
@@ -606,32 +611,33 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
       {/* ==========================================
           2. HERO SECTION (CRIMSON & ORANGE EMBER)
       ========================================== */}
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden border-b border-zinc-900">
+      <section className={`${visual.hero} relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden border-b border-zinc-900`}>
+        <TemplateField variant="rays" />
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-orange-600/15 rounded-full blur-[150px] pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-red-600/15 rounded-full blur-[130px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid min-w-0 grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <div className="min-w-0 lg:col-span-7">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-400 text-xs font-mono uppercase tracking-widest mb-6">
-                <Sparkles className="w-3.5 h-3.5" /> {dogAcai ? "Cachorros-quentes e açaí no copo" : "Eleito Melhor Smash na Brasa 2026"}
+              <div className={`${visual.heroBadge} inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-400 text-xs font-mono uppercase tracking-widest mb-6`}>
+                <Sparkles className="w-3.5 h-3.5" /> {dogAcai ? "Cachorros-quentes e açaí no copo" : "Hambúrguer na chapa, feito na hora"}
               </div>
 
-              <h1 className="mb-6 text-3xl font-black uppercase leading-[0.93] tracking-tighter text-white sm:text-6xl xl:text-7xl">
+              <h1 className={`${visual.heroTitle} mb-6 text-3xl font-black uppercase leading-[0.93] tracking-tighter text-white sm:text-6xl xl:text-7xl`}>
                 {dogAcai ? <>Dog na chapa.<br /><span className="text-fuchsia-400">Açaí bem gelado.</span></> : <>Crosta <span className="text-orange-500 italic">Caramelizada.</span> <br />
                 Fogo & <span className="text-red-500">Suculência.</span></>}
               </h1>
 
-              <p className="text-zinc-400 text-base sm:text-lg max-w-xl leading-relaxed mb-8 border-l-2 border-orange-500/60 pl-4">
-                {dogAcai ? "Escolha seu dog, capriche nos adicionais e complete o pedido com açaí e fruta fresca." : "Moemos nossos cortes de Wagyu e Angus diariamente. Pão brioche fermentado por 24h, selado na manteiga clarificada e conectado direto ao nosso App KDS de vendas e reservas."}
+              <p className={`${visual.heroDescription} text-zinc-400 text-base sm:text-lg max-w-xl leading-relaxed mb-8 border-l-2 border-orange-500/60 pl-4`}>
+                {dogAcai ? "Escolha seu dog, capriche nos adicionais e complete o pedido com açaí e fruta fresca." : "Carne bem temperada, pão macio e ingredientes frescos. Escolha seu lanche, acrescente uma porção e faça o pedido pelo WhatsApp."}
               </p>
 
-              <div className="flex flex-wrap items-center gap-4">
+              <div className={`${visual.heroActions} flex flex-wrap items-center gap-4`}>
                 <a
                   href={dogAcai ? "#cardapio" : "#app-vendas"}
                   className="px-8 py-4 rounded-2xl bg-gradient-to-r from-orange-600 via-red-600 to-amber-500 hover:from-orange-500 hover:to-red-500 text-white font-black uppercase tracking-wider text-xs sm:text-sm shadow-[0_0_40px_rgba(234,88,12,0.35)] transition-all flex items-center gap-3"
                 >
-                  <span>{dogAcai ? "Montar meu pedido" : "Abrir App de Vendas & KDS"}</span>
+                  <span>{dogAcai ? "Montar meu pedido" : "Ver painel de pedidos"}</span>
                   <ChevronRight className="w-4 h-4" />
                 </a>
 
@@ -640,18 +646,18 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                   className="px-6 py-4 rounded-2xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-200 font-bold text-xs sm:text-sm transition-all flex items-center gap-2"
                 >
                   <Zap className="w-4 h-4 text-orange-400" />
-                  Montar Combo (-18% OFF)
+                  Montar combo com desconto
                 </a>
               </div>
 
               <div className="mt-12 pt-8 border-t border-zinc-900 grid grid-cols-3 gap-4 max-w-lg">
                 <div>
                   <span className="text-xs font-mono text-orange-400 block">{"// EMBALAGEM"}</span>
-                  <span className="text-sm sm:text-base font-bold text-white">Térmica Anti-Vapor</span>
+                  <span className="text-sm sm:text-base font-bold text-white">Pedido bem embalado</span>
                 </div>
                 <div>
-                  <span className="text-xs font-mono text-orange-400 block">{dogAcai ? "// AÇAÍ" : "// BLEND"}</span>
-                  <span className="text-sm sm:text-base font-bold text-white">{dogAcai ? "300 ou 500 ml" : "100% Wagyu & Angus"}</span>
+                  <span className="text-xs font-mono text-orange-400 block">{dogAcai ? "// AÇAÍ" : "// CARNE"}</span>
+                  <span className="text-sm sm:text-base font-bold text-white">{dogAcai ? "300 ou 500 ml" : "100% bovina"}</span>
                 </div>
                 <div>
                   <span className="text-xs font-mono text-orange-400 block">{"// FRETE GRÁTIS"}</span>
@@ -663,7 +669,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
             </div>
 
             <div className="lg:col-span-5">
-              <div className="relative rounded-[2.5rem] overflow-hidden border border-zinc-800 bg-zinc-900 aspect-[4/4.2] group shadow-2xl">
+              <div className={`${visual.heroArt} relative rounded-[2.5rem] overflow-hidden border border-zinc-800 bg-zinc-900 aspect-[4/4.2] group shadow-2xl`}>
                 <Image
                   src={dogAcai ? "/images/dog-acai/cardapio.webp" : menuItems[0].image}
                   alt={dogAcai ? "Cachorro-quente na chapa e açaí com frutas" : menuItems[0].name}
@@ -673,7 +679,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#080606] via-[#080606]/30 to-transparent" />
                 <div className="absolute top-5 left-5 px-3 py-1.5 rounded-xl bg-zinc-950/85 backdrop-blur-md border border-orange-500/30 text-[11px] font-mono text-orange-400 flex items-center gap-1.5">
-                  <Award className="w-3.5 h-3.5" /> PRATO ASSINATURA
+                  <Award className="w-3.5 h-3.5" /> FAVORITO DA CASA
                 </div>
                 <div className="absolute bottom-5 left-5 right-5 p-5 rounded-2xl bg-zinc-950/90 backdrop-blur-xl border border-zinc-800/90 space-y-2.5">
                   <div className="flex items-start justify-between gap-4">
@@ -700,7 +706,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                       href={dogAcai ? "#cardapio" : "#app-vendas"}
                       className="py-3 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-orange-500/30 text-orange-400 font-bold text-[11px] uppercase tracking-wider transition-all flex items-center justify-center gap-1.5"
                     >
-                      <Clock className="w-3.5 h-3.5" /> {dogAcai ? "Ver vitrine" : "App & Mesas"}
+                      <Clock className="w-3.5 h-3.5" /> {dogAcai ? "Ver vitrine" : "Pedidos e mesas"}
                     </a>
                   </div>
                 </div>
@@ -713,16 +719,17 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
       {/* ==========================================
           3. COMBO BUILDER (ORANGE & RED ACCENTS)
       ========================================== */}
+      <TemplateTicker items={dogAcai ? ["Dog na chapa", "Açaí bem gelado", "Do seu jeito", "Delivery & retirada"] : ["Fogo & sabor", "Smash na brasa", "Receita da casa", "Feito na hora"]} />
       <section id="combo-lab" className="py-16 bg-zinc-950/70 border-b border-zinc-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/90 to-zinc-950 border border-orange-500/25 p-6 sm:p-10 relative overflow-hidden shadow-[0_0_60px_rgba(234,88,12,0.07)]">
+          <div className={`${visual.panel} rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/90 to-zinc-950 border border-orange-500/25 p-6 sm:p-10 relative overflow-hidden shadow-[0_0_60px_rgba(234,88,12,0.07)]`}>
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8 pb-6 border-b border-zinc-800">
               <div>
                 <span className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-widest text-orange-400 mb-2">
-                  <Zap className="w-3.5 h-3.5" /> Lab de Combos • Economia Inteligente
+                  <Zap className="w-3.5 h-3.5" /> {dogAcai ? "Cachorro-quente + porção + açaí" : "Lanche + porção + bebida"}
                 </span>
-                <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white">
-                  Monte {dogAcai ? "seu" : "sua"} <span className="text-orange-500 italic">{boxName}</span> com 18% OFF
+                <h2 className={`${visual.sectionHeading} text-2xl sm:text-4xl font-black uppercase tracking-tight text-white`}>
+                  Monte seu <span className="text-orange-500 italic">{boxName}</span> com 18% de desconto
                 </h2>
               </div>
               <div className="flex items-center gap-4 bg-zinc-950/90 border border-zinc-800 p-4 rounded-2xl">
@@ -738,14 +745,14 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                   onClick={handleAddComboToCart}
                   className="px-5 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 text-white font-black uppercase tracking-wider text-xs transition-all shadow-[0_0_20px_rgba(234,88,12,0.35)] flex items-center gap-2"
                 >
-                  <Plus className="w-4 h-4" /> Adicionar Box
+                  <Plus className="w-4 h-4" /> Adicionar combo
                 </button>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 {
-                  step: dogAcai ? "01. Cachorro-quente" : "01. Burger Principal",
+                  step: dogAcai ? "01. Cachorro-quente" : "01. Hambúrguer",
                   setter: setComboBurger,
                   val: comboBurger,
                   items: menuItems.filter(
@@ -759,7 +766,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                   items: menuItems.filter((i) => i.category === "sides"),
                 },
                 {
-                  step: dogAcai ? "03. Açaí" : "03. Bebida Artesanal",
+                  step: dogAcai ? "03. Açaí" : "03. Bebida",
                   setter: setComboDrink,
                   val: comboDrink,
                   items: menuItems.filter((i) => i.category === (dogAcai ? "acai" : "drinks")),
@@ -851,7 +858,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
         </p>
 
         {filteredItems.length === 0 && (
-          <div className="rounded-3xl border border-dashed border-zinc-800 bg-zinc-900/30 py-16 text-center">
+          <div className={`${visual.panel} rounded-3xl border border-dashed border-zinc-800 bg-zinc-900/30 py-16 text-center`}>
             <Search className="mx-auto mb-4 h-8 w-8 text-orange-500" />
             <p className="mb-1 text-lg font-black uppercase text-white">Nenhum item encontrado</p>
             <p className="mb-5 text-sm text-zinc-400">Nenhum item corresponde à sua busca.</p>
@@ -886,7 +893,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               whileTap={{ scale: 0.98 }}
-              className="group cursor-pointer rounded-3xl bg-zinc-900/40 border border-zinc-800/80 hover:border-orange-500/50 hover:-translate-y-1 overflow-hidden transition-all flex flex-col justify-between hover:shadow-[0_10px_40px_rgba(234,88,12,0.15)]"
+              className={`${visual.editorialCard} group cursor-pointer rounded-3xl bg-zinc-900/40 border border-zinc-800/80 hover:border-orange-500/50 hover:-translate-y-1 overflow-hidden transition-all flex flex-col justify-between hover:shadow-[0_10px_40px_rgba(234,88,12,0.15)]`}
             >
               <div>
                 <div className="relative h-56 w-full overflow-hidden bg-zinc-950">
@@ -957,14 +964,13 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-orange-400 text-xs font-mono uppercase tracking-widest mb-6">
-              <Mail className="w-3.5 h-3.5" /> Clube da Brasa VIP
+              <Mail className="w-3.5 h-3.5" /> Promoções da casa
             </span>
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tighter uppercase text-white mb-4">
-              Entre para a <span className="text-orange-500 italic">Fornalha Secreta.</span>
+            <h2 className={`${visual.sectionHeading} text-3xl sm:text-5xl font-black tracking-tighter uppercase text-white mb-4`}>
+              Receba as <span className="text-orange-500 italic">ofertas da semana.</span>
             </h2>
             <p className="text-zinc-400 text-sm sm:text-base leading-relaxed mb-8 max-w-md">
-              Membros VIP recebem acesso a lotes limitados de Wagyu, molhos defumados não listados no
-              cardápio e cupons de entrega grátis nas sextas à noite.
+              Cadastre seu e-mail para receber os combos da semana, novidades do cardápio e cupons de entrega.
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4 text-sm text-zinc-400 border-t border-zinc-800/80 pt-6">
               <div className="flex items-center gap-2">
@@ -977,10 +983,10 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
             </div>
           </div>
 
-          <div className="bg-zinc-900/60 p-8 rounded-3xl border border-zinc-800 shadow-2xl backdrop-blur-xl">
+          <div className={`${visual.panel} bg-zinc-900/60 p-8 rounded-3xl border border-zinc-800 shadow-2xl backdrop-blur-xl`}>
             <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
               <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-6">
-                Credencial Secret Club
+                Receba nossas ofertas
               </h3>
               <div>
                 <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-500 mb-1.5">
@@ -1006,7 +1012,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                 type="submit"
                 className="w-full mt-2 py-3.5 rounded-xl bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 text-white font-black uppercase tracking-wider text-xs flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(234,88,12,0.3)]"
               >
-                <span>Desbloquear Acesso VIP</span> <Send className="w-4 h-4" />
+                <span>Quero receber ofertas</span> <Send className="w-4 h-4" />
               </button>
             </form>
           </div>
@@ -1036,7 +1042,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                 Combos
               </a>
               <a href={dogAcai ? "#cardapio" : "#app-vendas"} className="hover:text-orange-400 transition-colors">
-                {dogAcai ? "Fazer pedido" : "App de Vendas & KDS"}
+                {dogAcai ? "Fazer pedido" : "Painel de pedidos"}
               </a>
             </nav>
           </div>
@@ -1099,7 +1105,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                       1. Ponto da Carne
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                      {["Mal Passado", "Ao Ponto do Chef (Rosado)", "Bem Passado"].map((point) => (
+                      {["Mal Passado", "Ao ponto", "Bem Passado"].map((point) => (
                         <button
                           key={point}
                           onClick={() => setModalDoneness(point)}
@@ -1116,7 +1122,7 @@ export default function DeliveryMenu({ dogAcai = false }: { dogAcai?: boolean })
                 )}
                 <div className="space-y-3">
                   <label className="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold block">
-                    Turbine sua Experiência (Opcional)
+                    Adicionais (opcional)
                   </label>
                   <div className="space-y-2">
                     {(dogAcai ? (selectedProduct.category === "acai" ? sweetExtras : savoryExtras) : ADDONS_LIST).map((addon) => {

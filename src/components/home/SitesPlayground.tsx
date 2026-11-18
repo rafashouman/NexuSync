@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { ProjectBackdrop } from "./ProjectBackdrop";
+import { projectBackgrounds } from "./project-backgrounds";
 import { ArrowUpRight, MousePointer2, Check } from "lucide-react";
 import s from "./SitesExperience.module.css";
 
@@ -19,6 +21,7 @@ export function SitesPlayground() {
       {formats.map((item, i) => <button key={item.label} aria-pressed={selected === i} onClick={() => { setSelected(i); setPreviewContact(false); }}>{item.label}</button>)}
     </div>
     <div className={s.browser} data-format={selected}>
+      <ProjectBackdrop src={projectBackgrounds.sites[selected]} />
       <div className={s.browserTop}><span aria-hidden="true">● ● ●</span><span>sua-marca.com.br</span><ArrowUpRight size={12} /></div>
       <div className={s.previewNav}><b>sua marca<span>®</span></b><small>UMA NOVA PRESENÇA DIGITAL</small></div>
       <div className={s.previewBody}>

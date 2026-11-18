@@ -3,14 +3,18 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { ChaosHeader, ChaosFooter } from "./ChaosChrome";
 import { ReactiveField } from "./ReactiveField";
+import { ProjectBackdrop } from "./ProjectBackdrop";
+import { projectBackgrounds } from "./project-backgrounds";
 import { HomePlans } from "./HomePlans";
 import { heroScreenshots, type HeroDeviceMode } from "./hero-templates";
 import { Component, useEffect, useRef, useState, type ReactNode } from "react";
 import {
   ArrowUpRight,
   ArrowDown,
+  ArrowUp,
   Plus,
   Pause,
   Play,
@@ -139,8 +143,12 @@ function Signal({ className = "" }: { className?: string }) {
   );
 }
 function ServiceArt({ kind }: { kind: string }) {
+  const background = kind === "web" ? projectBackgrounds.sites[2]
+    : kind === "app" || kind === "growth" ? projectBackgrounds.apps[2]
+    : projectBackgrounds.design[1];
   return (
     <div className={`${s.serviceArt} ${s[kind]}`} aria-hidden="true">
+      <ProjectBackdrop src={background} />
       {kind === "web" && (
         <div className={s.browserArt}>
           <div className={s.browserBar}>
@@ -221,6 +229,7 @@ function ServiceArt({ kind }: { kind: string }) {
 }
 
 export default function ControlledChaos() {
+  const router = useRouter();
   const [paused, setPaused] = useState(false);
   const [render3d, setRender3d] = useState(false);
   const [sceneReady, setSceneReady] = useState(false);
@@ -229,12 +238,15 @@ export default function ControlledChaos() {
   const [desktop, setDesktop] = useState(false);
   const [devicesMaximized, setDevicesMaximized] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  const [templateHintPosition, setTemplateHintPosition] = useState({ x: 0, y: 0 });
   const deviceMode = desktop ? device : "phone";
   const fallbackScreenshots = heroScreenshots(deviceMode).slice(
     0,
     deviceMode === "phone" ? 6 : 4,
   );
   const hero = useRef<HTMLDivElement>(null);
+  const heroVisual = useRef<HTMLDivElement>(null);
   const heroPointer = useRef({
     x: 0,
     y: 0,
@@ -248,13 +260,17 @@ export default function ControlledChaos() {
     active: false,
     pointerId: -1,
     lastX: 0,
+    startY: 0,
     lastTime: 0,
     velocity: 0,
   });
   useEffect(() => {
     if (!devicesMaximized) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setDevicesMaximized(false);
+      if (event.key === "Escape") {
+        setDevicesMaximized(false);
+        setSelectedTemplate(null);
+      }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
@@ -294,6 +310,7 @@ export default function ControlledChaos() {
           src="/images/hero-backdrop.webp"
           alt=""
           fill
+          loading="eager"
           sizes="100vw"
           className={s.heroBackdrop}
         />
@@ -363,17 +380,19 @@ export default function ControlledChaos() {
           </div>
           <div
             className={s.heroVisual}
+            ref={heroVisual}
             id="hero-devices"
             data-device={deviceMode}
             data-maximized={devicesMaximized}
             data-dragging={isDragging}
+            data-template-selected={selectedTemplate ? "true" : undefined}
             onPointerDown={(event) => {
               if (paused || (event.target as HTMLElement).closest("button")) return;
-              event.currentTarget.setPointerCapture(event.pointerId);
               dragState.current = {
                 active: true,
                 pointerId: event.pointerId,
                 lastX: event.clientX,
+                startY: event.clientY,
                 lastTime: performance.now(),
                 velocity: 0,
               };
@@ -398,10 +417,10 @@ export default function ControlledChaos() {
             }}
             onPointerUp={(event) => {
               if (!dragState.current.active || dragState.current.pointerId !== event.pointerId) return;
-              if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-                event.currentTarget.releasePointerCapture(event.pointerId);
-              }
               const fling = dragState.current.velocity;
+              if (selectedTemplate && event.clientY - dragState.current.startY < -55) {
+                router.push(`/templates/${selectedTemplate}`);
+              }
               if (Math.abs(fling) > 0.08) {
                 heroPointer.current.throwVelocity = Math.max(-7.5, Math.min(7.5, fling * 1.35));
                 heroPointer.current.throwRevision += 1;
@@ -444,7 +463,7 @@ export default function ControlledChaos() {
               })}
             </div>
             {render3d && (
-              <div className={s.canvas} data-ready={sceneReady} aria-hidden="true">
+              <div className={s.canvas} data-ready={sceneReady}>
                 <SceneBoundary onReady={setSceneReady}>
                   <Scene
                     active={inView && !paused}
@@ -452,8 +471,34 @@ export default function ControlledChaos() {
                     maximized={devicesMaximized}
                     onReady={setSceneReady}
                     input={heroPointer}
+                    selectedTemplate={selectedTemplate}
+                    onSelectTemplate={(slug, point) => {
+                      setSelectedTemplate(slug);
+                      if (slug && point && heroVisual.current) {
+                        const bounds = heroVisual.current.getBoundingClientRect();
+                        setTemplateHintPosition({
+                          x: Math.max(140, Math.min(bounds.width - 140, point.x - bounds.left)),
+                          y: Math.max(54, point.y - bounds.top - 18),
+                        });
+                      }
+                    }}
                   />
                 </SceneBoundary>
+              </div>
+            )}
+            {selectedTemplate && (
+              <div
+                className={s.templateLaunchHint}
+                style={{ left: templateHintPosition.x, top: templateHintPosition.y }}
+              >
+                <Link href={`/templates/${selectedTemplate}`} aria-label={`Abrir template ${selectedTemplate}`}>
+                  <ArrowUp size={18} />
+                  Veja o template<br />
+                  Clique e arraste para cima
+                </Link>
+                <button type="button" aria-label="Fechar template ampliado" onClick={() => setSelectedTemplate(null)}>
+                  ×
+                </button>
               </div>
             )}
             <span className={s.visualTag} aria-hidden="true">
@@ -507,6 +552,7 @@ export default function ControlledChaos() {
                 aria-pressed={device === "phone"}
                 aria-controls="hero-devices"
                 onClick={() => {
+                  setSelectedTemplate(null);
                   if (device !== "phone") {
                     setSceneReady(false);
                     setDevice("phone");
@@ -521,6 +567,7 @@ export default function ControlledChaos() {
                 aria-pressed={device === "notebook"}
                 aria-controls="hero-devices"
                 onClick={() => {
+                  setSelectedTemplate(null);
                   if (device !== "notebook") {
                     setSceneReady(false);
                     setDevice("notebook");

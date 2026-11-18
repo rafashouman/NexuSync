@@ -1,0 +1,115 @@
+.page {
+  --ink: #312116;
+  --rust: #9c381e;
+  --cream: #f5eedf;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+
+.page * { box-sizing: border-box; }
+.page a { color: inherit; text-decoration: none; }
+.page a:focus-visible { outline: 3px solid #d27b38; outline-offset: 4px; }
+.page h1, .page h2, .page h3, .page p { margin: 0; }
+.header {
+  min-height: 66px;
+  padding: 14px max(24px, calc((100% - 1120px) / 2));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: #2a1b13;
+  color: #fff3da;
+}
+.brand { display: inline-flex; align-items: center; gap: 8px; font: 800 24px/1 Georgia, serif; }
+.brand svg { color: #e6a650; }
+.headerContact { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; }
+.headerContact:hover { color: #f1bd76; }
+.hero {
+  color: #fff5df;
+  background-color: #402419;
+  background-image: repeating-linear-gradient(92deg, transparent 0, transparent 79px, #130b0840 80px, transparent 82px), linear-gradient(110deg, #281710, #57301c 58%, #2f1a13);
+}
+.heroInner {
+  max-width: 1120px;
+  min-height: 300px;
+  margin: 0 auto;
+  padding: 38px 24px;
+  display: grid;
+  grid-template-columns: minmax(230px, .75fr) 1fr;
+  align-items: center;
+  gap: clamp(35px, 6vw, 100px);
+}
+.mark {
+  width: min(100%, 300px);
+  padding: 24px 18px 22px;
+  border: 2px solid #e8ba79;
+  outline: 1px solid #e8ba7970;
+  outline-offset: -8px;
+  text-align: center;
+  color: #f4d49d;
+  transform: rotate(-2deg);
+}
+.markTop, .markBottom { display: block; font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.markName { display: block; margin: 4px 0; font: 900 clamp(42px, 5vw, 62px)/1 Georgia, serif; text-transform: uppercase; letter-spacing: -.05em; }
+.markRule { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 8px auto; }
+.markRule span { width: 48px; height: 1px; background: currentColor; }
+.heroCopy h1 { margin: 10px 0 15px; color: #fff5df; font: 700 clamp(36px, 4vw, 55px)/1.08 Georgia, serif; letter-spacing: -.035em; }
+.heroCopy h1 em { color: #eab876; font-style: normal; }
+.heroCopy > p:not(.eyebrow) { max-width: 470px; color: #ead9c3; font-size: 15px; line-height: 1.65; }
+.eyebrow { color: var(--rust); font-size: 11px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.heroCopy .eyebrow, .contact .eyebrow { color: #edb16e; }
+.heroLink { display: inline-flex; align-items: center; gap: 16px; margin-top: 21px; padding-bottom: 5px; border-bottom: 1px solid #d49b58; font-size: 13px; font-weight: 700; }
+.heroLink:hover { color: #f3bb76; }
+.heroBottom { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 15px; padding: 11px 20px; background: #20120d80; color: #e5c39c; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.heroBottom span:nth-child(even) { color: #d78a42; }
+.menu { max-width: 1120px; margin: 0 auto; padding: 62px 24px 70px; }
+.menuHeader { display: flex; justify-content: space-between; align-items: end; gap: 24px; padding-bottom: 26px; border-bottom: 2px solid #453020; }
+.menuHeader h2, .contact h2 { margin-top: 8px; font: 700 clamp(34px, 4vw, 48px)/1.05 Georgia, serif; letter-spacing: -.04em; }
+.menuHeader > p { max-width: 270px; color: #725e4b; font-size: 14px; line-height: 1.6; }
+.menuGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; padding-top: 30px; }
+.sectionHeader { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+.sectionNumber { color: #a55837; font-size: 11px; font-weight: 800; }
+.sectionHeader h3 { font: 700 25px/1.2 Georgia, serif; letter-spacing: -.02em; }
+.sectionHeader p { margin-top: 6px; color: #806b56; font-size: 12px; font-weight: 700; }
+.foodPhoto { position: relative; aspect-ratio: 2 / 1; margin: 0 0 8px; overflow: hidden; background: #d8cbb8; }
+.foodPhoto img { object-fit: cover; }
+.foodPhoto figcaption { position: absolute; right: 0; bottom: 0; padding: 5px 8px; background: #2a1b13d9; color: #fff3da; font-size: 10px; }
+.products { list-style: none; padding: 0; margin: 0; }
+.product { display: flex; align-items: center; gap: 16px; padding: 15px 0; border-bottom: 1px solid #d8cbb8; }
+.productPhoto { position: relative; flex: 0 0 104px; aspect-ratio: 1; background: #e8dac7; overflow: hidden; }
+.productPhoto img { object-fit: contain; }
+.productDetails { flex: 1; min-width: 0; }
+.productName { display: flex; align-items: baseline; gap: 8px; font-size: 15px; font-weight: 700; }
+.productName strong { white-space: nowrap; color: var(--rust); }
+.dots { flex: 1; min-width: 12px; border-bottom: 1px dotted #bca790; }
+.productDetails > a { display: inline-flex; align-items: center; gap: 3px; margin-top: 8px; color: #805039; font-size: 12px; font-weight: 700; }
+.productDetails > a:hover { color: var(--rust); text-decoration: underline; }
+.contact { display: flex; justify-content: space-between; align-items: center; gap: 30px; padding: 40px max(24px, calc((100% - 1072px) / 2)); background: #78351e; color: #fff3df; }
+.contact h2 { color: #fff3df; }
+.contact > div > p:last-child { margin-top: 9px; color: #f0d7c3; font-size: 14px; }
+.whatsapp { display: inline-flex; align-items: center; gap: 13px; padding: 15px 20px; background: #f5eedf; color: #312116 !important; font-size: 16px; font-weight: 800; }
+.whatsapp > svg:first-child { color: #2f6d43; }
+.whatsapp span { display: grid; gap: 3px; }
+.whatsapp small { color: #745a49; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.whatsapp:hover { background: #ffdfad; }
+.footer { display: flex; justify-content: space-between; gap: 15px; padding: 18px max(24px, calc((100% - 1072px) / 2)); background: #2a1b13; color: #ddc4a8; font-size: 11px; }
+
+@media (max-width: 680px) {
+  .header { min-height: 60px; padding-inline: 20px; }
+  .heroInner { grid-template-columns: 1fr; gap: 28px; padding: 36px 20px 34px; }
+  .mark { width: 230px; padding: 20px 14px 18px; }
+  .markName { font-size: 44px; }
+  .markTop, .markBottom { font-size: 9px; }
+  .heroCopy h1 { font-size: 37px; }
+  .heroBottom { gap: 10px; font-size: 9px; }
+  .menu { padding: 48px 20px 55px; }
+  .menuHeader { align-items: start; flex-direction: column; gap: 12px; }
+  .menuGrid { grid-template-columns: 1fr; gap: 36px; }
+  .product { gap: 12px; }
+  .productPhoto { flex-basis: 88px; }
+  .contact { align-items: start; flex-direction: column; padding: 34px 20px; }
+  .whatsapp { max-width: 100%; font-size: 15px; }
+  .footer { padding-inline: 20px; flex-wrap: wrap; }
+}

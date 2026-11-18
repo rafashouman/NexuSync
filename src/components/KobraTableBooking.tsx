@@ -173,7 +173,7 @@ export interface KobraCartItem {
 export interface KobraOrderRecord {
   id: string;
   customer: string;
-  mode: "DELIVERY" | "PICKUP" | "MESA VIP";
+  mode: "DELIVERY" | "PICKUP" | "MESA";
   itemsSummary: string;
   total: number;
   status: "PREPARANDO" | "NA BRASA" | "PRONTO" | "ENTREGUE";
@@ -183,130 +183,130 @@ export interface KobraOrderRecord {
 }
 
 export const KOBRA_ADDONS: KobraAddon[] = [
-  { id: "add-bacon", name: "Duplo Bacon Defumado em Macieira", price: 8.0 },
-  { id: "add-cheddar", name: "Pool de Cheddar Inglês Derretido", price: 9.0 },
-  { id: "add-patty", name: "Smash Extra 100g (Blend Wagyu)", price: 14.0 },
-  { id: "add-truffle", name: "Maionese de Trufas Negras (Pote)", price: 6.0 },
+  { id: "add-bacon", name: "Bacon extra", price: 8.0 },
+  { id: "add-cheddar", name: "Cheddar extra", price: 9.0 },
+  { id: "add-patty", name: "Hambúrguer extra (100 g)", price: 14.0 },
+  { id: "add-truffle", name: "Maionese verde (potinho)", price: 6.0 },
 ];
 
 export const KOBRA_MENU_ITEMS: KobraMenuItem[] = [
   {
     id: "b-01",
-    name: "Wagyu Truffle Melt",
-    tagline: "A Obra-Prima da Casa",
+    name: "X-bacon da casa",
+    tagline: "Carne, queijo e bacon caprichado",
     description:
-      "Duplo blend Wagyu 180g selado na manteiga clarificada, queijo Gruyère derretido, cebola caramelizada no Bourbon e aioli de trufas negras no brioche artesanal.",
+      "Hambúrguer de carne bovina de 180 g, queijo cheddar, bacon crocante, alface, tomate e maionese da casa no pão de brioche.",
     price: 48.9,
     category: "artesanais",
     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80",
-    calories: "780 kcal",
+    calories: "180 g de carne",
     prepTime: "18 min",
-    badge: "Chef's Signature",
+    badge: "Favorito da casa",
     allowDoneness: true,
   },
   {
     id: "b-02",
-    name: "Diablo Jalapeño Smash",
-    tagline: "Crosta Perfeita & Picância na Medida",
+    name: "Smash duplo com cheddar",
+    tagline: "Duas carnes e queijo derretido",
     description:
-      "Dois discos de 90g ultra-prensados com borda rendada crocante, American Cheese duplo, picles de jalapeño artesanal, bacon crispy e molho Kobra Fire.",
+      "Dois hambúrgueres de 90 g feitos na chapa, cheddar, cebola, picles e molho da casa no pão macio.",
     price: 38.9,
     category: "smash",
     image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=900&q=80",
-    calories: "640 kcal",
+    calories: "2 carnes de 90 g",
     prepTime: "12 min",
-    spicy: 2,
-    badge: "Top #1 Vendas",
+    spicy: 0,
+    badge: "Mais pedido",
     allowDoneness: false,
   },
   {
     id: "b-03",
-    name: "Smoked Brisket Monster",
-    tagline: "12 Horas de Defumação",
+    name: "X-salada artesanal",
+    tagline: "O clássico com tudo no lugar",
     description:
-      "Hambúrguer alto de 180g coberto com 100g de peito bovino desfiado defumado em lenha frutífera, anéis de cebola empanados na cerveja e barbecue de café.",
+      "Hambúrguer de carne bovina de 180 g, queijo prato, alface, tomate e maionese verde no pão de brioche.",
     price: 52.9,
     category: "artesanais",
     image: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80",
-    calories: "890 kcal",
+    calories: "180 g de carne",
     prepTime: "20 min",
-    badge: "Edição Limitada",
+    badge: "Clássico da casa",
     allowDoneness: true,
   },
   {
     id: "b-04",
-    name: "Oklahoma Onion Ultra",
-    tagline: "Clássico Americano Executado à Perfeição",
+    name: "Smash com cebola",
+    tagline: "Simples e bem servido",
     description:
-      "Dois smash burgers prensados diretamente sobre uma cama generosa de cebolas fatiadas finíssimas, queijo prato derretido, picles da casa e mostarda Dijon.",
+      "Dois hambúrgueres de 90 g na chapa com cebola dourada, queijo prato e maionese da casa.",
     price: 34.9,
     category: "smash",
     image: "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=900&q=80",
-    calories: "590 kcal",
+    calories: "2 carnes de 90 g",
     prepTime: "10 min",
     allowDoneness: false,
   },
   {
     id: "s-01",
-    name: "Truffle Parmesan Fries",
-    tagline: "Crocância Tripla",
+    name: "Batata frita da casa",
+    tagline: "Para dividir ou acompanhar",
     description:
-      "Batatas corte rústico fritas em três tempos, finalizadas com azeite trufado, chuva de grana padano ralado na hora e alecrim fresco.",
+      "Porção de batata frita crocante com sal e molho da casa à parte. Serve até duas pessoas.",
     price: 24.9,
     category: "sides",
     image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80",
-    calories: "420 kcal",
+    calories: "Porção de 300 g",
     prepTime: "8 min",
     badge: "Imperdível",
   },
   {
     id: "s-02",
-    name: "Nashville Hot Tenders",
-    tagline: "Frango Crocante Picante",
+    name: "Iscas de frango empanadas",
+    tagline: "Crocantes por fora, macias por dentro",
     description:
-      "Tiras de peito de frango marinadas no buttermilk, empanadas na farinha Panko com especiarias de Nashville. Acompanha molho Ranch de ervas.",
+      "Tiras de frango temperadas e empanadas, servidas com maionese verde. Uma porção para compartilhar.",
     price: 29.9,
     category: "sides",
     image: "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=900&q=80",
-    calories: "480 kcal",
+    calories: "Porção de 300 g",
     prepTime: "12 min",
-    spicy: 2,
+    spicy: 0,
   },
   {
     id: "d-01",
-    name: "Crimson Berry Craft Soda",
-    tagline: "Fermentação Natural da Casa",
+    name: "Suco de laranja",
+    tagline: "Feito na hora",
     description:
-      "Soda artesanal feita com redução de frutas vermelhas silvestres, toque de gengibre fresco, limão siciliano e água intensamente gaseificada (350ml).",
+      "Suco de laranja espremida, servido gelado no copo de 400 ml. Peça com ou sem açúcar.",
     price: 16.9,
     category: "drinks",
     image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
-    calories: "110 kcal",
+    calories: "400 ml",
     prepTime: "3 min",
   },
   {
     id: "d-02",
-    name: "Salted Caramel Bourbon Shake",
-    tagline: "Ultra Cremoso",
+    name: "Milk-shake de chocolate",
+    tagline: "Cremoso e bem gelado",
     description:
-      "Sorvete artesanal de fava de baunilha batido com caramelo salgado puxado na manteiga, flor de sal e chantilly tostado no maçarico (400ml).",
+      "Sorvete batido com leite e calda de chocolate, servido no copo de 400 ml.",
     price: 26.9,
     category: "drinks",
     image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=900&q=80",
-    calories: "610 kcal",
+    calories: "400 ml",
     prepTime: "5 min",
-    badge: "Best Seller",
+    badge: "Mais pedido",
   },
   {
     id: "ds-01",
-    name: "Basque Burnt Cheesecake",
-    tagline: "Interior Cremoso & Topo Caramelizado",
+    name: "Torta de morango",
+    tagline: "Para fechar o pedido",
     description:
-      "Cheesecake ao estilo de San Sebastián, assado em altíssima temperatura para criar uma casca caramelizada única e centro fluído. Acompanha calda de frutas vermelhas.",
+      "Fatia de torta com base de biscoito, recheio cremoso e cobertura de morango.",
     price: 28.9,
     category: "desserts",
     image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=900&q=80",
-    calories: "490 kcal",
+    calories: "1 fatia",
     prepTime: "5 min",
   },
 ];
@@ -316,23 +316,23 @@ const KOBRA_SLOTS = ["19:00", "20:00", "21:00", "22:00", "23:00"];
 const SEATING_ZONES = [
   {
     id: "balcao-chef",
-    name: "Balcão Fire Pit",
-    desc: "Frente à chapa • Degustação guiada",
-    badge: "Alta Demanda",
+    name: "Balcão",
+    desc: "Lugares próximos à chapa",
+    badge: "Atendimento rápido",
     image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80",
   },
   {
     id: "booth-neon",
-    name: "Booth Ember Lounge",
-    desc: "Sofás reservados • Som ambiente",
-    badge: "Ideal p/ Grupos",
+    name: "Mesas para grupos",
+    desc: "Espaço para reunir a família e os amigos",
+    badge: "Para compartilhar",
     image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80",
   },
   {
     id: "salao-lab",
-    name: "Salão Principal Lab",
-    desc: "Mesas centrais • Clima urbano",
-    badge: "Clássico",
+    name: "Salão principal",
+    desc: "Mesas para o dia a dia",
+    badge: "Mais escolhido",
     image: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=600&q=80",
   },
 ];
@@ -342,7 +342,7 @@ const INITIAL_ORDERS: KobraOrderRecord[] = [
     id: "KBR-8841",
     customer: "Lucas M.",
     mode: "DELIVERY",
-    itemsSummary: "2x Diablo Jalapeño Smash, 1x Truffle Parmesan Fries",
+    itemsSummary: "2x Smash duplo com cheddar, 1x Batata frita da casa",
     total: 102.7,
     status: "NA BRASA",
     createdAt: "Há 4 min",
@@ -352,8 +352,8 @@ const INITIAL_ORDERS: KobraOrderRecord[] = [
   {
     id: "KBR-8840",
     customer: "Fernanda R.",
-    mode: "MESA VIP",
-    itemsSummary: "1x Wagyu Truffle Melt, 1x Salted Caramel Shake",
+    mode: "MESA",
+    itemsSummary: "1x X-bacon da casa, 1x Milk-shake de chocolate",
     total: 75.8,
     status: "PRONTO",
     createdAt: "Há 9 min",
@@ -364,7 +364,7 @@ const INITIAL_ORDERS: KobraOrderRecord[] = [
     id: "KBR-8839",
     customer: "Thiago S.",
     mode: "PICKUP",
-    itemsSummary: "1x Smoked Brisket Monster, 1x Nashville Hot Tenders",
+    itemsSummary: "1x X-salada artesanal, 1x Iscas de frango empanadas",
     total: 82.8,
     status: "PREPARANDO",
     createdAt: "Agora",
@@ -397,16 +397,16 @@ export default function KobraTableBooking({
   const [orderMode, setOrderMode] = useState<"DELIVERY" | "PICKUP">("DELIVERY");
   const [cart, setCart] = useState<KobraCartItem[]>([
     {
-      cartItemId: "initial-wagyu",
+      cartItemId: "initial-burger",
       product: KOBRA_MENU_ITEMS[0],
       quantity: 1,
-      doneness: "Ao Ponto do Chef (Rosado)",
+      doneness: "Ao ponto",
       addons: [KOBRA_ADDONS[0]],
       unitFinalPrice: KOBRA_MENU_ITEMS[0].price + KOBRA_ADDONS[0].price,
     },
   ]);
   const [customizingProduct, setCustomizingProduct] = useState<KobraMenuItem | null>(null);
-  const [modalDoneness, setModalDoneness] = useState("Ao Ponto do Chef (Rosado)");
+  const [modalDoneness, setModalDoneness] = useState("Ao ponto");
   const [modalAddons, setModalAddons] = useState<KobraAddon[]>([]);
   const [modalNotes, setModalNotes] = useState("");
   const customizeTrapRef = useFocusTrap<HTMLDivElement>(!!customizingProduct, () =>
@@ -509,7 +509,7 @@ export default function KobraTableBooking({
           cartItemId: `${product.id}-${Date.now()}`,
           product,
           quantity: 1,
-          doneness: product.allowDoneness ? "Ao Ponto do Chef (Rosado)" : undefined,
+          doneness: product.allowDoneness ? "Ao ponto" : undefined,
           addons: [],
           unitFinalPrice: product.price,
         },
@@ -561,7 +561,7 @@ export default function KobraTableBooking({
     const summary = cart.map((i) => `${i.quantity}x ${i.product.name}`).join(", ");
 
     trackMetaEvent("Purchase", {
-      content_name: "Pedido KDS App",
+      content_name: "Pedido pelo painel",
       value: Number(cartTotal.toFixed(2)),
       currency: "BRL",
       order_id: code,
@@ -580,9 +580,9 @@ export default function KobraTableBooking({
     };
 
     setLiveOrders((prev) => [newOrder, ...prev]);
-    triggerToast(`Pedido #${code} Disparado!`, "Sincronizado com o KDS da Cozinha em tempo real");
+    triggerToast(`Pedido #${code} Disparado!`, "Pedido disponível na fila da cozinha");
 
-    const waMsg = `*PEDIDO CONFIRMADO — KOBRA BURGER APP* 🔥🍔\n*Protocolo KDS:* #${code}\n*Cliente:* ${newOrder.customer}\n*Modalidade:* ${orderMode}\n${orderMode === "DELIVERY" && customerAddress ? `*Endereço:* ${customerAddress}\n` : ""
+    const waMsg = `*PEDIDO CONFIRMADO — KOBRA BURGER* 🔥🍔\n*Número do pedido:* #${code}\n*Cliente:* ${newOrder.customer}\n*Modalidade:* ${orderMode}\n${orderMode === "DELIVERY" && customerAddress ? `*Endereço:* ${customerAddress}\n` : ""
       }----------------------------------\n*Itens:* ${summary}\n*Total:* R$ ${priceInReais.format(cartTotal)}`;
 
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(waMsg)}`, "_blank");
@@ -625,7 +625,7 @@ export default function KobraTableBooking({
     if (!selectedSlot) return;
 
     trackMetaEvent("Schedule", {
-      content_name: `Reserva Mesa VIP - ${selectedZone.name}`,
+      content_name: `Reserva de mesa - ${selectedZone.name}`,
       guests,
       slot: selectedSlot,
     });
@@ -641,7 +641,7 @@ export default function KobraTableBooking({
     setStatus("LOADING");
     try {
       const token = await user.getIdToken();
-      const serviceSummary = `KOBRA VIP • ${selectedZone.name} (${guests} pessoas)`;
+      const serviceSummary = `KOBRA • ${selectedZone.name} (${guests} pessoas)`;
 
       const res = await bookAppointment(
         {
@@ -667,8 +667,8 @@ export default function KobraTableBooking({
         setLiveOrders((prev) => [
           {
             id: `VIP-${shortCode}`,
-            customer: user.displayName || "Membro VIP",
-            mode: "MESA VIP",
+            customer: user.displayName || "Cliente",
+            mode: "MESA",
             itemsSummary: `Reserva: ${selectedZone.name} (${guests} lugares às ${selectedSlot})`,
             total: 0,
             status: "PRONTO",
@@ -695,7 +695,7 @@ export default function KobraTableBooking({
   const handleSendWhatsAppTicket = () => {
     if (!protocolCode || !selectedSlot) return;
     soundRef.current?.playClick();
-    const text = `*RESERVA CONFIRMADA — KOBRA.LAB* 🔥🍔\n----------------------------------\n*Código da reserva:* #${protocolCode}\n*Cliente:* ${user?.displayName || user?.email || "VIP"
+    const text = `*RESERVA CONFIRMADA — KOBRA.LAB* 🔥🍔\n----------------------------------\n*Código da reserva:* #${protocolCode}\n*Cliente:* ${user?.displayName || user?.email || "Cliente"
       }\n*Data:* ${selectedDate}\n*Horário:* ${selectedSlot}\n*Lugares:* ${guests} pessoas\n*Ambiente:* ${selectedZone.name
       }\n----------------------------------\n_Reserva validada via Lock Transacional._`;
 
@@ -759,10 +759,10 @@ export default function KobraTableBooking({
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-1">
                 <span className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-widest text-orange-400 bg-orange-500/10 border border-orange-500/20 px-2.5 py-0.5 rounded-full">
-                  <Sparkles className="w-3 h-3" /> Kobra Sales Engine v4.2
+                  <Sparkles className="w-3 h-3" /> Painel da lanchonete
                 </span>
                 <span className="text-[11px] font-mono text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2.5 py-0.5 rounded-full">
-                  ● KDS LIVE
+                  ● COZINHA
                 </span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
@@ -806,7 +806,7 @@ export default function KobraTableBooking({
                   }`}
               >
                 <LayoutDashboard className="w-4 h-4" />
-                <span>Dashboard Pedidos</span>
+                <span>Acompanhar pedidos</span>
                 <span className="px-1.5 py-0.5 rounded bg-black/30 font-mono text-[10px]">
                   {liveOrders.length}
                 </span>
@@ -825,7 +825,7 @@ export default function KobraTableBooking({
                   }`}
               >
                 <Calendar className="w-4 h-4" />
-                <span>Mesas VIP</span>
+                <span>Reservar mesa</span>
               </button>
             </div>
 
@@ -868,10 +868,10 @@ export default function KobraTableBooking({
                 <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 no-scrollbar">
                   {[
                     { id: "todos", label: "Todos (9)" },
-                    { id: "artesanais", label: "Wagyu Altos" },
-                    { id: "smash", label: "Ultra Smash" },
+                    { id: "artesanais", label: "Artesanais" },
+                    { id: "smash", label: "Smash na chapa" },
                     { id: "sides", label: "Porções" },
-                    { id: "drinks", label: "Drinks & Shakes" },
+                    { id: "drinks", label: "Bebidas" },
                     { id: "desserts", label: "Doces" },
                   ].map((cat) => (
                     <button
@@ -1140,7 +1140,7 @@ export default function KobraTableBooking({
                   className="w-full py-4 rounded-xl bg-gradient-to-r from-orange-600 via-red-600 to-amber-500 hover:from-orange-500 hover:to-red-500 text-white font-black uppercase tracking-wider text-xs flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(234,88,12,0.4)] transition-all disabled:opacity-40"
                 >
                   <Flame className="w-4 h-4 fill-current" />
-                  <span>Disparar Pedido p/ Cozinha (KDS)</span>
+                  <span>Enviar pedido para a cozinha</span>
                 </button>
               </form>
             </div>
@@ -1165,19 +1165,19 @@ export default function KobraTableBooking({
                 {
                   label: "Comandas Ativas na Brasa",
                   val: `${liveOrders.filter((o) => o.status !== "ENTREGUE").length} Pedidos`,
-                  sub: "Fluxo nominal sem gargalo",
+                  sub: "Pedidos em andamento",
                   icon: ChefHat,
                   accent: "text-red-400",
                 },
                 {
                   label: "Tempo Médio de Chapa",
                   val: "13m 40s",
-                  sub: "Meta SLA: < 18 min",
+                  sub: "Meta de preparo: até 18 min",
                   icon: Timer,
                   accent: "text-amber-400",
                 },
                 {
-                  label: "Ticket Médio no App",
+                  label: "Valor médio por pedido",
                   val: "R$ 89,40",
                   sub: "Conversão de Adicionais: 74%",
                   icon: Receipt,
@@ -1215,7 +1215,7 @@ export default function KobraTableBooking({
                 <div>
                   <h3 className="text-lg font-black uppercase tracking-tight text-white flex items-center gap-2">
                     <ChefHat className="w-5 h-5 text-orange-500" />
-                    Monitor KDS • Fila de Produção em Tempo Real
+                    Pedidos na cozinha • Acompanhe o preparo
                   </h3>
                   <p className="text-xs text-zinc-400">
                     Clique no botão de status de qualquer pedido para avançar a etapa na cozinha com alerta sonoro.
@@ -1283,7 +1283,7 @@ export default function KobraTableBooking({
                         <div>
                           <span className="text-[10px] font-mono text-zinc-500 block">TOTAL</span>
                           <span className="text-sm font-black text-white">
-                            {order.total > 0 ? `R$ ${priceInReais.format(order.total)}` : "VIP PASS"}
+                            {order.total > 0 ? `R$ ${priceInReais.format(order.total)}` : "RESERVA"}
                           </span>
                         </div>
 
@@ -1322,7 +1322,7 @@ export default function KobraTableBooking({
                   <p className="truncate text-xs sm:text-sm font-bold text-zinc-200">
                     {user
                       ? `Operador Autenticado: ${user.displayName || user.email}`
-                      : "Conecte seu Google para bloquear uma mesa ou lounge exclusivo na fornalha."}
+                      : "Entre com sua conta Google para reservar uma mesa."}
                   </p>
                 </div>
               </div>
@@ -1345,7 +1345,7 @@ export default function KobraTableBooking({
               <div className="lg:col-span-5 space-y-6 bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-5">
                 <div>
                   <label className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-orange-400 font-bold mb-3">
-                    <Calendar className="w-4 h-4" /> 01. Data da Experiência
+                    <Calendar className="w-4 h-4" /> 01. Data da reserva
                   </label>
                   <input
                     type="date"
@@ -1390,7 +1390,7 @@ export default function KobraTableBooking({
               <div className="lg:col-span-7 space-y-6 bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-5">
                 <div>
                   <label className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-orange-400 font-bold mb-3">
-                    <Sparkles className="w-4 h-4" /> 03. Zona do Laboratório (Com Prévia Visual)
+                    <Sparkles className="w-4 h-4" /> 03. Onde prefere sentar?
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {SEATING_ZONES.map((zone) => {
@@ -1438,7 +1438,7 @@ export default function KobraTableBooking({
 
                 <div>
                   <label className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-orange-400 font-bold mb-3">
-                    <Clock className="w-4 h-4" /> 04. Turno de Fogo (Horário)
+                    <Clock className="w-4 h-4" /> 04. Horário
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
                     {KOBRA_SLOTS.map((slot) => {
@@ -1510,7 +1510,7 @@ export default function KobraTableBooking({
                     onClick={handleSendWhatsAppTicket}
                     className="px-5 py-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-amber-500/40 text-amber-400 font-black text-xs uppercase tracking-wider flex items-center gap-2 transition-all"
                   >
-                    <MessageCircle className="w-4 h-4" /> Enviar Ticket no WhatsApp
+                    <MessageCircle className="w-4 h-4" /> Enviar reserva pelo WhatsApp
                   </button>
                 )}
 
@@ -1520,7 +1520,7 @@ export default function KobraTableBooking({
                   disabled={!selectedSlot || status === "LOADING"}
                   className="px-8 py-4 rounded-xl bg-gradient-to-r from-orange-600 via-red-600 to-amber-500 hover:from-orange-500 hover:to-red-500 text-white font-black text-xs uppercase tracking-wider transition-all shadow-[0_0_30px_rgba(234,88,12,0.35)] disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  {status === "LOADING" ? "Travando Horário..." : "Confirmar Reserva Atômica"}
+                  {status === "LOADING" ? "Reservando..." : "Confirmar reserva"}
                 </button>
               </div>
             </div>
@@ -1579,7 +1579,7 @@ export default function KobraTableBooking({
                       Ponto da Carne
                     </label>
                     <div className="grid grid-cols-3 gap-2">
-                      {["Mal Passado", "Ao Ponto do Chef (Rosado)", "Bem Passado"].map((pt) => (
+                      {["Mal Passado", "Ao ponto", "Bem Passado"].map((pt) => (
                         <button
                           key={pt}
                           type="button"
@@ -1601,7 +1601,7 @@ export default function KobraTableBooking({
 
                 <div className="space-y-2">
                   <label className="text-xs font-mono uppercase text-zinc-300 font-bold block">
-                    Adicionais de Fogo
+                    Adicionais
                   </label>
                   <div className="space-y-1.5">
                     {KOBRA_ADDONS.map((addon) => {

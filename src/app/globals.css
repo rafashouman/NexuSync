@@ -244,6 +244,99 @@
   }
 }
 
+.template-visual-system {
+  --template-accent: 234 88 12;
+  --template-line: 255 255 255;
+  position: relative;
+  isolation: isolate;
+  background-image:
+    linear-gradient(rgb(var(--template-line) / 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--template-line) / 0.025) 1px, transparent 1px);
+  background-size: 76px 76px;
+  background-position: center top;
+}
+
+.template-visual-system[data-template="academias"] {
+  --template-accent: 163 230 53;
+}
+
+.template-visual-system[data-template="connection"] {
+  --template-accent: 245 158 11;
+}
+
+.template-visual-system[data-template="dog-e-acai"] {
+  --template-accent: 16 185 129;
+}
+
+.template-visual-system[data-template="miniaturas"] {
+  --template-accent: 217 70 239;
+}
+
+.template-visual-system :is(h1, h2) {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.template-visual-system :is(header, section, footer) {
+  isolation: isolate;
+}
+
+.template-visual-system section {
+  position: relative;
+}
+
+.template-visual-system section::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: max(1rem, calc((100% - 1240px) / 2));
+  width: 46px;
+  height: 1px;
+  background: rgb(var(--template-accent) / 0.65);
+  box-shadow: 54px 0 0 rgb(var(--template-accent) / 0.12);
+  pointer-events: none;
+}
+
+.template-visual-system :is(button, a, [role="button"]) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.template-visual-system :is(button, a)[class*="rounded"] {
+  transition-duration: 220ms;
+}
+
+.template-visual-system :is(button, a)[class*="rounded"]:hover {
+  box-shadow: 0 0 0 1px rgb(var(--template-accent) / 0.18);
+}
+
+.template-visual-system :is(input, textarea, select):focus-visible {
+  outline: 2px solid rgb(var(--template-accent) / 0.9);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .template-visual-system section::before {
+    animation: template-edition-line 7s ease-in-out infinite;
+  }
+}
+
+@keyframes template-edition-line {
+  0%, 100% { width: 46px; opacity: 0.55; }
+  50% { width: 96px; opacity: 1; }
+}
+
+@media (max-width: 760px) {
+  .template-visual-system {
+    background-size: 48px 48px;
+  }
+  .template-visual-system section::before {
+    left: 1.25rem;
+  }
+}
+
 /* Templates claros: texto secundário e placeholders com contraste mínimo de 4.5:1 */
 @layer utilities {
   .demo-light .text-slate-400 {

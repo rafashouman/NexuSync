@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { TemplateField, templateStyles as visual } from "@/components/templates/TemplateVisuals";
 import {
   motion,
   AnimatePresence,
@@ -45,7 +46,7 @@ import { useActiveSection } from "@/components/ui/useActiveSection";
 // ==========================================
 const WHATSAPP_NUMBER = "5511999999999";
 const WHATSAPP_MESSAGE = encodeURIComponent(
-  "Olá! Quero agendar minha experiência VIP e conhecer a estrutura da PulseFit."
+  "Olá! Quero conhecer a PulseFit e agendar uma aula experimental."
 );
 
 // ==========================================
@@ -82,7 +83,7 @@ const Navbar = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 pt-4 sm:pt-6 pointer-events-none">
       <div
-        className={`max-w-6xl mx-auto transition-all duration-500 pointer-events-auto rounded-2xl border ${scrolled
+        className={`${visual.navPanel} max-w-7xl mx-auto transition-all duration-500 pointer-events-auto rounded-2xl border ${scrolled
           ? "bg-[#060807]/85 backdrop-blur-xl border-zinc-800/90 shadow-[0_20px_50px_rgba(0,0,0,0.6)] py-3 px-5"
           : "bg-zinc-950/40 backdrop-blur-md border-zinc-800/40 py-4 px-6"
           }`}
@@ -100,7 +101,7 @@ const Navbar = () => {
                 PULSE<span className="text-lime-400">FIT</span>
               </span>
               <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-zinc-500">
-                Performance Lab
+                Academia
               </span>
             </div>
           </a>
@@ -108,9 +109,9 @@ const Navbar = () => {
           {/* Desktop Links */}
           <nav className="hidden md:flex items-center gap-1 bg-zinc-900/60 border border-zinc-800/80 rounded-xl p-1">
             {[
-              { label: "Engenharia", href: "#vantagens" },
+              { label: "Diferenciais", href: "#vantagens" },
               { label: "O Espaço", href: "#galeria" },
-              { label: "Passaportes", href: "#planos" },
+              { label: "Planos", href: "#planos" },
               { label: "Dúvidas", href: "#faq" },
             ].map((item) => {
               const isActive = activeSection === item.href.slice(1);
@@ -153,7 +154,7 @@ const Navbar = () => {
               className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-lime-400 hover:bg-lime-300 text-zinc-950 font-black text-xs uppercase tracking-wider transition-all overflow-hidden shadow-[0_0_25px_rgba(163,230,53,0.3)]"
               onClick={() =>
                 trackMetaEvent("Lead", {
-                  content_name: "Day Pass Experimental Grátis",
+                  content_name: "Aula experimental gratuita",
                   content_category: "PulseFit Hero/Navbar",
                   value: 0,
                   currency: "BRL",
@@ -161,7 +162,7 @@ const Navbar = () => {
               }
             >
               <span className="relative z-10 flex items-center gap-1.5">
-                Day Pass Free
+                Aula grátis
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </span>
             </a>
@@ -189,9 +190,9 @@ const Navbar = () => {
             >
               <div className="pt-4 pb-2 mt-4 border-t border-zinc-800/80 flex flex-col gap-2">
                 {[
-                  { label: "Engenharia & Diferenciais", href: "#vantagens" },
-                  { label: "Tour pelo Espaço", href: "#galeria" },
-                  { label: "Planos & Passaportes", href: "#planos" },
+                  { label: "Nossa academia", href: "#vantagens" },
+                  { label: "Conheça o espaço", href: "#galeria" },
+                  { label: "Planos e mensalidades", href: "#planos" },
                   { label: "Perguntas Frequentes", href: "#faq" },
                   { label: "Agendar Visita", href: "#contato" },
                 ].map((item) => (
@@ -211,7 +212,7 @@ const Navbar = () => {
                   className="mt-2 w-full py-3 rounded-xl bg-lime-400 text-zinc-950 font-black text-xs uppercase tracking-widest text-center flex items-center justify-center gap-2"
                   onClick={() =>
                     trackMetaEvent("Lead", {
-                      content_name: "Day Pass Experimental Grátis",
+                      content_name: "Aula experimental gratuita",
                       content_category: "PulseFit Hero/Navbar",
                       value: 0,
                       currency: "BRL",
@@ -219,7 +220,7 @@ const Navbar = () => {
                   }
                 >
                   <MessageCircle className="w-4 h-4" />
-                  Resgatar Day Pass Grátis
+                  Agendar aula grátis
                 </a>
               </div>
             </motion.div>
@@ -243,7 +244,8 @@ const Hero = () => {
   const imageY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section className="relative min-h-screen pt-32 pb-20 md:pt-40 md:pb-28 flex items-center overflow-hidden">
+    <section className={`${visual.hero} relative min-h-screen pt-32 pb-20 md:pt-40 md:pb-28 flex items-center overflow-hidden`}>
+      <TemplateField variant="rays" />
       {/* Architectural Technical Grid Background */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.04]"
@@ -263,7 +265,7 @@ const Hero = () => {
           className="text-[18vw] font-black uppercase tracking-tighter leading-none opacity-[0.03] whitespace-nowrap"
           style={{ WebkitTextStroke: "2px #ffffff", color: "transparent" }}
         >
-          UNSTOPPABLE
+          MOVIMENTE-SE
         </span>
       </div>
 
@@ -275,13 +277,13 @@ const Hero = () => {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 mb-6"
+              className={`${visual.heroBadge} inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 mb-6`}
             >
               <span className="px-2 py-0.5 rounded-full bg-lime-400/20 text-lime-400 font-mono text-[10px] font-bold uppercase">
-                V.2026
+                PULSEFIT
               </span>
               <span className="text-xs text-zinc-300 font-medium">
-                Biomecânica de Elite & Alta Performance
+                Musculação e aulas para todos os níveis
               </span>
             </motion.div>
 
@@ -289,9 +291,9 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="mb-6 text-4xl font-black uppercase leading-[0.95] tracking-tighter text-white sm:text-6xl xl:text-7xl"
+              className={`${visual.heroTitle} mb-6 text-4xl font-black uppercase leading-[0.95] tracking-tighter text-white sm:text-6xl xl:text-7xl`}
             >
-              Não treine. <br />
+              Seu treino. <br />
               <span
                 className="block my-1"
                 style={{
@@ -299,20 +301,20 @@ const Hero = () => {
                   color: "transparent",
                 }}
               >
-                Reprograme
+                Sua rotina.
               </span>
-              sua <span className="text-lime-400 italic">biologia.</span>
+              Seu <span className="text-lime-400 italic">ritmo.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base sm:text-lg text-zinc-400 mb-10 leading-relaxed max-w-xl border-l-2 border-lime-400/50 pl-5"
+              className={`${visual.heroDescription} text-base sm:text-lg text-zinc-400 mb-10 leading-relaxed max-w-xl border-l-2 border-lime-400/50 pl-5`}
             >
-              Esqueça as academias convencionais. Combinamos maquinário importado de precisão,
-              design sensorial de iluminação e periodização guiada por dados para forjar resultados
-              reais.
+              Musculação, aulas em grupo e professores por perto para orientar você.
+              Seja para começar ou voltar a treinar, encontre uma rotina que combine com o seu
+              dia a dia.
             </motion.p>
 
             {/* Interactive CTA Group */}
@@ -320,7 +322,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
+              className={`${visual.heroActions} flex flex-col sm:flex-row items-stretch sm:items-center gap-4`}
             >
               <a
                 href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`}
@@ -329,7 +331,7 @@ const Hero = () => {
                 className="group relative inline-flex items-center justify-center gap-4 overflow-hidden px-8 py-4 rounded-2xl bg-gradient-to-r from-lime-400 to-emerald-400 text-zinc-950 font-black uppercase tracking-wider text-sm transition-all shadow-[0_0_40px_rgba(163,230,53,0.35)] hover:shadow-[0_0_60px_rgba(163,230,53,0.55)] hover:scale-[1.02] active:scale-[0.98]"
                 onClick={() =>
                   trackMetaEvent("Lead", {
-                    content_name: "Day Pass Experimental Grátis",
+                    content_name: "Aula experimental gratuita",
                     content_category: "PulseFit Hero/Navbar",
                     value: 0,
                     currency: "BRL",
@@ -351,7 +353,7 @@ const Hero = () => {
                 className="inline-flex items-center justify-center gap-3 px-7 py-4 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-200 font-semibold text-sm transition-all"
               >
                 <Compass className="w-4 h-4 text-lime-400" />
-                Explorar Instalações
+                Conhecer a academia
               </a>
             </motion.div>
 
@@ -363,9 +365,9 @@ const Hero = () => {
               className="mt-14 pt-8 border-t border-zinc-800/80 grid grid-cols-3 gap-6 max-w-lg"
             >
               {[
-                { count: 1200, suffix: "m²", label: "Área Climatizada", code: "ZONE_01" },
-                { val: "Zero", label: "Filas em Horário Pico", code: "FLOW_99%" },
-                { val: "Hammer", label: "& Life Fitness Pro", code: "GEAR_MAX" },
+                { count: 400, suffix: "m²", label: "Espaço para treinar", code: "ESPAÇO" },
+                { val: "Equipe", label: "Professores no salão", code: "APOIO" },
+                { val: "Seg–sáb", label: "Horários para sua rotina", code: "HORÁRIOS" },
               ].map((stat, i) => (
                 <div key={i} className="flex flex-col">
                   <span className="text-[10px] font-mono text-lime-400/80 mb-1">
@@ -390,7 +392,7 @@ const Hero = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-zinc-800 bg-zinc-900 shadow-2xl group"
+              className={`${visual.heroArt} relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-zinc-800 bg-zinc-900 shadow-2xl group`}
             >
               {/* Duotone & Vignette Overlays */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#060807] via-transparent to-zinc-950/40 z-10" />
@@ -402,7 +404,7 @@ const Hero = () => {
               >
                 <Image
                   src="/images/templates/academia/hero-gym.png"
-                  alt="Ambiente de alta performance PulseFit"
+                  alt="Sala de musculação da academia PulseFit"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 45vw"
@@ -414,7 +416,7 @@ const Hero = () => {
               <div className="absolute top-5 right-5 z-20 px-3.5 py-2 rounded-xl bg-zinc-950/80 backdrop-blur-md border border-zinc-800 flex items-center gap-2">
                 <Activity className="w-4 h-4 text-lime-400 animate-pulse" />
                 <span className="font-mono text-[11px] text-zinc-200 font-semibold">
-                  BIO-TRACKING ATIVO
+                  TREINO COM ORIENTAÇÃO
                 </span>
               </div>
 
@@ -426,12 +428,12 @@ const Hero = () => {
                       <Flame className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-xs font-mono uppercase text-zinc-400">Sessão em Destaque</p>
-                      <p className="text-sm font-bold text-white">HIIT Metabolic Burn • 45 min</p>
+                      <p className="text-xs font-mono uppercase text-zinc-400">Aula em destaque</p>
+                      <p className="text-sm font-bold text-white">Circuito funcional • 45 min</p>
                     </div>
                   </div>
                   <span className="text-xs font-mono font-bold text-lime-400 bg-lime-400/10 px-2.5 py-1 rounded-md border border-lime-400/20">
-                    ~850 KCAL
+                    45 MIN
                   </span>
                 </div>
                 {/* Progress bar simulation */}
@@ -444,7 +446,7 @@ const Hero = () => {
                   />
                 </div>
                 <div className="flex justify-between mt-1.5 text-[10px] font-mono text-zinc-500">
-                  <span>INTENSIDADE: ALTA</span>
+                  <span>PARA TODOS OS NÍVEIS</span>
                   <span>PRÓXIMA TURMA: 19:00</span>
                 </div>
               </div>
@@ -456,7 +458,7 @@ const Hero = () => {
                 4.9★
               </div>
               <div className="pr-2">
-                <p className="text-xs font-bold text-white">+2.500 Membros</p>
+                <p className="text-xs font-bold text-white">Turmas para todos os níveis</p>
                 <p className="text-[11px] text-zinc-400">Avaliação no Google</p>
               </div>
             </div>
@@ -472,15 +474,15 @@ const Hero = () => {
 // ==========================================
 const Marquee = () => {
   const words = [
-    "BIOMECÂNICA DE PRECISÃO",
+    "MUSCULAÇÃO",
     "•",
     "HIPERTROFIA",
     "•",
-    "METABOLIC CONDITIONING",
+    "CONDICIONAMENTO",
     "•",
-    "FORÇA BRUTA",
+    "TREINO FUNCIONAL",
     "•",
-    "RECOVERY ZONE",
+    "AULAS EM GRUPO",
     "•",
   ];
 
@@ -515,15 +517,14 @@ const Features = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <SectionTag index="01">Engenharia da Performance</SectionTag>
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tighter text-white uppercase leading-none">
-              Projetada para quem <br />
-              <span className="text-lime-400 italic">rejeita o mediano.</span>
+            <SectionTag index="01">Nossa academia</SectionTag>
+            <h2 className={`${visual.sectionHeading} text-3xl sm:text-5xl font-black tracking-tighter text-white uppercase leading-none`}>
+              Um espaço para <br />
+              <span className="text-lime-400 italic">cuidar de você.</span>
             </h2>
           </div>
           <p className="text-zinc-400 text-sm sm:text-base max-w-md leading-relaxed">
-            Cada metro quadrado foi desenhado usando princípios de fisiologia esportiva, acústica
-            motivacional e fluxo inteligente para eliminar distrações.
+            Equipamentos para seu treino, espaço organizado e uma equipe pronta para ajudar você a manter a rotina.
           </p>
         </div>
 
@@ -534,7 +535,7 @@ const Features = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="md:col-span-7 relative p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-zinc-900/90 via-zinc-900/50 to-zinc-950 border border-zinc-800/80 hover:border-lime-400/40 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(163,230,53,0.08)] transition-all group overflow-hidden flex flex-col justify-between min-h-[320px]"
+            className={`${visual.editorialCard} md:col-span-7 relative p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-zinc-900/90 via-zinc-900/50 to-zinc-950 border border-zinc-800/80 hover:border-lime-400/40 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(163,230,53,0.08)] transition-all group overflow-hidden flex flex-col justify-between min-h-[320px]`}
           >
             <div className="absolute -right-12 -bottom-12 w-64 h-64 bg-lime-400/10 rounded-full blur-3xl group-hover:bg-lime-400/20 transition-all" />
 
@@ -543,17 +544,16 @@ const Features = () => {
                 <Dumbbell className="w-7 h-7" />
               </div>
               <span className="font-mono text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded-full">
-                BIOMECÂNICA PURA
+                MUSCULAÇÃO
               </span>
             </div>
 
             <div className="relative z-10 mt-8">
               <h3 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight mb-3">
-                Maquinário Importado de Competição
+                Equipamentos para seu treino
               </h3>
               <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-xl">
-                Equipamentos convergentes e articulados que respeitam a curva de força natural das
-                suas articulações. Tensão constante no músculo alvo, risco zero de lesão articular.
+                Aparelhos e pesos livres para trabalhar diferentes grupos musculares, com orientação para ajustar a carga e a execução dos exercícios.
               </p>
             </div>
           </motion.div>
@@ -564,24 +564,23 @@ const Features = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="md:col-span-5 relative p-8 sm:p-10 rounded-3xl bg-zinc-900/40 border border-zinc-800/80 hover:border-lime-400/40 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(163,230,53,0.08)] transition-all group flex flex-col justify-between min-h-[320px]"
+            className={`${visual.editorialCard} md:col-span-5 relative p-8 sm:p-10 rounded-3xl bg-zinc-900/40 border border-zinc-800/80 hover:border-lime-400/40 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(163,230,53,0.08)] transition-all group flex flex-col justify-between min-h-[320px]`}
           >
             <div className="flex items-start justify-between">
               <div className="w-14 h-14 rounded-2xl bg-zinc-800 border border-zinc-700 text-lime-400 flex items-center justify-center group-hover:bg-lime-400 group-hover:text-zinc-950 transition-colors">
                 <Sliders className="w-7 h-7" />
               </div>
               <span className="font-mono text-xs text-lime-400 bg-lime-400/10 px-3 py-1 rounded-full">
-                APP EXCLUSIVO
+                TREINO ORGANIZADO
               </span>
             </div>
 
             <div className="mt-8">
               <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-3">
-                Periodização Guiada por Dados
+                Ficha de treino personalizada
               </h3>
               <p className="text-zinc-400 text-sm leading-relaxed">
-                Abandone a ficha de papel. Receba progressão de carga automatizada, vídeos em 4K da
-                execução biomecânica e reavaliação quinzenal diretamente no seu smartphone.
+                Seu professor monta uma ficha de acordo com seu objetivo e acompanha a evolução. Você sabe quais exercícios fazer e pode tirar dúvidas durante o treino.
               </p>
             </div>
           </motion.div>
@@ -592,16 +591,15 @@ const Features = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="md:col-span-4 group p-8 rounded-3xl bg-zinc-900/40 border border-zinc-800/80 hover:border-lime-400/40 hover:-translate-y-1 transition-all flex flex-col justify-between"
+            className={`${visual.editorialCard} md:col-span-4 group p-8 rounded-3xl bg-zinc-900/40 border border-zinc-800/80 hover:border-lime-400/40 hover:-translate-y-1 transition-all flex flex-col justify-between`}
           >
             <div className="w-12 h-12 rounded-xl bg-zinc-800/80 text-lime-400 flex items-center justify-center mb-6 group-hover:bg-lime-400 group-hover:text-zinc-950 group-hover:rotate-6 transition-all">
               <Zap className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white mb-2">Estúdios de treino</h3>
+              <h3 className="text-xl font-bold text-white mb-2">Aulas em grupo</h3>
               <p className="text-zinc-400 text-sm leading-relaxed">
-                Salas de Spinning, Cross e HIIT com iluminação cênica sincronizada e sistema de som
-                de festival para elevar sua adrenalina.
+                Aulas de bicicleta, circuito e treino funcional para variar a rotina e se movimentar em grupo, com orientação do professor.
               </p>
             </div>
           </motion.div>
@@ -612,16 +610,15 @@ const Features = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="md:col-span-4 group p-8 rounded-3xl bg-zinc-900/40 border border-zinc-800/80 hover:border-lime-400/40 hover:-translate-y-1 transition-all flex flex-col justify-between"
+            className={`${visual.editorialCard} md:col-span-4 group p-8 rounded-3xl bg-zinc-900/40 border border-zinc-800/80 hover:border-lime-400/40 hover:-translate-y-1 transition-all flex flex-col justify-between`}
           >
             <div className="w-12 h-12 rounded-xl bg-zinc-800/80 text-lime-400 flex items-center justify-center mb-6 group-hover:bg-lime-400 group-hover:text-zinc-950 group-hover:rotate-6 transition-all">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white mb-2">Climatização Hospitalar</h3>
+              <h3 className="text-xl font-bold text-white mb-2">Ambiente confortável</h3>
               <p className="text-zinc-400 text-sm leading-relaxed">
-                Renovação constante de ar com filtragem tripla e temperatura cravada em 21°C o ano
-                inteiro, além de vestiários estilo spa.
+                Espaço ventilado, limpeza frequente e vestiários com armários para guardar seus pertences enquanto treina.
               </p>
             </div>
           </motion.div>
@@ -632,27 +629,26 @@ const Features = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="md:col-span-4 p-8 rounded-3xl bg-gradient-to-br from-lime-400 to-emerald-500 text-zinc-950 flex flex-col justify-between shadow-[0_0_40px_rgba(163,230,53,0.25)]"
+            className={`${visual.editorialCard} md:col-span-4 p-8 rounded-3xl bg-gradient-to-br from-lime-400 to-emerald-500 text-zinc-950 flex flex-col justify-between shadow-[0_0_40px_rgba(163,230,53,0.25)]`}
           >
             <div className="flex justify-between items-start">
               <Clock className="w-8 h-8 text-zinc-950" />
               <span className="text-[10px] font-mono uppercase tracking-widest bg-black/15 text-zinc-950 px-2.5 py-1 rounded-full font-bold">
-                365 DIAS
+                SEGUNDA A SÁBADO
               </span>
             </div>
             <div className="mt-6">
               <h3 className="text-2xl font-black uppercase tracking-tight mb-2">
-                Horário Estendido
+                Horários que ajudam
               </h3>
               <p className="text-zinc-900 text-sm font-medium leading-relaxed mb-4">
-                Das 05h às 23h nos dias úteis. Domingos e feriados abertos para você nunca quebrar a
-                sua consistência.
+                De segunda a sexta, das 6h às 22h. Aos sábados, das 8h às 12h. Escolha o horário que funciona melhor para você.
               </p>
               <a
                 href="#planos"
                 className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider bg-zinc-950 text-lime-400 px-4 py-2.5 rounded-xl hover:bg-zinc-900 transition-colors"
               >
-                Conferir Acesso <ArrowUpRight className="w-4 h-4" />
+                Ver planos <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
           </motion.div>
@@ -671,37 +667,37 @@ const Gallery = () => {
   const zones = [
     {
       id: "01",
-      title: "Iron Sanctuary",
-      subtitle: "Musculação & Peso Livre",
-      specs: "Halteres até 60kg • 8 Gaiolas de Agachamento • Piso de Absorção Olímpica",
+      title: "Sala de musculação",
+      subtitle: "Musculação e pesos livres",
+      specs: "Aparelhos variados • Halteres e barras • Orientação no salão",
       src: "/images/templates/academia/foto-1.png",
     },
     {
       id: "02",
-      title: "Endurance Deck",
-      subtitle: "Cardio & Simulação",
-      specs: "Esteiras LifeFitness com Tela 4K • Escadas Simuladoras • Remo Concept2",
+      title: "Área de esteiras",
+      subtitle: "Esteiras e bicicletas",
+      specs: "Esteiras • Bicicletas • Aquecimento e condicionamento",
       src: "/images/templates/academia/foto-2.png",
     },
     {
       id: "03",
-      title: "Neon Cycle Lab",
-      subtitle: "Studio de Spinning Imersivo",
-      specs: "Bikes Magnéticas de Precisão • Áudio 3D • Painel de Telemetria Coletiva",
+      title: "Sala de bicicleta",
+      subtitle: "Aulas de bicicleta em grupo",
+      specs: "Aulas com professor • Música • Turmas em diferentes horários",
       src: "/images/templates/academia/foto-3.png",
     },
     {
       id: "04",
-      title: "The Box Arena",
-      subtitle: "Cross Training & Funcional",
-      specs: "Rig Oficial 12m • Pista de Sled em Grama Sintética • AirBikes & Wall Balls",
+      title: "Espaço funcional",
+      subtitle: "Circuitos e treino funcional",
+      specs: "Colchonetes • Elásticos • Exercícios em grupo",
       src: "/images/templates/academia/foto-4.png",
     },
     {
       id: "05",
-      title: "Recovery Lounge",
-      subtitle: "Vestiários & Pós-Treino",
-      specs: "Duchas de Alta Pressão • Armários Biométricos • Shake Bar Integrado",
+      title: "Vestiários",
+      subtitle: "Conforto antes e depois do treino",
+      specs: "Chuveiros • Armários • Espaço para se trocar",
       src: "/images/templates/academia/foto-6.png",
     },
   ];
@@ -711,9 +707,9 @@ const Gallery = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <SectionTag index="02">Tour Interativo</SectionTag>
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tighter text-white uppercase">
-              5 Zonas de <span className="text-lime-400 italic">Imersão</span>
+            <SectionTag index="02">Conheça o espaço</SectionTag>
+            <h2 className={`${visual.sectionHeading} text-3xl sm:text-5xl font-black tracking-tighter text-white uppercase`}>
+              Espaços para <span className="text-lime-400 italic">seu treino</span>
             </h2>
           </div>
           <p className="text-xs font-mono uppercase tracking-widest text-zinc-500">
@@ -743,7 +739,7 @@ const Gallery = () => {
             return (
               <article
                 key={zone.id}
-                className={`relative rounded-3xl overflow-hidden border transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${isActive
+                className={`${visual.panel} relative rounded-3xl overflow-hidden border transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${isActive
                   ? "flex-[4] border-lime-400/60 shadow-[0_0_40px_rgba(163,230,53,0.15)]"
                   : "flex-[1] border-zinc-800/80 hover:border-zinc-700 opacity-70 hover:opacity-100"
                   }`}
@@ -828,14 +824,14 @@ const Gallery = () => {
                             className="pointer-events-auto relative z-20 shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white text-zinc-950 font-bold text-xs uppercase tracking-wider hover:bg-lime-400 transition-colors self-start sm:self-auto"
                             onClick={() =>
                               trackMetaEvent("Lead", {
-                                content_name: "Day Pass Experimental Grátis",
+                                content_name: "Aula experimental gratuita",
                                 content_category: "PulseFit Hero/Navbar",
                                 value: 0,
                                 currency: "BRL",
                               })
                             }
                           >
-                            Visitar Zona <ArrowUpRight className="w-3.5 h-3.5" />
+                            Conhecer este espaço <ArrowUpRight className="w-3.5 h-3.5" />
                           </a>
                         </motion.div>
                       )}
@@ -859,59 +855,59 @@ const Pricing = () => {
   const [selectedGoal, setSelectedGoal] = useState<string>("all");
 
   const goals = [
-    { id: "all", label: "Ver Todos", recommendedPlan: "Cross Pro" },
-    { id: "musculacao", label: "Foco em Hipertrofia", recommendedPlan: "Fit Básico" },
-    { id: "condicionamento", label: "Emagrecimento & Cross", recommendedPlan: "Cross Pro" },
-    { id: "exclusivo", label: "Acompanhamento 360°", recommendedPlan: "VIP Total" },
+    { id: "all", label: "Ver Todos", recommendedPlan: "Musculação + aulas" },
+    { id: "musculacao", label: "Ganhar massa muscular", recommendedPlan: "Musculação" },
+    { id: "condicionamento", label: "Condicionamento e aulas", recommendedPlan: "Musculação + aulas" },
+    { id: "exclusivo", label: "Treino acompanhado", recommendedPlan: "Acompanhamento" },
   ];
 
   const plans = [
     {
-      name: "Fit Básico",
+      name: "Musculação",
       monthlyPrice: 149,
       annualPrice: 119,
-      description: "Acesso livre à nossa sala de musculação biomecânica e deck de cardio.",
+      description: "Musculação, esteiras e bicicletas para organizar seu treino.",
       features: [
-        "Musculação & Peso Livre sem restrição de horário",
-        "Deck de Cardio com telas integradas",
-        "Avaliação de Bioimpedância Inicial",
-        "Acesso ao App PulseFit (Fichas em Vídeo)",
+        "Musculação e pesos livres sem restrição de horário",
+        "Esteiras e bicicletas",
+        "Avaliação física inicial",
+        "Ficha de treino e orientação no salão",
       ],
-      cta: "Iniciar no Fit Básico",
+      cta: "Escolher musculação",
     },
     {
-      name: "Cross Pro",
+      name: "Musculação + aulas",
       monthlyPrice: 229,
       annualPrice: 189,
-      description: "A combinação definitiva de musculação livre com nossas arenas de alta intensidade.",
+      description: "Musculação e aulas em grupo para variar sua rotina de exercícios.",
       features: [
-        "Tudo do Passaporte Fit Básico",
-        "Acesso Ilimitado ao Box de Cross & HIIT",
-        "Studio Neon Cycle (Spinning Imersivo)",
+        "Tudo do plano Musculação",
+        "Aulas de circuito e treino funcional",
+        "Aulas de bicicleta em grupo",
         "Reavaliação física a cada 45 dias",
-        "4 Acessos VIP/mês para levar convidados",
+        "Uma aula para trazer um amigo por mês",
       ],
       badge: "Mais Escolhido",
-      cta: "Garantir Passaporte Pro",
+      cta: "Escolher musculação + aulas",
     },
     {
-      name: "VIP Total",
+      name: "Acompanhamento",
       monthlyPrice: 349,
       annualPrice: 279,
-      description: "Performance executiva com nutricionista e acompanhamento de perto.",
+      description: "Para quem quer ajuda mais próxima para seguir o treino.",
       features: [
-        "Acesso Total e Irrestrito a todas as Zonas",
-        "Consultoria Nutricional Esportiva Mensal",
-        "Small Group Personal (2x na semana)",
-        "Convidados ilimitados aos finais de semana",
-        "Kit Welcome PulseFit (Coqueteleira + Camiseta Tech)",
+        "Musculação e aulas em grupo",
+        "Avaliação física mensal",
+        "Duas sessões orientadas por semana",
+        "Ajustes na ficha conforme sua evolução",
+        "Conversa com o professor sobre suas metas",
       ],
-      cta: "Aplicar para Membro VIP",
+      cta: "Quero acompanhamento",
     },
   ];
 
   const activeRecommendation =
-    goals.find((g) => g.id === selectedGoal)?.recommendedPlan || "Cross Pro";
+    goals.find((g) => g.id === selectedGoal)?.recommendedPlan || "Musculação + aulas";
 
   return (
     <section id="planos" className="py-28 relative">
@@ -919,9 +915,9 @@ const Pricing = () => {
         {/* Header + Billing Switch */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-8">
           <div>
-            <SectionTag index="03">Passaportes de Acesso</SectionTag>
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tighter text-white uppercase">
-              Invista na sua <span className="text-lime-400 italic">alta performance</span>
+            <SectionTag index="03">Planos e mensalidades</SectionTag>
+            <h2 className={`${visual.sectionHeading} text-3xl sm:text-5xl font-black tracking-tighter text-white uppercase`}>
+              Escolha seu <span className="text-lime-400 italic">plano de treino</span>
             </h2>
           </div>
 
@@ -935,7 +931,7 @@ const Pricing = () => {
                 : "text-zinc-400 hover:text-white"
                 }`}
             >
-              Plano Flex (Mensal)
+              Plano mensal
             </button>
             <button
               onClick={() => setBilling("anual")}
@@ -947,7 +943,7 @@ const Pricing = () => {
             >
               <span>Plano anual</span>
               <span className="px-2 py-0.5 rounded-md bg-black/20 text-[10px] font-mono">
-                -20% OFF
+                Desconto anual
               </span>
             </button>
           </div>
@@ -986,7 +982,7 @@ const Pricing = () => {
               <motion.div
                 key={idx}
                 layout
-                className={`relative flex flex-col justify-between p-8 sm:p-10 rounded-[2.5rem] transition-all duration-500 ${isRecommended
+                className={`${visual.panel} relative flex flex-col justify-between p-8 sm:p-10 rounded-[2.5rem] transition-all duration-500 ${isRecommended
                   ? "bg-gradient-to-b from-zinc-900 via-zinc-900/90 to-zinc-950 border-2 border-lime-400 shadow-[0_0_50px_rgba(163,230,53,0.18)] lg:-translate-y-3 z-10"
                   : "bg-zinc-900/30 border border-zinc-800/80 hover:border-zinc-700"
                   }`}
@@ -1055,13 +1051,13 @@ const Pricing = () => {
 
                 <a
                   href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                    `Olá! Quero garantir o passaporte ${plan.name} na modalidade ${billing.toUpperCase()}.`
+                    `Olá! Quero conhecer o plano ${plan.name} na modalidade ${billing.toUpperCase()}.`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => {
                     trackMetaEvent("InitiateCheckout", {
-                      content_name: `Passaporte ${plan.name} (${billing.toUpperCase()})`,
+                      content_name: `Plano ${plan.name} (${billing.toUpperCase()})`,
                       content_category: "Assinatura Academia",
                       value: currentPrice,
                       currency: "BRL",
@@ -1096,19 +1092,19 @@ const FAQ = () => {
   const faqs = [
     {
       q: "Existe taxa de matrícula, manutenção ou multa de cancelamento?",
-      a: "Zero letras miúdas. Na modalidade Flex (Mensal), você não possui fidelidade e pode cancelar quando desejar com aviso prévio de 30 dias. No Plano anual, você garante 20% de desconto fixo durante os 12 meses.",
+      a: "O plano mensal não tem fidelidade. O anual tem valor reduzido e compromisso de 12 meses. A recepção explica os valores, as condições de cancelamento e qualquer taxa antes da contratação.",
     },
     {
-      q: "Como funciona o Day Pass Experimental Gratuito?",
-      a: "Basta clicar em qualquer botão de agendamento nesta página. Nosso concierge agendará um horário onde um treinador fará um tour rápido pelas 5 zonas e liberará seu acesso para um treino completo.",
+      q: "Como funciona a aula experimental gratuita?",
+      a: "Fale com a recepção pelo WhatsApp para combinar um horário. Você conhece o espaço, conversa com o professor e experimenta um treino.",
     },
     {
       q: "Sou iniciante, terei acompanhamento na sala de musculação?",
-      a: "Sim! Além do nosso aplicativo com vídeos em alta definição de cada máquina, temos professores de plantão em todas as zonas para corrigir sua postura, ajustar cargas e garantir segurança biomecânica.",
+      a: "Sim. O professor ajuda você a usar os aparelhos, ajustar as cargas e entender sua ficha, respeitando seu nível de experiência.",
     },
     {
       q: "Aceitam agregadores como Gympass (Wellhub) ou TotalPass?",
-      a: "Para mantermos o controle rigoroso de lotação, conforto térmico e disponibilidade imediata dos equipamentos para nossos membros, operamos exclusivamente com passaportes próprios.",
+      a: "Consulte a recepção para saber quais convênios estão disponíveis e como funciona o acesso.",
     },
   ];
 
@@ -1121,13 +1117,13 @@ const FAQ = () => {
           {/* Left Column */}
           <div className="lg:col-span-5 lg:sticky lg:top-32">
             <SectionTag index="04">Transparência Total</SectionTag>
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tighter text-white uppercase leading-none mb-6">
+            <h2 className={`${visual.sectionHeading} text-3xl sm:text-5xl font-black tracking-tighter text-white uppercase leading-none mb-6`}>
               Dúvidas <br />
               <span className="text-lime-400 italic">Frequentes</span>
             </h2>
             <p className="text-zinc-400 text-sm sm:text-base leading-relaxed mb-8">
               Ainda tem alguma pergunta específica sobre nossa metodologia ou estrutura? Fale
-              diretamente com nossa recepção técnica.
+              diretamente com nossa recepção.
             </p>
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
@@ -1136,7 +1132,7 @@ const FAQ = () => {
               className="inline-flex items-center gap-3 px-6 py-3.5 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-lime-400/50 text-white text-xs font-bold uppercase tracking-wider transition-all"
               onClick={() =>
                 trackMetaEvent("Lead", {
-                  content_name: "Day Pass Experimental Grátis",
+                  content_name: "Aula experimental gratuita",
                   content_category: "PulseFit Hero/Navbar",
                   value: 0,
                   currency: "BRL",
@@ -1144,7 +1140,7 @@ const FAQ = () => {
               }
             >
               <MessageCircle className="w-4 h-4 text-lime-400" />
-              Chamar Concierge no WhatsApp
+              Falar com a recepção
             </a>
           </div>
 
@@ -1205,7 +1201,7 @@ const FAQ = () => {
 // ==========================================
 const Contact = () => {
   const [name, setName] = useState("");
-  const [goal, setGoal] = useState("Hipertrofia & Estética");
+  const [goal, setGoal] = useState("Ganhar massa muscular");
   const [touched, setTouched] = useState(false);
   const [issued, setIssued] = useState<{ name: string; goal: string; link: string } | null>(null);
   const nameValid = name.trim().length >= 3;
@@ -1219,7 +1215,7 @@ const Contact = () => {
 
     // Dispara Lead + Schedule qualificado com o objetivo do aluno
     trackMetaEvent("Lead", {
-      content_name: "Credencial VIP Pass 1 Dia Free",
+      content_name: "Agendamento de aula experimental",
       content_category: goal,
       customer_name: guestName,
       value: 49.9, // Valor estimado do Day Pass para otimização de ROAS
@@ -1231,7 +1227,7 @@ const Contact = () => {
     });
 
     const customMsg = encodeURIComponent(
-      `Olá! Meu nome é ${guestName}. Gerei meu VIP Pass pelo site com foco em [${goal}] e gostaria de agendar meu treino experimental.`
+      `Olá! Meu nome é ${guestName}. Preenchi meu interesse pelo site com foco em [${goal}] e gostaria de agendar meu treino experimental.`
     );
     const link = `https://wa.me/${WHATSAPP_NUMBER}?text=${customMsg}`;
     window.open(link, "_blank", "noopener,noreferrer");
@@ -1248,12 +1244,11 @@ const Contact = () => {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6">
               <SectionTag index="05">Acesso Imediato</SectionTag>
-              <h2 className="text-3xl sm:text-5xl font-black tracking-tighter text-white uppercase leading-none mb-6">
-                Emita seu <span className="text-lime-400 italic">VIP Pass</span> Experimental.
+              <h2 className={`${visual.sectionHeading} text-3xl sm:text-5xl font-black tracking-tighter text-white uppercase leading-none mb-6`}>
+                Agende seu <span className="text-lime-400 italic">treino</span> experimental.
               </h2>
               <p className="text-zinc-400 mb-10 leading-relaxed text-sm sm:text-base">
-                Configure seu passe ao lado e envie diretamente para nossa recepção no WhatsApp. Sem
-                formulários lentos ou espera por e-mail.
+                Informe seu nome e seu objetivo. Depois, fale com a recepção pelo WhatsApp para combinar o melhor dia e horário.
               </p>
 
               <div className="space-y-5 border-t border-zinc-800/80 pt-8">
@@ -1262,9 +1257,9 @@ const Contact = () => {
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-[11px] font-mono uppercase text-zinc-500">Flagship Unit</p>
+                    <p className="text-[11px] font-mono uppercase text-zinc-500">Nossa unidade</p>
                     <p className="text-sm font-semibold text-zinc-200">
-                      Av. Gaucha, 999 - Bairro Famoso, Porto Alegre - RS
+                      Rua das Flores, 120 - Centro, Porto Alegre - RS
                     </p>
                   </div>
                 </div>
@@ -1275,7 +1270,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-[11px] font-mono uppercase text-zinc-500">
-                      Concierge Direto
+                      Fale com a recepção
                     </p>
                     <p className="text-sm font-semibold text-zinc-200">(51) 99999-9999</p>
                   </div>
@@ -1290,16 +1285,16 @@ const Contact = () => {
                   initial={{ opacity: 0, scale: 0.94 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ type: "spring", stiffness: 220, damping: 20 }}
-                  className="relative overflow-hidden p-8 rounded-3xl bg-zinc-900/70 backdrop-blur-xl border border-lime-400/40 shadow-[0_0_50px_rgba(163,230,53,0.15)] space-y-6"
+                  className={`${visual.panel} relative overflow-hidden p-8 rounded-3xl bg-zinc-900/70 backdrop-blur-xl border border-lime-400/40 shadow-[0_0_50px_rgba(163,230,53,0.15)] space-y-6`}
                 >
                   <Confetti />
                   <div className="flex items-center justify-between border-b border-dashed border-lime-400/30 pb-4">
                     <div>
                       <span className="text-[10px] font-mono uppercase tracking-widest text-lime-400 block">
-                        CREDENCIAL EMITIDA
+                        INTERESSE REGISTRADO
                       </span>
                       <h3 className="text-lg font-black uppercase text-white">
-                        1 DIA DE ACESSO TOTAL FREE
+                        AULA EXPERIMENTAL GRÁTIS
                       </h3>
                     </div>
                     <motion.div
@@ -1347,7 +1342,7 @@ const Contact = () => {
                       }}
                       className="flex-1 py-3.5 rounded-xl border border-zinc-700 hover:border-zinc-500 text-white font-bold uppercase tracking-wider text-xs transition-colors"
                     >
-                      Emitir outra credencial
+                      Agendar para outra pessoa
                     </button>
                   </div>
                 </motion.div>
@@ -1355,15 +1350,15 @@ const Contact = () => {
               <form
                 onSubmit={handleVipPassSubmit}
                 noValidate
-                className="p-8 rounded-3xl bg-zinc-900/70 backdrop-blur-xl border border-zinc-800 shadow-2xl space-y-6 relative"
+                className={`${visual.panel} p-8 rounded-3xl bg-zinc-900/70 backdrop-blur-xl border border-zinc-800 shadow-2xl space-y-6 relative`}
               >
                 <div className="flex items-center justify-between border-b border-dashed border-zinc-800 pb-4">
                   <div>
                     <span className="text-[10px] font-mono uppercase tracking-widest text-lime-400 block">
-                      CREDENCIAL TEMPORÁRIA
+                      EXPERIMENTE A ACADEMIA
                     </span>
                     <h3 className="text-lg font-black uppercase text-white">
-                      1 DIA DE ACESSO TOTAL FREE
+                      AULA EXPERIMENTAL GRÁTIS
                     </h3>
                   </div>
                   <Dumbbell className="w-6 h-6 text-lime-400" />
@@ -1374,7 +1369,7 @@ const Contact = () => {
                     htmlFor="vip-name"
                     className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-2"
                   >
-                    Nome do Convidado(a)
+                    Seu nome
                   </label>
                   <div className="relative">
                     <input
@@ -1421,12 +1416,12 @@ const Contact = () => {
                     onChange={(e) => setGoal(e.target.value)}
                     className="w-full px-4 py-3.5 rounded-xl bg-zinc-950 border border-zinc-800 text-white focus:outline-none focus:border-lime-400 transition-colors text-sm"
                   >
-                    <option value="Hipertrofia & Estética">Hipertrofia & Estética</option>
-                    <option value="Emagrecimento & Condicionamento">
-                      Emagrecimento & Condicionamento
+                    <option value="Ganhar massa muscular">Ganhar massa muscular</option>
+                    <option value="Melhorar o condicionamento">
+                      Melhorar o condicionamento
                     </option>
-                    <option value="Aulas de Cross & HIIT">Aulas de Cross & HIIT</option>
-                    <option value="Saúde & Longevidade">Saúde & Longevidade</option>
+                    <option value="Aulas em grupo">Aulas em grupo</option>
+                    <option value="Mais disposição no dia a dia">Mais disposição no dia a dia</option>
                   </select>
                 </div>
 
@@ -1439,7 +1434,7 @@ const Contact = () => {
                     className="absolute inset-y-0 -left-1/3 w-1/4 -skew-x-12 bg-white/40 transition-transform duration-700 group-hover:translate-x-[700%]"
                   />
                   <MessageCircle className="relative w-4 h-4" />
-                  <span className="relative">Emitir Credencial via WhatsApp</span>
+                  <span className="relative">Agendar pelo WhatsApp</span>
                 </button>
               </form>
               )}
@@ -1467,7 +1462,7 @@ const Footer = () => {
           </span>
         </div>
         <p className="text-xs font-mono text-zinc-600">
-          © {2026} PULSEFIT PERFORMANCE LAB. TODOS OS DIREITOS RESERVADOS.
+          © {2026} ACADEMIA PULSEFIT. TODOS OS DIREITOS RESERVADOS.
         </p>
       </div>
     </footer>
@@ -1479,7 +1474,10 @@ const Footer = () => {
 // ==========================================
 export default function LandingPage() {
   return (
-    <div className="demo-dark min-h-screen bg-[#060807] text-zinc-100 selection:bg-lime-400 selection:text-zinc-950 font-sans antialiased overflow-x-hidden">
+    <div
+      data-template="academias"
+      className={`${visual.root} demo-dark template-visual-system min-h-screen bg-[#060807] text-zinc-100 selection:bg-lime-400 selection:text-zinc-950 font-sans antialiased overflow-x-hidden`}
+    >
       <ScrollProgress />
       <Navbar />
       <main id="conteudo">
@@ -1499,7 +1497,7 @@ export default function LandingPage() {
         className="bg-gradient-to-r from-lime-400 to-emerald-400 text-zinc-950 shadow-[0_0_30px_rgba(163,230,53,0.35)]"
         onClick={() =>
           trackMetaEvent("Lead", {
-            content_name: "Day Pass Experimental Grátis",
+            content_name: "Aula experimental gratuita",
             content_category: "PulseFit Sticky Bar",
             value: 0,
             currency: "BRL",

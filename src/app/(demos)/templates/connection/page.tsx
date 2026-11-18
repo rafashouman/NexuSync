@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { TemplateField, templateStyles as visual } from "@/components/templates/TemplateVisuals";
 import React, { useEffect, useMemo, useState } from "react";
 import { drawReadingCards, generateReadingForUser } from "@/lib/hotsites/tarot-site-engine";
 import { readLastDraw, rememberDraw } from "@/lib/hotsites/tarot-draw-history";
@@ -174,7 +175,11 @@ export default function TarotLeadHotsite() {
   };
 
   return (
-    <main id="conteudo" className="demo-dark min-h-screen bg-[#070709] text-[#F4F1EA] selection:bg-amber-500/30 selection:text-amber-200 font-sans overflow-x-hidden relative">
+    <main
+      id="conteudo"
+      data-template="connection"
+      className={`${visual.root} demo-dark template-visual-system min-h-screen bg-[#070709] text-[#F4F1EA] selection:bg-amber-500/30 selection:text-amber-200 font-sans overflow-x-hidden relative`}
+    >
       {/* Glow Ambiental Sutil */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-amber-500/5 blur-[140px] rounded-full" />
@@ -183,7 +188,7 @@ export default function TarotLeadHotsite() {
 
       {/* Header Minimalista */}
       <header className="relative z-10 border-b border-white/5 bg-[#070709]/80 backdrop-blur-md">
-        <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-2.5 h-2.5 rotate-45 bg-amber-400 shadow-[0_0_12px_#f59e0b]" />
             <span className="text-xs uppercase tracking-[0.25em] text-zinc-300 font-medium">
@@ -218,7 +223,7 @@ export default function TarotLeadHotsite() {
         </div>
       </header>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 py-12 md:py-20">
+      <div className={`${visual.oracleStage} relative z-10 max-w-5xl mx-auto px-6 py-12 md:py-20`}>
         <AnimatePresence mode="wait">
           {/* ================= PASSO 1: ESCOLHA DO MONTE ================= */}
           {step === 1 && (
@@ -230,15 +235,16 @@ export default function TarotLeadHotsite() {
               transition={{ duration: 0.4 }}
               className="space-y-12"
             >
-              <div className="max-w-2xl mx-auto text-center space-y-4">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] bg-amber-500/10 text-amber-300 border border-amber-500/20">
+              <div className={`${visual.oracleIntro} max-w-2xl mx-auto text-center space-y-4`}>
+                <TemplateField />
+                <span className={`${visual.heroBadge} inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] bg-amber-500/10 text-amber-300 border border-amber-500/20`}>
                   <Sparkles className="w-3 h-3" /> Sincronicidade Ativa
                 </span>
-                <h1 className="text-3xl md:text-5xl font-light tracking-tight text-white leading-tight">
-                  Respire fundo. Qual dos três montes chama a sua atenção agora?
+                <h1 className={`${visual.oracleTitle} text-3xl md:text-5xl font-light tracking-tight text-white leading-tight`}>
+                  Respire fundo.<br /><em className="not-italic text-amber-300">Sua intuição</em> escolhe o caminho.
                 </h1>
                 <p className="text-zinc-400 text-sm md:text-base">
-                  Não tente racionalizar. Escolha pela primeira impressão visual para destravar sua leitura personalizada de 3 cartas.
+                  Qual dos três montes chama sua atenção? Escolha pela primeira impressão e descubra sua leitura personalizada de 3 cartas.
                 </p>
               </div>
 
@@ -251,7 +257,7 @@ export default function TarotLeadHotsite() {
                       whileHover={{ y: -8 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => handleSelectDeck(deck.id)}
-                      className={`group relative text-left rounded-2xl p-7 bg-[#111116] border border-white/10 ${deck.borderHover} transition-all duration-300 flex flex-col justify-between min-h-[340px] overflow-hidden shadow-2xl`}
+                      className={`${visual.deckCard} group relative text-left rounded-2xl p-7 bg-[#111116] border border-white/10 ${deck.borderHover} transition-all duration-300 flex flex-col justify-between min-h-[340px] overflow-hidden shadow-2xl`}
                     >
                       {/* Gradiente Interno */}
                       <div
@@ -471,7 +477,7 @@ export default function TarotLeadHotsite() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="rounded-3xl bg-gradient-to-b from-[#16161e] to-[#111116] border border-amber-500/30 p-8 md:p-10 shadow-[0_0_50px_rgba(245,158,11,0.1)]"
+                  className={`${visual.panel} rounded-3xl bg-gradient-to-b from-[#16161e] to-[#111116] border border-amber-500/30 p-8 md:p-10 shadow-[0_0_50px_rgba(245,158,11,0.1)]`}
                 >
                   <div className="max-w-xl mx-auto text-center space-y-3 mb-8">
                     <span className="text-xs uppercase tracking-[0.2em] text-amber-400 font-semibold">
@@ -553,7 +559,7 @@ export default function TarotLeadHotsite() {
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-950/30 via-[#111116] to-[#111116] border border-emerald-500/30 p-8 md:p-10 text-center space-y-6"
+                  className={`${visual.panel} relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-950/30 via-[#111116] to-[#111116] border border-emerald-500/30 p-8 md:p-10 text-center space-y-6`}
                 >
                   <Confetti />
                   <div className="space-y-2">

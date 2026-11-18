@@ -1,9 +1,9 @@
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
 export const metadata = nexuSyncMetadata({
-  title: "Loja virtual streetwear | Demonstração Vortex Atelier",
+  title: "Loja de roupas e acessórios | Demonstração Vortex Atelier",
   description:
-    "Explore uma demonstração de loja virtual streetwear, conheça as peças e monte uma sacola de compras.",
+    "Explore uma loja de camisetas, manga longa e acessórios, com cores, tamanhos e pedido pelo WhatsApp. Demonstração NexuSync.",
   path: "/templates/streetwear",
 });
 

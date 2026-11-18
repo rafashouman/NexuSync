@@ -4,7 +4,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { RoundedBox, useTexture } from "@react-three/drei";
 import { Suspense, useEffect, useRef, type RefObject } from "react";
 import { AdditiveBlending, Shape, SRGBColorSpace, type Group, type Texture } from "three";
-import { heroScreenshots, type HeroDeviceMode } from "./hero-templates";
+import { heroScreenshots, heroTemplates, type HeroDeviceMode } from "./hero-templates";
 
 export type HeroPointer = RefObject<{
   x: number;
@@ -59,6 +59,126 @@ function NotebookMockup({ texture }: { texture: Texture }) {
   </group>;
 }
 
+function OrbitSignal() {
+  const logoCore = useRef<Group>(null);
+  const innerOrbit = useRef<Group>(null);
+  const outerOrbit = useRef<Group>(null);
+  const pulse = useRef(0);
+  const logo = useTexture("/images/icon.png", texture => {
+    texture.colorSpace = SRGBColorSpace;
+    texture.anisotropy = 4;
+  });
+  useFrame(({ pointer }, delta) => {
+    if (!logoCore.current || !innerOrbit.current || !outerOrbit.current) return;
+    const ease = 1 - Math.exp(-delta * 5);
+    logoCore.current.rotation.x += (-.08 + pointer.y * .12 - logoCore.current.rotation.x) * ease;
+    logoCore.current.rotation.y += (-.28 - pointer.x * .2 - logoCore.current.rotation.y) * ease;
+    logoCore.current.rotation.z += (-.04 + pointer.x * .025 - logoCore.current.rotation.z) * ease;
+    innerOrbit.current.rotation.z -= delta * .65;
+    outerOrbit.current.rotation.y += delta * .22;
+    pulse.current = Math.max(0, pulse.current - delta * 1.9);
+    const pulseWave = Math.sin((1 - pulse.current) * Math.PI);
+    logoCore.current.scale.setScalar(1.18 + Math.max(0, pulseWave) * .22);
+  });
+  const particles = Array.from({ length: 12 }, (_, index) => {
+    const angle = index / 12 * Math.PI * 2;
+    const radius = index % 2 ? .86 : 1.18;
+    return <mesh key={index} position={[Math.cos(angle) * radius, Math.sin(angle) * radius, 0]}>
+      <sphereGeometry args={[index % 3 ? .018 : .035, 10, 10]} />
+      <meshBasicMaterial color={index % 3 ? "#56dfff" : "#d4ff38"} transparent opacity={index % 3 ? .72 : .95} toneMapped={false} />
+    </mesh>;
+  });
+  return <group position={[0, .15, .75]}>
+    <mesh rotation={[Math.PI / 2, 0, 0]}>
+      <torusGeometry args={[.48, .018, 10, 64]} />
+      <meshBasicMaterial color="#d4ff38" transparent opacity={.65} blending={AdditiveBlending} depthWrite={false} toneMapped={false} />
+    </mesh>
+    <group ref={innerOrbit} rotation={[.35, .55, 0]}>
+      <mesh>
+        <torusGeometry args={[.86, .009, 8, 72]} />
+        <meshBasicMaterial color="#8be7c5" transparent opacity={.45} blending={AdditiveBlending} depthWrite={false} toneMapped={false} />
+      </mesh>
+      {particles}
+    </group>
+    <group ref={outerOrbit} rotation={[1.15, .15, 0]}>
+      <mesh>
+        <torusGeometry args={[1.18, .008, 8, 80]} />
+        <meshBasicMaterial color="#3459ff" transparent opacity={.72} blending={AdditiveBlending} depthWrite={false} toneMapped={false} />
+      </mesh>
+    </group>
+    <group
+      ref={logoCore}
+      rotation={[-.08, -.28, -.04]}
+      scale={1.18}
+      onClick={(event) => {
+        event.stopPropagation();
+        pulse.current = 1;
+      }}
+    >
+      {Array.from({ length: 7 }, (_, index) => {
+        const depth = 6 - index;
+        return <mesh
+          key={depth}
+          position={[-depth * .026, -depth * .026, -depth * .026]}
+        >
+          <planeGeometry args={[1.12, 1.12]} />
+          <meshBasicMaterial
+            map={logo}
+            color={index < 3 ? "#086b8a" : "#14b7c8"}
+            transparent
+            alphaTest={.05}
+            toneMapped={false}
+          />
+        </mesh>;
+      })}
+      <mesh position={[0, 0, .025]}>
+        <planeGeometry args={[1.12, 1.12]} />
+        <meshBasicMaterial
+          map={logo}
+          transparent
+          alphaTest={.05}
+          toneMapped={false}
+        />
+      </mesh>
+    </group>
+  </group>;
+}
+
+function OrbitDevice({ texture, mask, mode, position, selected, onSelect }: {
+  texture: Texture;
+  mask: Texture;
+  mode: HeroDeviceMode;
+  position: [number, number, number];
+  selected: boolean;
+  onSelect: (point: { x: number; y: number }) => void;
+}) {
+  const device = useRef<Group>(null);
+  useFrame((_, delta) => {
+    if (!device.current) return;
+    const targetScale = selected ? 1.45 : 1;
+    const ease = 1 - Math.exp(-delta * 8);
+    device.current.scale.x += (targetScale - device.current.scale.x) * ease;
+    device.current.scale.y += (targetScale - device.current.scale.y) * ease;
+    device.current.scale.z += (targetScale - device.current.scale.z) * ease;
+  });
+  return <group
+    ref={device}
+    position={position}
+    onClick={(event) => {
+      event.stopPropagation();
+      onSelect({ x: event.nativeEvent.clientX, y: event.nativeEvent.clientY });
+    }}
+    onPointerOver={() => {
+      document.body.style.cursor = "pointer";
+    }}
+    onPointerOut={() => {
+      document.body.style.cursor = "";
+    }}
+  >
+    {mode === "phone" ? <PhoneMockup texture={texture} mask={mask} /> : <NotebookMockup texture={texture} />}
+  </group>;
+}
+
 function CameraRig({ mode, maximized = false }: { mode: HeroDeviceMode; maximized?: boolean }) {
   const { camera, invalidate, size } = useThree();
   useEffect(() => {
@@ -72,7 +192,15 @@ function CameraRig({ mode, maximized = false }: { mode: HeroDeviceMode; maximize
   return null;
 }
 
-function TemplateRing({ active, mode, maximized = false, onReady, input }: { active: boolean; mode: HeroDeviceMode; maximized?: boolean; onReady?: (ready: boolean) => void; input?: HeroPointer }) {
+function TemplateRing({ active, mode, maximized = false, onReady, input, selectedTemplate, onSelectTemplate }: {
+  active: boolean;
+  mode: HeroDeviceMode;
+  maximized?: boolean;
+  onReady?: (ready: boolean) => void;
+  input?: HeroPointer;
+  selectedTemplate: string | null;
+  onSelectTemplate: (slug: string | null, point?: { x: number; y: number }) => void;
+}) {
   const group = useRef<Group>(null);
   const textures = useTexture(heroScreenshots(mode), maps => {
     for (const texture of maps) {
@@ -91,13 +219,13 @@ function TemplateRing({ active, mode, maximized = false, onReady, input }: { act
       }
     }
   });
-  const [mask, glow] = useTexture(["/images/hero-devices/screen-mask.svg", "/images/hero-devices/core-glow.svg"]);
+  const mask = useTexture("/images/hero-devices/screen-mask.svg");
   const rotation = useRef(-.28);
   const speed = useRef(.13);
   const follow = useRef({ x: 0, y: 0 });
   const consumedDragDelta = useRef(0);
   const consumedThrowRevision = useRef(0);
-  const count = mode === "notebook" ? 6 : 10;
+  const count = heroTemplates(mode).length;
   const radius = mode === "notebook" ? 3.12 : 2.85;
   useEffect(() => {
     onReady?.(true);
@@ -128,7 +256,7 @@ function TemplateRing({ active, mode, maximized = false, onReady, input }: { act
         consumedThrowRevision.current = inputState.throwRevision;
       }
     }
-    if (inputState?.dragging) {
+    if (inputState?.dragging || selectedTemplate) {
       speed.current = 0;
     } else {
       const targetSpeed = inputState?.inside ? (Math.abs(target.x) < .06 ? 0 : target.x * .65) : .13;
@@ -144,22 +272,36 @@ function TemplateRing({ active, mode, maximized = false, onReady, input }: { act
   });
   return <>
     <CameraRig mode={mode} maximized={maximized} />
-    <sprite position={[0, 1.02, 0]} scale={[4.5, 4.5, 1]}><spriteMaterial map={glow} blending={AdditiveBlending} transparent depthWrite={false} toneMapped={false} /></sprite>
-    <pointLight position={[0, .7, 0]} intensity={22} distance={7} color="#9aeaff" />
+    <OrbitSignal />
     <group ref={group} rotation={[0, -.28, .025]}>{Array.from({ length: count }, (_, i) => {
       const angle = i / count * Math.PI * 2;
-      return <group key={`${mode}-${i}`} position={[Math.sin(angle) * radius, 0, Math.cos(angle) * radius]}>
-        {mode === "phone" ? <PhoneMockup texture={textures[i % textures.length]} mask={mask} /> : <NotebookMockup texture={textures[i % textures.length]} />}
-      </group>;
+      const template = heroTemplates(mode)[i % textures.length];
+      return <OrbitDevice
+        key={`${mode}-${template}-${i}`}
+        texture={textures[i % textures.length]}
+        mask={mask}
+        mode={mode}
+        position={[Math.sin(angle) * radius, 0, Math.cos(angle) * radius]}
+        selected={selectedTemplate === template}
+        onSelect={(point) => onSelectTemplate(selectedTemplate === template ? null : template, point)}
+      />;
     })}</group>
   </>;
 }
 
-export default function ChaosScene({ active = true, mode = "notebook", maximized = false, onReady, input }: { active?: boolean; mode?: HeroDeviceMode; maximized?: boolean; onReady?: (ready: boolean) => void; input?: HeroPointer }) {
+export default function ChaosScene({ active = true, mode = "notebook", maximized = false, onReady, input, selectedTemplate, onSelectTemplate }: {
+  active?: boolean;
+  mode?: HeroDeviceMode;
+  maximized?: boolean;
+  onReady?: (ready: boolean) => void;
+  input?: HeroPointer;
+  selectedTemplate: string | null;
+  onSelectTemplate: (slug: string | null, point?: { x: number; y: number }) => void;
+}) {
   return <Canvas frameloop={active ? "always" : "demand"} dpr={[1, 1.5]} camera={{ position: [0, 3.6, 9.8], fov: 39 }} gl={{ alpha: true, antialias: true }} onCreated={({ camera }) => camera.lookAt(0, 0, 0)} fallback={<span />}>
     <ambientLight intensity={1.4} />
     <directionalLight position={[3, 5, 5]} intensity={4} color="#d8e5ff" />
     <pointLight position={[-4, 1, -2]} intensity={14} color="#3459ff" />
-    <Suspense fallback={null}><TemplateRing active={active} mode={mode} maximized={maximized} onReady={onReady} input={input} /></Suspense>
+    <Suspense fallback={null}><TemplateRing active={active} mode={mode} maximized={maximized} onReady={onReady} input={input} selectedTemplate={selectedTemplate} onSelectTemplate={onSelectTemplate} /></Suspense>
   </Canvas>;
 }

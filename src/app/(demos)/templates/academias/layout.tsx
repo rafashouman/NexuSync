@@ -1,9 +1,9 @@
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
 export const metadata = nexuSyncMetadata({
-  title: "Site para academia | Demonstração PulseFit Lab",
+  title: "Site para academia | Demonstração PulseFit",
   description:
-    "Veja uma demonstração de site para academia com apresentação de serviços, informações e caminhos para contato.",
+    "Conheça uma academia com musculação, aulas em grupo, planos e agendamento de aula experimental. Demonstração NexuSync.",
   path: "/templates/academias",
 });
 

@@ -358,3 +358,10 @@
 @media(prefers-reduced-motion:reduce){
   .siteCard:hover,.button:hover,.button:hover svg,.serviceLink:hover svg{transform:none}
 }
+
+/* Portfolio images sit below the original type, orbit and interface artwork. */
+.designPrint { isolation: isolate; --project-veil: #d4ff38d6; }
+.designPrint[data-print="1"] { --project-veil: #3459ffd6; }
+.designPrint[data-print="2"] { --project-veil: #dfe5dcd6; }
+.designPrint > strong, .designPrint > svg { opacity: .94; }
+.interfacePrint i { opacity: .88; }
