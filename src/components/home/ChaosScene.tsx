@@ -13,6 +13,7 @@ export type HeroPointer = RefObject<{
   dragging: boolean;
   dragDelta: number;
   throwVelocity: number;
+  throwRevision: number;
 }>;
 
 function roundedShape(width: number, height: number, radius: number) {
@@ -94,6 +95,8 @@ function TemplateRing({ active, mode, maximized = false, onReady, input }: { act
   const rotation = useRef(-.28);
   const speed = useRef(.13);
   const follow = useRef({ x: 0, y: 0 });
+  const consumedDragDelta = useRef(0);
+  const consumedThrowRevision = useRef(0);
   const count = mode === "notebook" ? 6 : 10;
   const radius = mode === "notebook" ? 3.12 : 2.85;
   useEffect(() => {
@@ -115,13 +118,14 @@ function TemplateRing({ active, mode, maximized = false, onReady, input }: { act
     follow.current.x += (target.x - follow.current.x) * ease;
     follow.current.y += (target.y - follow.current.y) * ease;
     if (inputState) {
-      if (inputState.dragDelta !== 0) {
-        rotation.current += inputState.dragDelta;
-        inputState.dragDelta = 0;
+      const dragDelta = inputState.dragDelta - consumedDragDelta.current;
+      if (dragDelta !== 0) {
+        rotation.current += dragDelta;
+        consumedDragDelta.current = inputState.dragDelta;
       }
-      if (inputState.throwVelocity !== 0) {
+      if (inputState.throwRevision !== consumedThrowRevision.current) {
         speed.current = inputState.throwVelocity;
-        inputState.throwVelocity = 0;
+        consumedThrowRevision.current = inputState.throwRevision;
       }
     }
     if (inputState?.dragging) {

@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { ArrowUpRight, ArrowDown } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { Contact } from "@/components/Contact";
-import { StudioMark } from "./AboutExperience";
 import s from "./SitesExperience.module.css";
 import c from "./StudioExperience.module.css";
 

@@ -242,6 +242,7 @@ export default function ControlledChaos() {
     dragging: false,
     dragDelta: 0,
     throwVelocity: 0,
+    throwRevision: 0,
   });
   const dragState = useRef({
     active: false,
@@ -403,6 +404,7 @@ export default function ControlledChaos() {
               const fling = dragState.current.velocity;
               if (Math.abs(fling) > 0.08) {
                 heroPointer.current.throwVelocity = Math.max(-7.5, Math.min(7.5, fling * 1.35));
+                heroPointer.current.throwRevision += 1;
               }
               dragState.current.active = false;
               heroPointer.current.dragging = false;
