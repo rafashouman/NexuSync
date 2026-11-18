@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowDown, ArrowUpRight, Flame, MessageCircle } from "lucide-react";
+import { ArrowDown, ArrowUpRight, CalendarDays, Flame, MessageCircle } from "lucide-react";
 import styles from "./mini-cardapio.module.css";
 
 export const metadata: Metadata = {
@@ -86,9 +86,16 @@ export default function MiniCardapioPage() {
           <ShalonMark />
           <div className={styles.heroCopy}>
             <h1>Um bom assado.<br /><em>Um bom almoço.</em></h1>
-            <p className={styles.eyebrow}>Feito no capricho, pra você</p>
-            <p className={styles.eyebrow}>Assados sábado domingo e feriados<br />
-Marmitex de segunda a sabado</p>
+            <p className={styles.eyebrow}>Feitos no capricho, pra você</p>
+            <div className={styles.schedule}>
+              <span className={styles.scheduleHeading}>
+                <CalendarDays size={15} aria-hidden="true" /> Dias de atendimento
+              </span>
+              <dl>
+                <div><dt>Assados</dt><dd>Sábados, domingos e feriados</dd></div>
+                <div><dt>Marmitex</dt><dd>De segunda a sábado</dd></div>
+              </dl>
+            </div>
             <a href="#cardapio" className={styles.heroLink}>
               Ver nosso cardápio <ArrowDown size={17} aria-hidden="true" />
             </a>
