@@ -87,6 +87,8 @@ export default function MiniCardapioPage() {
           <div className={styles.heroCopy}>
             <h1>Um bom assado.<br /><em>Um bom almoço.</em></h1>
             <p className={styles.eyebrow}>Feito no capricho, pra você</p>
+            <p className={styles.eyebrow}>Assados sábado domingo e feriados<br />
+Marmitex de segunda a sabado</p>
             <a href="#cardapio" className={styles.heroLink}>
               Ver nosso cardápio <ArrowDown size={17} aria-hidden="true" />
             </a>
