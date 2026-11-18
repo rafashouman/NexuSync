@@ -10,23 +10,62 @@
 
 .chrome{overflow:visible;position:relative;z-index:30}
 
+/* A quiet image across the entire opening, with one luminous focal point. */
+.heroStage{position:relative;isolation:isolate}
+.heroStage .heroBackdrop{object-fit:cover;object-position:center;opacity:.36;z-index:-2;pointer-events:none}
+.heroStage::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,#080b1290 0%,#080b1240 60%,#080b1230),linear-gradient(0deg,#080b12 0%,transparent 24%,transparent 82%,#080b12a0)}
+.hero{z-index:0}
+.heroGrid{opacity:.35}
+.coreHalo{position:absolute;left:50%;top:48%;width:60%;height:48%;transform:translate(-50%,-50%);background:radial-gradient(ellipse,#8be7c526 0%,#3459ff16 35%,transparent 70%);pointer-events:none}
+.canvas[data-ready="false"]{opacity:0}
+.canvas[data-ready="true"]{opacity:1;transition:opacity .35s}
+.heroBottom{gap:24px;position:relative;z-index:3;align-items:center}
+.heroBottom .deviceControls{display:flex;gap:3px;padding:4px;border:1px solid #ffffff30;background:#080b1270;flex-shrink:0}
+.heroBottom .deviceControls button{min-height:36px;padding:9px 12px;font-size:10px;gap:8px;color:#bdc5d2;white-space:nowrap;transition:background .2s,color .2s}
+.heroBottom .deviceControls button[aria-pressed="true"]{background:var(--lime);color:var(--ink)}
+.heroBottom .deviceControls button:hover:not([aria-pressed="true"]){background:#ffffff0d;color:var(--paper)}
+.heroBottom>button{flex-shrink:0;min-height:40px}
+.solutionIndex{display:flex;align-items:center;gap:40px;max-width:1600px;margin:0 auto;padding:30px 56px;border-bottom:1px solid #ffffff22}
+.solutionIndex>span{font-size:9px;line-height:1.8;letter-spacing:.12em;color:#8f9bad;min-width:135px}
+.solutionIndex>div{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%}
+.solutionIndex a{display:flex;align-items:center;gap:12px;padding:15px 22px;border-left:1px solid #ffffff20;font-size:13px;min-height:52px}
+.solutionIndex a>small{font-size:8px;color:#8a94a5;align-self:flex-start;margin-top:4px}
+.solutionIndex a>svg{color:#829aff;flex-shrink:0;margin-left:auto;transition:transform .2s}
+.solutionIndex a:nth-child(2)>svg{color:#8be7c5}
+.solutionIndex a:nth-child(3)>svg{color:var(--lime)}
+.solutionIndex a:nth-child(4)>svg{color:#8be7c5}
+.solutionIndex a:hover>svg{transform:translate(3px,-3px)}
+
+/* Paper, ink and small color accents replace the full lime manifesto. */
+.manifesto{background:#eef0e8;color:#10171d}
+.manifesto>.sectionLabel{color:#47535a}
+.manifesto h2>.manifestoBlue{color:#3459ff}
+.manifesto h2>.manifestoGreen{color:#12644f}
+.manifesto h2 em{color:#10171d;background:linear-gradient(transparent 71%,#d4ff38 71%,#d4ff38 95%,transparent 95%);box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.manifesto h2>svg{color:#3459ff}
+.manifesto p{color:#47535a}
+.manifesto .darkButton svg{color:var(--lime)}
+
 /* Preview ring remains visible until WebGL and its screenshots are ready. */
-.templateFallback{position:absolute;left:50%;top:44%;width:105px;height:250px;transform-style:preserve-3d;transform:translate(-50%,-50%) perspective(750px) rotateX(-18deg) rotateY(-22deg);transition:opacity .3s;pointer-events:none}
+.templateFallback{position:absolute;left:50%;top:44%;width:115px;height:237px;transform-style:preserve-3d;transform:translate(-50%,-50%) perspective(750px) rotateX(-18deg) rotateY(-22deg);transition:opacity .3s;pointer-events:none}
 .templateFallback[data-ready="true"]{opacity:0}
-.templateFallback>div{position:absolute;inset:0;border:2px solid #3459ff;border-radius:4px;overflow:hidden;backface-visibility:visible;background:#111b31}
-.templateFallback img{object-fit:cover}
-@media(max-width:760px){.templateFallback{width:90px;height:225px;top:48%;transform:translate(-50%,-50%) perspective(750px) rotateX(-18deg) rotateY(-22deg) scale(.8)}}
+.templateFallback>div{position:absolute;inset:0;border:4px solid #344256;border-radius:17px;overflow:hidden;backface-visibility:visible;background:#111b31;box-shadow:0 0 0 1px #8c9eae55}
+.templateFallback[data-device="phone"]>div::after{content:"";position:absolute;z-index:1;top:6px;left:50%;transform:translateX(-50%);width:28px;height:7px;border-radius:8px;background:#05070b}
+.templateFallback[data-device="notebook"]{width:190px;height:124px;top:46%}
+.templateFallback[data-device="notebook"]>div{border-radius:6px;border-width:5px 5px 9px}
+.templateFallback img{object-fit:cover;object-position:top}
+@media(max-width:760px){.templateFallback{width:105px;height:216px;top:48%;transform:translate(-50%,-50%) perspective(750px) rotateX(-18deg) rotateY(-22deg) scale(.8)}}
 
 /* The ring sits beside the opening line, with room between every screen. */
 .heroVisual{top:-8px;right:-10px;width:56%;height:600px}
 .visualTag{bottom:28px;left:24%}
 .heroSticker{bottom:100px;right:65px}
-.manifestoField{position:absolute;right:2.5%;top:49%;width:clamp(350px,34vw,590px);aspect-ratio:1;transform:translateY(-50%);color:#304612;pointer-events:none;opacity:.65}
+.manifestoField{position:absolute;right:2.5%;top:49%;width:clamp(350px,34vw,590px);aspect-ratio:1;transform:translateY(-50%);color:#3459ff;pointer-events:none;opacity:.32}
 .manifestoField>svg{width:100%;height:100%;overflow:visible}
-.manifestoField path:nth-child(3n){stroke:#3459ff;opacity:.6}
+.manifestoField path:nth-child(3n){stroke:#12644f;opacity:.6}
 .manifestoField path:nth-child(4n){stroke-dasharray:2 5;opacity:.45}
 .manifesto h2{max-width:1050px}
-.manifesto h2 em{color:#344515}
+.manifesto h2 em{color:#10171d}
 .manifesto>div{gap:45px}
 .contact{position:relative;isolation:isolate;overflow:hidden}
 .contactField{position:absolute;right:160px;top:-20px;width:400px;height:400px;color:#4f70ff;opacity:.55;pointer-events:none;z-index:0}
@@ -37,3 +76,9 @@
 @media(min-width:761px) and (max-width:1000px){.hero{min-height:auto}.heroVisual{position:relative;top:auto;right:auto;width:min(680px,100%);height:460px;margin:0 0 0 auto}.heroBottom{margin-top:0}.heroSticker{right:50px;bottom:50px}.visualTag{bottom:20px;left:12%}}
 @media(max-width:1100px){.manifestoField{width:430px;right:-60px;opacity:.4}.contactField{right:65px;width:330px;height:330px}}
 @media(max-width:760px){.heroVisual{position:relative;top:auto;right:auto;width:100%;height:360px;margin-top:0}.visualTag{bottom:12px;left:0}.heroSticker{right:20px;bottom:40px}.manifestoField{right:-130px;top:45%;width:330px;opacity:.23}.manifesto>div{gap:24px}.contactField{right:-90px;top:5px;width:280px;height:280px;opacity:.3}}
+
+@media(min-width:1001px) and (max-width:1100px){.heroBottom{gap:12px}.heroBottom>span{font-size:9px;gap:10px}.heroBottom .deviceControls button{padding-inline:8px;font-size:9px}}
+@media(max-width:1100px){.solutionIndex{padding:25px 32px;gap:22px}.solutionIndex>span{min-width:100px;font-size:8px}.solutionIndex a{padding-inline:14px;font-size:11px;gap:9px}}
+@media(max-width:1000px){.heroBottom .deviceControls{display:none}}
+@media(max-width:760px){.heroBackdrop{object-position:64% center!important}.heroStage .heroBackdrop{opacity:.3}.heroBottom{align-items:flex-start;gap:20px}.solutionIndex{padding:24px 20px;display:block}.solutionIndex>span{display:block;margin-bottom:17px;font-size:8px}.solutionIndex>span br{display:none}.solutionIndex>div{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 0}.solutionIndex a{padding:12px;font-size:11px}.solutionIndex a:nth-child(odd){padding-left:0;border-left:0}.solutionIndex a>small{margin-top:3px}.manifestoField{opacity:.18}}
+@media(max-width:360px){.manifesto h2{font-size:28px}.manifesto h2 svg{width:24px;height:24px;margin-left:6px}}

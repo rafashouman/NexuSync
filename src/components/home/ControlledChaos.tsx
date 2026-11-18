@@ -5,8 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChaosHeader, ChaosFooter } from "./ChaosChrome";
 import { ReactiveField } from "./ReactiveField";
+import { HomePlans } from "./HomePlans";
+import { heroScreenshots, type HeroDeviceMode } from "./hero-templates";
 import { Component, useEffect, useRef, useState, type ReactNode } from "react";
-import { ArrowUpRight, ArrowDown, Plus, Pause, Play } from "lucide-react";
+import { ArrowUpRight, ArrowDown, Plus, Pause, Play, Smartphone, Laptop } from "lucide-react";
 import { waLink } from "@/lib/site-config";
 import s from "./ControlledChaos.module.css";
 
@@ -54,10 +56,17 @@ export default function ControlledChaos() {
   const [render3d, setRender3d] = useState(false);
   const [sceneReady, setSceneReady] = useState(false);
   const [inView, setInView] = useState(true);
+  const [device, setDevice] = useState<HeroDeviceMode>("phone");
+  const [desktop, setDesktop] = useState(false);
+  const deviceMode = desktop ? device : "phone";
+  const fallbackScreenshots = heroScreenshots(deviceMode).slice(0, deviceMode === "phone" ? 6 : 4);
   const hero = useRef<HTMLDivElement>(null);
-  const heroPointer = useRef({ x: 0, y: 0 });
+  const heroPointer = useRef({ x: 0, y: 0, inside: false });
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const desktopQuery = window.matchMedia("(min-width: 1001px)");
+    const updateDesktop = () => setDesktop(desktopQuery.matches);
+    updateDesktop(); desktopQuery.addEventListener("change", updateDesktop);
     let timer: ReturnType<typeof setTimeout>;
     const update = () => {
       clearTimeout(timer);
@@ -68,40 +77,44 @@ export default function ControlledChaos() {
     update(); preference.addEventListener("change", update);
     const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting));
     if (hero.current) observer.observe(hero.current);
-    return () => { clearTimeout(timer); preference.removeEventListener("change", update); observer.disconnect(); };
+    return () => { clearTimeout(timer); preference.removeEventListener("change", update); desktopQuery.removeEventListener("change", updateDesktop); observer.disconnect(); };
   }, []);
   return <div className={s.home} data-paused={paused}>
     <ChaosHeader />
 
+    <div className={s.heroStage}>
+    <Image src="/images/hero-backdrop.webp" alt="" fill sizes="100vw" className={s.heroBackdrop} />
     <section className={s.hero} ref={hero} onPointerMove={event => {
       if (event.pointerType !== "mouse" || paused) return;
       const bounds = event.currentTarget.getBoundingClientRect();
       heroPointer.current.x = Math.max(-1, Math.min(1, (event.clientX - bounds.left) / bounds.width * 2 - 1));
       heroPointer.current.y = Math.max(-1, Math.min(1, 1 - (event.clientY - bounds.top) / bounds.height * 2));
-    }} onPointerLeave={() => { heroPointer.current.x = 0; heroPointer.current.y = 0; }}>
+      heroPointer.current.inside = true;
+    }} onPointerLeave={() => { heroPointer.current = { x: 0, y: 0, inside: false }; }}>
       <div className={s.heroGrid} aria-hidden="true" />
       <div className={s.heroTop}><span><i /> AGÊNCIA DIGITAL / NEXUSYNC</span><span>ESTRATÉGIA. DESIGN. TECNOLOGIA.</span></div>
       <div className={s.heroCopy}><h1>Seu negócio<br />merece <span>ir mais<br /><em>longe.</em><svg viewBox="0 0 310 26" aria-hidden="true"><path d="M3 20Q155 -7 305 10" /></svg></span></h1>
         <p>Sites, aplicativos e estratégias para atrair mais clientes, fortalecer sua marca e gerar resultados reais no digital.</p>
         <div className={s.heroActions}><Link href={contact} className={s.primary}>Tirar meu projeto do papel <ArrowUpRight size={20} /></Link><a href="#servicos" className={s.textLink}>Conhecer soluções <ArrowDown size={16} /></a></div>
       </div>
-      <div className={s.heroVisual} aria-hidden="true"><div className={s.templateFallback} data-ready={sceneReady}>{["imobiliaria", "cardapio", "academias", "streetwear", "arquitetura", "dog-e-acai"].map((slug, i) => <div key={slug} style={{ transform: `rotateY(${i * 60}deg) translateZ(155px)` }}><Image src={`/images/hero-templates/${slug}.jpg`} fill sizes="110px" alt="" /></div>)}</div>{render3d && <div className={s.canvas}><SceneBoundary onReady={setSceneReady}><Scene active={inView && !paused} onReady={setSceneReady} input={heroPointer} /></SceneBoundary></div>}<span className={s.visualTag}>PROJETOS EM ÓRBITA.<br /><b>SUA MARCA NO PRÓXIMO.</b></span><span className={s.cross}>+</span><span className={s.verticalLabel}>CREATIVE SYSTEM / 001</span><span className={s.heroSticker}>FORA<br />DO ÓBVIO. <ArrowUpRight /></span></div>
-      <div className={s.heroBottom}><span>Tecnologia de ponta <i /> Design estratégico <i /> Foco em resultados</span><button onClick={() => { setPaused(!paused); setRender3d(true); }} aria-label={paused ? "Ativar animações" : "Pausar animações"}>{paused ? <Play size={14} /> : <Pause size={14} />} {paused ? "Ativar movimento" : "Pausar movimento"}</button></div>
+      <div className={s.heroVisual} id="hero-devices" data-device={deviceMode} aria-hidden="true"><div className={s.coreHalo} /><div className={s.templateFallback} data-ready={sceneReady} data-device={deviceMode}>{fallbackScreenshots.map((src, i) => <div key={src} style={{ transform: `rotateY(${i * 360 / fallbackScreenshots.length}deg) translateZ(${deviceMode === "phone" ? 155 : 175}px)` }}><Image src={src} fill sizes={deviceMode === "phone" ? "110px" : "180px"} alt="" /></div>)}</div>{render3d && <div className={s.canvas} data-ready={sceneReady}><SceneBoundary onReady={setSceneReady}><Scene active={inView && !paused} mode={deviceMode} onReady={setSceneReady} input={heroPointer} /></SceneBoundary></div>}<span className={s.visualTag}>PROJETOS EM ÓRBITA.<br /><b>SUA MARCA NO PRÓXIMO.</b></span><span className={s.cross}>+</span><span className={s.verticalLabel}>CREATIVE SYSTEM / 001</span><span className={s.heroSticker}>FORA<br />DO ÓBVIO. <ArrowUpRight /></span></div>
+      <div className={s.heroBottom}><span>Tecnologia de ponta <i /> Design estratégico <i /> Foco em resultados</span><div className={s.deviceControls} role="group" aria-label="Formato dos mockups"><button type="button" aria-pressed={device === "phone"} aria-controls="hero-devices" onClick={() => { if (device !== "phone") { setSceneReady(false); setDevice("phone"); } }}><Smartphone size={14} />Smartphones</button><button type="button" aria-pressed={device === "notebook"} aria-controls="hero-devices" onClick={() => { if (device !== "notebook") { setSceneReady(false); setDevice("notebook"); } }}><Laptop size={15} />Notebooks</button></div><button onClick={() => { setPaused(!paused); setRender3d(true); }} aria-label={paused ? "Ativar animações" : "Pausar animações"}>{paused ? <Play size={14} /> : <Pause size={14} />} {paused ? "Ativar movimento" : "Pausar movimento"}</button></div>
     </section>
+    </div>
 
-    <div className={s.ticker} aria-label="Design, código, movimento e estratégia"><div aria-hidden="true">{[0, 1, 2, 3].map(i => <span key={i}>DESIGN <b>✳</b> CÓDIGO <b>↗</b> MOVIMENTO <b>✳</b> ESTRATÉGIA <b>↗</b> </span>)}</div></div>
+    <nav className={s.solutionIndex} aria-label="Acessos rápidos às soluções"><span>ESCOLHA O SEU <br />PRÓXIMO PASSO.</span><div>{[["Sites & lojas", "/criacao-de-sites"], ["Apps & automações", "/apps"], ["Design & motion", "/design"], ["Tráfego & SEO", "/marketing"]].map(([label, href], i) => <Link key={href} href={href}><small>0{i + 1}</small><span>{label}</span><ArrowUpRight size={17} /></Link>)}</div></nav>
 
     <section className={s.section} id="servicos"><div className={s.sectionLabel}><span>01 / O QUE FAZEMOS</span><span>CRIATIVIDADE COM DIREÇÃO ↘</span></div><div className={s.sectionHeading}><h2>Sua próxima fase.<br /><span>Começa aqui.</span></h2><p>Soluções digitais completas para o seu negócio. Da presença online à performance, unimos tecnologia, estratégia e design para gerar crescimento.</p></div>
-      <div className={s.serviceGrid}>{services.map(service => <Link href={service.href} className={s.serviceCard} key={service.n} id={service.n === "02" ? "aplicacoes" : service.n === "03" ? "midias-digitais" : service.n === "04" ? "planos-marketing" : undefined}><ServiceArt kind={service.art} /><div className={s.serviceInfo}><div className={s.serviceMeta}><span>{service.n} / {service.tag}</span><ArrowUpRight /></div><h3>{service.title}</h3><h4>{service.copy}</h4><p>{service.text}</p></div></Link>)}</div>
+      <div className={s.serviceGrid}>{services.map(service => <Link href={service.href} className={s.serviceCard} key={service.n}><ServiceArt kind={service.art} /><div className={s.serviceInfo}><div className={s.serviceMeta}><span>{service.n} / {service.tag}</span><ArrowUpRight /></div><h3>{service.title}</h3><h4>{service.copy}</h4><p>{service.text}</p></div></Link>)}</div>
     </section>
 
-    <section className={s.manifesto} data-cursor-tone="ink"><span className={s.sectionLabel}>PRESENÇA É MAIS DO QUE ESTAR ONLINE.</span><h2>Seu negócio tem<br />personalidade.<br />Sua presença digital<br />também <em>precisa ter.</em><ArrowUpRight /></h2><div><p>Facilite o caminho entre conhecer sua empresa e falar com você. Um bom site combina informação, confiança e caminhos claros para o cliente dar o próximo passo.</p><Link href="/templates" className={s.darkButton}>Explore nossos projetos <ArrowUpRight size={20} /></Link></div><span className={s.manifestoField}><ReactiveField paused={paused} /></span></section>
+    <section className={s.manifesto} id="manifesto" data-cursor-tone="ink"><span className={s.sectionLabel}>PRESENÇA É MAIS DO QUE ESTAR ONLINE.</span><h2>Seu negócio tem<br /><span className={s.manifestoBlue}>personalidade.</span><br /><span className={s.manifestoGreen}>Sua presença digital</span><br />também <em>precisa ter.</em><ArrowUpRight /></h2><div><p>Facilite o caminho entre conhecer sua empresa e falar com você. Um bom site combina informação, confiança e caminhos claros para o cliente dar o próximo passo.</p><Link href="/templates" className={s.darkButton}>Explore nossos projetos <ArrowUpRight size={20} /></Link></div><span className={s.manifestoField}><ReactiveField paused={paused} /></span></section>
 
     <section className={s.section} id="como-funciona"><div className={s.sectionLabel}><span>02 / DA IDEIA AO MUNDO</span><span>SEM COMPLICAÇÃO.</span></div><div className={s.sectionHeading}><h2>Processo claro.<br /><span>Próximo passo certo.</span></h2><p>Do primeiro contato ao site publicado, com etapas claras. Você sabe o que acontece em cada fase e o que precisamos para tirar o projeto do papel.</p></div><ol className={s.steps}>{steps.map(([title, body], i) => <li key={title}><span>0{i + 1}<ArrowUpRight /></span><h3>{title}</h3><p>{body}</p></li>)}</ol></section>
 
-    <section className={s.planStrip} id="planos"><div><span className={s.sectionLabel}>SEU PROJETO, NA MEDIDA CERTA.</span><h2>Um site pensado para<br />o seu próximo objetivo.</h2></div><div><p>Landing pages, sites institucionais, lojas virtuais e projetos sob medida. Escolha a estrutura que faz sentido para o seu negócio.</p><Link href="/criacao-de-sites#planos" className={s.primary}>Conhecer planos e entregas <ArrowUpRight size={20} /></Link></div></section>
+    <HomePlans />
 
-    <section className={`${s.section} ${s.faq}`} id="faq"><div><span className={s.sectionLabel}>03 / VAMOS SIMPLIFICAR</span><h2>Boas perguntas.<br /><span>Respostas claras.</span></h2><p>Confira prazos, investimento e o que cada serviço inclui. A proposta define as entregas e as condições antes de começarmos.</p></div><div>{faqs.map(([q, a]) => <details key={q}><summary>{q}<Plus size={20} /></summary><p>{a}</p></details>)}<Link href="/contato" className={s.textLink}>Ainda tem uma dúvida? Fale com a gente <ArrowUpRight size={16} /></Link></div></section>
+    <section className={`${s.section} ${s.faq}`} id="faq"><div><span className={s.sectionLabel}>04 / VAMOS SIMPLIFICAR</span><h2>Boas perguntas.<br /><span>Respostas claras.</span></h2><p>Confira prazos, investimento e o que cada serviço inclui. A proposta define as entregas e as condições antes de começarmos.</p></div><div>{faqs.map(([q, a]) => <details key={q}><summary>{q}<Plus size={20} /></summary><p>{a}</p></details>)}<Link href="/contato" className={s.textLink}>Ainda tem uma dúvida? Fale com a gente <ArrowUpRight size={16} /></Link></div></section>
 
     <section className={s.contact} id="contato"><ReactiveField shape="weave" paused={paused} className={s.contactField} /><span className={s.sectionLabel}>A PRÓXIMA CONEXÃO COMEÇA COM UMA CONVERSA.</span><Link href={contact}><h2>Vamos criar<br /><em>algo grande?</em></h2><span className={s.contactArrow}><ArrowUpRight /></span></Link><div><p>O que falta para seu cliente chamar você?</p><a href={waLink("Olá! Vim pelo site da NexuSync e gostaria de falar sobre um projeto.")}>Fale pelo WhatsApp <ArrowUpRight size={18} /></a></div></section>
     <ChaosFooter />
