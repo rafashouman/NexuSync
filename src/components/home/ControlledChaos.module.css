@@ -82,3 +82,59 @@
 @media(max-width:1000px){.heroBottom .deviceControls{display:none}}
 @media(max-width:760px){.heroBackdrop{object-position:64% center!important}.heroStage .heroBackdrop{opacity:.3}.heroBottom{align-items:flex-start;gap:20px}.solutionIndex{padding:24px 20px;display:block}.solutionIndex>span{display:block;margin-bottom:17px;font-size:8px}.solutionIndex>span br{display:none}.solutionIndex>div{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 0}.solutionIndex a{padding:12px;font-size:11px}.solutionIndex a:nth-child(odd){padding-left:0;border-left:0}.solutionIndex a>small{margin-top:3px}.manifestoField{opacity:.18}}
 @media(max-width:360px){.manifesto h2{font-size:28px}.manifesto h2 svg{width:24px;height:24px;margin-left:6px}}
+
+/* Short, tactile feedback keeps the interactive elements easy to recognize. */
+.primary,.darkButton,.navCta{transition:background .22s,color .22s,border-color .22s,box-shadow .22s,transform .22s}
+.primary>svg,.darkButton>svg,.navCta>svg,.textLink>svg{flex-shrink:0;transition:transform .22s}
+.textLink{transition:color .2s; text-underline-offset:5px;text-decoration-thickness:1px}
+.serviceCard{--hover-accent:#829aff;transition:border-color .25s}
+.serviceCard:nth-child(2),.serviceCard:nth-child(4){--hover-accent:#8be7c5}
+.serviceCard:nth-child(3){--hover-accent:var(--lime)}
+.serviceInfo h3{transition:color .25s}
+.serviceArt::after{content:"";position:absolute;inset:0;border:1px solid transparent;pointer-events:none;transition:border-color .25s}
+.appArt,.motion>strong,.growth>svg{transition:transform .35s}
+.solutionIndex a{--hover-accent:#829aff;position:relative;transition:background .22s,color .22s}
+.solutionIndex a:nth-child(2),.solutionIndex a:nth-child(4){--hover-accent:#8be7c5}
+.solutionIndex a:nth-child(3){--hover-accent:var(--lime)}
+.solutionIndex a::after{content:"";position:absolute;left:22px;right:22px;bottom:0;height:2px;background:var(--hover-accent);opacity:0;transition:opacity .22s}
+.heroBottom>button{transition:color .2s}
+.heroBottom .deviceControls button{transition:background .2s,color .2s,box-shadow .2s}
+.faq details{transition:border-color .22s}
+.faq summary{transition:color .22s}
+.manifesto :is(a,button,summary):focus-visible{outline-color:var(--blue)}
+.serviceCard:focus-visible{border-bottom-color:var(--hover-accent)}
+.serviceCard:focus-visible .serviceInfo h3{color:var(--hover-accent)}
+.solutionIndex a:focus-visible{background:#ffffff09;color:var(--hover-accent)}
+.solutionIndex a:focus-visible::after{opacity:1}
+
+@media(hover:hover) and (pointer:fine){
+  .primary:hover{background:var(--paper);box-shadow:5px 5px 0 var(--blue)}
+  .darkButton:hover{background:var(--blue);box-shadow:5px 5px 0 var(--lime)}
+  .navCta:hover{border-color:var(--lime);box-shadow:4px 4px 0 var(--blue)}
+  .home .textLink:hover{color:var(--lime);text-decoration-line:underline}
+  .serviceCard:hover{border-bottom-color:var(--hover-accent)}
+  .serviceCard:hover .serviceInfo h3{color:var(--hover-accent)}
+  .serviceCard:hover .serviceArt{filter:brightness(1.07)}
+  .serviceCard:hover .serviceArt::after{border-color:var(--hover-accent)}
+  .solutionIndex a:hover{background:#ffffff09;color:var(--hover-accent)}
+  .solutionIndex a:hover::after{opacity:1}
+  .heroBottom>button:hover{color:var(--lime)}
+  .heroBottom .deviceControls button:hover:not([aria-pressed="true"]){background:#ffffff15;box-shadow:inset 0 -2px var(--blue)}
+  .heroBottom .deviceControls button[aria-pressed="true"]:hover{background:#e5ff85}
+  .faq details:hover{border-bottom-color:#d4ff3890}
+  .faq summary:hover{color:var(--lime)}
+  .contact>div a:hover{color:var(--lime)}
+}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .primary:hover,.darkButton:hover,.navCta:hover{transform:translate(-2px,-3px)}
+  .primary:hover>svg,.darkButton:hover>svg,.navCta:hover>svg{transform:translate(3px,-3px)}
+  .textLink:hover>svg{transform:translateY(3px)}
+  .serviceCard:hover .appArt{transform:rotate(3deg) translateY(-4px)}
+  .serviceCard:hover .motion>strong{transform:translateY(-4px)}
+  .serviceCard:hover .growth>svg{transform:translateY(-4px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .primary:hover,.darkButton:hover,.navCta:hover{transform:none}
+  .serviceCard:hover .browserArt{transform:rotate(-7deg) translateY(32px)}
+  .serviceCard:hover .serviceMeta svg,.solutionIndex a:hover>svg,.contact>a:hover .contactArrow{transform:none}
+}
