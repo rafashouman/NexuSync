@@ -331,6 +331,30 @@ Leitura: a home atual já carrega cerca de 0,5 MB de JS, boa parte do three.js d
 - trocar PBR por materiais mais leves onde não há diferença visual;
 - `renderer.compileAsync` antes do primeiro quadro.
 
+### Otimização da cena 3D (19/11/2026)
+
+O que mudou em `world/scene.ts`, sem diferença visual (conferido por screenshots antes/depois):
+
+- **Draw calls de ~650 para ~170.**
+  - Vitrines, placas, poças de luz, traços da rua, postes e poças dos postes viraram `InstancedMesh`, com cor por instância.
+  - As luzes dos postes viraram um único `Points`.
+  - Cada prédio passou de 6 grupos de material para 2 (fachadas + teto).
+- **`MeshLambertMaterial`** no lugar do PBR (`MeshStandardMaterial`).
+- **Renderização sob demanda.** Taxa cheia só quando algo se mexe: rolagem, mouse, câmera em transição, pulso da busca, placas ou hover. Parada, a cena anima a 30 fps no desktop e 15 fps no celular. No celular, o teto é 30 fps.
+- **Construção em etapas,** cedendo o processador entre elas.
+- **`compileAsync`** quando o navegador tem `KHR_parallel_shader_compile`.
+- **Canvas mais leve:** resolução até 1,5× no desktop e 1,25× no celular, e sem antialias no celular.
+- **Raycast do hover** só quando o ponteiro se move.
+
+| Métrica | Celular antes → depois | Desktop antes → depois |
+| --- | --- | --- |
+| TBT (aprox.) | 1.096 ms → **321 ms** | 346 ms → **271 ms** |
+| LCP | 1,43 s → **1,35 s** | 0,61 s → **0,42 s** |
+| CLS | 0,002 → 0,002 | 0,093 → 0,093 |
+| JS | 442 KB → 443 KB | 442 KB → 443 KB |
+
+O TBT que sobra vem sobretudo da compilação de shaders no primeiro quadro: o Chrome de teste usa GPU emulada (SwiftShader), sem compilação paralela. Em navegadores com GPU real, o `compileAsync` remove essa trava. Falta medir num aparelho real.
+
 ### Fase 5 — Qualidade
 - [ ] Celular (375 px), tablet e desktop sem rolagem horizontal.
 - [ ] Movimento reduzido e fallback sem WebGL.
