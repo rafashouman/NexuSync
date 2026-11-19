@@ -1,0 +1,373 @@
+# NexuSync — Plano de desenvolvimento: Rua Acesa
+
+Data: 19/11/2026
+Projeto: `C:\@sites\nexusync` (Next.js 16.4.6 · React 19 · Tailwind 4 · three 0.182 + @react-three/fiber/drei)
+Protótipo aprovado: https://claude.ai/artifact/VCTqcHAP4JxE79tMtqC3LK
+
+---
+
+## 1. Objetivo
+
+Substituir a home atual (`ControlledChaos`) pela experiência **Rua Acesa**, aprovada no protótipo: uma rua 3D à noite que fica atrás de todo o conteúdo e conta uma história. O negócio do visitante começa apagado e invisível na busca, e termina aceso e primeiro no mapa. A interação é a própria história: o mouse acende vitrines e a rolagem move a câmera por cada bloco do copy.
+
+A home precisa deixar claro o posicionamento da agência:
+
+- **Foco em presença online e SEO orgânico.** Tráfego pago não é o argumento de venda da home.
+- **Pilares, nesta ordem:** 1) Presença online, com sites marcantes; 2) Design, com foco em motion graphics; 3) Gestão de redes sociais; 4) Tráfego pago, sempre por último.
+
+Esta fase cobre só a home. As rotas de demos, apps, templates, admin e as páginas internas continuam funcionando sem mudança (ver seção 10).
+
+---
+
+## 2. Decisões já tomadas
+
+| Tema | Decisão |
+| --- | --- |
+| Conceito | "A Rua Acesa": quem tem site e aparece no Google está com a vitrine acesa e um feixe de busca no telhado. |
+| Paleta | Base azul-noite. Âmbar = a luz de estar visível, usada também nos CTAs. Azul-sinal = a busca. Branco frio = iluminação pública. Sem lima e sem roxo. |
+| Regra de cor | Âmbar só para "visível, aceso, ação". Azul-sinal só para "busca, Google, pin". Nada de cor decorativa. |
+| Tipografia | Archivo (variável, eixo de largura, para títulos e números), Inter (texto) e JetBrains Mono (rótulos, busca, recibo). |
+| Botões | Mantém o formato atual: retangular, com bloco de seta separado. |
+| Oferta da página | Plano Presence: de R$ 599,00 por R$ 499,00, entrega estimada de 5 a 10 dias úteis. Os dados vêm de `src/data/sitePlans.ts`. |
+| Método | O nome "Método Orçamento em 7 Dias" fica. O contador mostra as 4 etapas reais do processo (Entendemos seu negócio → Definimos a proposta → Criamos e apresentamos → Publicamos e orientamos), não "Dia 1–7". |
+| Depoimentos | Fora até existirem depoimentos reais. Nada de texto provisório no ar. |
+| Vídeo | "Pedido online - 21 segundos" (vertical, 720×1280, H.264/AAC), num modal vertical. |
+| Regras de copy | As de `docs/Nosso repertório criativo.md`: não inventar preços, descontos, depoimentos, urgência ou resultados. |
+
+---
+
+## 3. Diagnóstico do projeto atual
+
+### 3.1 Home e componentes
+
+| Item | Situação | Impacto no plano |
+| --- | --- | --- |
+| `src/app/(site)/page.tsx` | Renderiza só `<ControlledChaos />` e tem a metadata da home. | Passa a renderizar `<RuaHome />`, com metadata nova. |
+| `src/components/home/ControlledChaos.tsx` | 670 linhas: hero com carrossel 3D, serviços, manifesto, "como funciona", FAQ e contato. | Sai da home. O código fica no repositório até o lançamento estabilizar, depois é removido. |
+| `src/components/home/ChaosScene.tsx` | Cena R3F carregada com `dynamic(..., { ssr: false })`. | É o padrão a seguir para o mundo 3D. |
+| `ChaosHeader` / `ChaosFooter` / `StudioCursor` / `FloatingWA` | Cabeçalho, rodapé, cursor e WhatsApp flutuante da home. | Cabeçalho e rodapé ganham versão Rua Acesa. O cursor customizado sai (a rua já reage ao mouse). |
+| `src/app/(site)/layout.tsx` | O título da metadata é "NexuSync \| Tráfego Pago e SEO, Sites e Automações". | **Contraria os pilares.** Precisa ser reescrito. |
+| `src/data/siteNavigation.ts` | Menu "Soluções" termina com "Marketing, tráfego e SEO". | Reorganizar o menu pelos pilares, na ordem. |
+| `src/app/globals.css` | Tokens globais com lima (`--color-champagne: #d4ff38`, `--primary`, seleção e foco). | A nova paleta entra primeiro escopada na home (`.rua`), para não quebrar as outras páginas. |
+| `src/app/layout.tsx` | Carrega Geist e Montserrat por `<link>` do Google Fonts. | As fontes novas entram com `next/font/google` só na home. |
+
+### 3.2 O que já existe e será reaproveitado
+
+- **Orçamento:** `QuoteLink` leva para `/contato?interest=…&source=…#orcamento`, com interesses em `src/lib/quote.ts`, gravação em `src/app/actions/quotes.ts` e painel em `/admin/orcamentos`. Todos os CTAs "Quero ver meu orçamento" usam esse fluxo.
+- **WhatsApp:** `waLink()` em `src/lib/site-config.ts`. A mensagem do Presence já existe em `sitePlans.ts` (`waMessage`).
+- **Analytics:** `trackAnalyticsEvent()` em `src/lib/analytics.ts`, com eventos tipados, mais o `MetaPixel`.
+- **Preços:** `src/data/sitePlans.ts` é a única fonte. A home não pode ter preço escrito à mão.
+- **FAQ:** a home atual tem perguntas úteis para SEO, como tipos de site e o que o cliente precisa fornecer. Elas são revisadas e entram na nova home.
+
+### 3.3 Riscos encontrados
+
+1. **Deploy automático.** Todo push na `main` dispara `.github/workflows/deploy.yml`: `npm ci` → `lint` → `tsc --noEmit` → `scripts/test-quote-validation.cjs` → `build` → `deploy-nexusync` na VPS.
+2. **Arquivos de deploy apagados na cópia local.** `Dockerfile`, `docker-compose.yml` e `.dockerignore` estão apagados, mas não commitados. O script da VPS provavelmente usa esses arquivos. **Commitar essas exclusões e dar push pode derrubar o deploy.** A limpeza de docs e previews é segura.
+3. **Next 16 tem mudanças incompatíveis** (aviso em `AGENTS.md`). Antes de escrever código, ler os guias em `node_modules/next/dist/docs/` sobre App Router, `cacheComponents` (ativo no `next.config.ts`), `dynamic` e metadata.
+4. **Peso da cena 3D.** Uma cena WebGL que cobre a página toda pode piorar LCP e INP no celular. Por isso existe o orçamento de performance da seção 6.4.
+
+---
+
+## 4. Arquitetura proposta
+
+### 4.1 Estrutura de arquivos
+
+```
+src/components/rua/
+  RuaHome.tsx              # server component: monta as seções; todo o texto sai no HTML (SEO)
+  RuaHome.module.css       # tokens e estilos da home, escopados em .rua
+  RuaChrome.tsx            # cabeçalho (com pilares) e rodapé da home
+  world/
+    RuaWorld.tsx           # client: <Canvas> fixo, carregado com dynamic(ssr:false)
+    Street.tsx             # chão, grade, rua, calçadas, postes
+    Buildings.tsx          # fileiras de prédios, vitrines, poças de luz, hover
+    SearchBeam.tsx         # feixe de busca (shader) + pin
+    AttemptSigns.tsx       # as 6 placas das tentativas
+    CityBlocks.tsx         # quarteirões de fundo (InstancedMesh)
+    cameraKeys.ts          # enquadramentos por seção + chave do método
+    useStoryScroll.ts      # mapeia a rolagem para (seção, progresso, transição)
+    WorldTags.tsx          # etiquetas "Seu concorrente" / "Você" projetadas na tela
+  sections/
+    HeroSection.tsx        # + SearchSimulator.tsx (client)
+    DorSection.tsx
+    TentativasSection.tsx  # client só nos cards (hover acende a placa)
+    AgoraSection.tsx       # + PageTimer.tsx (client)
+    MetodoSection.tsx      # furadeira (SVG, client) + painel fixo das 4 etapas
+    ParaQuemSection.tsx
+    EntregaveisSection.tsx # recibo gerado a partir de sitePlans.ts
+    PilaresSection.tsx
+    FaqSection.tsx
+    FinalSection.tsx
+  VideoModal.tsx           # vídeo vertical, carregado só ao abrir
+src/store/useRuaStore.ts   # zustand: seção atual, progresso, etapa do método, tentativa ativa, pulso da busca
+```
+
+### 4.2 Como as peças conversam
+
+- **O texto é sempre HTML do servidor.** O 3D é decoração (`aria-hidden`). Sem WebGL, com JavaScript lento ou para o Google, a página continua completa e legível.
+- **Uma fonte de verdade para a história.** `useStoryScroll` mede as seções (com `ResizeObserver`) e grava em `useRuaStore` a seção atual, o progresso e a etapa do método. O mundo 3D e os componentes de UI leem o mesmo estado.
+- **Câmera.** Um enquadramento fixo por seção em `cameraKeys.ts`, com transição suave entre eles. A seção do método tem uma órbita própria, guiada pelo progresso das 4 etapas. Esse é o mesmo modelo do protótipo, portado para `useFrame` do R3F.
+- **Reações ao visitante:**
+  - mouse em cima de um prédio → a vitrine acende e o prédio sobe um pouco;
+  - arrastar no hero e no final → gira a rua;
+  - busca simulada → o feixe do concorrente pulsa;
+  - card de tentativa → a placa acende e depois apaga.
+- **Rolagem suave.** Adicionar `lenis` (a mesma biblioteca usada pela BOA Labs). Os links de âncora usam `lenis.scrollTo`. Com movimento reduzido, a rolagem nativa é mantida.
+
+### 4.3 Portar do protótipo (o que muda)
+
+| Protótipo (HTML único) | Projeto |
+| --- | --- |
+| three r128 global, `THREE.*` | three 0.182 via R3F/drei. Trocar `outputEncoding` por `outputColorSpace` / `SRGBColorSpace`. |
+| `convertSRGBToLinear` manual | Usar o gerenciamento de cor nativo do three 0.182 (`ColorManagement`). Conferir as cores lado a lado com o protótipo. |
+| Lenis por CDN | Pacote `lenis` no `package.json`. |
+| Fontes do Google por `<link>` | `next/font/google` (Archivo com eixo `wdth`, Inter, JetBrains Mono). |
+| Recibo com itens escritos à mão | Itens e preços lidos de `sitePlans.ts` (ver 5.3). |
+| Vídeo publicado junto ao artefato | `public/videos/pedido-online.mp4` + pôster `public/videos/pedido-online.jpg`. |
+
+### 4.4 Regras do Next 16 que afetam o código (lidas em `node_modules/next/dist/docs/`)
+
+- **`ssr: false` só funciona dentro de Client Components.** O `RuaWorld` é importado por um componente `"use client"` com `dynamic(() => import(...), { ssr: false })`. Dentro de um Server Component dá erro (guia `lazy-loading`).
+- **`cacheComponents` está ativo, e isso faz a rota ficar oculta, não desmontada, ao navegar.** O Next guarda a página anterior em `<Activity mode="hidden">`: os efeitos são limpos ao sair e recriados ao voltar. Então o canvas WebGL, a instância do Lenis, os listeners de rolagem, ponteiro e resize e os `IntersectionObserver` precisam de cleanup completo no `useEffect`, senão vazam ou duplicam ao ir e voltar da home.
+- **Rolagem suave.** O `<html>` tem `data-scroll-behavior="smooth"` e a classe `scroll-smooth`. Com o Lenis ativo na home, o CSS precisa forçar `scroll-behavior: auto` enquanto `html.lenis` existir (regras do `lenis.css`), senão os dois brigam.
+- **Fontes:** `next/font/google` aceita `axes` em fontes variáveis. Usar `Archivo({ subsets: ['latin'], axes: ['wdth'], variable: '--font-rua-display' })`, mais Inter e JetBrains Mono com `variable`, aplicadas só no container da home.
+- **JSON-LD:** `<script type="application/ld+json">` nativo, no `page.tsx`, com `JSON.stringify(...).replace(/</g, '\\u003c')`, o mesmo padrão já usado em `(site)/layout.tsx`.
+- **Build do projeto:** `npm run build` usa webpack (`next build --webpack`). O CI roda `lint`, `tsc --noEmit`, `scripts/test-quote-validation.cjs` e `build`, e tudo isso precisa passar na branch antes do merge.
+
+---
+
+## 5. Conteúdo da home (ordem final)
+
+| # | Seção | Conteúdo | Cena 3D |
+| --- | --- | --- | --- |
+| 1 | Hero | Headline "O concorrente da sua rua já aparece no Google quando alguém pesquisa o seu serviço.", subtítulo com "site marcante e SEO orgânico, sem depender de anúncio", 3 bullets, CTA e vídeo. Simulador de busca à direita. | Rua vista de cima; concorrente aceso com feixe; "Você · invisível na busca". |
+| — | Faixa animada | Sites marcantes · SEO orgânico · Motion graphics · Redes sociais · Landing pages · Hotsites | — |
+| 2 | Dor | 3 cenas: a reunião (busca sem resultado), o Instagram (alcance caindo, ilustrativo), o domingo no Wix. Fecha com "Não falta esforço. Falta estrutura." | Câmera na rua, em frente à vitrine apagada do visitante. |
+| 3 | Tentativas | 6 cards com "Acende / Apaga": Instagram, Google Meu Negócio sem site, Wix/Hostinger, site por IA, cartão, grupo de WhatsApp. | 6 placas em volta do prédio que acendem e apagam. |
+| 4 | Agora | "Você está nesta página há 0:00." + CTA e WhatsApp. | Vista aberta da cidade. |
+| 5 | Método | Furadeira (furo → quadro → telefone tocando) + painel fixo "Etapa 1–4 / 4". | Órbita: linhas de diagnóstico → prédio cresce → vitrine acende → pin e feixe sobem. |
+| 6 | Pra quem é / não é | Duas colunas. | Vista alta com os dois feixes (concorrente e visitante). |
+| 7 | Entregáveis | Recibo do Presence que "imprime" na rolagem. | Prédio do visitante aceso, com pin. |
+| 8 | Pilares | "Primeiro a vitrine acende. Depois a rua inteira vê." O prédio dos 4 pilares: 01 Presença online (alicerce) → 04 Tráfego pago (último andar). | Cidade mais iluminada. |
+| 9 | FAQ | Perguntas revisadas da home atual (SEO orgânico). | — |
+| 10 | Final | "Na próxima busca, quem aparece é você." + CTAs. | Mapa visto de cima com "Você · primeiro na busca". |
+
+### 5.1 Texto
+
+O texto aprovado está no protótipo e é a referência. Nenhum texto novo entra sem passar pelas regras de `docs/Nosso repertório criativo.md`.
+
+### 5.2 CTAs
+
+| CTA | Destino | Origem (`QuoteSection`) |
+| --- | --- | --- |
+| "Quero ver meu orçamento" (cabeçalho) | `QuoteLink` → `/contato#orcamento`, interesse `institucional` | `header` |
+| "Quero ver meu orçamento" (hero) | idem | `hero` |
+| "Quero ver meu orçamento" (agora, recibo, final) | idem | `sites` |
+| "Falar no WhatsApp" | `waLink(sitePlans[Presence].waMessage)` | registrado como `quote_whatsapp_click` |
+
+### 5.3 Recibo (Entregáveis)
+
+Proposta de 7 itens, todos vindos de `features` do Presence em `sitePlans.ts`:
+
+1. Site com múltiplas páginas
+2. Layout personalizado para sua marca
+3. Catálogo de produtos ou serviços
+4. Pedidos de delivery via WhatsApp
+5. SEO básico para mecanismos de busca
+6. Configuração de domínio próprio
+7. Orientação para atualização do conteúdo
+
+Totais: "De R$ 599,00" (riscado) e "Seu investimento R$ 499,00", lidos de `originalPrice` e `price`. A nota de rodapé usa o campo `scope` do plano. A nota sobre domínio fica: "Registro de domínio e hospedagem são orçados à parte."
+
+> Ponto a confirmar: essa lista substitui a do protótipo, que tinha itens escritos por mim. O item 5 reforça o argumento de SEO orgânico com algo que o plano realmente inclui.
+
+---
+
+## 6. SEO orgânico, acessibilidade e performance
+
+### 6.1 Metadata
+
+- **Home (`(site)/page.tsx`):**
+  - título: "Criação de Sites e SEO Orgânico para Negócios Locais | NexuSync";
+  - descrição sobre ser encontrado no Google com um site marcante, citando o Presence e o prazo real.
+- **Layout `(site)`:** trocar "Tráfego Pago e SEO, Sites e Automações" por um título na ordem dos pilares, por exemplo "NexuSync | Sites, Design e Presença Online".
+- **Open Graph:** imagem nova com a rua acesa (1200×630), gerada a partir da cena.
+
+### 6.2 Dados estruturados
+
+- Manter `Organization` e `WebSite`.
+- Adicionar `FAQPage` com as perguntas que aparecem na página, nem mais nem menos.
+- Adicionar `Service` + `Offer` do Presence (499,00 BRL), com o mesmo preço mostrado na página.
+- Validar no Rich Results Test antes do lançamento.
+
+### 6.3 Acessibilidade
+
+- O 3D é `aria-hidden`; toda informação existe em texto.
+- Hierarquia de títulos: um `h1` (hero), `h2` por seção e `h3` nos cards.
+- Cards de tentativa focáveis. Foco visível no azul-sinal.
+- `prefers-reduced-motion`: sem rolagem suave, sem órbita automática, sem animação do letreiro, sem ciclo automático das tentativas. A câmera troca de enquadramento sem animar.
+- Contraste mínimo de 4,5:1. O botão âmbar leva texto escuro.
+- O modal de vídeo prende o foco (usar `useFocusTrap`, que já existe em `src/components/ui/`) e fecha com Esc.
+
+### 6.4 Orçamento de performance
+
+| Métrica (celular, 4G) | Meta |
+| --- | --- |
+| LCP | < 2,5 s. O LCP deve ser o `h1` (texto), nunca o canvas. |
+| CLS | < 0,1 |
+| INP | < 200 ms |
+| JS da home (gzip) | Medir o atual no build e não piorar mais de 30%. |
+
+Como chegar lá:
+
+- carregar o `RuaWorld` com `dynamic(ssr:false)` depois da primeira pintura;
+- limitar o DPR a 1,5 no celular;
+- usar menos prédios no celular e `InstancedMesh` nos quarteirões;
+- pausar a renderização quando a aba está oculta;
+- sem WebGL, mostrar um fundo estático com as luzes em CSS;
+- vídeo com `preload="none"`, `faststart` e pôster.
+
+### 6.5 Vídeo
+
+Reexportar o .mov como MP4 web (H.264, AAC, `-movflags +faststart`) e criar um pôster JPG. Não há ffmpeg nesta máquina: exportar pelo DaVinci com a opção web ou instalar o ffmpeg.
+
+---
+
+## 7. Analytics
+
+| Evento | Quando |
+| --- | --- |
+| `quote_interest_select` / `quote_whatsapp_click` (já existem) | Cliques nos CTAs, com `section`. |
+| `home_search_simulated` (novo) | O visitante usa o simulador. Registra o serviço digitado só como categoria (dentista, pizzaria…); texto livre não vai para o analytics. |
+| `home_video_play` (novo) | O vídeo começa a tocar. |
+| `home_method_complete` (novo) | O visitante chega à Etapa 4 do método. Mede se a história é assistida até o fim. |
+
+Os eventos novos entram no tipo `AnalyticsEvent` em `src/lib/analytics.ts`.
+
+---
+
+## 8. Fases de execução
+
+Todo o trabalho acontece numa branch (`feat/rua-acesa`). **Nada vai para a `main` sem a sua aprovação, porque a `main` publica direto em produção.**
+
+### Fase 0 — Preparação
+- [x] Arquivos de deploy (`Dockerfile`, `docker-compose.yml`, `.dockerignore`) restaurados do último commit (seção 3.3, risco 2).
+- [x] Branch `feat/rua-acesa` criada a partir da `main` (19/11/2026), levando junto a limpeza local de docs, que segue sem commit.
+- [x] Guias do Next 16 lidos; as regras que afetam o código estão na seção 4.4.
+- [x] Checagens do CI na branch, antes de qualquer mudança: `lint` ✓, `tsc --noEmit` ✓, `test-quote-validation` ✓, `build` ✓ (45 rotas; home estática). O aviso `MONGODB_URI is not configured` no build local é esperado, porque não há banco local.
+- [x] Linha de base da home atual (`ControlledChaos`), medida abaixo.
+
+**Linha de base (19/11/2026).** Build de produção local (`next start`), Chrome headless via DevTools Protocol, cache desligado, mediana de 3 rodadas. Celular: 375×812, 4G lento (150 ms, 1,6 Mbps), CPU 4×. Desktop: 1440×900, sem limitação de CPU.
+
+| Métrica | Celular | Desktop |
+| --- | --- | --- |
+| FCP | 1,31 s | 0,52 s |
+| LCP | 1,31 s (imagem de fundo do hero) | 0,52 s (idem) |
+| CLS | 0,002 | 0,003 |
+| TBT (aprox., via long tasks) | 21 ms | 38 ms |
+| JS transferido | 508 KB · 26 arquivos | 536 KB · 34 arquivos |
+| Total transferido | 1.220 KB · 56 requisições | 1.279 KB · 80 requisições |
+| Evento `load` | 3,2 s | 0,74 s |
+
+Leitura: a home atual já carrega cerca de 0,5 MB de JS, boa parte do three.js do hero. A meta da seção 6.4 ("não piorar mais de 30%") fica em **até ~660 KB de JS no celular**, com LCP vindo do `h1` em texto, que deve ser mais rápido que a imagem de hoje.
+
+**Aceite:** ✓ concluída.
+
+### Fase 1 — Fundação sem 3D ✓ (19/11/2026)
+- [x] `RuaHome` (Server Component) com todas as seções em HTML do servidor, estilos escopados em `.rua` (`rua.module.css`) e fontes via `next/font` (Archivo com eixo `wdth`, Inter e JetBrains Mono).
+- [x] CTAs "Quero ver meu orçamento" → `/contato?interest=institucional&source=…#orcamento`. Usam link direto, não `QuoteLink`, porque o `QuoteLink` intercepta o clique na rota `/` e procuraria um `#orcamento` na própria home. WhatsApp via `waLink(presence.waMessage)`.
+- [x] Recibo gerado a partir de `sitePlans.ts`: preço, preço "de", prazo, selo e os 7 itens validados contra `features`.
+- [x] Metadata da home (título "Criação de Sites e SEO Orgânico para Negócios Locais") e do layout `(site)` ("Sites, Design e Presença Online"). JSON-LD `FAQPage` e `Service`/`Offer` no `page.tsx`.
+- [x] `SiteChrome` deixou de montar o `StudioCursor` na home.
+
+**Aceite:** ✓ texto completo no HTML; `lint`, `tsc`, `test-quote-validation` e `build` passam.
+
+### Fase 2 — O mundo 3D ✓ (19/11/2026)
+- [x] Cena portada para three 0.182 em `src/components/rua/world/scene.ts`: rua, prédios, vitrines, feixes, pins, quarteirões instanciados, linhas de diagnóstico e placas.
+- [x] `cameraKeys.ts`: um enquadramento por seção e a órbita do método.
+- [x] Hover que acende vitrines, arrastar para girar (hero e final), etiquetas projetadas.
+- [x] Rolagem suave com `lenis` 1.3.27 (`autoRaf`, `anchors`) em `RuaEffects.tsx`. `globals.css` força `scroll-behavior: auto` com `html.lenis`.
+
+**Decisões de implementação (diferentes da seção 4.1):**
+- three imperativo em vez de R3F: porta 1:1 da cena aprovada, com controle total do descarte exigido pelo `cacheComponents`.
+- Eventos de `window` (`rua:pulse`, `rua:attempt` em `events.ts`) em vez de zustand: menos código, e a UI não importa o three.
+
+**Compatibilidade r128 → 0.182:**
+- cores lidas como lineares (`setHex(hex, LinearSRGBColorSpace)`) para manter o visual aprovado;
+- luzes × π (novo modelo físico);
+- o three é baixado por `import()` só no cliente, depois da primeira pintura.
+
+### Fase 3 — Interações das seções ✓ (19/11/2026)
+- [x] Simulador de busca (`SearchSimulator.tsx`).
+- [x] Placas das tentativas (`AttemptCards.tsx`): hover, foco por teclado e ciclo automático.
+- [x] Método: furadeira em SVG guiada pela rolagem e painel fixo das 4 etapas.
+- [x] Recibo imprimindo na rolagem.
+- [x] Cronômetro.
+- [x] Modal de vídeo (`VideoModal.tsx`, `<dialog>` nativo, vídeo em `public/videos/pedido-online.mp4`).
+
+### Fase 4 — Pilares, FAQ e navegação (parcial)
+- [x] Seções Pilares, FAQ (com `FAQPage`) e Final.
+- [ ] `siteNavigation.ts` reorganizado pelos pilares: Presença online (sites, lojas, landing pages, SEO) → Design e motion → Redes sociais → Tráfego pago. Afeta o cabeçalho das páginas internas.
+- [ ] Banner de cookies global ainda usa o lima (`#d4ff38`). Precisa entrar na troca de tokens globais.
+
+**Aceite:** a ordem dos pilares aparece igual na home, no menu e na metadata.
+
+### Medição após as fases 1–3 (19/11/2026, mesmo método da linha de base)
+
+| Métrica | Celular antes → agora | Desktop antes → agora |
+| --- | --- | --- |
+| LCP | 1,31 s (imagem) → 1,43 s (texto) | 0,52 s → 0,61 s (`h1`) |
+| CLS | 0,002 → 0,002 | 0,003 → **0,093** (era 0,201; corrigido com o hero alinhado ao topo e Inter/Mono em `display: optional`) |
+| JS transferido | 508 KB → **442 KB** (−13%) | 536 KB → **442 KB** |
+| Total transferido | 1.220 KB → **736 KB** (−40%) | 1.279 KB → **731 KB** |
+| Requisições | 56 → 40 | 80 → 39 |
+| TBT (aprox.) | 21 ms → **1.096 ms** ⚠ | 38 ms → **346 ms** ⚠ |
+
+**Prioridade da Fase 5: o TBT.** A cena renderiza todo quadro, com cerca de 300 objetos e materiais PBR, e no Chrome com GPU emulada isso gera tarefas longas. Ações previstas:
+
+- renderizar sob demanda, só quando a câmera ou a cena mudam;
+- limitar a 30 fps no celular;
+- juntar a geometria fixa (traços da rua, postes, poças) em poucos draw calls;
+- trocar PBR por materiais mais leves onde não há diferença visual;
+- `renderer.compileAsync` antes do primeiro quadro.
+
+### Fase 5 — Qualidade
+- [ ] Celular (375 px), tablet e desktop sem rolagem horizontal.
+- [ ] Movimento reduzido e fallback sem WebGL.
+- [ ] Acessibilidade (teclado, leitor de tela, contraste).
+- [ ] Orçamento de performance (seção 6.4).
+- [ ] Dados estruturados validados.
+- [ ] Eventos de analytics conferidos.
+- [ ] `scripts/check-public-routes.cjs` e `scripts/test-quote-validation.cjs` passando.
+
+**Aceite:** todas as metas da seção 6 atingidas.
+
+### Fase 6 — Lançamento
+- [ ] Revisão final com você na branch.
+- [ ] Merge na `main` (dispara o deploy).
+- [ ] Conferir o site no ar e o Search Console.
+- [ ] Plano de volta: revert do merge.
+- [ ] Depois de estável: remover `ControlledChaos` e os componentes que só ele usava.
+
+---
+
+## 9. Pendências e decisões abertas
+
+| # | Pendência | Quem decide |
+| --- | --- | --- |
+| 1 | ~~A limpeza local apagou os arquivos de deploy (Docker).~~ Resolvido em 19/11/2026: `Dockerfile`, `docker-compose.yml` e `.dockerignore` restaurados do último commit. | — |
+| 2 | Confirmar os 7 itens do recibo (seção 5.3). | Você |
+| 3 | Interesse do CTA no formulário: usar `institucional` ou criar um interesse `presence`. | Você |
+| 4 | Aprovar a dependência `lenis`. | Você |
+| 5 | Reexportar o vídeo em MP4 web com pôster. | Você (DaVinci) ou eu (com ffmpeg instalado) |
+| 6 | Imagem de Open Graph nova a partir da cena. | Eu, na fase 5 |
+| 7 | Depoimentos reais, quando existirem, voltam como bloco próprio. | Você |
+
+---
+
+## 10. Fora desta fase (próximas)
+
+- **Identidade nova nas páginas internas:** `/criacao-de-sites`, `/lojas-virtuais`, `/design`, `/marketing`, `/apps`, `/quem-somos`, `/contato`. Depois disso, trocar os tokens globais (lima → âmbar/azul-noite) em `globals.css`.
+- **Renomear e reposicionar `/marketing`** para separar "Redes sociais" de "Tráfego pago", na ordem dos pilares.
+- **SEO local**, retomando o "Plano de crescimento orgânico" (backup): páginas por cidade e segmento ("Criação de sites em Porto Alegre", "Sites para clínicas"…) e conteúdos como "Como saber se sua empresa precisa de um site ou só melhorar o Google".
+- **Versão da Rua Acesa para as páginas de serviço:** cada pilar com sua própria cena curta, na mesma linguagem visual.

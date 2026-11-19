@@ -6,8 +6,8 @@ import DemoShell from "@/components/ui/DemoShell";
 
 
 export const metadata: Metadata = {
-  title: "NexuSync | Tráfego Pago e SEO, Sites e Automações",
-  description: "Sites, tráfego pago, gestão de redes sociais e automações para pequenos e médios negócios. Conheça os serviços e pacotes da NexuSync.",
+  title: "NexuSync | Sites, Design e Presença Online",
+  description: "Sites marcantes com SEO orgânico, design com motion graphics, gestão de redes sociais e, por último, tráfego pago. Soluções digitais para pequenos negócios.",
   openGraph: {
     type: "website",
     locale: "pt_BR",

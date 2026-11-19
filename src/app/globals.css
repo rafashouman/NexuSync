@@ -594,3 +594,6 @@ body:has(#home-menu) [data-analytics-section="floating"] { visibility: hidden; }
 @media (prefers-reduced-motion: reduce) {
   html.scroll-smooth { scroll-behavior: auto; }
 }
+/* Lenis drives the scroll on the home; native smooth scrolling would fight it. */
+html.lenis,
+html.lenis.scroll-smooth { scroll-behavior: auto !important; }

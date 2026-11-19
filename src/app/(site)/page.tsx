@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import ControlledChaos from "@/components/home/ControlledChaos";
-const title = "Criação de Sites e Soluções Digitais | NexuSync";
+import RuaHome from "@/components/rua/RuaHome";
+import { faqs, presence } from "@/components/rua/content";
+
+const title = "Criação de Sites e SEO Orgânico para Negócios Locais | NexuSync";
 const description =
-  "Criação de sites profissionais, lojas virtuais, sistemas web e automações para pequenos negócios. Conheça as soluções da NexuSync.";
+  "Seu concorrente já aparece no Google. A NexuSync cria sites marcantes com SEO orgânico para negócios locais serem encontrados, sem depender de anúncio. Orçamento completo em 7 dias.";
+
 export const metadata: Metadata = {
   title,
   description,
@@ -19,7 +22,7 @@ export const metadata: Metadata = {
         url: "https://nexusync.online/images/site-preview-desktop.webp",
         width: 1440,
         height: 1000,
-        alt: "NexuSync — soluções digitais",
+        alt: "NexuSync — criação de sites e SEO orgânico",
       },
     ],
   },
@@ -30,6 +33,48 @@ export const metadata: Metadata = {
     images: ["https://nexusync.online/images/site-preview-desktop.webp"],
   },
 };
+
+const toNumber = (brl: string) => brl.replace(/\./g, "").replace(",", ".");
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "FAQPage",
+      "@id": "https://nexusync.online/#faq",
+      mainEntity: faqs.map(([question, answer]) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: { "@type": "Answer", text: answer },
+      })),
+    },
+    {
+      "@type": "Service",
+      "@id": "https://nexusync.online/#presence",
+      name: `Criação de site — plano ${presence.name}`,
+      serviceType: "Criação de sites com SEO básico",
+      description: presence.description,
+      provider: { "@id": "https://nexusync.online/#organization" },
+      areaServed: { "@type": "Country", name: "Brasil" },
+      offers: {
+        "@type": "Offer",
+        price: toNumber(presence.price),
+        priceCurrency: "BRL",
+        url: "https://nexusync.online/#entregaveis",
+        availability: "https://schema.org/InStock",
+      },
+    },
+  ],
+};
+
 export default function HomePage() {
-  return <ControlledChaos />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
+      />
+      <RuaHome />
+    </>
+  );
 }
