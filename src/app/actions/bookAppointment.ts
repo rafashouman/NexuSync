@@ -47,6 +47,12 @@ export async function bookAppointment(data: BookingPayload, idToken: string) {
     typeof data.serviceName !== "string" ||
     data.serviceName.trim().length === 0 ||
     data.serviceName.length > 140 ||
+    (data.guests !== undefined &&
+      (!Number.isSafeInteger(data.guests) || data.guests < 1 || data.guests > 20)) ||
+    (data.seatingZone !== undefined &&
+      (typeof data.seatingZone !== "string" ||
+        data.seatingZone.trim().length === 0 ||
+        data.seatingZone.length > 60)) ||
     typeof idToken !== "string" ||
     idToken.length === 0 ||
     idToken.length > 10_000
