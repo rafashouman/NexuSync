@@ -15,14 +15,23 @@
 
 @media(min-width:761px){.mobileNav{display:none}}
 
-.chrome{overflow:visible;position:relative;z-index:55;height:94px}
+.chrome{overflow:visible;position:relative;z-index:55;height:126px}
 .chromeFixed{position:fixed;top:0;left:0;right:0;z-index:55;background:rgba(8,11,18,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:background .28s ease,border-color .28s ease,box-shadow .28s ease}
 .chromeFixed[data-scrolled="true"]{background:rgba(8,11,18,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom-color:#ffffff22;box-shadow:0 12px 34px rgba(0,0,0,.45)}
+.headerTopBar{border-bottom:1px solid #ffffff14;background:rgba(5,7,12,.55);max-height:32px;overflow:hidden;transition:max-height .28s cubic-bezier(.22,1,.36,1),opacity .22s ease,border-color .22s ease}
+.headerTopInner{height:32px;margin:0 auto;width:calc(100% - 112px);max-width:1488px;display:flex;align-items:center;justify-content:flex-end;gap:22px;font-size:11px;color:#aeb6c5}
+.headerContactLink{display:inline-flex;align-items:center;gap:6px;color:#aeb6c5;transition:color .2s ease}
+.headerContactLink svg{color:var(--lime);flex-shrink:0}
+.headerContactLink:hover{color:var(--lime)}
+.mobileContacts{display:flex;flex-direction:column;gap:10px;padding-top:12px;border-top:1px solid #ffffff1a;font-size:13px}
 .header,.logo img,.navCta,.menuButton{transition:height .28s cubic-bezier(.22,1,.36,1),width .28s cubic-bezier(.22,1,.36,1),max-height .28s cubic-bezier(.22,1,.36,1),padding .28s cubic-bezier(.22,1,.36,1),font-size .28s ease,border-color .28s ease,background .22s,color .22s,box-shadow .22s,transform .22s}
-.chromeFixed[data-scrolled="true"] .header{height:62px;border-bottom-color:transparent}
+.chromeFixed[data-scrolled="true"] .headerTopBar{max-height:24px}
+.chromeFixed[data-scrolled="true"] .headerTopInner{height:24px;font-size:10px}
+.chromeFixed[data-scrolled="true"] .header{height:58px;border-bottom-color:transparent}
 .chromeFixed[data-scrolled="true"] .logo img{width:136px;max-height:38px}
 .chromeFixed[data-scrolled="true"] .navCta{padding:9px 14px;font-size:12px;gap:16px}
-@media(max-width:760px){.chrome{height:78px}.chromeFixed[data-scrolled="true"] .header{height:56px}.chromeFixed[data-scrolled="true"] .logo img{width:116px}.chromeFixed[data-scrolled="true"] .menuButton{width:36px;height:36px}.chromeFixed[data-scrolled="true"] .mobileNav{top:56px}}
+@media(max-width:1100px){.headerTopInner{width:calc(100% - 64px)}}
+@media(max-width:760px){.chrome{height:106px}.headerTopBar{max-height:28px}.headerTopInner{height:28px;width:calc(100% - 40px);justify-content:space-between;gap:12px;font-size:10px}.chromeFixed[data-scrolled="true"] .headerTopBar{max-height:22px}.chromeFixed[data-scrolled="true"] .headerTopInner{height:22px;font-size:9.5px}.chromeFixed[data-scrolled="true"] .header{height:54px}.chromeFixed[data-scrolled="true"] .logo img{width:116px}.chromeFixed[data-scrolled="true"] .menuButton{width:36px;height:36px}.chromeFixed[data-scrolled="true"] .mobileNav{top:76px}}
 .motion>strong{position:relative;z-index:1}
 
 /* A quiet image across the entire opening, with one luminous focal point. */
