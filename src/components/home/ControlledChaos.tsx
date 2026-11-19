@@ -6,8 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChaosHeader, ChaosFooter } from "./ChaosChrome";
 import { ReactiveField } from "./ReactiveField";
-import { ProjectBackdrop } from "./ProjectBackdrop";
-import { projectBackgrounds } from "./project-backgrounds";
+import { ExperienceVisual, type ExperienceKind } from "./ExperienceVisual";
 import { HomePlans } from "./HomePlans";
 import { heroScreenshots, type HeroDeviceMode } from "./hero-templates";
 import { Component, useEffect, useRef, useState, type ReactNode } from "react";
@@ -117,115 +116,9 @@ const faqs = [
   ],
 ];
 
-function Signal({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 400 400"
-      fill="none"
-      aria-hidden="true"
-    >
-      <g className={s.signalLines}>
-        {Array.from({ length: 10 }, (_, i) => (
-          <ellipse
-            key={i}
-            cx="200"
-            cy="200"
-            rx={55 + i * 13}
-            ry={160 - i * 9}
-            transform={`rotate(${i * 12} 200 200)`}
-            stroke="currentColor"
-            strokeWidth="1"
-          />
-        ))}
-      </g>
-    </svg>
-  );
-}
 function ServiceArt({ kind }: { kind: string }) {
-  const background = kind === "web" ? projectBackgrounds.sites[2]
-    : kind === "app" || kind === "growth" ? projectBackgrounds.apps[2]
-    : projectBackgrounds.design[1];
-  return (
-    <div className={`${s.serviceArt} ${s[kind]}`} aria-hidden="true">
-      <ProjectBackdrop src={background} />
-      {kind === "web" && (
-        <div className={s.browserArt}>
-          <div className={s.browserBar}>
-            ● ● ● <span>nexusync / digital experience</span>
-          </div>
-          <div className={s.browserBody}>
-            <span>
-              MAKE
-              <br />
-              IT REAL.
-            </span>
-            <div className={s.artFlower}>✳</div>
-            <small>IDEIAS QUE GANHAM FORMA ↗</small>
-          </div>
-        </div>
-      )}
-      {kind === "app" && (
-        <div className={s.appArt}>
-          <div className={s.appSide}>
-            n/{" "}
-            <span>
-              ▦<br />◷<br />↗
-            </span>
-          </div>
-          <div className={s.appPanel}>
-            <small>VISÃO GERAL</small>
-            <b>Tudo em sintonia.</b>
-            <div className={s.chart}>
-              {[35, 60, 45, 80, 65, 95, 82].map((h, i) => (
-                <i
-                  key={i}
-                  style={{ height: `${h}%`, animationDelay: `${i * -0.3}s` }}
-                />
-              ))}
-            </div>
-            <span>● &nbsp; Seu negócio, organizado.</span>
-          </div>
-        </div>
-      )}
-      {kind === "motion" && (
-        <>
-          <Signal />
-          <strong>
-            mova
-            <br />
-            <em>sua marca.</em>
-          </strong>
-          <span className={s.artSticker}>PLAY ↗</span>
-        </>
-      )}
-      {kind === "growth" && (
-        <>
-          <svg viewBox="0 0 500 240">
-            <path
-              d="M0 210H500M0 150H500M0 90H500M0 30H500"
-              stroke="currentColor"
-              opacity=".15"
-            />
-            <path
-              className={s.growthLine}
-              d="M20 210 100 175 165 190 250 105 320 120 455 25"
-              stroke="currentColor"
-              strokeWidth="8"
-              fill="none"
-            />
-            <path
-              d="m420 25 35 0 0 35"
-              stroke="currentColor"
-              strokeWidth="8"
-              fill="none"
-            />
-          </svg>
-          <span>ESTRATÉGIA + CRIATIVIDADE</span>
-        </>
-      )}
-    </div>
-  );
+  const scene: ExperienceKind = kind === "motion" ? "design" : kind === "growth" ? "marketing" : kind === "app" ? "app" : "web";
+  return <div className={s.serviceArt}><ExperienceVisual kind={scene} /></div>;
 }
 
 export default function ControlledChaos() {

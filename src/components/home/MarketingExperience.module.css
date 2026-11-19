@@ -3,3 +3,15 @@
 @media(max-width:1100px){.connection{padding:60px 32px;gap:40px}.goalTabs button{font-size:9px;padding:9px}.panelBody{padding:22px}.panelTop{padding-inline:20px}.panelBody h2{font-size:36px!important}.connectionArt{padding:22px}.services h3{font-size:27px!important}.addons article{grid-template-columns:1fr 240px;gap:30px}}
 @media(max-width:760px){.goalTabs{gap:5px}.goalTabs button{font-size:9px;padding:10px 9px;flex:1}.panelBody{padding:25px 20px}.panelBody h2{font-size:36px!important}.panelTop{font-size:6px}.diagram{height:120px}.pathSteps li{font-size:7px}.services{grid-template-columns:1fr;gap:25px}.services h3{font-size:28px!important;margin-top:25px!important}.services p{font-size:12px!important}.connection{padding:45px 20px;grid-template-columns:1fr;gap:40px}.connectionArt{transform:rotate(0)}.connection h2{font-size:40px!important}.plans{grid-template-columns:1fr;gap:20px}.plan h3{font-size:31px!important}.addons article{grid-template-columns:1fr;gap:15px}.addons article>span{text-align:left;font-size:12px}.addons h3{font-size:22px!important}.microcopy{font-size:10px!important}}
 @media(prefers-reduced-motion:reduce){.marketing *,.marketing *::before,.marketing *::after{animation:none!important;transition:none!important}}
+.journey{margin:22px 0;background:#edf2eb;color:#21332d;box-shadow:8px 8px 0 #3459ff32}
+.journeyBar{display:flex;justify-content:space-between;gap:10px;padding:12px 15px;background:#293e35;color:#d9ede0;font-size:8px;letter-spacing:.08em}
+.journeyContent{min-height:150px;display:flex;flex-direction:column;align-items:flex-start;gap:9px;padding:20px}
+.journeyContent small{font-size:9px;letter-spacing:.1em;color:#658172}
+.journeyContent strong{font-family:Georgia,serif;font-weight:400;font-size:25px;line-height:1.1}
+.journeyContent b{font-size:12px;color:#3459aa}
+.journeyContent p{font-size:11px!important;color:#607067!important;line-height:1.5}
+.journey>button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:13px 20px;background:#d4ff38;color:#17231b;border:0;text-align:left;font-size:10px;cursor:pointer}
+.pathSteps li[data-active="true"]{border-color:#d4ff38;color:#fff}
+.journeyContent{animation:journeyEnter .4s ease both}
+@keyframes journeyEnter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.journeyContent{animation:none}}

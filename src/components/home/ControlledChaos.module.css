@@ -15,7 +15,14 @@
 
 @media(min-width:761px){.mobileNav{display:none}}
 
-.chrome{overflow:visible;position:relative;z-index:30}
+.chrome{overflow:visible;position:relative;z-index:55;height:94px}
+.chromeFixed{position:fixed;top:0;left:0;right:0;z-index:55;background:rgba(8,11,18,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:background .28s ease,border-color .28s ease,box-shadow .28s ease}
+.chromeFixed[data-scrolled="true"]{background:rgba(8,11,18,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom-color:#ffffff22;box-shadow:0 12px 34px rgba(0,0,0,.45)}
+.header,.logo img,.navCta,.menuButton{transition:height .28s cubic-bezier(.22,1,.36,1),width .28s cubic-bezier(.22,1,.36,1),max-height .28s cubic-bezier(.22,1,.36,1),padding .28s cubic-bezier(.22,1,.36,1),font-size .28s ease,border-color .28s ease,background .22s,color .22s,box-shadow .22s,transform .22s}
+.chromeFixed[data-scrolled="true"] .header{height:62px;border-bottom-color:transparent}
+.chromeFixed[data-scrolled="true"] .logo img{width:136px;max-height:38px}
+.chromeFixed[data-scrolled="true"] .navCta{padding:9px 14px;font-size:12px;gap:16px}
+@media(max-width:760px){.chrome{height:78px}.chromeFixed[data-scrolled="true"] .header{height:56px}.chromeFixed[data-scrolled="true"] .logo img{width:116px}.chromeFixed[data-scrolled="true"] .menuButton{width:36px;height:36px}.chromeFixed[data-scrolled="true"] .mobileNav{top:56px}}
 .motion>strong{position:relative;z-index:1}
 
 /* A quiet image across the entire opening, with one luminous focal point. */
@@ -147,13 +154,6 @@
   .serviceCard:hover .serviceMeta svg,.solutionIndex a:hover>svg,.contact>a:hover .contactArrow{transform:none}
 }
 
-/* Real projects form the background; the original artwork stays above them. */
+/* Real projects live inside the mockups: a screen in the browser, a dashboard in the app, a frame in the video player. */
 .serviceArt{isolation:isolate}
-.web{--project-veil:#1d30b0ad}
-.app{--project-veil:#142a25c4}
-.motion{--project-veil:#d4ff38d6}
-.growth{--project-veil:#141e35d9}
-.browserArt{background:#eaece3df}
-.browserBar{background:#151925e8}
-.appArt{background:#111b1bdc}
-.chart i{opacity:.92}
+.serviceArt{height:auto;display:block}

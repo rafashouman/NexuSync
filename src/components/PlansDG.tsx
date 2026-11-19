@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ProjectBackdrop } from "./home/ProjectBackdrop";
+import { DesignPlanVisual } from "./home/DesignPlanVisual";
 import { ArrowUpRight } from "lucide-react";
 import { designPlans } from "@/data/designPlans";
 import { usePromoSlots } from "@/components/usePromoSlots";
@@ -9,12 +9,7 @@ import { PlanActions, PlanDetails, PlanFeatures, PlanPrice } from "./home/PlanPr
 import s from "./home/HomePlans.module.css";
 
 function DesignPrint({ index }: { index: number }) {
-  return <div className={s.designPrint} data-print={index} aria-hidden="true">
-    <ProjectBackdrop src={["/images/port-dg/bargento-cardapio.jpg", "/images/port-iv/bela-juba-com-bg.jpg", "/images/showcase/streetwear.jpg"][index]} sizes="(max-width: 760px) 100vw, 25vw" />
-    <span>N/ STUDIO</span>
-    {index === 0 ? <strong>Aa<span>↗</span></strong> : index === 1 ? <svg viewBox="0 0 200 200" fill="none">{Array.from({ length: 8 }, (_, i) => <ellipse key={i} cx="100" cy="100" rx="80" ry="30" stroke="currentColor" strokeWidth="1.5" transform={`rotate(${i * 22.5} 100 100)`} />)}</svg> : <div className={s.interfacePrint}><i /><i /><i /><i /></div>}
-    <small>{["COR. FORMA. PRESENÇA.", "UMA MARCA. UM UNIVERSO.", "PENSADO PARA NAVEGAR."][index]}</small>
-  </div>;
+  return <div className={s.designPrint} data-print={index}><DesignPlanVisual index={index} /></div>;
 }
 
 export function PlansDG() {

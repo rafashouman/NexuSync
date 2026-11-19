@@ -13,9 +13,28 @@ const goals = [
 
 export function MarketingPlayground() {
   const [selected, setSelected] = useState(0);
+  const [step, setStep] = useState(0);
   const goal = goals[selected];
   const Icon = goal.icon;
-  return <div className={s.playground}><div className={s.goalTabs} role="group" aria-label="Explore um objetivo de marketing">{goals.map((item, i) => <button key={item.label} aria-pressed={selected === i} onClick={() => setSelected(i)}>{item.label}</button>)}</div>
-    <div className={s.goalPanel}><div className={s.panelTop}><span>ESCOLHA O OBJETIVO. EXPLORE O CAMINHO.</span><Icon size={20} /></div><div className={s.panelBody} aria-live="polite"><span className={s.micro}>ESTRATÉGIA / {goal.channel}</span><h2>{goal.title}<br /><em>{goal.accent}</em></h2><div className={s.diagram} aria-hidden="true"><svg viewBox="0 0 420 150" fill="none"><path d="M20 100C95 100 75 40 155 40S240 110 305 70 365 40 400 40" stroke="#3459ff" strokeWidth="1" /><path className={s.signalPath} d="M20 100C95 100 75 40 155 40S240 110 305 70 365 40 400 40" stroke="#d4ff38" strokeWidth="3" strokeLinecap="round" /><circle cx="20" cy="100" r="6" fill="#d4ff38" /><circle cx="155" cy="40" r="9" fill="#080b12" stroke="#8be7c5" /><circle cx="305" cy="70" r="6" fill="#3459ff" /><circle cx="400" cy="40" r="6" fill="#d4ff38" /></svg><span>↗</span></div><ol className={s.pathSteps}>{goal.path.map((step, i) => <li key={step}><span>0{i + 1}</span>{step}</li>)}</ol><p>{goal.text}</p><Link href={`#marketing-${goal.href}`} className={s.panelLink}>Ver escopo e investimento<ArrowUpRight size={14} /></Link></div></div><p className={s.demoNote}>Uma visão do caminho de cada serviço. O plano parte do objetivo e da realidade do seu negócio.</p>
+  const scenes = [
+    [
+      { eyebrow: "BUSCA LOCAL", title: "arquitetura em porto alegre", body: "Ateliê Vão · Arquitetura", detail: "Projetos residenciais e interiores. Conheça nosso trabalho." },
+      { eyebrow: "PÁGINA DA EMPRESA", title: "Espaços para viver melhor.", body: "Projetos que começam pela forma de viver.", detail: "Portfólio · serviços · contato" },
+      { eyebrow: "CONTATO", title: "Vamos conversar?", body: "Conte sobre seu espaço e suas ideias.", detail: "O atendimento continua no canal escolhido." },
+    ],
+    [
+      { eyebrow: "ANÚNCIO ILUSTRATIVO", title: "Seu espaço, seu jeito.", body: "Conheça os projetos do Ateliê Vão.", detail: "Uma oferta apresentada ao público certo." },
+      { eyebrow: "PÁGINA DE OFERTA", title: "Um projeto começa aqui.", body: "Entenda o serviço e conheça o portfólio.", detail: "Informação clara antes do contato." },
+      { eyebrow: "ATENDIMENTO", title: "Oi! Quero saber mais.", body: "O interesse chega ao canal combinado.", detail: "A equipe segue a conversa com o cliente." },
+    ],
+    [
+      { eyebrow: "NOVO CONTATO", title: "Pedido de informações", body: "Interesse em um projeto residencial.", detail: "Dados demonstrativos · nenhum envio real." },
+      { eyebrow: "ACOMPANHAMENTO", title: "Próximo passo: retornar", body: "Contato organizado na etapa de atendimento.", detail: "Acompanhe o que ainda precisa de resposta." },
+      { eyebrow: "RETORNO", title: "Conversa em andamento", body: "A equipe dá continuidade ao atendimento.", detail: "Cada oportunidade com um caminho definido." },
+    ],
+  ];
+  const scene = scenes[selected][step];
+  return <div className={s.playground}><div className={s.goalTabs} role="group" aria-label="Explore um objetivo de marketing">{goals.map((item, i) => <button key={item.label} aria-pressed={selected === i} onClick={() => { setSelected(i); setStep(0); }}>{item.label}</button>)}</div>
+    <div className={s.goalPanel}><div className={s.panelTop}><span>UMA JORNADA, TRÊS MOMENTOS / SIMULAÇÃO</span><Icon size={20} /></div><div className={s.panelBody}><span className={s.micro}>ESTRATÉGIA / {goal.channel}</span><h2>{goal.title}<br /><em>{goal.accent}</em></h2><div className={s.journey} aria-live="polite"><div className={s.journeyBar}><span>0{step + 1} / {scene.eyebrow}</span><span>DEMONSTRAÇÃO</span></div><div className={s.journeyContent} key={`${selected}-${step}`}><small>{goal.path[step]}</small><strong>{scene.title}</strong><b>{scene.body}</b><p>{scene.detail}</p></div><button onClick={() => setStep((step + 1) % 3)}>{step === 2 ? "Recomeçar jornada" : "Ver próximo passo"}<ArrowUpRight size={14} /></button></div><ol className={s.pathSteps}>{goal.path.map((item, i) => <li key={item} data-active={step === i}><span>0{i + 1}</span>{item}</li>)}</ol><p>{goal.text}</p><Link href={`#marketing-${goal.href}`} className={s.panelLink}>Ver escopo e investimento<ArrowUpRight size={14} /></Link></div></div><p className={s.demoNote}>Uma visão do caminho de cada serviço. O plano parte do objetivo e da realidade do seu negócio.</p>
   </div>;
 }

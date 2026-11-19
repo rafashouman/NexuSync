@@ -359,9 +359,39 @@
   .siteCard:hover,.button:hover,.button:hover svg,.serviceLink:hover svg{transform:none}
 }
 
-/* Portfolio images sit below the original type, orbit and interface artwork. */
-.designPrint { isolation: isolate; --project-veil: #d4ff38d6; }
-.designPrint[data-print="1"] { --project-veil: #3459ffd6; }
-.designPrint[data-print="2"] { --project-veil: #dfe5dcd6; }
-.designPrint > strong, .designPrint > svg { opacity: .94; }
-.interfacePrint i { opacity: .88; }
+/* Real portfolio pieces sit in their own frame below the original type, orbit and interface artwork. */
+.designPrint { gap: 12px; justify-content: flex-start; }
+.designPrint > span, .designPrint > small { flex-shrink: 0; }
+.printArt { flex: 0 0 auto; display: flex; align-items: center; min-height: 84px; }
+.printArt > strong { position: relative; font-size: 78px; line-height: 1; letter-spacing: -.1em; font-weight: 500; transition: rotate .4s, scale .4s; }
+.printArt > strong > span { position: absolute; top: -8px; right: -34px; font-size: 38px; font-weight: 300; }
+.printArt > svg { width: 84px; height: 84px; transition: rotate .4s, scale .4s; }
+.printArt .interfacePrint { position: static; width: 120px; padding-block: 8px; }
+.interfacePrint i { height: 30px; }
+.interfacePrint i:first-child { height: 12px; }
+.interfacePrint i:nth-child(2) { height: auto; }
+.interfacePrint i:nth-child(4) { height: 20px; }
+.printFrame { position: relative; flex: 1 1 auto; min-height: 120px; aspect-ratio: 3 / 2; background: #fff; border: 5px solid #fff; box-shadow: 6px 6px 0 #10190c33; overflow: hidden; }
+.printFrame > span { position: absolute; inset: 0; width: auto; height: auto; background: #fff; }
+.designPrint[data-print="2"] .printFrame { border-color: #080b12; background: #080b12; box-shadow: 6px 6px 0 #3459ff40; }
+@media (hover: hover) {
+  .designCard:hover .printArt > svg { rotate: 8deg; scale: 1.04; }
+  .designCard:hover .printArt > strong { rotate: -3deg; scale: 1.03; }
+}
+@media (max-width: 760px) {
+  .designPrint { height: auto; min-height: 0; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); grid-template-areas: "label frame" "art frame" "caption frame"; align-items: center; gap: 12px 18px; }
+  .designPrint > span { grid-area: label; align-self: start; }
+  .printArt { grid-area: art; }
+  .printArt > strong { font-size: 64px; }
+  .printArt > svg { width: 70px; height: 70px; }
+  .designPrint > small { grid-area: caption; align-self: end; }
+  .printFrame { grid-area: frame; }
+}
+.designPrint,.designPrint[data-print]{display:flex;align-items:stretch;height:auto;min-height:0;padding:0;background:#101927}
+@media (max-width: 1100px) and (min-width: 761px) {
+  .designCard { grid-template-columns: minmax(190px, .8fr) minmax(0, 1.5fr) minmax(190px, 1fr); }
+  .designPrint { grid-row: auto; }
+  .designContent { padding: 22px; }
+  .designInvestment { grid-column: auto; border-left: 1px solid #ffffff20; padding: 22px; }
+  .designInvestment .price { border-top: 0; padding-top: 0; }
+}
