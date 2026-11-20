@@ -8,8 +8,8 @@
   --color-petroleum: #141f50;
   --color-ocean: #2032a6;
   --color-sea: #2a40ba;
-  --color-turquoise: #5b97ff;
-  --color-ice: #8ab4ff;
+  --color-turquoise: #05e5f6;
+  --color-ice: #8ff3fb;
   --color-champagne: #ffb547;
   --color-gold: #e89b2f;
   --color-ivory: #f4f4e9;
@@ -93,7 +93,7 @@
   --muted-foreground: #dce4f5;
   --border: rgb(16 185 129 / 28%);
   --input: rgb(16 185 129 / 38%);
-  --ring: #5b97ff;
+  --ring: #05e5f6;
 }
 
 @layer base {

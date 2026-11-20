@@ -1,4 +1,4 @@
-.mock{border:1px solid #ffffff26;background:#0c1428;padding:26px;max-width:520px;width:100%;box-shadow:14px 14px 0 #5b97ff26}
+.mock{border:1px solid #ffffff26;background:#0c1428;padding:26px;max-width:520px;width:100%;box-shadow:14px 14px 0 #05e5f626}
 .mockTag{display:block;font-size:9px;letter-spacing:.14em;color:#9aa6c2;margin-bottom:22px}
 .result{padding:16px 0;border-top:1px solid #ffffff1c}
 .result:first-of-type{border-top:0}
@@ -24,7 +24,7 @@
 .searches{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:10px}
 .searches li{border:1px solid #ffffff2e;padding:11px 16px;font-size:14px;color:#dfe4ee;background:#0c1428}
 .tag{font-size:9px;letter-spacing:.1em;color:var(--lime);border:1px solid #ffb54766;padding:2px 7px;margin-right:8px;white-space:nowrap}
-.note{border-left:3px solid #5b97ff;background:#5b97ff14;padding:16px 20px;font-size:13px;color:#dfe4ee;line-height:1.65;margin-top:22px}
+.note{border-left:3px solid #05e5f6;background:#05e5f614;padding:16px 20px;font-size:13px;color:#dfe4ee;line-height:1.65;margin-top:22px}
 .others{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 .others a{border:1px solid #ffffff2e;padding:10px 16px;font-size:13px;transition:border-color .2s,color .2s}
 .others a:hover{border-color:var(--lime);color:var(--lime)}
