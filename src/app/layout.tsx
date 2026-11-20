@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   description: "Desenvolvimento de sites institucionais, plataformas digitais e e-commerces de alta performance.",
   icons: {
     icon: [
-      { url: "/images/favicon.ico?v=20261117", type: "image/x-icon" },
-      { url: "/images/favicon-32x32.png?v=20261117", sizes: "32x32", type: "image/png" },
-      { url: "/images/favicon-16x16.png?v=20261117", sizes: "16x16", type: "image/png" },
+      { url: "/images/favicon.ico?v=20261120", type: "image/x-icon" },
+      { url: "/images/favicon-32x32.png?v=20261120", sizes: "32x32", type: "image/png" },
+      { url: "/images/favicon-16x16.png?v=20261120", sizes: "16x16", type: "image/png" },
     ],
-    shortcut: "/images/favicon.ico?v=20261117",
+    shortcut: "/images/favicon.ico?v=20261120",
   },
   other: {
     "p:domain_verify": "3ea911eb961dc25477766381f746866b",
