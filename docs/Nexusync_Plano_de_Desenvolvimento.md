@@ -307,7 +307,13 @@ Leitura: a home atual já carrega cerca de 0,5 MB de JS, boa parte do three.js d
 
 ### Fase 4 — Pilares, FAQ e navegação (parcial)
 - [x] Seções Pilares, FAQ (com `FAQPage`) e Final.
-- [ ] `siteNavigation.ts` reorganizado pelos pilares: Presença online (sites, lojas, landing pages, SEO) → Design e motion → Redes sociais → Tráfego pago. Afeta o cabeçalho das páginas internas.
+- [x] Menu reorganizado pelos pilares (19/11/2026). `siteNavigation.ts` ganhou `solutionPillars`:
+  1. Presença online: criação de sites, lojas virtuais, aplicativos e "SEO e presença no Google" (`/marketing#marketing-seo-local`).
+  2. Design: design e motion graphics.
+  3. Redes sociais: gestão de redes sociais (`/marketing#marketing-presenca-ativa`).
+  4. Tráfego pago (`/marketing#marketing-aquisicao-local`).
+
+  O dropdown "Soluções" do cabeçalho mostra os rótulos "01 · Presença online" a "04 · Tráfego pago". O menu móvel e o rodapé seguem a mesma ordem. O link "Como funciona" foi corrigido de `/#como-funciona` (âncora da home antiga) para `/#metodo`.
 - [ ] Banner de cookies global ainda usa o lima (`#d4ff38`). Precisa entrar na troca de tokens globais.
 
 **Aceite:** a ordem dos pilares aparece igual na home, no menu e na metadata.
