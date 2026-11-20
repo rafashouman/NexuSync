@@ -42,8 +42,8 @@ export const phases = [
 
 export const pillars = [
   { title: "Presença online", text: "Sites marcantes e SEO orgânico para você aparecer pra quem já está procurando o seu serviço.", tag: "Alicerce", href: "/seo-para-negocios-locais", cta: "Como trabalhamos o SEO" },
-  { title: "Design e motion graphics", text: "Identidade visual e movimento para a sua marca ser lembrada, não só vista." },
-  { title: "Gestão de redes sociais", text: "Constância nas redes para manter perto quem já te conhece." },
+  { title: "Design e motion graphics", text: "Identidade visual e movimento para a sua marca ser lembrada, não só vista.", href: "/design", cta: "Ver motion graphics" },
+  { title: "Gestão de redes sociais", text: "Constância nas redes para manter perto quem já te conhece.", href: "/redes-sociais", cta: "Ver o plano de redes" },
   { title: "Tráfego pago", text: "Acelera o que já funciona, depois que a base está de pé.", tag: "Último andar" },
 ] as const;
 

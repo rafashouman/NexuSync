@@ -8,7 +8,7 @@ export const solutionPillars: readonly { pillar: string; links: readonly NavLink
     ["Aplicativos e automações", "/apps"], ["SEO e presença no Google", "/seo-para-negocios-locais"],
   ] },
   { pillar: "Design", links: [["Design e motion graphics", "/design"]] },
-  { pillar: "Redes sociais", links: [["Gestão de redes sociais", "/marketing#marketing-presenca-ativa"]] },
+  { pillar: "Redes sociais", links: [["Gestão de redes sociais", "/redes-sociais"]] },
   { pillar: "Tráfego pago", links: [["Tráfego pago", "/marketing#marketing-aquisicao-local"]] },
 ];
 

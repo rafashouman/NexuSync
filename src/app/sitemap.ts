@@ -4,7 +4,7 @@ import { appCatalog } from "@/data/appCatalog";
 import { segments } from "@/data/segments";
 
 /** Pages that sell: priority follows the agency's pillar order (online presence first). */
-const servicePaths = ["/seo-para-negocios-locais", "/criacao-de-sites", "/lojas-virtuais", "/design", "/marketing", "/apps"];
+const servicePaths = ["/seo-para-negocios-locais", "/criacao-de-sites", "/lojas-virtuais", "/design", "/redes-sociais", "/marketing", "/apps"];
 const segmentPaths = segments.map((segment) => `/sites-para/${segment.slug}`);
 
 const publicPaths = [...new Set([
