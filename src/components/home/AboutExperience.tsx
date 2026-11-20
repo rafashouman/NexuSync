@@ -56,7 +56,8 @@ export function StudioMark() {
   );
 }
 
-export default function AboutExperience() {
+/** On /contato the page already has its own h1, so this block renders its title as an h2. */
+export default function AboutExperience({ headingTag: Heading = "h1" }: { headingTag?: "h1" | "h2" }) {
   return (
     <div className={`${s.page} ${c.studio}`}>
       <section className={s.hero}>
@@ -68,7 +69,7 @@ export default function AboutExperience() {
         <div className={s.heroGrid}>
           <div>
             <p className={s.kicker}>GENTE DE VERDADE. CONVERSA DE PERTO.</p>
-            <h1 className={c.aboutTitle}>
+            <Heading className={c.aboutTitle}>
               Seu negócio tem
               <br />
               personalidade.
@@ -78,7 +79,7 @@ export default function AboutExperience() {
                 <br />
                 digital também.
               </em>
-            </h1>
+            </Heading>
             <p className={s.intro}>
               Somos a NexuSync. Aproximamos criação, tecnologia e marketing do
               que torna o seu negócio único.

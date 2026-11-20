@@ -12,7 +12,7 @@ export default function ContactPage() {
   return (
     <>
       <ContactExperience /> 
-      <AboutExperience />
+      <AboutExperience headingTag="h2" />
     </>
   );
 

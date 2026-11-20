@@ -33,15 +33,15 @@
 .webFlow, .appBottom, .marketingProgress { display: flex; align-items: center; justify-content: space-between; gap: 2cqw; padding: 3cqw 5cqw; font-size: 1.8cqw; letter-spacing: .06em; }
 .webFlow i, .marketingProgress i { flex: 1; height: 1px; background: currentColor; opacity: .3; }
 .pointer { position: absolute; left: 37%; top: 65%; color: #3459ff; animation: pointer 5s ease-in-out infinite; }
-.appScene { position: absolute; inset: 5%; background: #f4f1e8; color: #243a30; box-shadow: 0 15px 40px #0005; }
+.appScene { position: absolute; inset: 5%; background: #f4f1e8; color: #14261c; box-shadow: 0 15px 40px #0005; }
 .appHeader { background: #293e35; color: #f7f3e8; border: 0; }
 .appHeader>span, .marketingHeader>span { display: flex; align-items: center; gap: 1.5cqw; }
 .appHeader small { opacity: .65; }
 .appContent { display: grid; grid-template-columns: 1.15fr .85fr; align-items: center; gap: 3cqw; padding: 5cqw; }
 .appContent strong { display: block; margin-top: 2cqw; font-family: Georgia, serif; font-size: 5cqw; line-height: 1; font-weight: 400; }
-.appContent em { color: #6a8571; font-weight: 400; }
-.appContent p { font-size: 2.2cqw; margin: 3cqw 0 2cqw; }
-.appContent p span { float: right; color: #7d8d80; }
+.appContent em { color: #3f5e49; font-weight: 400; }
+.appContent p { color: #3b4251 !important; font-size: 2.2cqw; margin: 3cqw 0 2cqw; }
+.appContent p span { float: right; color: #55665a; }
 .appTimes { display: flex; gap: 1cqw; }
 .appTimes span { padding: 2cqw; border: 1px solid #becbc0; font-size: 2cqw; }
 .appTimes span:nth-child(2) { background: #293e35; color: #fff; animation: slot 5s ease-in-out infinite; }
@@ -50,13 +50,13 @@
 .appReceipt small, .appReceipt b, .appReceipt strong { display: block; margin-top: 2cqw; }
 .appReceipt b { font-size: 5cqw; }
 .appReceipt p { font-size: 2cqw; }
-.appReceipt strong { font: 600 1.8cqw Arial, sans-serif; color: #557060; }
-.appBottom { border-top: 1px solid #d5ded2; color: #708176; }
+.appReceipt strong { font: 600 1.8cqw Arial, sans-serif; color: #3b5446; }
+.appBottom { border-top: 1px solid #d5ded2; color: #4c5e52; }
 .productScene { position: absolute; inset: 5%; display: flex; flex-direction: column; background: #f4eee3; color: #332a22; box-shadow: 0 15px 40px #0005; }
 .productScene[data-kind="burger"] { background: #241e19; color: #f7eee2; }
-.productScene[data-kind="fashion"] { background: #e5e9dd; color: #283a2f; }
+.productScene[data-kind="fashion"] { background: #e5e9dd; color: #1a2a20; }
 .productScene[data-kind="motors"] { background: #e9e9e3; color: #1b2532; }
-.productScene[data-kind="acai"] { background: #f0e5ee; color: #502344; }
+.productScene[data-kind="acai"] { background: #f0e5ee; color: #3a1832; }
 .productHeader { border-color: currentColor; padding-block: 2.5cqw; }
 .productHeader>span { opacity: .65; }
 .productLayout { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; }
@@ -85,14 +85,14 @@
 .interfacePiece>strong { background: #294438; color: white; padding: 1.5cqw; font-size: 1.6cqw; }
 .designNotes { display: flex; flex-direction: column; justify-content: center; gap: 3cqw; padding: 4cqw; }
 .designNotes strong { font-size: 5cqw; line-height: 1.05; letter-spacing: -.05em; }
-.designNotes em { color: #4a795e; font-weight: 400; }
+.designNotes em { color: #2f5a41; font-weight: 400; }
 .designNotes>div { display: flex; flex-wrap: wrap; align-items: center; gap: 1cqw; }
 .designNotes i { width: 4cqw; height: 4cqw; border-radius: 50%; background: #294438; }
 .designNotes i:nth-child(2) { background: #a9c2a4; }.designNotes i:nth-child(3) { background: #ffb547; }
 .designNotes div span { width: 100%; margin-top: 1cqw; font-size: 1.7cqw; }
 .designTimeline { display: flex; align-items: center; gap: 2cqw; padding: 3cqw 4cqw; border-top: 1px solid #a7b5a7; font-size: 1.8cqw; }
 .designTimeline div { position: relative; flex: 1; height: 4px; background: #b7c4b8; }
-.designTimeline i { position: absolute; inset: 0 auto 0 0; width: 40%; background: #3459ff; animation: timeline 6s linear infinite; }
+.designTimeline i { position: absolute; inset: 0 auto 0 0; width: 40%; background: #1f38c0; animation: timeline 6s linear infinite; }
 .marketingScene { position: absolute; inset: 5%; color: #e9f1f0; background: #17273a; box-shadow: 0 15px 40px #0005; }
 .marketingHeader { color: #a3c7c1; border-color: #ffffff22; }
 .marketingBody { display: grid; grid-template-columns: 1.15fr .85fr; gap: 3cqw; padding: 4cqw; }
@@ -108,7 +108,7 @@
 .marketingProgress { color: #8be7c5; }
 @keyframes pointer { 0%, 15% { transform: translate(0, 0); } 45%, 70% { transform: translate(5cqw, -2cqw); } 100% { transform: translate(0, 0); } }
 @keyframes imageDrift { to { transform: scale(1.05); } }
-@keyframes slot { 0%, 20%, 100% { background: transparent; color: #243a30; } 35%, 80% { background: #293e35; color: white; } }
+@keyframes slot { 0%, 20%, 100% { background: transparent; color: #14261c; } 35%, 80% { background: #293e35; color: white; } }
 @keyframes receipt { 0%, 20%, 100% { opacity: .65; transform: translateY(3px); } 35%, 80% { opacity: 1; transform: translateY(0); } }
 @keyframes status { 0%, 35%, 100% { background: #dbe8c7; } 45%, 85% { background: #ffb547; } }
 @keyframes productClick { 0%, 15%, 100% { transform: translate(2cqw, 1cqw); } 30%, 70% { transform: translate(-2cqw, -2cqw); } }
