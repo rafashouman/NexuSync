@@ -68,7 +68,7 @@ export default function RuaHome() {
               O concorrente da sua rua <span id="rua-hl" className={s.hl} data-lit="false">já aparece no Google</span> quando alguém pesquisa o seu serviço.
             </h1>
             <p className={s.sub}>
-              E quem não encontra você liga pra ele. A NexuSync coloca o seu negócio no mapa com um site marcante e SEO orgânico, sem depender de anúncio. Seu orçamento completo sai em 7 dias.
+              E quem não encontra você liga pra ele. A NexuSync acende a vitrine do seu negócio com um site marcante e SEO básico, sem depender de anúncio. Seu orçamento completo sai em 7 dias.
             </p>
             <ul className={s.bul}>
               <li><span>Quem pesquisa escolhe entre os primeiros resultados. <strong>Quem não aparece nem entra na disputa.</strong></span></li>

@@ -402,7 +402,7 @@ O TBT que sobra vem sobretudo da compilação de shaders no primeiro quadro: o C
 
 - ~~Banner de cookies global ainda em lima (`#d4ff38`).~~ Resolvido na branch `fix/cookie-banner-palette`.
 - ~~Revisar a pergunta nova do FAQ "O site ajuda a aparecer no Google?".~~ Revisada (20/11/2026) na branch `fix/faq-google`. A primeira versão descrevia entregas de SEO (títulos, descrições, páginas organizadas) que só estão documentadas no serviço mensal "SEO e presença local", e citava só o Presence. A resposta nova usa a pergunta e a base do texto já aprovado em `/criacao-de-sites`, diz que Go, Presence e Pulse incluem SEO básico, não garante posição e separa o acompanhamento contínuo (serviço à parte). O texto visível e o JSON-LD `FAQPage` são idênticos.
-- **Ponto a decidir, ainda não alterado:** o subtítulo do hero diz "coloca o seu negócio no mapa". Pode ser lido como aparecer no Google Maps, mas as entregas dos planos de site não incluem o Perfil da Empresa no Google; só o serviço mensal de SEO traz "Orientações para o Perfil da Empresa no Google".
+- ~~Subtítulo do hero com "coloca o seu negócio no mapa".~~ Trocado (20/11/2026) por "acende a vitrine do seu negócio com um site marcante e SEO básico". O "mapa" podia ser lido como Google Maps, e o Perfil da Empresa no Google só vem no serviço mensal de SEO; também contradizia o card "Google Meu Negócio sem site".
 - Testar num celular real (o TBT foi medido com GPU emulada).
 - Eventos novos de analytics (seção 7) ainda não implementados.
 - Vídeo sem `faststart` (o arquivo é 5,4 MB e só baixa quando o modal abre).
