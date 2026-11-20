@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -31,6 +32,7 @@ export function RuaEffects() {
     const rings = byId("rua-rings");
     const chain = Array.from(byId("rua-chain")?.querySelectorAll("span") ?? []);
     let lastStep = -1;
+    let methodReported = false;
 
     function method() {
       if (!track || !step) return;
@@ -39,6 +41,10 @@ export function RuaEffects() {
       const n = Math.min(4, 1 + Math.floor(p * 4));
       if (n === lastStep) return;
       lastStep = n;
+      if (n === 4 && !methodReported) {
+        methodReported = true;
+        trackAnalyticsEvent({ eventName: "home_method_complete" });
+      }
       step.textContent = String(n);
       segs.forEach((seg, i) => seg.setAttribute("data-on", String(i < n)));
       phases.forEach((li, i) => li.setAttribute("data-state", i === n - 1 ? "on" : i < n - 1 ? "done" : "off"));

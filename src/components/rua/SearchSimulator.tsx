@@ -1,12 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { trackAnalyticsEvent, type HomeSearchCategory } from "@/lib/analytics";
 import { PULSE_EVENT } from "./events";
 import { SearchIcon } from "./icons";
 import s from "./rua.module.css";
 
 const CHIPS = ["dentista", "pizzaria", "eletricista", "barbearia"] as const;
-const CYCLE = ["dentista", "pizzaria", "eletricista", "advogado", "pet shop", "barbearia"];
+const CYCLE: HomeSearchCategory[] = ["dentista", "pizzaria", "eletricista", "advogado", "pet shop", "barbearia"];
+const categoryOf = (q: string): HomeSearchCategory => {
+  const normalized = q.trim().toLowerCase();
+  return (CYCLE as string[]).includes(normalized) ? (normalized as HomeSearchCategory) : "outro";
+};
 
 const cap = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -70,6 +75,7 @@ export function SearchSimulator() {
     const q = query.trim().slice(0, 40) || "seu serviço";
     setQuery(q);
     show(q);
+    trackAnalyticsEvent({ eventName: "home_search_simulated", category: categoryOf(q), input: "typed" });
   }
 
   return (
@@ -90,7 +96,12 @@ export function SearchSimulator() {
       <div className={s.chips} role="group" aria-label="Exemplos de serviço">
         {CHIPS.map((chip) => (
           <button key={chip} type="button" className={s.chip} aria-pressed={result === chip}
-            onClick={() => { stopAuto(); const my = ++token.current; type(chip, my); }}>
+            onClick={() => {
+              stopAuto();
+              const my = ++token.current;
+              type(chip, my);
+              trackAnalyticsEvent({ eventName: "home_search_simulated", category: chip, input: "chip" });
+            }}>
             {cap(chip)}
           </button>
         ))}

@@ -27,7 +27,8 @@ function QuoteButton({ source, children, small }: { source: "header" | "hero" | 
 
 function WhatsAppButton({ href = presenceWhatsApp }: { href?: string }) {
   return (
-    <a className={`${s.btn} ${s.btnLine}`} href={href} target="_blank" rel="noopener noreferrer">
+    <a className={`${s.btn} ${s.btnLine}`} href={href} target="_blank" rel="noopener noreferrer"
+      data-analytics-section="sites" data-analytics-interest="institucional">
       <span>Falar no WhatsApp</span>
       <em aria-hidden="true"><ArrowIcon /></em>
     </a>
