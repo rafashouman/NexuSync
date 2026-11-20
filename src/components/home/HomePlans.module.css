@@ -31,7 +31,7 @@
 .serviceNav small { color: #8c919c; font-size: 9px; align-self: start; margin-top: 8px; }
 .serviceNav svg { margin-left: auto; flex-shrink: 0; color: #8be7c5; }
 .serviceNav [data-kind="sites"] svg { color: #829aff; }
-.serviceNav [data-kind="design"] svg { color: #d4ff38; }
+.serviceNav [data-kind="design"] svg { color: #ffb547; }
 .serviceNav a:hover { background: #ffffff09; }
 
 .group { --plan-accent: #829aff; --plan-button: #3459ff; --plan-button-ink: #f1f2e9; }
@@ -48,7 +48,7 @@
 .siteGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
 .card { min-width: 0; border: 1px solid #ffffff26; background: #101722; }
 .siteCard { display: flex; flex-direction: column; transition: border-color .25s, transform .25s; }
-.siteCard[data-featured="true"] { background: #182c7e; border-color: #536dff; --plan-accent: #d4ff38; --plan-button: #d4ff38; --plan-button-ink: #080b12; }
+.siteCard[data-featured="true"] { background: #182c7e; border-color: #536dff; --plan-accent: #ffb547; --plan-button: #ffb547; --plan-button-ink: #080b12; }
 .browserBar { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-bottom: 1px solid #ffffff20; padding: 13px 18px; color: #aab3c5; background: #080b1230; font-size: 8px; letter-spacing: .09em; }
 .browserBar > span:first-child { display: flex; gap: 4px; }
 .browserBar i { display: block; width: 4px; height: 4px; background: #70809b; border-radius: 50%; }
@@ -56,7 +56,7 @@
 .cardBody { display: flex; flex-direction: column; padding: 27px; flex: 1; }
 .cardTop { display: flex; justify-content: space-between; align-items: center; gap: 15px; min-height: 24px; margin-bottom: 22px; font-size: 8px; color: #b2bace; }
 .cardTop > span:last-child { text-align: right; }
-.siteCard[data-featured="true"] .cardTop > span:last-child { color: #d4ff38; }
+.siteCard[data-featured="true"] .cardTop > span:last-child { color: #ffb547; }
 .siteCard h4 { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 16px; font-size: clamp(34px, 3vw, 49px); font-weight: 500; letter-spacing: -.055em; line-height: 1.1; }
 .siteCard h4 span { color: var(--plan-accent); font-weight: 350; }
 .group .description { font-size: 13px; line-height: 1.75; color: #b4bdcb; }
@@ -110,15 +110,15 @@
 .marketingCard .details .features { flex: initial; }
 
 /* Design reads as a set of studio prints, with an editorial horizontal layout. */
-.design { --plan-accent: #d4ff38; --plan-button: #d4ff38; --plan-button-ink: #080b12; }
+.design { --plan-accent: #ffb547; --plan-button: #ffb547; --plan-button-ink: #080b12; }
 .designList { display: flex; flex-direction: column; gap: 20px; }
 .designCard { display: grid; grid-template-columns: .7fr 1.5fr 1fr; min-width: 0; border: 1px solid #ffffff26; background: #12151b; }
 .designCard[data-featured="true"] { border-color: #d4ff3860; }
-.designPrint { position: relative; min-height: 300px; overflow: hidden; background: #d4ff38; color: #10190c; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
+.designPrint { position: relative; min-height: 300px; overflow: hidden; background: #ffb547; color: #10190c; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
 .designPrint > span, .designPrint > small { position: relative; z-index: 1; font-size: 8px; letter-spacing: .12em; }
 .designPrint > strong { position: relative; font-size: clamp(60px, 8vw, 110px); line-height: 1; letter-spacing: -.1em; font-weight: 500; }
 .designPrint > strong > span { position: absolute; top: -20px; right: 0; font-size: 60px; font-weight: 300; }
-.designPrint[data-print="1"] { background: #3459ff; color: #d4ff38; }
+.designPrint[data-print="1"] { background: #3459ff; color: #ffb547; }
 .designPrint > svg { width: 120%; max-width: 230px; align-self: center; margin-inline: -10%; }
 .designPrint[data-print="2"] { background: #dfe5dc; color: #3459ff; }
 .interfacePrint { display: grid; grid-template-columns: .45fr 1fr; gap: 7px; transform: rotate(-8deg); padding-block: 22px; }
@@ -325,7 +325,7 @@
 .serviceNav a>svg,.optionBottom>svg,.custom a>svg{transition:transform .22s}
 .serviceNav a{--nav-accent:#829aff;position:relative;transition:background .22s,color .22s}
 .serviceNav a[data-kind="marketing"],.serviceNav a[data-kind="apps"]{--nav-accent:#8be7c5}
-.serviceNav a[data-kind="design"]{--nav-accent:#d4ff38}
+.serviceNav a[data-kind="design"]{--nav-accent:#ffb547}
 .serviceNav a::after{content:"";position:absolute;inset:auto 18px 0;height:2px;background:var(--nav-accent);opacity:0;transition:opacity .22s}
 .button{transition:box-shadow .22s,transform .22s}
 .details{transition:border-color .22s}

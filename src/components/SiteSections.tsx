@@ -125,7 +125,7 @@ export function SiteSolutions() {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-40 top-20 -z-10 h-96 w-96 rounded-full bg-[#d4ff38]/[0.12] blur-[120px]"
+        className="pointer-events-none absolute -left-40 top-20 -z-10 h-96 w-96 rounded-full bg-[#ffb547]/[0.12] blur-[120px]"
       />
       <div className="container-luxe">
         <motion.div
@@ -135,10 +135,10 @@ export function SiteSolutions() {
           transition={{ duration: 0.55 }}
           className="mx-auto mb-8 max-w-6xl text-center sm:mb-10"
         >
-          <div className="mb-3 inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#d4ff38]">
-            <span aria-hidden className="h-px w-8 bg-[#d4ff38]" />
+          <div className="mb-3 inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#ffb547]">
+            <span aria-hidden className="h-px w-8 bg-[#ffb547]" />
             Nossas soluções
-            <span aria-hidden className="h-px w-8 bg-[#d4ff38]" />
+            <span aria-hidden className="h-px w-8 bg-[#ffb547]" />
           </div>
           <h2 className="text-balance font-display text-2xl font-semibold leading-tight tracking-tight sm:text-3xl xl:text-4xl">
               Soluções digitais completas <span className="text-champagne">para o seu negócio</span>
@@ -162,11 +162,11 @@ export function SiteSolutions() {
               >
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#d4ff38]/[0.1] blur-[70px] transition-opacity group-hover:bg-[#d4ff38]/[0.2]"
+                  className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#ffb547]/[0.1] blur-[70px] transition-opacity group-hover:bg-[#ffb547]/[0.2]"
                 />
                 <div className="relative flex items-center justify-between">
                   <span
-                    className="grid h-10 w-10 place-items-center rounded-xl border border-[#10b981]/45 bg-ocean text-[#d4ff38]"
+                    className="grid h-10 w-10 place-items-center rounded-xl border border-[#10b981]/45 bg-ocean text-[#ffb547]"
                   >
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
@@ -197,7 +197,7 @@ export function SiteSolutions() {
                   <a
                     data-analytics-section="sites"
                     data-analytics-interest={solution.interest}
-                    className="mt-3 inline-flex w-full items-center justify-center gap-2 text-xs font-semibold text-[#c8d2eb] transition-colors hover:text-[#d4ff38]"
+                    className="mt-3 inline-flex w-full items-center justify-center gap-2 text-xs font-semibold text-[#c8d2eb] transition-colors hover:text-[#ffb547]"
                     href={waLink(solution.whatsapp)}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -217,7 +217,7 @@ export function SiteSolutions() {
           <QuoteLink
             interest="nao-sei"
             section="sites"
-            className="font-semibold text-[#d4ff38] underline decoration-[#d4ff38]/40 underline-offset-4 transition-colors hover:text-[#f4f4e9]"
+            className="font-semibold text-[#ffb547] underline decoration-[#ffb547]/40 underline-offset-4 transition-colors hover:text-[#f4f4e9]"
           >
             Conte seu objetivo e ajudamos a definir o formato.
           </QuoteLink>
@@ -351,7 +351,7 @@ export function SiteProcess() {
                   className="group relative rounded-[1.6rem] border border-turquoise/40 bg-ocean/80 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/40 hover:bg-ocean sm:p-7"
                 >
                   <div className="relative z-10 flex items-center justify-between">
-                    <span className="grid h-16 w-16 place-items-center rounded-2xl border border-turquoise/40 bg-ocean text-ice shadow-[0_0_30px_rgba(212,255,56,0.12)] transition-all duration-300 group-hover:border-turquoise/40 group-hover:bg-turquoise/15 group-hover:shadow-[0_0_36px_rgba(212,255,56,0.22)]">
+                    <span className="grid h-16 w-16 place-items-center rounded-2xl border border-turquoise/40 bg-ocean text-ice shadow-[0_0_30px_rgba(255,181,71,0.12)] transition-all duration-300 group-hover:border-turquoise/40 group-hover:bg-turquoise/15 group-hover:shadow-[0_0_36px_rgba(255,181,71,0.22)]">
                       <Icon className="h-6 w-6" aria-hidden="true" />
                     </span>
                     <span className="font-mono text-xs tracking-widest text-ice/60">

@@ -42,7 +42,7 @@ export function StudioCursor() {
         }
       }
       element!.dataset.interactive = String(!!control);
-      element!.style.setProperty("--cursor-color", dark ? "#080b12" : "#d4ff38");
+      element!.style.setProperty("--cursor-color", dark ? "#080b12" : "#ffb547");
       element!.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       element!.dataset.visible = "true";
       site!.dataset.customCursor = "true";

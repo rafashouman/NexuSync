@@ -67,9 +67,9 @@
 .productFooter { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 2cqw; padding: 2cqw 4cqw; border-top: 1px solid currentColor; }
 .productFooter>div { display: flex; flex-direction: column; gap: 1cqw; }
 .productFooter b { font-size: 2.8cqw; }
-.productAction { padding: 2cqw; background: #d4ff38; color: #182318; animation: actionPress 6s ease-in-out infinite; }
+.productAction { padding: 2cqw; background: #ffb547; color: #182318; animation: actionPress 6s ease-in-out infinite; }
 .productCursor { position: absolute; right: 2cqw; bottom: -1cqw; z-index: 1; color: #3459ff; animation: productClick 6s ease-in-out infinite; }
-.productStatus { display: flex; align-items: center; gap: 1cqw; font-size: 1.8cqw; padding: 1.5cqw 4cqw; background: #d4ff38; color: #1b2c1e; animation: status 6s ease-in-out infinite; }
+.productStatus { display: flex; align-items: center; gap: 1cqw; font-size: 1.8cqw; padding: 1.5cqw 4cqw; background: #ffb547; color: #1b2c1e; animation: status 6s ease-in-out infinite; }
 .designScene { position: absolute; inset: 5%; background: #e8e8dd; color: #182c26; box-shadow: 0 15px 40px #0005; }
 .designHeader { border-color: #a7b5a7; }
 .designWorkspace { display: grid; grid-template-columns: 1fr 1fr; height: 61%; }
@@ -88,7 +88,7 @@
 .designNotes em { color: #4a795e; font-weight: 400; }
 .designNotes>div { display: flex; flex-wrap: wrap; align-items: center; gap: 1cqw; }
 .designNotes i { width: 4cqw; height: 4cqw; border-radius: 50%; background: #294438; }
-.designNotes i:nth-child(2) { background: #a9c2a4; }.designNotes i:nth-child(3) { background: #d4ff38; }
+.designNotes i:nth-child(2) { background: #a9c2a4; }.designNotes i:nth-child(3) { background: #ffb547; }
 .designNotes div span { width: 100%; margin-top: 1cqw; font-size: 1.7cqw; }
 .designTimeline { display: flex; align-items: center; gap: 2cqw; padding: 3cqw 4cqw; border-top: 1px solid #a7b5a7; font-size: 1.8cqw; }
 .designTimeline div { position: relative; flex: 1; height: 4px; background: #b7c4b8; }
@@ -110,7 +110,7 @@
 @keyframes imageDrift { to { transform: scale(1.05); } }
 @keyframes slot { 0%, 20%, 100% { background: transparent; color: #243a30; } 35%, 80% { background: #293e35; color: white; } }
 @keyframes receipt { 0%, 20%, 100% { opacity: .65; transform: translateY(3px); } 35%, 80% { opacity: 1; transform: translateY(0); } }
-@keyframes status { 0%, 35%, 100% { background: #dbe8c7; } 45%, 85% { background: #d4ff38; } }
+@keyframes status { 0%, 35%, 100% { background: #dbe8c7; } 45%, 85% { background: #ffb547; } }
 @keyframes productClick { 0%, 15%, 100% { transform: translate(2cqw, 1cqw); } 30%, 70% { transform: translate(-2cqw, -2cqw); } }
 @keyframes actionPress { 0%, 25%, 45%, 100% { transform: scale(1); } 35% { transform: scale(.96); } }
 @keyframes timeline { from { width: 0; } to { width: 100%; } }

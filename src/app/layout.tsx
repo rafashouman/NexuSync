@@ -37,7 +37,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="antialiased bg-background text-foreground selection:bg-[#d4ff38]/30 selection:text-[#f4f4e9] font-sans"
+        className="antialiased bg-background text-foreground selection:bg-[#ffb547]/30 selection:text-[#f4f4e9] font-sans"
       >
         <MetaPixel />
         {/* O children aqui vai renderizar ou o SiteLayout ou a página do Template */}

@@ -13,7 +13,7 @@ export function Hero() {
         <div className="relative z-10">
           <p className="mb-4 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8be7c5]">
             Agência digital NexuSync
-            <span aria-hidden className="h-px w-8 bg-[#d4ff38]" />
+            <span aria-hidden className="h-px w-8 bg-[#ffb547]" />
           </p>
           <h1 className="max-w-2xl font-display text-[clamp(2.5rem,4.2vw,3.8rem)] leading-[1.04] tracking-tight">
             Seu negócio merece{" "}
@@ -35,14 +35,14 @@ export function Hero() {
               href="#servicos"
               className="inline-flex min-h-12 items-center gap-2 rounded-full border border-[#10b981] px-5 py-3 text-sm font-semibold text-[#f4f4e9] transition-colors hover:bg-[#2032a6]"
             >
-              <span aria-hidden className="grid h-5 w-5 place-items-center rounded-full bg-[#d4ff38] text-xs text-abyss">▶</span>
+              <span aria-hidden className="grid h-5 w-5 place-items-center rounded-full bg-[#ffb547] text-xs text-abyss">▶</span>
               Conhecer soluções
             </a>
           </div>
           <div className="mt-6 flex flex-wrap gap-x-5 gap-y-3 border-t border-[#10b981]/30 pt-4 text-[11px] leading-4 text-[#c8d2eb] sm:gap-x-6">
-            <span className="inline-flex items-center gap-2"><Rocket className="h-4 w-4 text-[#d4ff38]" aria-hidden /> Tecnologia de ponta</span>
-            <span className="inline-flex items-center gap-2"><Gem className="h-4 w-4 text-[#d4ff38]" aria-hidden /> Design estratégico</span>
-            <span className="inline-flex items-center gap-2"><ChartNoAxesColumnIncreasing className="h-4 w-4 text-[#d4ff38]" aria-hidden /> Foco em resultados</span>
+            <span className="inline-flex items-center gap-2"><Rocket className="h-4 w-4 text-[#ffb547]" aria-hidden /> Tecnologia de ponta</span>
+            <span className="inline-flex items-center gap-2"><Gem className="h-4 w-4 text-[#ffb547]" aria-hidden /> Design estratégico</span>
+            <span className="inline-flex items-center gap-2"><ChartNoAxesColumnIncreasing className="h-4 w-4 text-[#ffb547]" aria-hidden /> Foco em resultados</span>
           </div>
         </div>
         <HeroTemplatePreview presentation="home" />

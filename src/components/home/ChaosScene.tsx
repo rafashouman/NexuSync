@@ -85,13 +85,13 @@ function OrbitSignal() {
     const radius = index % 2 ? .86 : 1.18;
     return <mesh key={index} position={[Math.cos(angle) * radius, Math.sin(angle) * radius, 0]}>
       <sphereGeometry args={[index % 3 ? .018 : .035, 10, 10]} />
-      <meshBasicMaterial color={index % 3 ? "#56dfff" : "#d4ff38"} transparent opacity={index % 3 ? .72 : .95} toneMapped={false} />
+      <meshBasicMaterial color={index % 3 ? "#56dfff" : "#ffb547"} transparent opacity={index % 3 ? .72 : .95} toneMapped={false} />
     </mesh>;
   });
   return <group position={[0, .15, .75]}>
     <mesh rotation={[Math.PI / 2, 0, 0]}>
       <torusGeometry args={[.48, .018, 10, 64]} />
-      <meshBasicMaterial color="#d4ff38" transparent opacity={.65} blending={AdditiveBlending} depthWrite={false} toneMapped={false} />
+      <meshBasicMaterial color="#ffb547" transparent opacity={.65} blending={AdditiveBlending} depthWrite={false} toneMapped={false} />
     </mesh>
     <group ref={innerOrbit} rotation={[.35, .55, 0]}>
       <mesh>

@@ -178,7 +178,7 @@ export function Segments() {
                 onClick={() => setActiveIdx(idx)}
                 className={`group relative flex min-h-[275px] cursor-pointer flex-col justify-between overflow-hidden rounded-[1.75rem] border p-6 backdrop-blur-xl transition-all duration-300 ${
                   isSelected
-                    ? "border-turquoise/40 bg-turquoise/[0.08] -translate-y-1 shadow-[0_20px_50px_-20px_rgba(212,255,56,0.35)]"
+                    ? "border-turquoise/40 bg-turquoise/[0.08] -translate-y-1 shadow-[0_20px_50px_-20px_rgba(255,181,71,0.35)]"
                     : "border-turquoise/40 bg-ocean/65 hover:-translate-y-1 hover:border-turquoise/40 hover:bg-ocean/65"
                 }`}
               >

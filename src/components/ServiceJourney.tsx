@@ -114,7 +114,7 @@ export function ServiceHero({
           )}
         </h1>
         <p className="mt-7 max-w-xl border-l-2 border-turquoise/35 pl-5 text-lg leading-8 text-muted-foreground">{item.intro}</p>
-        <QuoteLink interest={item.interest} section={item.section as QuoteSection} className="group mt-8 inline-flex items-center gap-3 rounded-xl bg-brand-gradient px-6 py-4 font-semibold text-abyss shadow-[0_12px_36px_-16px_rgba(212,255,56,.75)] transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise">{item.cta}<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden /></QuoteLink>
+        <QuoteLink interest={item.interest} section={item.section as QuoteSection} className="group mt-8 inline-flex items-center gap-3 rounded-xl bg-brand-gradient px-6 py-4 font-semibold text-abyss shadow-[0_12px_36px_-16px_rgba(255,181,71,.75)] transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise">{item.cta}<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden /></QuoteLink>
       </div>
       {visual && <div className="min-w-0">{visual}</div>}
     </div>

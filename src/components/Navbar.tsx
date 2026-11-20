@@ -63,10 +63,10 @@ export function Navbar() {
     >
       <div className={`border-b border-[#10b981]/15 bg-[#141f50]/55 text-xs transition-all duration-500 ${scrolled ? "hidden" : ""}`}>
         <div className="container-luxe flex h-8 items-center justify-end gap-5">
-          <a href={`mailto:${EMAIL}`} className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-[#d4ff38] transition-colors">
+          <a href={`mailto:${EMAIL}`} className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-[#ffb547] transition-colors">
             <Mail className="h-3.5 w-3.5" aria-hidden /> {EMAIL}
           </a>
-          <a href={WA_HREF} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-[#d4ff38] transition-colors">
+          <a href={WA_HREF} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-[#ffb547] transition-colors">
             <MessageCircle className="h-3.5 w-3.5" aria-hidden /> WhatsApp {WA_DISPLAY}
           </a>
         </div>
@@ -89,7 +89,7 @@ export function Navbar() {
             <a
               key={l.label}
               href={l.href}
-              className="whitespace-nowrap text-xs 2xl:text-sm font-medium text-muted-foreground hover:text-[#d4ff38] transition-colors duration-300"
+              className="whitespace-nowrap text-xs 2xl:text-sm font-medium text-muted-foreground hover:text-[#ffb547] transition-colors duration-300"
             >
               {l.label}
             </a>
@@ -100,7 +100,7 @@ export function Navbar() {
               aria-haspopup="true"
               aria-expanded={productsOpen}
               onClick={() => setProductsOpen((v) => !v)}
-              className="inline-flex items-center gap-1 whitespace-nowrap text-xs 2xl:text-sm font-medium text-muted-foreground hover:text-[#d4ff38] transition-colors duration-300"
+              className="inline-flex items-center gap-1 whitespace-nowrap text-xs 2xl:text-sm font-medium text-muted-foreground hover:text-[#ffb547] transition-colors duration-300"
             >
               Produtos
               <ChevronDown className={`h-3.5 w-3.5 transition-transform ${productsOpen ? "rotate-180" : ""}`} aria-hidden />
@@ -112,7 +112,7 @@ export function Navbar() {
                     <Link
                       href={product.href}
                       onClick={() => setProductsOpen(false)}
-                      className="block rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-[#2032a6] hover:text-[#d4ff38] transition-colors"
+                      className="block rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-[#2032a6] hover:text-[#ffb547] transition-colors"
                     >
                       {product.label}
                     </Link>
@@ -125,7 +125,7 @@ export function Navbar() {
 
         <QuoteLink
           section="header"
-          className="hidden whitespace-nowrap xl:inline-flex items-center gap-2 rounded-full border border-[#d4ff38]/65 bg-[#d4ff38] px-5 py-2.5 text-sm font-bold text-abyss hover:bg-[#bce82c] hover:border-[#bce82c] hover:shadow-brand-glow transition-all duration-300"
+          className="hidden whitespace-nowrap xl:inline-flex items-center gap-2 rounded-full border border-[#ffb547]/65 bg-[#ffb547] px-5 py-2.5 text-sm font-bold text-abyss hover:bg-[#e89b2f] hover:border-[#e89b2f] hover:shadow-brand-glow transition-all duration-300"
         >
           Pedir orçamento
         </QuoteLink>

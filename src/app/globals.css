@@ -10,8 +10,8 @@
   --color-sea: #2a40ba;
   --color-turquoise: #10b981;
   --color-ice: #8be7c5;
-  --color-champagne: #d4ff38;
-  --color-gold: #bce82c;
+  --color-champagne: #ffb547;
+  --color-gold: #e89b2f;
   --color-ivory: #f4f4e9;
   --color-mist: #dce4f5;
   --color-abyss: #0d1639;
@@ -36,7 +36,7 @@
 }
 
 @utility text-brand-gradient {
-  background-color: #d4ff38;
+  background-color: #ffb547;
   background-image: none;
   background-clip: text;
   -webkit-background-clip: text;
@@ -44,15 +44,15 @@
 }
 
 @utility bg-brand-gradient {
-  background-color: #d4ff38;
+  background-color: #ffb547;
   background-image: none;
   @variant hover {
-    background-color: #bce82c;
+    background-color: #e89b2f;
   }
 }
 
 @utility shadow-brand-glow {
-  box-shadow: 0 8px 34px -12px rgb(212 255 56 / 25%);
+  box-shadow: 0 8px 34px -12px rgb(255 181 71 / 25%);
 }
 
 .nexusync-site {
@@ -74,7 +74,7 @@
 }
 
 .nexusync-site :is(a, button, input, textarea, select, summary):focus-visible {
-  outline: 2px solid #d4ff38;
+  outline: 2px solid #ffb547;
   outline-offset: 4px;
 }
 
@@ -87,7 +87,7 @@
   --popover: #141f50;
   --popover-foreground: #f4f4e9;
 
-  --primary: #d4ff38;
+  --primary: #ffb547;
   --primary-foreground: #0d1639;
   --muted: #2032a6;
   --muted-foreground: #dce4f5;
@@ -114,14 +114,14 @@
 
 /* Utilitários no novo padrão do Tailwind v4 */
 @utility text-violet-gradient {
-  background-image: linear-gradient(to right, #f4f4e9, #d4ff38 72%, #bce82c);
+  background-image: linear-gradient(to right, #f4f4e9, #ffb547 72%, #e89b2f);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 @utility bg-violet-gradient {
-  background-image: linear-gradient(120deg, #e4ff8b, #d4ff38 58%, #bce82c);
+  background-image: linear-gradient(120deg, #ffd28a, #ffb547 58%, #e89b2f);
 }
 
 @utility container-luxe {
@@ -141,7 +141,7 @@
 
 .home-hero-glow {
   background:
-    radial-gradient(ellipse at 100% 12%, rgb(212 255 56 / 14%), transparent 24%),
+    radial-gradient(ellipse at 100% 12%, rgb(255 181 71 / 14%), transparent 24%),
     radial-gradient(ellipse at 2% 92%, rgb(16 185 129 / 16%), transparent 30%);
 }
 
@@ -154,7 +154,7 @@
 }
 
 @utility shadow-violet-glow {
-  box-shadow: 0 8px 34px -12px rgb(212 255 56 / 38%);
+  box-shadow: 0 8px 34px -12px rgb(255 181 71 / 38%);
 }
 
 .hero-title {
@@ -179,11 +179,11 @@
 @keyframes logo-pulse {
   0%, 100% {
     transform: scale(1);
-    filter: drop-shadow(0 0 0 rgb(212 255 56 / 0%));
+    filter: drop-shadow(0 0 0 rgb(255 181 71 / 0%));
   }
   50% {
     transform: scale(1.04);
-    filter: drop-shadow(0 0 8px rgb(212 255 56 / 40%));
+    filter: drop-shadow(0 0 8px rgb(255 181 71 / 40%));
   }
 }
 

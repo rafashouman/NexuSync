@@ -131,7 +131,7 @@ const services: {
     span: "lg:col-span-6",
     tag: "Processos",
     metrics: ["Integrações", "Lembretes", "Fluxos"],
-    accent: "from-lime-500/15 via-transparent to-transparent",
+    accent: "from-[#ffb547]/15 via-transparent to-transparent",
     featured: false,
     waMessage: "Olá! Quero automatizar processos. Meu negócio é [segmento] e meu principal objetivo é [objetivo].",
   },

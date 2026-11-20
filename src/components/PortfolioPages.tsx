@@ -135,7 +135,7 @@ const playfulApps = [
     description:
       "Jogo de memória espacial com cartas 3D, cronômetro de precisão e gravação de recordes por apelido.",
     icon: Layers3,
-    accent: "from-lime-400/20 via-emerald-500/5 to-transparent",
+    accent: "from-[#ffb547]/20 via-emerald-500/5 to-transparent",
   },
   {
     id: "arknoid",
@@ -814,7 +814,7 @@ export function DesignPageHero() {
           </div>
           <div
             aria-hidden="true"
-            className="relative mx-auto w-full max-w-[500px] overflow-hidden rounded-[2rem] border border-turquoise/40 bg-ocean p-5 shadow-[0_30px_90px_-40px_rgba(212,255,56,.5)] sm:p-7"
+            className="relative mx-auto w-full max-w-[500px] overflow-hidden rounded-[2rem] border border-turquoise/40 bg-ocean p-5 shadow-[0_30px_90px_-40px_rgba(255,181,71,.5)] sm:p-7"
           >
             <div className="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full bg-turquoise/15 blur-3xl" />
             <div className="relative flex items-center justify-between border-b border-turquoise/40 pb-5">
@@ -835,7 +835,7 @@ export function DesignPageHero() {
                 Marca com <span className="text-brand-gradient">presença.</span>
               </p>
               <div className="mt-6 flex gap-2">
-                {["#d4ff38", "#8be7c5", "#d4ff38", "#f4f4e9"].map((color) => (
+                {["#ffb547", "#8be7c5", "#ffb547", "#f4f4e9"].map((color) => (
                   <span
                     key={color}
                     className="h-9 flex-1 rounded-xl border border-turquoise/40"

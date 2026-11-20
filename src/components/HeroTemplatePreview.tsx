@@ -125,7 +125,7 @@ export function HeroTemplatePreview({
         onBlur={() => setHovering(false)}
         className={`${previewVisible ? "block" : "hidden"} relative mx-auto w-full max-w-[650px]`}
       >
-        <div aria-hidden className="pointer-events-none absolute inset-x-8 top-10 h-64 rounded-full bg-[#d4ff38]/20 blur-[90px]" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-8 top-10 h-64 rounded-full bg-[#ffb547]/20 blur-[90px]" />
         <div className="relative grid items-end">
         <div data-preview-device="laptop" className="relative hidden min-w-0 pb-0 lg:col-start-1 lg:row-start-1 lg:block lg:w-[90%]">
           <div className="relative w-full pl-3">
@@ -195,9 +195,9 @@ export function HeroTemplatePreview({
                 type="button"
                 onClick={() => setActiveIndex(index)}
                 aria-pressed={index === visibleIndex}
-                className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4ff38] ${
+                className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ffb547] ${
                   index === visibleIndex
-                    ? "border-[#d4ff38]/65 bg-[#d4ff38]/15 text-[#f4f4e9]"
+                    ? "border-[#ffb547]/65 bg-[#ffb547]/15 text-[#f4f4e9]"
                     : "border-[#8be7c5]/25 text-[#c8d2eb] hover:border-[#8be7c5]/55 hover:text-[#f4f4e9]"
                 }`}
               >
@@ -215,7 +215,7 @@ export function HeroTemplatePreview({
               </button>
             )}
           </div>
-          <Link href={template.href} className="text-[11px] font-semibold text-[#d4ff38] underline underline-offset-4 hover:text-[#f4f4e9]">
+          <Link href={template.href} className="text-[11px] font-semibold text-[#ffb547] underline underline-offset-4 hover:text-[#f4f4e9]">
             Explorar {template.brand}
           </Link>
         </div>

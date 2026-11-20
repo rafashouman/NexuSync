@@ -124,7 +124,7 @@
 .uiKit i:nth-child(2) { background: #d7e4d3; }
 .uiKit i:nth-child(3) { background: #3459ff; }
 .uiKit b { font-size: 14px; }
-.prototype { color: #d4ff38; font-size: 8px; font-weight: 700; line-height: 1.4; letter-spacing: .04em; }
+.prototype { color: #ffb547; font-size: 8px; font-weight: 700; line-height: 1.4; letter-spacing: .04em; }
 .prototype i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; animation: pulse 2s ease-in-out infinite; }
 @keyframes rise { 0%, 15%, 100% { transform: translateY(0); } 35%, 65% { transform: translateY(-3px); } }
 @keyframes click { 0%, 15%, 100% { transform: translate(2px, 2px); } 45%, 70% { transform: translate(-8px, -6px); } }
