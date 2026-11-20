@@ -2,8 +2,9 @@ import Link from "next/link";
 import { ArrowUpRight, Check, Plus } from "lucide-react";
 import { JsonLd } from "@/components/JsonLd";
 import s from "@/components/home/SitesExperience.module.css";
-import c from "./SeoPage.module.css";
+import c from "@/components/home/SeoPages.module.css";
 import { marketingPlans } from "@/data/marketingPlans";
+import { segments } from "@/data/segments";
 import { sitePlans } from "@/data/sitePlans";
 import { breadcrumbs, faqSchema, serviceSchema } from "@/lib/seo";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
@@ -134,6 +135,16 @@ export default function SeoPage() {
           </div>
           <ul>{notPromised.map((item) => <li key={item}>{item}</li>)}</ul>
         </div>
+      </section>
+
+      <section className={s.section} id="por-segmento">
+        <div className={s.heading}>
+          <div><p className={s.kicker}>POR SEGMENTO</p><h2>Seu tipo de negócio <em>tem página própria.</em></h2></div>
+          <p>Veja o que as pessoas pesquisam e o que o site precisa ter em cada segmento.</p>
+        </div>
+        <nav className={c.others} aria-label="Sites por segmento">
+          {segments.map((segment) => <Link key={segment.slug} href={`/sites-para/${segment.slug}`}>Sites para {segment.plural}</Link>)}
+        </nav>
       </section>
 
       <section className={s.section} id="perguntas">
