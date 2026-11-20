@@ -442,7 +442,7 @@
 
   .demo-shell[data-theme="claro"] .demo-dark
     :is([class*="text-lime-"], [class*="text-green-"], [class*="text-emerald-"]) {
-    color: #3f6212 !important;
+    color: #7a4a0c !important;
   }
 
   .demo-shell[data-theme="claro"] .demo-dark

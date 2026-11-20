@@ -57,14 +57,14 @@
 .catalogPreview[data-app="voxelvaders"]{--preview-bg:#34163c;--preview-bar:#5c2258;--preview-row:#703069;--preview-active:#a23a87;--preview-accent:#ffcf77;--preview-secondary:#ffb4db;--preview-graphic:#e34aa3}
 .catalogPreview[data-app="pulse-arkanoid"]{--preview-bg:#3e2318;--preview-bar:#69351e;--preview-row:#854722;--preview-active:#b3622d;--preview-accent:#ffe596;--preview-secondary:#ffc6a0;--preview-graphic:#ef773d}
 .catalogPreview[data-app="cyber-tarot"]{--preview-bg:#2c1a42;--preview-bar:#50336b;--preview-row:#60417a;--preview-active:#8257a3;--preview-accent:#fbe39c;--preview-secondary:#e4c5ff;--preview-graphic:#a477d1}
-.catalogPreview[data-app="arcade"]{--preview-bg:#182352;--preview-bar:#2d3e82;--preview-row:#3a5197;--preview-active:#526dc0;--preview-accent:#e9ff81;--preview-secondary:#a6eaff;--preview-graphic:#657cf1}
+.catalogPreview[data-app="arcade"]{--preview-bg:#182352;--preview-bar:#2d3e82;--preview-row:#3a5197;--preview-active:#526dc0;--preview-accent:#ffd28a;--preview-secondary:#a6eaff;--preview-graphic:#657cf1}
 .catalogPreview[data-app="reservas"]{--preview-bg:#402322;--preview-bar:#703931;--preview-row:#854b3c;--preview-active:#af6850;--preview-accent:#ffe1a1;--preview-secondary:#ffc8aa;--preview-graphic:#e87850}
 .catalogPreview[data-app="connection"]{--preview-bg:#3b1e3e;--preview-bar:#663456;--preview-row:#7a4064;--preview-active:#a55b84;--preview-accent:#ffe2ae;--preview-secondary:#ffc4e1;--preview-graphic:#d573ad}
 .catalogPreview[data-app="bluemoon"]{--preview-bg:#182748;--preview-bar:#304570;--preview-row:#3d5683;--preview-active:#5b78ad;--preview-accent:#f7df9d;--preview-secondary:#c4d6ff;--preview-graphic:#8e9ddd}
 .catalogPreview[data-app="academias"]{--preview-bg:#41271c;--preview-bar:#70402a;--preview-row:#874d2d;--preview-active:#b66b3c;--preview-accent:#ffed93;--preview-secondary:#ffc59e;--preview-graphic:#eb803d}
 .catalogPreview[data-app="miniaturas"]{--preview-bg:#352c1e;--preview-bar:#5c4b2d;--preview-row:#715c34;--preview-active:#9b7c42;--preview-accent:#ffe7a0;--preview-secondary:#dfd3a6;--preview-graphic:#c9994f}
 .catalogPreview[data-app="imobiliaria"]{--preview-bg:#29372c;--preview-bar:#415642;--preview-row:#50674b;--preview-active:#6c8960;--preview-accent:#f3e7ae;--preview-secondary:#cbe1b9;--preview-graphic:#8aad77}
-.catalogPreview[data-app="cyber-oregon"]{--preview-bg:#122f27;--preview-bar:#1d5140;--preview-row:#29664d;--preview-active:#358c65;--preview-accent:#d7ff9f;--preview-secondary:#a0f1c0;--preview-graphic:#41bd82}
+.catalogPreview[data-app="cyber-oregon"]{--preview-bg:#122f27;--preview-bar:#1d5140;--preview-row:#29664d;--preview-active:#358c65;--preview-accent:#ffd28a;--preview-secondary:#a0f1c0;--preview-graphic:#41bd82}
 .catalogPreviewTop{display:flex;justify-content:space-between;gap:8px;padding:10px 12px;border-bottom:1px solid #ffffff24;background:var(--preview-bar);font-size:8px;letter-spacing:.04em}
 .catalogPreviewTop span:last-child{color:var(--preview-accent)}
 .catalogPreviewBody{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 12px}
