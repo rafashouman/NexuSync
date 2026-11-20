@@ -277,6 +277,8 @@
 .floorN { font-family: var(--display); font-weight: 900; font-stretch: 125%; font-size: 32px; line-height: 1; color: var(--dim); font-variant-numeric: tabular-nums; }
 .floor h3 { font-family: var(--display); font-weight: 700; font-stretch: 104%; font-size: 20px; margin: 0 0 4px; }
 .floor p { margin: 0; color: var(--mute); font-size: 14px; }
+.floorLink { display: inline-block; margin-top: 10px; font-size: 13px; font-weight: 600; color: rgb(var(--amber-rgb)); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+.floorLink:focus-visible { outline: 2px solid #5b97ff; outline-offset: 4px; }
 .base { border-color: rgba(var(--amber-rgb), 0.55); background: rgba(var(--amber-rgb), 0.08); }
 .base .floorN { color: var(--amber); }
 .lvl { font: 600 10px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); border: 1px solid rgba(var(--amber-rgb), 0.5); border-radius: 2px; padding: 5px 8px; white-space: nowrap; }

@@ -1,13 +1,21 @@
 import MarketingExperience from "@/components/home/MarketingExperience";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbs, serviceSchema } from "@/lib/seo";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
-export const metadata = nexuSyncMetadata({
-  title: "Tráfego, SEO e Social Media para Pequenas Empresas | NexuSync",
-  description:
-    "Gestão de redes sociais, anúncios no Google e na Meta, SEO e presença local para sua empresa. Conheça as entregas e solicite uma proposta.",
-  path: "/marketing",
-});
+const path = "/marketing";
+const title = "SEO, Redes Sociais e Tráfego Pago para Pequenas Empresas | NexuSync";
+const description =
+  "SEO e presença local, gestão de redes sociais e, por último, anúncios no Google e na Meta para sua empresa. Conheça as entregas e solicite uma proposta.";
+
+export const metadata = nexuSyncMetadata({ title, description, path });
 
 export default function MarketingPage() {
-  return <MarketingExperience />;
+  return (
+    <>
+      <JsonLd data={serviceSchema({ name: "Marketing digital", path, serviceType: "SEO, gestão de redes sociais e tráfego pago", description })} />
+      <JsonLd data={breadcrumbs(["Marketing", path])} />
+      <MarketingExperience />
+    </>
+  );
 }

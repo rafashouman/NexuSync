@@ -2,27 +2,33 @@ import type { MetadataRoute } from "next";
 
 import { appCatalog } from "@/data/appCatalog";
 
+/** Pages that sell: priority follows the agency's pillar order (online presence first). */
+const servicePaths = ["/seo-para-negocios-locais", "/criacao-de-sites", "/lojas-virtuais", "/design", "/marketing", "/apps"];
+
 const publicPaths = [...new Set([
   "/",
+  ...servicePaths,
   "/quem-somos",
   "/contato",
-  "/criacao-de-sites",
   "/arcsync",
   "/visionsync",
-  "/apps",
-  "/design",
-  "/marketing",
-  "/lojas-virtuais",
   "/templates",
   "/templates/cyber-oregon",
   "/privacidade",
   ...appCatalog.map(app => app.path),
 ])];
 
+function priorityOf(path: string) {
+  if (path === "/") return 1;
+  if (servicePaths.includes(path)) return 0.9;
+  if (path === "/contato" || path === "/quem-somos") return 0.7;
+  return 0.4;
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return publicPaths.map((path) => ({
     url: `https://nexusync.online${path}`,
-    changeFrequency: path === "/" ? "monthly" : "yearly",
-    priority: path === "/" ? 1 : 0.6,
+    changeFrequency: "monthly",
+    priority: priorityOf(path),
   }));
 }

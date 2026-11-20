@@ -5,7 +5,7 @@ type NavGroup = { title: string; links: readonly NavLink[] };
 export const solutionPillars: readonly { pillar: string; links: readonly NavLink[] }[] = [
   { pillar: "Presença online", links: [
     ["Criação de sites", "/criacao-de-sites"], ["Lojas virtuais e catálogos", "/lojas-virtuais"],
-    ["Aplicativos e automações", "/apps"], ["SEO e presença no Google", "/marketing#marketing-seo-local"],
+    ["Aplicativos e automações", "/apps"], ["SEO e presença no Google", "/seo-para-negocios-locais"],
   ] },
   { pillar: "Design", links: [["Design e motion graphics", "/design"]] },
   { pillar: "Redes sociais", links: [["Gestão de redes sociais", "/marketing#marketing-presenca-ativa"]] },

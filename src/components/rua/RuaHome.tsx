@@ -299,7 +299,7 @@ export default function RuaHome() {
               {pillars.map((pillar, i) => (
                 <li key={pillar.title} className={`${s.floor} ${i === 0 ? s.base : ""}`}>
                   <span className={s.floorN}>{String(i + 1).padStart(2, "0")}</span>
-                  <div><h3>{pillar.title}</h3><p>{pillar.text}</p></div>
+                  <div><h3>{pillar.title}</h3><p>{pillar.text}</p>{"href" in pillar && <Link href={pillar.href} className={s.floorLink}>{pillar.cta} →</Link>}</div>
                   {"tag" in pillar && <span className={`${s.lvl} ${i === 0 ? "" : s.lvlDim}`}>{pillar.tag}</span>}
                 </li>
               ))}
