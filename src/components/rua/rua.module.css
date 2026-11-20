@@ -361,12 +361,64 @@
 .floor p { margin: 0; color: var(--mute); font-size: 15px; }
 .floorLink { display: inline-block; margin-top: 10px; font-size: 14px; font-weight: 600; color: rgb(var(--amber-rgb)); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
 .floorLink:focus-visible { outline: 2px solid #5b97ff; outline-offset: 4px; }
-.floors[data-reveal="true"] .floor { transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.floor { transition: border-color 0.3s, scale 0.3s; }
+.floors[data-reveal="true"] .floor { transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s, scale 0.3s; }
 .floors[data-reveal="true"] .floor[data-in="false"] { opacity: 0; transform: translateY(24px); }
 .alsoDesign { margin: 28px auto 0; font-size: 16px; }
 .alsoDesign .floorLink { margin-top: 0; margin-left: 4px; }
 .base { border-color: rgba(var(--amber-rgb), 0.55); background: rgba(var(--amber-rgb), 0.08); }
 .base .floorN { color: var(--amber); }
+
+/* ---------- cards em movimento: respiração em onda, pulso ao acender e anel que se espalha ----------
+   Usa a propriedade `scale` (não `transform`) para não brigar com as transições de entrada e de hover. */
+.try,
+.results li,
+.floor,
+.planTab { position: relative; }
+.try::after,
+.results .top::after,
+.planTab[aria-pressed="true"]::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; border: 1px solid rgba(var(--amber-rgb), 0.7); opacity: 0; pointer-events: none; }
+/* tentativas: uma onda lenta atravessa a grade; o card que acende dá um pulo e solta um anel */
+.try { animation: breathe 5.4s ease-in-out infinite; }
+.try:nth-child(2) { animation-delay: 0.3s; }
+.try:nth-child(3) { animation-delay: 0.6s; }
+.try:nth-child(4) { animation-delay: 0.9s; }
+.try:nth-child(5) { animation-delay: 1.2s; }
+.try:nth-child(6) { animation-delay: 1.5s; }
+.try[data-state="on"] { animation: cardPop 0.7s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
+.try[data-state="on"]::after { animation: wave 1.1s ease-out; }
+.try[data-state="on"] h3::before { animation: dotWave 1.1s ease-out; }
+/* simulador: o card do concorrente pulsa e solta um anel azul a cada busca */
+.results .top { animation: rin 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both, breathe 3.6s 0.6s ease-in-out infinite; }
+.results .top::after { border-color: rgba(var(--signal-rgb), 0.8); animation: wave 1.3s 0.35s ease-out; }
+.results .top .rpin { animation: pinBob 2.4s ease-in-out infinite; }
+/* planos: o plano escolhido solta um anel e os outros sobem no hover */
+.planTab[aria-pressed="true"]::after { animation: wave 1.1s ease-out; }
+.planTab:hover { transform: translateY(-3px); }
+/* pilares: crescem um pouco no hover */
+.floor:hover { border-color: rgba(var(--amber-rgb), 0.5); scale: 1.015; }
+@keyframes breathe { 0%, 100% { scale: 1; } 50% { scale: 1.018; } }
+@keyframes cardPop { 0% { scale: 1; } 40% { scale: 1.05; } 100% { scale: 1.025; } }
+@keyframes wave { 0% { opacity: 0.9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.12, 1.25); } }
+@keyframes dotWave { 0% { box-shadow: 0 0 0 0 rgba(var(--amber-rgb), 0.8); } 100% { box-shadow: 0 0 0 14px rgba(var(--amber-rgb), 0); } }
+@keyframes pinBob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -3px; } }
+
+/* ---------- botão flutuante do WhatsApp ---------- */
+.waFloat { position: fixed; right: 22px; bottom: 22px; z-index: 40; display: block; text-decoration: none; animation: waIn 0.6s 1.2s cubic-bezier(0.3, 1.5, 0.5, 1) both; }
+.waFloat > i { position: relative; display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: var(--amber); color: var(--amber-ink); box-shadow: 0 10px 30px -8px rgba(var(--amber-rgb), 0.7); transition: scale 0.25s; }
+.waFloat > i::before,
+.waFloat > i::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(var(--amber-rgb), 0.7); animation: waRing 2.6s ease-out infinite; pointer-events: none; }
+.waFloat > i::after { animation-delay: 1.3s; }
+.waFloat svg { width: 28px; height: 28px; }
+.waFloat > span { position: absolute; right: 70px; top: 50%; margin-top: -16px; white-space: nowrap; font: 600 12px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); background: rgba(var(--night-rgb), 0.88); border: 1px solid var(--line); border-radius: 2px; padding: 8px 11px; opacity: 0; translate: 8px 0; transition: opacity 0.25s, translate 0.25s; pointer-events: none; }
+.waFloat:hover > i,
+.waFloat:focus-visible > i { scale: 1.08; }
+.waFloat:hover > span,
+.waFloat:focus-visible > span { opacity: 1; translate: 0 0; }
+.waFloat:focus-visible { outline: none; }
+.waFloat:focus-visible > i { outline: 2px solid var(--signal); outline-offset: 4px; }
+@keyframes waIn { from { opacity: 0; scale: 0.6; } }
+@keyframes waRing { 0% { opacity: 0.8; scale: 1; } 100% { opacity: 0; scale: 1.7; } }
 
 /* faq */
 .faq { display: grid; gap: 8px; margin-top: 28px; }
@@ -424,6 +476,16 @@
   .hint > b,
   .mTyping i,
   .rcItems .rcLine { animation: none; }
+  .try,
+  .try::after,
+  .try h3::before,
+  .results .top,
+  .results .top::after,
+  .results .top .rpin,
+  .planTab::after,
+  .waFloat,
+  .waFloat > i::before,
+  .waFloat > i::after { animation: none !important; }
   .rua *,
   .rua *::before,
   .rua *::after { transition-duration: 0.01ms !important; }

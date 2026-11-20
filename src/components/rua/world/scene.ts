@@ -111,6 +111,32 @@ type Building = {
 type AttemptSign = { mesh: Mesh<PlaneGeometry, MeshBasicMaterial>; canvas: HTMLCanvasElement; tex: CanvasTexture; text: string; t0: number };
 
 const ATTEMPT_LABELS = ["INSTAGRAM", "PERFIL NO GOOGLE", "CONSTRUTOR", "SITE POR IA", "CARTÃO DE VISITA", "WHATSAPP"];
+
+// ---------- map palette (linear hex, like the rest of the scene; no lime, no purple) ----------
+/** Facade + roof pairs: navy, blue, teal, slate, brick, sand. Roofs read as the "map" from above. */
+const BLOCK_TONES: { facade: number; roof: number }[] = [
+  { facade: 0x0c1630, roof: 0x101d3c },
+  { facade: 0x101c3a, roof: 0x16284e },
+  { facade: 0x072428, roof: 0x063c42 },
+  { facade: 0x141c2e, roof: 0x1c2638 },
+  { facade: 0x26140a, roof: 0x3a1c0c },
+  { facade: 0x221e12, roof: 0x34301c },
+];
+/** Window glow tints: cool white, cyan, warm white. */
+const WINDOW_TINTS = [0x9fb3ff, 0x8fe3ff, 0xffe2b8];
+const PARK = 0x0a3218;
+const TREE = [0x0b3a22, 0x0a3030, 0x123a1c];
+const PLAZA = 0x302818;
+/** Cross streets (z). Kept away from the visitor's building (z 4) and the rival (z -6). */
+const CROSS = [-72, -40, 24, 56];
+const CROSS_HALF = 3;
+/** Street names painted on the ground, like a map. */
+const STREET_NAMES: { text: string; x: number; z: number; along: boolean }[] = [
+  { text: "AV. CENTRAL", x: -1.6, z: 38, along: true },
+  { text: "AV. CENTRAL", x: 1.6, z: -52, along: true },
+  { text: "RUA DO COMÉRCIO", x: 26, z: 24, along: false },
+  { text: "RUA DAS FLORES", x: -30, z: -40, along: false },
+];
 const NUMERIC_KEYS = ["shift", "shiftY", "city", "rival", "you", "beam", "scan", "grow", "veilS", "veilF", "tagR", "tagY", "signs"] as const;
 
 export function createWorld(refs: WorldRefs): (() => void) | null {
@@ -205,7 +231,7 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
     scene.add(ground);
     const grid = new GridHelper(600, 150, raw(0x1b2c5a), raw(0x111c3a));
     (grid.material as Material).transparent = true;
-    (grid.material as Material).opacity = 0.5;
+    (grid.material as Material).opacity = 0.32;
     grid.position.y = 0.005;
     scene.add(grid);
     const street = new Mesh(new PlaneGeometry(7, 600), new MeshLambertMaterial({ color: raw(0x04070e) }));
@@ -219,26 +245,66 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
       sw.position.set(sx, 0.03, 0);
       scene.add(sw);
     }
+    const onCross = (z: number, pad = 0) => CROSS.some((c) => Math.abs(z - c) < CROSS_HALF + pad);
     const dashZ: number[] = [];
-    for (let z = -150; z < 150; z += 4.5) dashZ.push(z);
+    for (let z = -150; z < 150; z += 4.5) if (!onCross(z, 1)) dashZ.push(z);
     const dashes = new InstancedMesh(new PlaneGeometry(0.14, 1.8), new MeshBasicMaterial({ color: raw(0x2a3858) }), dashZ.length);
     dashZ.forEach((z, i) => place(dashes, i, 0, 0.04, z, -Math.PI / 2, 0, 1, 1));
     scene.add(dashes);
 
-    // street lights: cool white, never amber (amber means "a business is visible")
+    // cross streets with zebra crossings: the city reads as a map from above
+    const crossMat = new MeshLambertMaterial({ color: raw(0x04070e) });
+    for (const c of CROSS) {
+      const road = new Mesh(new PlaneGeometry(240, CROSS_HALF * 2), crossMat);
+      road.rotation.x = -Math.PI / 2;
+      road.position.set(0, 0.025, c);
+      scene.add(road);
+    }
+    const zebraSpots: [number, number][] = [];
+    for (const c of CROSS) for (const side of [-1, 1]) for (let k = -3; k <= 3; k++) zebraSpots.push([k * 0.9, c + side * (CROSS_HALF + 0.9)]);
+    const zebra = new InstancedMesh(new PlaneGeometry(0.45, 1.4), new MeshBasicMaterial({ color: raw(0x3a4866) }), zebraSpots.length);
+    zebraSpots.forEach(([x, z], i) => place(zebra, i, x, 0.045, z, -Math.PI / 2, 0, 1, 1));
+    scene.add(zebra);
+
+    // street names on the ground
+    const nameFamily = getComputedStyle(root).getPropertyValue("--font-rua-mono").trim() || "ui-monospace, monospace";
+    for (const n of STREET_NAMES) {
+      const c = document.createElement("canvas");
+      c.width = 512;
+      c.height = 64;
+      const g = c.getContext("2d")!;
+      g.fillStyle = "rgba(170,190,240,0.75)";
+      g.font = `600 34px ${nameFamily}`;
+      g.textAlign = "center";
+      g.textBaseline = "middle";
+      g.fillText(n.text, 256, 34);
+      const t = new CanvasTexture(c);
+      t.anisotropy = 4;
+      textures.push(t);
+      const label = new Mesh(new PlaneGeometry(6.4, 0.8), new MeshBasicMaterial({ map: t, transparent: true, opacity: 0.55, depthWrite: false }));
+      label.rotation.set(-Math.PI / 2, 0, n.along ? Math.PI / 2 : 0);
+      label.position.set(n.x, 0.05, n.z);
+      scene.add(label);
+    }
+
+    // street lights: cool white, never amber (amber means "a business is visible").
+    // Kept low and at the curb so their glow never sits on top of a roof.
     const lampSpots: [number, number][] = [];
-    for (let z = -96; z <= 96; z += 12) for (const sx of [-4.1, 4.1]) lampSpots.push([sx, z + (sx > 0 ? 6 : 0)]);
-    const poles = new InstancedMesh(new CylinderGeometry(0.05, 0.07, 4.2, 6), new MeshLambertMaterial({ color: raw(0x1a2340) }), lampSpots.length);
-    const lampPools = new InstancedMesh(new PlaneGeometry(5, 5), new MeshBasicMaterial({ map: glow, color: raw(0x56669a), transparent: true, opacity: 0.3, blending: AdditiveBlending, depthWrite: false }), lampSpots.length);
+    for (let z = -96; z <= 96; z += 12) for (const sx of [-3.75, 3.75]) {
+      const zz = z + (sx > 0 ? 6 : 0);
+      if (!onCross(zz, 1)) lampSpots.push([sx, zz]);
+    }
+    const poles = new InstancedMesh(new CylinderGeometry(0.05, 0.07, 3.4, 6), new MeshLambertMaterial({ color: raw(0x1a2340) }), lampSpots.length);
+    const lampPools = new InstancedMesh(new PlaneGeometry(4.4, 4.4), new MeshBasicMaterial({ map: glow, color: raw(0x56669a), transparent: true, opacity: 0.3, blending: AdditiveBlending, depthWrite: false }), lampSpots.length);
     const lampPos: number[] = [];
     lampSpots.forEach(([sx, zz], i) => {
-      place(poles, i, sx, 2.1, zz, 0, 0, 1, 1);
+      place(poles, i, sx, 1.7, zz, 0, 0, 1, 1);
       place(lampPools, i, sx * 0.72, 0.05, zz, -Math.PI / 2, 0, 1, 1);
-      lampPos.push(sx, 4.25, zz);
+      lampPos.push(sx, 3.45, zz);
     });
     const lampGeo = new BufferGeometry();
     lampGeo.setAttribute("position", new Float32BufferAttribute(lampPos, 3));
-    const lamps = new Points(lampGeo, new PointsMaterial({ map: glow, color: raw(0xcfd9ff), size: 4.9, sizeAttenuation: true, transparent: true, opacity: 0.55, blending: AdditiveBlending, depthWrite: false }));
+    const lamps = new Points(lampGeo, new PointsMaterial({ map: glow, color: raw(0xcfd9ff), size: 2.6, sizeAttenuation: true, transparent: true, opacity: 0.5, blending: AdditiveBlending, depthWrite: false }));
     scene.add(poles, lampPools, lamps);
 
     await yieldToMain();
@@ -246,15 +312,17 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
 
     // front-row buildings
     const blds: Building[] = [];
-    const roofMat = new MeshLambertMaterial({ color: raw(0x0e1830) });
+    const roofMats = BLOCK_TONES.map((t) => new MeshLambertMaterial({ color: raw(t.roof) }));
     const texV = [0, 1, 2, 3, 4, 5].map((i) => winTex(11 + i));
-    const NAVYS = [0x0c1630, 0x101c3a, 0x0e1934, 0x132042];
     const span = mobile ? 64 : 96;
     const specs: { side: number; cz: number; w: number; d: number; h: number; shop: number; base: number }[] = [];
     for (const side of [-1, 1]) {
       let z = -span;
       while (z < span) {
         const w = 3 + R() * 2.6;
+        // never build on a cross street: jump to the far side of it
+        const hit = CROSS.find((c) => z < c + CROSS_HALF + 0.4 && z + w > c - CROSS_HALF - 0.4);
+        if (hit !== undefined) { z = hit + CROSS_HALF + 0.4; continue; }
         const d = 4 + R() * 3.2;
         let h = 2.6 + Math.pow(R(), 1.6) * 9;
         const cz = z + w / 2;
@@ -282,8 +350,12 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
       tex.needsUpdate = true;
       tex.repeat.set(Math.max(1, s.w / 3.2), Math.max(1, s.h / 3.6));
       textures.push(tex);
-      const facade = new MeshLambertMaterial({ color: raw(NAVYS[Math.floor(R() * NAVYS.length)]), emissive: raw(0x9fb3ff), emissiveMap: tex, emissiveIntensity: 0 });
-      const mesh = new Mesh(buildingBox(s.d, s.h, s.w), [facade, roofMat]);
+      // the visitor and the rival keep the original navy so the story colors (amber, signal blue) stay readable
+      const special = i >= kept.length - 2;
+      const tone = special ? 0 : Math.floor(R() * BLOCK_TONES.length);
+      const tint = special ? WINDOW_TINTS[0] : WINDOW_TINTS[Math.floor(R() * WINDOW_TINTS.length)];
+      const facade = new MeshLambertMaterial({ color: raw(BLOCK_TONES[tone].facade), emissive: raw(tint), emissiveMap: tex, emissiveIntensity: 0 });
+      const mesh = new Mesh(buildingBox(s.d, s.h, s.w), [facade, roofMats[tone]]);
       mesh.position.set(cx, 0, s.cz);
       scene.add(mesh);
       place(fronts, i, s.side * 4.97, 0.95, s.cz, 0, (-s.side * Math.PI) / 2, s.w * 0.78, 1.5);
@@ -301,27 +373,67 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
     const rival = blds[n - 1];
     const meshes = blds.map((b) => b.mesh);
 
-    // back city blocks
-    const backN = mobile ? 150 : 320;
-    const bGeo = new BoxGeometry(1, 1, 1);
-    bGeo.translate(0, 0.5, 0);
+    // back city: an 8×8 grid of lots, one thing per lot (block, park or plaza), so nothing overlaps.
+    // Windows only on the facades (group 0); roofs (group 1) stay plain, so no "lights on top".
+    const CELL = 8;
+    const maxBack = mobile ? 150 : 320;
+    type Lot = { x: number; z: number };
+    const lots: { block: Lot[]; park: Lot[]; plaza: Lot[] } = { block: [], park: [], plaza: [] };
+    for (let gx = 2; gx <= 11; gx++) {
+      for (let gz = -14; gz <= 14; gz++) {
+        const z = gz * CELL;
+        if (onCross(z, CELL / 2 - 0.5)) continue;
+        for (const side of [-1, 1]) {
+          const lot = { x: side * gx * CELL, z };
+          const r = R();
+          if (r < 0.6) lots.block.push(lot);
+          else if (r < 0.72) lots.park.push(lot);
+          else if (r < 0.78) lots.plaza.push(lot);
+        }
+      }
+    }
+    const blockLots = lots.block.slice(0, maxBack);
+    const backN = blockLots.length;
     const bTex = winTex(99);
     bTex.repeat.set(2, 3);
-    const backMat = new MeshLambertMaterial({ color: raw(0x0b142b), emissive: raw(0x9fb3ff), emissiveMap: bTex, emissiveIntensity: 0.2 });
-    const back = new InstancedMesh(bGeo, backMat, backN);
+    const backMat = new MeshLambertMaterial({ color: 0xffffff, emissive: raw(0x9fb3ff), emissiveMap: bTex, emissiveIntensity: 0.2 });
+    const backRoof = new MeshLambertMaterial({ color: 0xc8c8c8 });
+    const back = new InstancedMesh(buildingBox(1, 1, 1), [backMat, backRoof], backN);
     const m4 = new Matrix4();
     const q = new Quaternion();
     const sc = new Vector3();
     const ps = new Vector3();
-    for (let k = 0; k < backN; k++) {
-      const x = (R() < 0.5 ? -1 : 1) * (16 + R() * 70);
-      const z = (R() * 2 - 1) * 110;
-      ps.set(Math.round(x / 8) * 8, 0, Math.round(z / 8) * 8);
-      sc.set(3 + R() * 5, 2 + Math.pow(R(), 2) * 16, 3 + R() * 5);
+    blockLots.forEach((lot, k) => {
+      ps.set(lot.x, 0, lot.z);
+      sc.set(3.4 + R() * 3, 2 + Math.pow(R(), 2) * 16, 3.4 + R() * 3);
       m4.compose(ps, q, sc);
       back.setMatrixAt(k, m4);
-    }
+      back.setColorAt(k, raw(BLOCK_TONES[Math.floor(R() * BLOCK_TONES.length)].facade));
+    });
     scene.add(back);
+
+    // parks with trees and plazas: ground tiles plus one instanced draw for all trees
+    const tiles = [...lots.park.map((l) => ({ ...l, c: PARK })), ...lots.plaza.map((l) => ({ ...l, c: PLAZA }))];
+    const tileMesh = new InstancedMesh(new PlaneGeometry(CELL - 1, CELL - 1), new MeshLambertMaterial({ color: 0xffffff }), Math.max(1, tiles.length));
+    tiles.forEach((t, i) => {
+      place(tileMesh, i, t.x, 0.012, t.z, -Math.PI / 2, 0, 1, 1);
+      tileMesh.setColorAt(i, raw(t.c));
+    });
+    tileMesh.count = tiles.length;
+    const treeSpots: [number, number, number][] = [];
+    for (const p of lots.park) for (let k = 0; k < 4; k++) treeSpots.push([p.x + (R() - 0.5) * 5, p.z + (R() - 0.5) * 5, 0.5 + R() * 0.35]);
+    const treeGeo = new ConeGeometry(0.9, 2.4, 7);
+    treeGeo.translate(0, 1.4, 0);
+    const trees = new InstancedMesh(treeGeo, new MeshLambertMaterial({ color: 0xffffff }), Math.max(1, treeSpots.length));
+    treeSpots.forEach(([x, z, s], i) => {
+      ps.set(x, 0, z);
+      sc.setScalar(s);
+      m4.compose(ps, q, sc);
+      trees.setMatrixAt(i, m4);
+      trees.setColorAt(i, raw(TREE[i % TREE.length]));
+    });
+    trees.count = treeSpots.length;
+    scene.add(tileMesh, trees);
 
     await yieldToMain();
     if (disposed) return;
@@ -336,10 +448,11 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
         uniforms: { uColor: { value: raw(0x5b97ff) }, uI: { value: 0 }, uT: { value: 0 } },
         vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
         fragmentShader:
-          "uniform vec3 uColor; uniform float uI; uniform float uT; varying vec2 vUv; void main(){ float a = pow(1.0 - vUv.y, 2.4) * uI; a *= 0.72 + 0.28 * sin(uT * 3.0 - vUv.y * 22.0); gl_FragColor = vec4(uColor, a * 0.6); }",
+          "uniform vec3 uColor; uniform float uI; uniform float uT; varying vec2 vUv; void main(){ float a = pow(1.0 - vUv.y, 3.0) * uI; a *= 0.72 + 0.28 * sin(uT * 3.0 - vUv.y * 22.0); gl_FragColor = vec4(uColor, a * 0.42); }",
       });
-    const beamGeo = new CylinderGeometry(0.45, 1.05, 38, 32, 1, true);
-    beamGeo.translate(0, 19, 0);
+    // slim and short: a map marker, not a searchlight
+    const beamGeo = new CylinderGeometry(0.18, 0.55, 18, 24, 1, true);
+    beamGeo.translate(0, 9, 0);
     const pinMat = new MeshLambertMaterial({ color: raw(0x5b97ff), emissive: raw(0x5b97ff), emissiveIntensity: 0.9 });
     const pinHalo = new SpriteMaterial({ map: glow, color: raw(0x5b97ff), transparent: true, opacity: 0.7, blending: AdditiveBlending, depthWrite: false });
     const makePin = () => {
@@ -350,14 +463,16 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
       tip.rotation.x = Math.PI;
       tip.position.y = 0.55;
       const halo = new Sprite(pinHalo);
-      halo.scale.set(4, 4, 1);
+      halo.scale.set(2.6, 2.6, 1);
       halo.position.y = 1.4;
       g.add(head, tip, halo);
       return g;
     };
     const rBeam = new Mesh(beamGeo, beamMat());
     rBeam.position.set(rival.cx, rival.h, rival.cz);
+    const PIN = 0.62;
     const rPin = makePin();
+    rPin.scale.setScalar(PIN);
     rPin.position.set(rival.cx, rival.h + 0.6, rival.cz);
     const yBeam = new Mesh(beamGeo, beamMat());
     yBeam.position.set(you.cx, you.h, you.cz);
@@ -414,8 +529,10 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
       const tex = new CanvasTexture(c);
       tex.anisotropy = 4;
       textures.push(tex);
-      const mesh = new Mesh(new PlaneGeometry(3.6, 0.9), new MeshBasicMaterial({ map: tex, transparent: true, opacity: 0, depthWrite: false, color: SIGNDIM.clone() }));
-      const u = (i % 2 ? 2.15 : -2.15) + ((i % 3) - 1) * 0.25;
+      const mesh = new Mesh(new PlaneGeometry(3.6, 0.9), new MeshBasicMaterial({ map: tex, transparent: true, opacity: 0, depthWrite: false, depthTest: false, color: SIGNDIM.clone() }));
+      // drawn over the city (no building cuts through a sign) and kept inside the frame
+      mesh.renderOrder = 10;
+      const u = (i % 2 ? 1.95 : -1.95) + ((i % 3) - 1) * 0.2;
       const v = 2.2 - Math.floor(i / 2) * 2.2;
       mesh.position.copy(cT).addScaledVector(fwd, -3.5 + (i % 3) * 0.6).addScaledVector(rgt, u).addScaledVector(upv, v);
       mesh.visible = false;
@@ -665,8 +782,8 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
       const back1 = 1.70158;
       const eb = bt <= 0 ? 0 : 1 + (back1 + 1) * Math.pow(bt - 1, 3) + back1 * Math.pow(bt - 1, 2);
       yPin.visible = eb > 0.01;
-      yPin.scale.setScalar(Math.max(0.001, eb));
-      yPin.position.y = yH + 0.6 + you.lift + Math.sin(now * 2) * 0.18;
+      yPin.scale.setScalar(Math.max(0.001, eb * PIN));
+      yPin.position.y = yH + 0.35 + you.lift + Math.sin(now * 2) * 0.18;
       yPin.rotation.y = now * 0.8;
       yBeam.visible = bt > 0.01;
       yBeam.position.y = yH + you.lift;
@@ -674,9 +791,9 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
       (yBeam.material as ShaderMaterial).uniforms.uT.value = now;
       (rBeam.material as ShaderMaterial).uniforms.uI.value = clamp(cur.rival * 0.85 + pulse * 0.6);
       (rBeam.material as ShaderMaterial).uniforms.uT.value = now;
-      rPin.position.y = rival.h + 0.6 + rival.lift + Math.sin(now * 2 + 1) * 0.18;
+      rPin.position.y = rival.h + 0.35 + rival.lift + Math.sin(now * 2 + 1) * 0.18;
       rPin.rotation.y = now * 0.8;
-      rPin.scale.setScalar(1 + pulse * 0.35);
+      rPin.scale.setScalar(PIN * (1 + pulse * 0.35));
 
       // attempt signs: on for a moment, then they flicker out
       const showSigns = cur.signs > 0.01;

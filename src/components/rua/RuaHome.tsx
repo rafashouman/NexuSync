@@ -325,6 +325,17 @@ export default function RuaHome() {
         </div>
       </section>
 
+      <a className={s.waFloat} href={contactWhatsApp} target="_blank" rel="noopener noreferrer" aria-label="Falar com a NexuSync no WhatsApp"
+        data-analytics-section="floating" data-analytics-interest="unspecified">
+        <i>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z" />
+            <path d="M9.2 8.6c.2-.5.6-.6.9-.6h.5c.2 0 .4.1.5.4l.6 1.5c.1.2 0 .5-.1.6l-.5.6c.6 1.2 1.5 2.1 2.7 2.7l.6-.5c.2-.2.4-.2.6-.1l1.5.6c.3.1.4.3.4.5v.5c0 .3-.1.7-.6.9-.6.3-1.6.4-3-.3a8 8 0 0 1-3.5-3.5c-.7-1.4-.6-2.4-.3-3z" fill="currentColor" stroke="none" />
+          </svg>
+        </i>
+        <span>Fale com a gente</span>
+      </a>
+
       <footer className={s.footer}>
         <div className={`${s.wrap} ${s.pad} ${s.footerInner}`}>
           <span>© NexuSync</span>
