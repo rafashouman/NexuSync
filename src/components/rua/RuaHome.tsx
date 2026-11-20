@@ -100,7 +100,7 @@ export default function RuaHome() {
           <p className={s.eyebrow}>Você já viveu essa cena</p>
           <div className={s.beat}>
             <p className={s.beatN}>Cena 1 de 3 · A reunião</p>
-            <h3>A reunião foi ótima. No dia seguinte, o cliente pesquisou o nome da sua empresa.</h3>
+            <h2>A reunião foi ótima. No dia seguinte, o cliente pesquisou o nome da sua empresa.</h2>
             <div className={s.mock} aria-label="Exemplo de busca sem resultado">
               <div className={s.mField}><SearchIcon /><span>sua empresa ltda</span></div>
               <p className={s.mNone}>Nenhum resultado encontrado para &quot;sua empresa ltda&quot;.</p>
@@ -109,14 +109,14 @@ export default function RuaHome() {
           </div>
           <div className={s.beat}>
             <p className={s.beatN}>Cena 2 de 3 · O Instagram</p>
-            <h3>O Instagram que trazia clientes agora mal chega aos seus próprios seguidores.</h3>
+            <h2>O Instagram que trazia clientes agora mal chega aos seus próprios seguidores.</h2>
             <div className={`${s.mock} ${s.mChart}`}>
               <div className={s.mCap}><span>Alcance dos posts</span><span>ilustrativo</span></div>
               <svg viewBox="0 0 320 120" role="img" aria-label="Linha de alcance caindo ao longo de seis meses">
                 <g stroke="rgba(150,176,255,.16)" strokeWidth="1"><line x1="10" y1="20" x2="310" y2="20" /><line x1="10" y1="55" x2="310" y2="55" /><line x1="10" y1="90" x2="310" y2="90" /></g>
                 <polyline points="10,26 70,22 130,38 190,52 250,74 310,92" fill="none" stroke="#5B97FF" strokeWidth="2.5" strokeLinejoin="round" />
                 <circle cx="310" cy="92" r="4.5" fill="#FFB547" />
-                <g fill="#6A7694" fontSize="10" textAnchor="middle" style={{ fontFamily: "var(--mono)" }}>
+                <g fill="#7885a5" fontSize="10" textAnchor="middle" style={{ fontFamily: "var(--mono)" }}>
                   <text x="10" y="114" textAnchor="start">jan</text><text x="70" y="114">fev</text><text x="130" y="114">mar</text><text x="190" y="114">abr</text><text x="250" y="114">mai</text><text x="310" y="114" textAnchor="end">jun</text>
                 </g>
               </svg>
@@ -124,7 +124,7 @@ export default function RuaHome() {
           </div>
           <div className={s.beat}>
             <p className={s.beatN}>Cena 3 de 3 · O domingo</p>
-            <h3>Num domingo, você abriu o Wix. Três horas depois, fechou a aba.</h3>
+            <h2>Num domingo, você abriu o Wix. Três horas depois, fechou a aba.</h2>
             <div className={`${s.mock} ${s.mEd}`}>
               <div className={s.mBar}><span>Editor · salvo há 3 h</span><button type="button" disabled>Publicar</button></div>
               <div className={s.mCanvas}>Arraste um elemento aqui</div>
@@ -178,7 +178,7 @@ export default function RuaHome() {
                   <line x1="440" y1="0" x2="440" y2="64" /><line x1="500" y1="64" x2="500" y2="128" /><line x1="440" y1="128" x2="440" y2="192" /><line x1="500" y1="192" x2="500" y2="256" />
                 </g>
                 <line x1="380" y1="0" x2="380" y2="320" stroke="#9AA6C2" strokeWidth="1.5" />
-                <circle id="rua-hole" cx="384" cy="120" r="0" fill="#060A14" stroke="#6A7694" strokeWidth="1" />
+                <circle id="rua-hole" cx="384" cy="120" r="0" fill="#060A14" stroke="#7885a5" strokeWidth="1" />
                 <g id="rua-dust" fill="#9AA6C2" opacity="0"><circle cx="370" cy="112" r="2" /><circle cx="364" cy="128" r="1.5" /><circle cx="372" cy="134" r="1.8" /><circle cx="358" cy="118" r="1.2" /></g>
                 <g id="rua-drill-g">
                   <rect x="140" y="98" width="170" height="44" rx="10" fill="none" stroke="#EDF0F7" strokeWidth="2" />
@@ -186,7 +186,7 @@ export default function RuaHome() {
                   <line x1="196" y1="160" x2="214" y2="160" stroke="#FFB547" strokeWidth="3" strokeLinecap="round" />
                   <rect x="310" y="108" width="26" height="24" rx="3" fill="none" stroke="#EDF0F7" strokeWidth="2" />
                   <line id="rua-bit" x1="336" y1="120" x2="384" y2="120" stroke="#9AA6C2" strokeWidth="4" strokeDasharray="5 4" />
-                  <g stroke="#6A7694" strokeWidth="1.5"><line x1="160" y1="112" x2="160" y2="128" /><line x1="170" y1="112" x2="170" y2="128" /><line x1="180" y1="112" x2="180" y2="128" /></g>
+                  <g stroke="#7885a5" strokeWidth="1.5"><line x1="160" y1="112" x2="160" y2="128" /><line x1="170" y1="112" x2="170" y2="128" /><line x1="180" y1="112" x2="180" y2="128" /></g>
                 </g>
                 <g id="rua-frame" opacity="0">
                   <line x1="384" y1="120" x2="350" y2="150" stroke="#9AA6C2" strokeWidth="1.2" />

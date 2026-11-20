@@ -8,7 +8,7 @@
   --line: rgba(150, 176, 255, 0.16);
   --ink: #edf0f7;
   --mute: #9aa6c2;
-  --dim: #6a7694;
+  --dim: #7885a5;
   --amber: #ffb547;
   --amber-rgb: 255, 181, 71;
   --amber-ink: #1a1100;
@@ -173,7 +173,7 @@
 /* dor */
 .beat { min-height: 78vh; display: flex; flex-direction: column; justify-content: center; gap: 22px; max-width: 580px; padding-block: 24px; }
 .beatN { font: 500 12px var(--mono); letter-spacing: 0.14em; color: var(--dim); text-transform: uppercase; margin: 0; }
-.beat h3 { font-family: var(--display); font-weight: 700; font-stretch: 102%; font-size: clamp(24px, 2.7vw, 38px); line-height: 1.1; letter-spacing: -0.015em; margin: 0; }
+.beat h2 { text-wrap: balance; font-family: var(--display); font-weight: 700; font-stretch: 102%; font-size: clamp(24px, 2.7vw, 38px); line-height: 1.1; letter-spacing: -0.015em; margin: 0; }
 .mock { border: 1px solid var(--line); background: rgba(var(--navy-rgb), 0.82); border-radius: 4px; padding: 16px; max-width: 450px; font-size: 14px; }
 .mField { display: flex; align-items: center; gap: 10px; font: 500 14px var(--mono); border: 1px solid var(--line); border-radius: 3px; padding: 10px 12px; background: rgba(var(--night-rgb), 0.7); }
 .mField svg { width: 15px; height: 15px; color: var(--dim); flex: none; }
@@ -228,9 +228,13 @@
 .segs i { height: 4px; border-radius: 2px; background: var(--line); }
 .segs i[data-on="true"] { background: var(--amber); box-shadow: 0 0 10px rgba(var(--amber-rgb), 0.6); }
 .phases { list-style: none; margin: 0; padding: 0; display: grid; }
-.phases li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 14px; padding: 13px 0; border-top: 1px solid var(--line); opacity: 0.4; transition: opacity 0.45s; }
-.phases li[data-state="on"] { opacity: 1; }
-.phases li[data-state="done"] { opacity: 0.7; }
+.phases li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 14px; padding: 13px 0; border-top: 1px solid var(--line); }
+/* Steps are dimmed by color, not opacity, so every state keeps at least 4.5:1 contrast. */
+.phases li b { color: var(--dim); transition: color 0.45s; }
+.phases li span { transition: color 0.45s; }
+.phases li:not([data-state="on"]):not([data-state="done"]) span { color: var(--dim); }
+.phases li[data-state="done"] b { color: var(--mute); }
+.phases li[data-state="on"] b { color: var(--ink); }
 .phaseN { font: 500 11px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--mute); padding-top: 4px; }
 .phases b { font-family: var(--display); font-weight: 700; font-size: 18px; display: block; margin-bottom: 2px; }
 .phases li span { color: var(--mute); font-size: 14px; }
