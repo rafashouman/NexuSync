@@ -43,6 +43,9 @@ const structuredData = {
       url: "https://nexusync.online/",
       logo: "https://nexusync.online/images/logo-text.png",
       email: "contato@nexusync.online",
+      description: "Agência digital que cria sites marcantes com SEO orgânico, design com motion graphics, gestão de redes sociais e tráfego pago para negócios locais.",
+      areaServed: { "@type": "Country", name: "Brasil" },
+      knowsAbout: ["Criação de sites", "SEO orgânico", "Motion graphics", "Gestão de redes sociais", "Tráfego pago"],
       contactPoint: {
         "@type": "ContactPoint",
         telephone: "+5551993583936",
