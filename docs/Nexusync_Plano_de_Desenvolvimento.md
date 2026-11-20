@@ -406,7 +406,7 @@ O TBT que sobra vem sobretudo da compilação de shaders no primeiro quadro: o C
 - Eventos novos de analytics (seção 7) ainda não implementados.
 - Vídeo sem `faststart` (o arquivo é 5,4 MB e só baixa quando o modal abre).
 - Imagem de Open Graph nova.
-- O 404 de `/templates/seguro-piloto`.
+- ~~O 404 de `/templates/seguro-piloto`.~~ Decisão (19/11/2026): a página é a landing da Costi Seguros, que grava leads reais, e **não volta ao ar**. A entrada saiu do catálogo, do sitemap, do diretório de apps e do CSS de preview (`check-public-routes.cjs`: 39 de 39). A landing (`PilotosLanding.tsx`), a ação `savePilotLead` e o painel `/admin/pilotos` ficaram no código. Para republicar: restaurar a rota com `git show 43f5f11^:"src/app/(demos)/templates/seguro-piloto/page.tsx"` e a entrada em `appCatalog.ts`.
 
 ### Fase 6 — Lançamento
 - [ ] Revisão final com você na branch.

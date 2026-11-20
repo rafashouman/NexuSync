@@ -90,11 +90,6 @@ export const appCatalog = [
     description: "Configure uma miniatura sob medida.",
   },
   {
-    slug: "seguro-piloto", name: "Seguro Piloto", category: "Atendimento",
-    path: "/templates/seguro-piloto",
-    description: "Conheça o seguro e o fluxo de solicitação para pilotos.",
-  },
-  {
     slug: "streetwear", name: "Vortex Atelier", category: "Loja virtual",
     path: "/templates/streetwear",
     description: "Explore as peças e monte uma sacola.",

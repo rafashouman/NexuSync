@@ -24,7 +24,6 @@ const previews: Record<string, [string, string, string]> = {
   bluemoon: ["CARTAS", "COMBINAR", "JOGAR"],
   academias: ["TREINOS", "ESTRUTURA", "CONTATO"],
   miniaturas: ["MODELO", "OPÇÕES", "ORÇAMENTO"],
-  "seguro-piloto": ["COBERTURA", "DÚVIDAS", "SOLICITAÇÃO"],
   imobiliaria: ["BAIRRO", "IMÓVEIS", "CONTATO"],
   "cyber-oregon": ["DIAGNÓSTICO", "ESCOPO", "CONTATO"],
 };
