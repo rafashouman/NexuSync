@@ -125,14 +125,14 @@ function ConsentBanner({ onChoose }: { onChoose: (value: Consent) => void }) {
     <div
       role="dialog"
       aria-label="Consentimento de cookies"
-      className="fixed inset-x-3 bottom-3 z-[100] mx-auto max-w-xl rounded-2xl border border-turquoise/25 bg-ocean/95 p-4 text-sm text-ivory/80 shadow-2xl backdrop-blur-md sm:p-5"
+      className="fixed inset-x-3 bottom-3 z-[100] mx-auto max-w-xl rounded-2xl border border-[#96b0ff]/20 bg-[#0c1428]/95 p-4 text-sm text-[#edf0f7]/80 shadow-2xl backdrop-blur-md sm:p-5"
     >
       <p className="leading-6">
         Usamos cookies, Google Analytics e o Pixel da Meta para medir audiência
         e interações. Só ativamos com a sua permissão. Saiba mais no{" "}
         <Link
           href="/privacidade"
-          className="font-semibold text-ice underline-offset-4 hover:underline"
+          className="font-semibold text-[#5b97ff] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5b97ff]"
         >
           Aviso de Privacidade
         </Link>
@@ -142,14 +142,14 @@ function ConsentBanner({ onChoose }: { onChoose: (value: Consent) => void }) {
         <button
           type="button"
           onClick={() => onChoose("granted")}
-          className="rounded-full bg-champagne px-5 py-2 text-xs font-semibold text-abyss transition hover:bg-turquoise"
+          className="rounded-full bg-[#ffb547] px-5 py-2 text-xs font-semibold text-[#1a1100] transition hover:bg-[#ffc56f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5b97ff]"
         >
           Aceitar
         </button>
         <button
           type="button"
           onClick={() => onChoose("denied")}
-          className="rounded-full border border-turquoise/20 px-5 py-2 text-xs font-semibold text-ivory/80 transition hover:bg-ice/10"
+          className="rounded-full border border-[#96b0ff]/25 px-5 py-2 text-xs font-semibold text-[#edf0f7]/80 transition hover:bg-[#96b0ff]/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5b97ff]"
         >
           Recusar
         </button>

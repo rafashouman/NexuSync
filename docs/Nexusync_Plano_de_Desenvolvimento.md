@@ -314,7 +314,7 @@ Leitura: a home atual já carrega cerca de 0,5 MB de JS, boa parte do three.js d
   4. Tráfego pago (`/marketing#marketing-aquisicao-local`).
 
   O dropdown "Soluções" do cabeçalho mostra os rótulos "01 · Presença online" a "04 · Tráfego pago". O menu móvel e o rodapé seguem a mesma ordem. O link "Como funciona" foi corrigido de `/#como-funciona` (âncora da home antiga) para `/#metodo`.
-- [ ] Banner de cookies global ainda usa o lima (`#d4ff38`). Precisa entrar na troca de tokens globais.
+- [x] Banner de cookies sem lima (20/11/2026): fundo navy `#0c1428`, **Aceitar** em âmbar `#ffb547` com texto escuro, link em azul-sinal `#5b97ff` e anel de foco azul-sinal. Fica em `MetaPixel.tsx` e vale para o site todo. Os tokens globais do lima (`--color-champagne`, `--primary`, seleção de texto, anel de foco em `.nexusync-site`) seguem nas páginas internas e entram na fase de identidade nova delas (seção 10).
 
 **Aceite:** a ordem dos pilares aparece igual na home, no menu e na metadata.
 
@@ -400,7 +400,7 @@ O TBT que sobra vem sobretudo da compilação de shaders no primeiro quadro: o C
 
 **Pendências que não bloqueiam o merge:**
 
-- Banner de cookies global ainda em lima (`#d4ff38`).
+- ~~Banner de cookies global ainda em lima (`#d4ff38`).~~ Resolvido na branch `fix/cookie-banner-palette`.
 - Revisar a pergunta nova do FAQ "O site ajuda a aparecer no Google?".
 - Testar num celular real (o TBT foi medido com GPU emulada).
 - Eventos novos de analytics (seção 7) ainda não implementados.
