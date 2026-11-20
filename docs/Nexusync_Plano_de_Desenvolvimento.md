@@ -405,17 +405,25 @@ O TBT que sobra vem sobretudo da compilação de shaders no primeiro quadro: o C
 - ~~Subtítulo do hero com "coloca o seu negócio no mapa".~~ Trocado (20/11/2026) por "acende a vitrine do seu negócio com um site marcante e SEO básico". O "mapa" podia ser lido como Google Maps, e o Perfil da Empresa no Google só vem no serviço mensal de SEO; também contradizia o card "Google Meu Negócio sem site".
 - Testar num celular real (o TBT foi medido com GPU emulada).
 - ~~Eventos novos de analytics (seção 7).~~ Feitos (20/11/2026): `home_search_simulated` (`category` + `input` chip/typed; texto livre vira "outro", nada digitado é enviado), `home_video_play` e `home_method_complete`, uma vez por visita. Os botões de WhatsApp da home ganharam `data-analytics-section`/`-interest`, senão só o Pixel contava o clique. Cadastrar os três como eventos/conversões no GA4 é manual.
-- Vídeo sem `faststart` (o arquivo é 5,4 MB e só baixa quando o modal abre).
+- ~~Vídeo sem `faststart`.~~ Feito (20/11/2026): o `moov` foi para o início, o logo roxo foi trocado pelo símbolo atual e o arquivo caiu de 5,4 MB para 3,7 MB (ffmpeg instalado pelo winget). `scripts/mp4-faststart.mjs` faz só o `faststart`, sem recodificar.
 - ~~Imagem de Open Graph nova.~~ Feita: `public/images/og-rua-acesa.jpg` (1200×630, 69 KB), gerada da cena real, usada só pela home (as páginas internas herdam `site-preview-desktop.webp`).
-- ~~Lima das páginas internas.~~ Trocado por âmbar (20/11/2026): lima `#d4ff38` → `#ffb547`, `#bce82c` e variantes de hover → `#e89b2f`, `#e4ff8b` → `#ffd28a`, em tokens globais, CSS modules e componentes. Ficaram de fora as paletas de demos (`templateCatalog.ts`, acento do template academias). Os verdes turquoise/ice das páginas internas continuam; trocá-los é uma decisão à parte. As páginas internas não foram revistas visualmente depois da troca.
+- ~~Lima das páginas internas.~~ Trocado por âmbar (20/11/2026): lima `#d4ff38` → `#ffb547`, `#bce82c` e variantes de hover → `#e89b2f`, `#e4ff8b` → `#ffd28a`, em tokens globais, CSS modules e componentes. Ficaram de fora as paletas de demos (`templateCatalog.ts`, acento do template academias). Os verdes turquoise/ice das páginas internas (`#10b981`, `#8be7c5`) foram trocados pelo azul-sinal da home (`#5b97ff`, `#8ab4ff`) em 20/11/2026, tokens inclusos; paletas de demos, o verde do WhatsApp e verdes de sucesso ficaram.
 - ~~O 404 de `/templates/seguro-piloto`.~~ Decisão (19/11/2026): a página é a landing da Costi Seguros, que grava leads reais, e **não volta ao ar**. A entrada saiu do catálogo, do sitemap, do diretório de apps e do CSS de preview (`check-public-routes.cjs`: 39 de 39). A landing (`PilotosLanding.tsx`), a ação `savePilotLead` e o painel `/admin/pilotos` ficaram no código. Para republicar: restaurar a rota com `git show 43f5f11^:"src/app/(demos)/templates/seguro-piloto/page.tsx"` e a entrada em `appCatalog.ts`.
+
+### Depois do lançamento: SEO, pilares e limpeza (20/11/2026)
+- **SEO orgânico:** nova `/seo-para-negocios-locais` (SEO básico dos planos de site e serviço de SEO e presença local, sem prometer posição) e 6 páginas `/sites-para/[segmento]` (dentistas, pizzarias, eletricistas, advogados, pet shops, barbearias), com recursos filtrados contra `sitePlans.ts`. Schema `Service`, `FAQPage` e `BreadcrumbList` nas páginas de serviço (`src/lib/seo.ts`), `Organization` com descrição e Instagram, sitemap com prioridades por pilar. Registro DNS do Google Search Console criado na Hostinger; falta verificar o domínio e enviar o sitemap.
+- **Pilar 2, `/design`:** motion graphics em primeiro lugar, com o vídeo real (lazy, com poster), portfólio filtrável de 12 trabalhos (`src/data/designPortfolio.ts`), faixa de prazos por pacote e bloco de motion sob medida.
+- **Pilar 3, `/redes-sociais`:** plano Presença Ativa, complementos, exclusões e FAQ, tudo dos dados de `marketingPlans.ts`.
+- **Acessibilidade:** home e páginas internas medidas com script próprio (contraste mínimo de 4,5:1 e ordem dos títulos); `/contato` tinha dois `h1`. Contraste de textos opacos em mocks (labels de 7 px de demos) e estados desabilitados não foi tratado.
+- **Performance da home:** framer-motion e o chrome animado saíram do JS inicial (cerca de 216 KB para 161 KB gzip) e a cena 3D começa em idle depois do `load`. Lighthouse oficial a rodar depois do deploy.
+- **Limpeza:** 30 componentes sem rota removidos (`PilotosLanding` ficou), dependência `@heroicons/react` removida.
 
 ### Fase 6 — Lançamento
 - [ ] Revisão final com você na branch.
 - [ ] Merge na `main` (dispara o deploy).
 - [ ] Conferir o site no ar e o Search Console.
 - [ ] Plano de volta: revert do merge.
-- [ ] Depois de estável: remover `ControlledChaos` e os componentes que só ele usava.
+- [x] Depois de estável: remover `ControlledChaos` e os componentes que só ele usava (20/11/2026, 30 arquivos).
 
 ---
 
@@ -427,8 +435,11 @@ O TBT que sobra vem sobretudo da compilação de shaders no primeiro quadro: o C
 | 2 | Confirmar os 7 itens do recibo (seção 5.3). | Você |
 | 3 | Interesse do CTA no formulário: usar `institucional` ou criar um interesse `presence`. | Você |
 | 4 | Aprovar a dependência `lenis`. | Você |
-| 5 | Reexportar o vídeo em MP4 web com pôster. | Você (DaVinci) ou eu (com ffmpeg instalado) |
-| 6 | Imagem de Open Graph nova a partir da cena. | Eu, na fase 5 |
+| 5 | ~~Reexportar o vídeo em MP4 web com pôster.~~ Feito em 20/11/2026 (faststart, logo atual e poster). | — |
+| 6 | ~~Imagem de Open Graph nova a partir da cena.~~ Feita. | — |
+| 8 | Verificar o domínio no Search Console e enviar `sitemap.xml`; cadastrar os eventos `home_search_simulated`, `home_video_play`, `home_method_complete` e `design_video_play` no GA4. | Você |
+| 9 | URL da página do Facebook para o `sameAs` do schema. | Você |
+| 10 | Confirmar que os 12 clientes do portfólio de `/design` podem aparecer. | Você |
 | 7 | Depoimentos reais, quando existirem, voltam como bloco próprio. | Você |
 
 ---
@@ -436,6 +447,6 @@ O TBT que sobra vem sobretudo da compilação de shaders no primeiro quadro: o C
 ## 10. Fora desta fase (próximas)
 
 - **Identidade nova nas páginas internas:** `/criacao-de-sites`, `/lojas-virtuais`, `/design`, `/marketing`, `/apps`, `/quem-somos`, `/contato`. Depois disso, trocar os tokens globais (lima → âmbar/azul-noite) em `globals.css`.
-- **Renomear e reposicionar `/marketing`** para separar "Redes sociais" de "Tráfego pago", na ordem dos pilares.
-- **SEO local**, retomando o "Plano de crescimento orgânico" (backup): páginas por cidade e segmento ("Criação de sites em Porto Alegre", "Sites para clínicas"…) e conteúdos como "Como saber se sua empresa precisa de um site ou só melhorar o Google".
+- ~~Renomear e reposicionar `/marketing`~~ para separar "Redes sociais" de "Tráfego pago": feito em parte. `/redes-sociais` e `/seo-para-negocios-locais` existem e o título de `/marketing` segue a ordem dos pilares; a página `/marketing` ainda reúne SEO, redes e tráfego.
+- **SEO local**, retomando o "Plano de crescimento orgânico" (backup): as páginas por segmento estão feitas. Faltam as páginas por cidade ("Criação de sites em Porto Alegre"…) e conteúdos como "Como saber se sua empresa precisa de um site ou só melhorar o Google".
 - **Versão da Rua Acesa para as páginas de serviço:** cada pilar com sua própria cena curta, na mesma linguagem visual.
