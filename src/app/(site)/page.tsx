@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import RuaHome from "@/components/rua/RuaHome";
 import { faqs, presence } from "@/components/rua/content";
 
-const title = "Criação de Sites e SEO Orgânico para Negócios Locais | NexuSync";
+const title = "Criação de Sites Personalizados e Interativos | NexuSync";
 const description =
-  "Seu concorrente já aparece no Google. A NexuSync cria sites marcantes com SEO orgânico para negócios locais serem encontrados, sem depender de anúncio. Orçamento completo em 7 dias.";
+  "Sites sob medida, landing pages, hotsites e catálogos digitais com interações que fazem o cliente explorar. Leves no celular e com SEO desde a base.";
 
 export const metadata: Metadata = {
   title,
@@ -52,7 +52,7 @@ const structuredData = {
       "@type": "Service",
       "@id": "https://nexusync.online/#presence",
       name: `Criação de site — plano ${presence.name}`,
-      serviceType: "Criação de sites com SEO básico",
+      serviceType: "Criação de sites personalizados",
       description: presence.description,
       provider: { "@id": "https://nexusync.online/#organization" },
       areaServed: { "@type": "Country", name: "Brasil" },

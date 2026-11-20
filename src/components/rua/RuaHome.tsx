@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Archivo, Inter, JetBrains_Mono } from "next/font/google";
 import { AttemptCards } from "./AttemptCards";
-import { contactWhatsApp, EMAIL, faqs, phases, pillars, presence, presenceWhatsApp, quoteHref, receiptItems, WA_DISPLAY } from "./content";
+import { contactWhatsApp, EMAIL, faqs, go, phases, pillars, presence, presenceWhatsApp, proposalHref, pulse, receiptItems, WA_DISPLAY } from "./content";
 import { ArrowIcon, SearchIcon } from "./icons";
 import { RuaEffects } from "./RuaEffects";
 import { RuaWorld } from "./RuaWorld";
@@ -14,11 +14,11 @@ const display = Archivo({ subsets: ["latin"], axes: ["wdth"], variable: "--font-
 const body = Inter({ subsets: ["latin"], variable: "--font-rua-body", display: "optional" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-rua-mono", display: "optional" });
 
-const MARQUEE = ["Sites marcantes", "SEO orgânico", "Motion graphics", "Redes sociais", "Landing pages", "Hotsites"];
+const MARQUEE = ["Sites sob medida", "Landing pages", "Hotsites interativos", "Catálogos digitais", "Gamificação", "SEO desde a base"];
 
-function QuoteButton({ source, children, small }: { source: "header" | "hero" | "sites"; children: React.ReactNode; small?: boolean }) {
+function ProposalButton({ source, children, small }: { source: "header" | "hero" | "sites"; children: React.ReactNode; small?: boolean }) {
   return (
-    <Link className={`${s.btn} ${s.btnAmber} ${small ? s.btnSm : ""}`} href={quoteHref(source)}>
+    <Link className={`${s.btn} ${s.btnAmber} ${small ? s.btnSm : ""}`} href={proposalHref(source)}>
       <span>{children}</span>
       <em aria-hidden="true"><ArrowIcon /></em>
     </Link>
@@ -47,16 +47,16 @@ export default function RuaHome() {
             <Image src="/images/logo-text.png" width={517} height={91} sizes="150px" alt="NexuSync" priority />
           </Link>
           <nav className={s.navLinks} aria-label="Seções da página">
-            <a href="#tentativas">O que não funciona</a>
+            <a href="#tentativas">O que você já tentou</a>
             <a href="#metodo">Método</a>
             <a href="#praquem">Pra quem é</a>
-            <a href="#entregaveis">Entregáveis</a>
-            <a href="#pilares">Pilares</a>
+            <a href="#entregaveis">Planos</a>
+            <Link href="/templates">Demonstrações</Link>
           </nav>
-          <QuoteButton source="header" small>
-            <b className={s.long}>Quero ver meu orçamento</b>
-            <b className={s.short}>Orçamento</b>
-          </QuoteButton>
+          <ProposalButton source="header" small>
+            <b className={s.long}>Pedir minha proposta</b>
+            <b className={s.short}>Proposta</b>
+          </ProposalButton>
         </div>
       </header>
 
@@ -64,22 +64,23 @@ export default function RuaHome() {
       <section className={`${s.hero} ${s.grab}`} id="top" data-key="0" data-rua-grab="">
         <div className={`${s.wrap} ${s.pad}`}>
           <div className={s.heroCopy}>
-            <p className={s.eyebrow}>NexuSync · sites para negócios locais</p>
+            <p className={s.eyebrow}>NexuSync · sites sob medida e interativos</p>
             <h1>
-              O concorrente da sua rua <span id="rua-hl" className={s.hl} data-lit="false">já aparece no Google</span> quando alguém pesquisa o seu serviço.
+              Seu negócio é único. <span id="rua-hl" className={s.hl} data-lit="false">Seu site também deveria ser.</span>
             </h1>
             <p className={s.sub}>
-              E quem não encontra você liga pra ele. A NexuSync acende a vitrine do seu negócio com um site marcante e SEO básico, sem depender de anúncio. Seu orçamento completo sai em 7 dias.
+              A NexuSync cria sites, landing pages, hotsites e catálogos digitais sob medida, com interações que fazem o cliente explorar o que você oferece. Leves até no celular e com SEO desde a base. Planos a partir de R$ {go.price}.
             </p>
             <ul className={s.bul}>
-              <li><span>Quem pesquisa escolhe entre os primeiros resultados. <strong>Quem não aparece nem entra na disputa.</strong></span></li>
-              <li><span>Instagram e indicação <strong>não aparecem quando alguém digita &quot;perto de mim&quot;.</strong></span></li>
-              <li><span>Orçamento fechado em 7 dias, com <strong>preço, prazo e tudo o que está incluso.</strong></span></li>
+              <li><span>Quem chega pela busca, por indicação ou pelo Instagram <strong>quer entender rápido o que você oferece.</strong></span></li>
+              <li><span>Site montado em construtor pronto <strong>fica parecido com o de qualquer concorrente.</strong></span></li>
+              <li><span>Proposta com <strong>preço, prazo e tudo o que está incluso</strong> antes de você decidir.</span></li>
             </ul>
             <div className={s.ctas}>
-              <QuoteButton source="hero">Quero ver meu orçamento</QuoteButton>
+              <ProposalButton source="hero">Pedir minha proposta</ProposalButton>
               <VideoModal />
             </div>
+            <Link href="/templates" className={s.floorLink}>ou experimente uma demonstração →</Link>
           </div>
           <SearchSimulator />
           <p className={s.hint} aria-hidden="true"><b />role para acender a sua vitrine · arraste para girar a rua</p>
@@ -99,23 +100,23 @@ export default function RuaHome() {
         <div className={`${s.wrap} ${s.pad}`}>
           <p className={s.eyebrow}>Você já viveu essa cena</p>
           <div className={s.beat}>
-            <p className={s.beatN}>Cena 1 de 3 · A reunião</p>
-            <h2>A reunião foi ótima. No dia seguinte, o cliente pesquisou o nome da sua empresa.</h2>
-            <div className={s.mock} aria-label="Exemplo de busca sem resultado">
+            <p className={s.beatN}>Cena 1 de 3 · A indicação</p>
+            <h2>Alguém indicou você. A pessoa abriu seu site e não achou o que procurava.</h2>
+            <div className={s.mock} aria-label="Exemplo de site sem as informações que o cliente procurava">
               <div className={s.mField}><SearchIcon /><span>sua empresa ltda</span></div>
-              <p className={s.mNone}>Nenhum resultado encontrado para &quot;sua empresa ltda&quot;.</p>
-              <p className={s.mSug}>Você quis dizer: <u>concorrente da sua rua</u>?</p>
+              <p className={s.mNone}>1 resultado · sua-empresa.com.br · &quot;Serviços: em breve&quot;</p>
+              <p className={s.mSug}>Próxima aba aberta: <u>concorrente da sua rua</u></p>
             </div>
           </div>
           <div className={s.beat}>
             <p className={s.beatN}>Cena 2 de 3 · O Instagram</p>
-            <h2>O Instagram que trazia clientes agora mal chega aos seus próprios seguidores.</h2>
+            <h2>Seu negócio tem mais para mostrar do que cabe num feed.</h2>
             <div className={`${s.mock} ${s.mChart}`}>
-              <div className={s.mCap}><span>Alcance dos posts</span><span>ilustrativo</span></div>
-              <svg viewBox="0 0 320 120" role="img" aria-label="Linha de alcance caindo ao longo de seis meses">
+              <div className={s.mCap}><span>Mensagens perguntando preço e horário</span><span>ilustrativo</span></div>
+              <svg viewBox="0 0 320 120" role="img" aria-label="Linha de mensagens repetidas subindo ao longo de seis meses">
                 <g stroke="rgba(150,176,255,.16)" strokeWidth="1"><line x1="10" y1="20" x2="310" y2="20" /><line x1="10" y1="55" x2="310" y2="55" /><line x1="10" y1="90" x2="310" y2="90" /></g>
-                <polyline points="10,26 70,22 130,38 190,52 250,74 310,92" fill="none" stroke="#5B97FF" strokeWidth="2.5" strokeLinejoin="round" />
-                <circle cx="310" cy="92" r="4.5" fill="#FFB547" />
+                <polyline points="10,92 70,86 130,70 190,58 250,38 310,26" fill="none" stroke="#5B97FF" strokeWidth="2.5" strokeLinejoin="round" />
+                <circle cx="310" cy="26" r="4.5" fill="#FFB547" />
                 <g fill="#7885a5" fontSize="10" textAnchor="middle" style={{ fontFamily: "var(--mono)" }}>
                   <text x="10" y="114" textAnchor="start">jan</text><text x="70" y="114">fev</text><text x="130" y="114">mar</text><text x="190" y="114">abr</text><text x="250" y="114">mai</text><text x="310" y="114" textAnchor="end">jun</text>
                 </g>
@@ -124,12 +125,12 @@ export default function RuaHome() {
           </div>
           <div className={s.beat}>
             <p className={s.beatN}>Cena 3 de 3 · O domingo</p>
-            <h2>Num domingo, você abriu o Wix. Três horas depois, fechou a aba.</h2>
+            <h2>Num domingo, você abriu um construtor de sites. Três horas depois, fechou a aba.</h2>
             <div className={`${s.mock} ${s.mEd}`}>
               <div className={s.mBar}><span>Editor · salvo há 3 h</span><button type="button" disabled>Publicar</button></div>
               <div className={s.mCanvas}>Arraste um elemento aqui</div>
             </div>
-            <p className={s.closing}>Não falta esforço. <span>Falta estrutura.</span></p>
+            <p className={s.closing}>Não falta esforço. <span>Falta um site à altura do seu trabalho.</span></p>
           </div>
         </div>
       </section>
@@ -139,11 +140,11 @@ export default function RuaHome() {
         <div className={`${s.wrap} ${s.pad}`}>
           <div className={s.col}>
             <p className={s.eyebrow}>O que você já tentou</p>
-            <h2>Seis jeitos de aparecer. Todos acendem por um tempo e apagam.</h2>
-            <p className={s.lead}>Passe o mouse em cada um e veja a luz que ele dá ao seu negócio.</p>
+            <h2>Seis jeitos de se apresentar online. Cada um acende só uma parte.</h2>
+            <p className={s.lead}>Toque ou passe o mouse em cada um e veja o que ele ilumina e o que deixa no escuro.</p>
           </div>
           <AttemptCards />
-          <p className={s.triesFoot}>Cada um resolve um pedaço. Nenhum coloca você na frente de quem está procurando o seu serviço agora.</p>
+          <p className={s.triesFoot}>Você não precisa abandonar nenhum deles. Precisa de um lugar que junte tudo e faça o visitante querer ficar: o seu site.</p>
         </div>
       </section>
 
@@ -151,9 +152,9 @@ export default function RuaHome() {
       <section className={`${s.sec} ${s.now}`} id="agora" data-key="3">
         <div className={`${s.wrap} ${s.pad}`}>
           <h2>Você está nesta página há <span className={s.timer} id="rua-timer">0:00</span>.</h2>
-          <p className={s.lead}>Quem pesquisa o seu serviço decide bem mais rápido que isso. E escolhe quem aparece primeiro.</p>
+          <p className={s.lead}>Ninguém pediu para você ficar. Foi a curiosidade. É isso que o seu cliente deveria sentir no seu site.</p>
           <div className={s.ctas}>
-            <QuoteButton source="sites">Quero ver meu orçamento</QuoteButton>
+            <ProposalButton source="sites">Quero um site assim</ProposalButton>
             <WhatsAppButton />
           </div>
           <span className={s.phone}>WhatsApp {WA_DISPLAY}</span>
@@ -168,7 +169,7 @@ export default function RuaHome() {
               <div className={s.col}>
                 <p className={s.eyebrow}>O método</p>
                 <h2>Ninguém compra uma furadeira porque quer uma furadeira.</h2>
-                <p className={s.lead}>Compra porque quer o furo na parede. E quer o furo porque quer o quadro pendurado. Você não precisa de um site: precisa do telefone tocando. Por isso o nosso método começa pelo resultado e termina com um orçamento fechado.</p>
+                <p className={s.lead}>Compra porque quer o furo na parede. E quer o furo porque quer o quadro pendurado. Com site é igual: você não precisa de páginas e botões. Precisa que as pessoas entendam o seu valor e chamem você. Por isso o método começa pelo objetivo e só depois vai para a tela.</p>
                 <p className={s.chain} id="rua-chain"><span>furadeira</span>→<span>furo</span>→<span>quadro</span>→<span>telefone tocando</span></p>
               </div>
               <svg id="rua-drill" viewBox="0 0 560 320" role="img" aria-label="Uma furadeira faz um furo na parede, e um quadro com um telefone tocando é pendurado nele">
@@ -204,7 +205,7 @@ export default function RuaHome() {
           <div className={s.stick}>
             <div className={`${s.wrap} ${s.pad}`}>
               <div className={s.mpanel}>
-                <p className={s.mname}>Método Orçamento em 7 Dias</p>
+                <p className={s.mname}>Método NexuSync · do objetivo à publicação</p>
                 <p className={s.day}><span>Etapa <span id="rua-step">1</span></span><small>/ 4</small></p>
                 <div className={s.segs} id="rua-segs" aria-hidden="true">{phases.map(([title], i) => <i key={title} data-on={String(i === 0)} />)}</div>
                 <ol className={s.phases} id="rua-phases">
@@ -225,24 +226,24 @@ export default function RuaHome() {
       <section className={s.sec} id="praquem" data-key="5">
         <div className={`${s.wrap} ${s.pad}`}>
           <div className={s.center}>
-            <p className={s.eyebrow}>Antes de pedir o orçamento</p>
+            <p className={s.eyebrow}>Antes de pedir sua proposta</p>
             <h2>Pra quem é. E pra quem não é.</h2>
             <div className={s.who}>
               <div className={s.yes}>
                 <h3>É pra você se</h3>
                 <ul>
-                  <li><span>seu negócio atende a sua cidade ou região e hoje vive de indicação;</span></li>
-                  <li><span>você quer ser encontrado por quem ainda não te conhece;</span></li>
-                  <li><span>você prefere decidir com preço e prazo na mão;</span></li>
-                  <li><span>você responde rápido quando um cliente chama.</span></li>
+                  <li><span>seu negócio é bom, mas a presença online ainda não mostra isso;</span></li>
+                  <li><span>você quer um site com a cara da sua marca, não igual ao do vizinho;</span></li>
+                  <li><span>você tem produtos, serviços ou uma novidade que merecem ser explorados;</span></li>
+                  <li><span>você prefere decidir com preço, prazo e escopo na mão.</span></li>
                 </ul>
               </div>
               <div className={s.no}>
                 <h3>Não é pra você se</h3>
                 <ul>
                   <li><span>você procura o site mais barato possível, de qualquer jeito;</span></li>
-                  <li><span>você não tem tempo pra atender os contatos que chegarem;</span></li>
-                  <li><span>você espera resultado sem mudar nada no atendimento.</span></li>
+                  <li><span>você quer animação só por enfeite, sem um objetivo por trás;</span></li>
+                  <li><span>você espera posição garantida no Google ou resultado sem mudar nada no atendimento.</span></li>
                 </ul>
               </div>
             </div>
@@ -255,13 +256,13 @@ export default function RuaHome() {
         <div className={`${s.wrap} ${s.pad}`}>
           <div className={s.deliver}>
             <div>
-              <p className={s.eyebrow}>O que entra no seu orçamento</p>
-              <h2>Sete entregas. Um preço fechado.</h2>
+              <p className={s.eyebrow}>Plano recomendado</p>
+              <h2>{receiptItems.length} entregas. Um preço fechado.</h2>
             </div>
             <div className={s.rcwrap}>
               <div className={s.receipt} id="rua-receipt">
                 <div className={s.rcHead}>
-                  <b>NEXUSYNC · ORÇAMENTO</b>
+                  <b>NEXUSYNC · RECIBO</b>
                   <span>Plano {presence.name} · {presence.badge?.toLowerCase()}</span>
                   <span>{presence.deliveryTime}</span>
                 </div>
@@ -278,11 +279,13 @@ export default function RuaHome() {
                 </div>
                 <p className={s.rcNote}>Registro de domínio e hospedagem são orçados à parte.</p>
                 <div className={s.barcode} aria-hidden="true" />
-                <p className={s.rcFoot}>obrigado por aparecer.</p>
+                <p className={s.rcFoot}>obrigado por chegar até aqui.</p>
               </div>
             </div>
+            <p className={s.lead}>Precisa de algo mais enxuto? Plano {go.name} por R$ {go.price}. Quer mais estrutura e recursos? Plano {pulse.name} por R$ {pulse.price}. Hotsites interativos e gamificação têm proposta sob medida.</p>
             <div className={s.ctas}>
-              <QuoteButton source="sites">Quero ver meu orçamento</QuoteButton>
+              <ProposalButton source="sites">Pedir minha proposta</ProposalButton>
+              <Link href="/criacao-de-sites" className={s.floorLink}>Comparar os planos →</Link>
             </div>
           </div>
         </div>
@@ -294,7 +297,7 @@ export default function RuaHome() {
           <div className={s.center}>
             <p className={s.eyebrow}>Os pilares da NexuSync</p>
             <h2>Primeiro a vitrine acende. Depois a rua inteira vê.</h2>
-            <p className={s.lead}>Trabalhamos em quatro pilares, nessa ordem. Cada um se apoia no anterior: o anúncio pago é o último andar, nunca o alicerce.</p>
+            <p className={s.lead}>Todo site nosso é construído em quatro andares, nessa ordem. Cada um se apoia no anterior.</p>
             <ol className={s.floors}>
               {pillars.map((pillar, i) => (
                 <li key={pillar.title} className={`${s.floor} ${i === 0 ? s.base : ""}`}>
@@ -304,6 +307,7 @@ export default function RuaHome() {
                 </li>
               ))}
             </ol>
+            <p className={s.lead}><small>Com o site de pé, também cuidamos de redes sociais e tráfego pago.</small></p>
           </div>
         </div>
       </section>
@@ -329,12 +333,13 @@ export default function RuaHome() {
       {/* final */}
       <section className={`${s.final} ${s.grab}`} id="final" data-key="8" data-rua-grab="">
         <div className={`${s.wrap} ${s.pad}`}>
-          <p className={s.eyebrow} style={{ justifyContent: "center" }}>A próxima busca</p>
-          <h2>Na próxima busca, quem aparece é você.</h2>
+          <p className={s.eyebrow} style={{ justifyContent: "center" }}>A próxima visita</p>
+          <h2>Na próxima visita, o cliente fica.</h2>
           <div className={s.ctas}>
-            <QuoteButton source="sites">Quero ver meu orçamento</QuoteButton>
+            <ProposalButton source="sites">Pedir minha proposta</ProposalButton>
             <WhatsAppButton href={contactWhatsApp} />
           </div>
+          <Link href="/templates" className={s.floorLink}>ou explore as demonstrações →</Link>
           <p className={s.contact}><span>{EMAIL}</span><span>WhatsApp {WA_DISPLAY}</span></p>
         </div>
       </section>
@@ -342,7 +347,7 @@ export default function RuaHome() {
       <footer className={s.footer}>
         <div className={`${s.wrap} ${s.pad} ${s.footerInner}`}>
           <span>© NexuSync</span>
-          <span>Sites, design, redes sociais e tráfego pago, nessa ordem.</span>
+          <span>Sites sob medida e interativos. Design, redes e tráfego quando a base está pronta.</span>
           <span><Link href="/quem-somos">Quem somos</Link> · <Link href="/privacidade">Privacidade</Link></span>
         </div>
       </footer>

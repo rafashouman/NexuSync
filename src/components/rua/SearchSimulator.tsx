@@ -6,8 +6,16 @@ import { PULSE_EVENT } from "./events";
 import { SearchIcon } from "./icons";
 import s from "./rua.module.css";
 
-const CHIPS = ["dentista", "pizzaria", "eletricista", "barbearia"] as const;
-const CYCLE: HomeSearchCategory[] = ["dentista", "pizzaria", "eletricista", "advogado", "pet shop", "barbearia"];
+const CHIPS = ["hamburgueria", "loja de roupas", "dentista", "barbearia"] as const;
+const CYCLE: HomeSearchCategory[] = ["hamburgueria", "dentista", "loja de roupas", "advogado", "pet shop", "barbearia"];
+
+/** O que o site da "Sua empresa" mostra em cada segmento e qual demonstração o "Explorar" abre. */
+const DEMO_BY_CATEGORY: Record<string, { features: string; href: string }> = {
+  hamburgueria: { features: "Monte seu pedido · cardápio com fotos", href: "/templates/cardapio" },
+  "loja de roupas": { features: "Vitrine da coleção · peças por categoria", href: "/templates/streetwear" },
+};
+const DEFAULT_DEMO = { features: "Serviços explicados · agenda · WhatsApp", href: "/templates" };
+const demoOf = (q: string) => DEMO_BY_CATEGORY[q.trim().toLowerCase()] ?? DEFAULT_DEMO;
 const categoryOf = (q: string): HomeSearchCategory => {
   const normalized = q.trim().toLowerCase();
   return (CYCLE as string[]).includes(normalized) ? (normalized as HomeSearchCategory) : "outro";
@@ -17,8 +25,8 @@ const cap = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export function SearchSimulator() {
-  const [query, setQuery] = useState("dentista");
-  const [result, setResult] = useState<string | null>("dentista");
+  const [query, setQuery] = useState("hamburgueria");
+  const [result, setResult] = useState<string | null>("hamburgueria");
   const token = useRef(0);
   const auto = useRef(true);
   const box = useRef<HTMLDivElement>(null);
@@ -80,7 +88,7 @@ export function SearchSimulator() {
 
   return (
     <div className={s.search} ref={box} data-rua-search="">
-      <p className={s.searchTitle}>Simule uma busca na sua cidade</p>
+      <p className={s.searchTitle}>Simule uma busca. Qual resultado você abriria?</p>
       <form className={s.field} onSubmit={onSubmit} autoComplete="off">
         <label htmlFor="rua-q">
           <SearchIcon />
@@ -112,14 +120,14 @@ export function SearchSimulator() {
             <li key={`top-${result}`} className={s.top}>
               <span className={s.rpin} aria-hidden="true" />
               <div>
-                <b>{cap(result)} · seu concorrente</b>
-                <small>★ 4,8 · a 300 m · aberto agora</small>
-                <span className={s.acts}><span>Site</span><span>Rotas</span><span>Ligar</span></span>
+                <b>Sua empresa · {cap(result)}</b>
+                <small>{demoOf(result).features}</small>
+                <span className={s.acts}><a href={demoOf(result).href}><span>Explorar</span></a><span>Rotas</span><span>Ligar</span></span>
               </div>
             </li>
             <li key={`you-${result}`} className={s.you}>
               <span className={`${s.rpin} ${s.rpinOff}`} aria-hidden="true" />
-              <div><b>Sua empresa</b><small>Nenhum resultado encontrado.</small></div>
+              <div><b>{cap(result)} · site padrão</b><small>Início · Sobre · Contato. Nada para explorar.</small></div>
             </li>
           </>
         )}

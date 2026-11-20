@@ -61,7 +61,7 @@ export function RuaWorld() {
       <div ref={veilS} className={s.veilS} aria-hidden="true" />
       <div ref={veilF} className={s.veilF} aria-hidden="true" />
       <div ref={tagRival} className={`${s.tag} ${s.tagRival}`} aria-hidden="true">
-        <span><i />Seu concorrente · 1º na busca</span>
+        <span><i />Site padrão · 1º na busca</span>
       </div>
       <div ref={tagYou} className={`${s.tag} ${s.tagYou}`} aria-hidden="true">
         <span><i /><b ref={tagYouTxt}>Você · invisível na busca</b></span>

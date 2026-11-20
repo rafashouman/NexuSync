@@ -2,7 +2,7 @@ import type { PILOT_MODALITIES } from "@/lib/pilot";
 import type { QuoteSection } from "@/lib/quote";
 
 /** Service categories of the home search simulator; free text is never sent, only "outro". */
-export type HomeSearchCategory = "dentista" | "pizzaria" | "eletricista" | "advogado" | "pet shop" | "barbearia" | "outro";
+export type HomeSearchCategory = "hamburgueria" | "loja de roupas" | "dentista" | "pizzaria" | "eletricista" | "advogado" | "pet shop" | "barbearia" | "outro";
 
 export type AnalyticsEvent =
   | { eventName: "page_view" }

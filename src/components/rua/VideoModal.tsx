@@ -24,7 +24,7 @@ export function VideoModal() {
         <i aria-hidden="true">
           <svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 1.5v11l9-5.5z" fill="currentColor" /></svg>
         </i>
-        <span>Assista ao vídeo<small>21 segundos</small></span>
+        <span>Veja um pedido online<small>21 segundos</small></span>
       </button>
       <dialog ref={dialog} className={s.dialog} aria-label="Vídeo: pedido online" onClose={() => video.current?.pause()}>
         <div className={s.dlgBar}>
