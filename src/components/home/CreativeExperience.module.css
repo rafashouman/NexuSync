@@ -113,3 +113,7 @@
 @keyframes catalogCard{0%,100%{translate:0 0}50%{translate:0 -5px}}
 @media(max-width:760px){.catalog{grid-template-columns:1fr}.catalogArt{height:auto}.catalogPreviewBody{padding:16px 12px;gap:12px}.catalogPreviewSteps>div{padding:8px;font-size:8px}}
 @media(prefers-reduced-motion:reduce){.catalogPreview *{animation:none!important}}
+.motionSample{margin:0;width:100%;max-width:340px;justify-self:center}
+.motionSample video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;background:#0c1428;border:1px solid #ffffff26;box-shadow:14px 14px 0 #5b97ff26}
+.motionSample figcaption{margin-top:16px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9aa6c2}
+@media(max-width:760px){.motionSample{max-width:300px}.motionSample video{box-shadow:8px 8px 0 #5b97ff26}}

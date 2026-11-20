@@ -15,4 +15,8 @@ export const designFaqs = [
     q: "Quantas rodadas de ajustes estão incluídas?",
     a: "O Design Starter inclui uma rodada de ajustes. Os pacotes Design Profissional e UI/UX Premium incluem duas, conforme o escopo apresentado na proposta.",
   },
+  {
+    q: "Como contrato motion graphics?",
+    a: "Conte o que deseja apresentar e onde a animação será utilizada. A proposta define formato, duração, direção visual, áudio quando aplicável, revisões e arquivos de entrega. O serviço é orçado separadamente dos pacotes apresentados.",
+  },
 ];

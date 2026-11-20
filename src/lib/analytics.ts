@@ -53,7 +53,7 @@ export type AnalyticsEvent =
       capitalInsured: number;
     }
   | { eventName: "home_search_simulated"; category: HomeSearchCategory; input: "chip" | "typed" }
-  | { eventName: "home_video_play" | "home_method_complete" }
+  | { eventName: "home_video_play" | "home_method_complete" | "design_video_play" }
   | {
       eventName: "game_start" | "game_end" | "game_high_score";
       appId: "arknoid";
