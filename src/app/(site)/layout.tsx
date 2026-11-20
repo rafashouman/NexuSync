@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SiteChrome } from "@/components/home/SiteChrome";
 
 
-import DemoShell from "@/components/ui/DemoShell";
+import { DemoFrame } from "@/components/ui/DemoFrame";
 
 
 export const metadata: Metadata = {
@@ -79,9 +79,9 @@ export default function RootLayout({
         }}
       />
       <div className="nexusync-site">
-      <DemoShell>
+      <DemoFrame>
         <SiteChrome>{children}</SiteChrome>
-      </DemoShell>
+      </DemoFrame>
       </div>
     </>
   );
