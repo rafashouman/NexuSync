@@ -1,12 +1,13 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowUpRight, ArrowDown, Plus } from "lucide-react";
 import { AppPlayground, DesignPlayground } from "./CreativePlayground";
 import { ChaosAppDirectory } from "./ChaosAppDirectory";
+import { DesignPortfolio } from "./DesignPortfolio";
 import { MotionSample } from "./MotionSample";
 import { ServiceOffers } from "./ServiceOffers";
 import { appFaqs } from "@/data/appFaqs";
 import { designFaqs } from "@/data/designFaqs";
+import { designPlans } from "@/data/designPlans";
 import s from "./SitesExperience.module.css";
 import c from "./CreativeExperience.module.css";
 
@@ -40,9 +41,9 @@ const content = {
     ],
     steps: [
       ["Entendemos sua marca", "Reunimos referências, objetivos e materiais existentes."],
-      ["Definimos a direção", "Definimos peças, formatos e aplicações necessárias."],
+      ["Definimos a direção", "Definimos peças, formatos e aplicações. Em motion graphics, também a duração e onde a animação será usada."],
       ["Criamos e apresentamos", "Apresentamos a criação e realizamos as revisões contratadas."],
-      ["Entregamos os arquivos", "Entregamos os arquivos e orientações previstos no pacote."],
+      ["Entregamos os arquivos", "Entregamos os arquivos e orientações previstos no pacote ou na proposta."],
     ],
   },
 } as const;
@@ -64,10 +65,10 @@ export default function CreativeExperience({ kind }: { kind: keyof typeof conten
     <section className={s.formatsSection} id="solucoes"><div className={s.section}><p className={s.kicker}>02 / {apps ? "MENOS TAREFAS REPETITIVAS. MAIS POSSIBILIDADES." : "COERÊNCIA EM CADA PONTO DE CONTATO."}</p><h2>{apps ? "Do atendimento" : "Da primeira impressão"}<br /><em>{apps ? "à operação." : "à marca que fica."}</em></h2><div className={c.solutionRows}>{item.formats.map(([title, text, href, label], i) => <article key={title}><span>0{i + 1}</span><div><h3>{title}</h3><p>{text}</p></div><Link href={href}>{label}<ArrowUpRight size={18} /></Link></article>)}</div></div></section>
     {apps ? <section className={s.section} id="todos-os-aplicativos"><div className={s.heading}><div><p className={s.kicker}>03 / EXPERIMENTE ANTES DE IMAGINAR O SEU</p><h2>Ideias que você<br /><em>pode testar.</em></h2></div><p>Todos os aplicativos e demonstrações em um só lugar. Abra uma experiência, explore o fluxo e compartilhe a referência para o seu projeto.</p></div><ChaosAppDirectory /></section> : <>
       <section className={c.motionSection} id="motion-graphics"><div><p className={s.kicker}>MOVIMENTO COM PROPÓSITO</p><h2>Sua marca<br />entra em cena.<br /><em>E deixa sua impressão.</em></h2><p>Uma identidade pode ganhar ritmo, transições e novas formas de se apresentar. Criamos motion graphics para aplicações digitais, campanhas e apresentações.</p><Link href="/contato?interest=design&source=media#orcamento" className={s.button}>Conversar sobre uma animação<ArrowUpRight size={18} /></Link><small>Formato, duração, som, revisões e arquivos finais definidos na proposta. Orçamento sob medida.</small></div><MotionSample /></section>
-      <section className={s.section} id="portfolio-design"><div className={s.heading}><div><p className={s.kicker}>03 / DESIGN APLICADO</p><h2>Uma linguagem.<br /><em>Muitas possibilidades.</em></h2></div><p>Identidades e aplicações visuais do portfólio. A direção de cada projeto parte da personalidade da marca e do que ela precisa comunicar.</p></div><div className={c.portfolio}>{[["/images/port-iv/bela-juba-com-bg.jpg", "Bela Juba", "Identidade visual"], ["/images/port-dg/aw-cartao.jpg", "Aheadworks", "Aplicação de marca"], ["/images/port-dg/bargento-cardapio.jpg", "Bargento", "Design de cardápio"]].map(([src, name, category]) => <figure key={src}><div><Image src={src} alt={`${name} — ${category}`} width={800} height={600} sizes="(max-width: 760px) 100vw, 33vw" /></div><figcaption><span>{category}</span><h3>{name}</h3></figcaption></figure>)}</div></section>
+      <section className={s.section} id="portfolio-design"><div className={s.heading}><div><p className={s.kicker}>03 / DESIGN APLICADO</p><h2>Uma linguagem.<br /><em>Muitas possibilidades.</em></h2></div><p>Trabalhos do portfólio, de logotipos a cartões, cardápios e panfletos. A direção de cada projeto parte da personalidade da marca e do que ela precisa comunicar.</p></div><DesignPortfolio /></section>
     </>}
-    <section className={s.section} id="processo"><p className={s.kicker}>04 / DO PRIMEIRO CONTATO À ENTREGA</p><h2>Uma direção clara.<br /><em>Em cada etapa.</em></h2><ol className={s.steps}>{item.steps.map(([title, text], i) => <li key={title}><span>0{i + 1}<ArrowUpRight size={20} /></span><h3>{title}</h3><p>{text}</p></li>)}</ol></section>
-    <section className={s.plansSection} id={offersId}><div className={s.section}><p className={s.kicker}>05 / ESCOPO CLARO. ENTREGAS DEFINIDAS.</p><div className={s.heading}><h2>{apps ? "Soluções para" : "Design para"}<br /><em>{apps ? "o seu próximo passo." : "a sua próxima fase."}</em></h2><p>{apps ? "O formato e as funções são definidos conforme o processo que sua empresa precisa melhorar." : "Escolha entre peças digitais, identidade visual e telas para sites e aplicativos, com entregas definidas em cada pacote. Motion graphics recebe orçamento próprio."}</p></div><ServiceOffers kind={kind} /></div></section>
+    <section className={s.section} id="processo"><p className={s.kicker}>04 / DO PRIMEIRO CONTATO À ENTREGA</p><h2>Uma direção clara.<br /><em>Em cada etapa.</em></h2><ol className={s.steps}>{item.steps.map(([title, text], i) => <li key={title}><span>0{i + 1}<ArrowUpRight size={20} /></span><h3>{title}</h3><p>{text}</p></li>)}</ol>{!apps && <ul className={c.deliveryStrip} aria-label="Prazo e entregas por formato">{designPlans.map(plan => <li key={plan.id}><span>{plan.name}</span><b>{plan.deliveryTime}</b>{plan.deliverablesSummary.join(", ")}</li>)}<li><span>Motion graphics</span><b>Prazo definido na proposta</b>Formato, duração, áudio, revisões e arquivos finais conforme o projeto.</li></ul>}</section>
+    <section className={s.plansSection} id={offersId}><div className={s.section}><p className={s.kicker}>05 / ESCOPO CLARO. ENTREGAS DEFINIDAS.</p><div className={s.heading}><h2>{apps ? "Soluções para" : "Design para"}<br /><em>{apps ? "o seu próximo passo." : "a sua próxima fase."}</em></h2><p>{apps ? "O formato e as funções são definidos conforme o processo que sua empresa precisa melhorar." : "Escolha entre peças digitais, identidade visual e telas para sites e aplicativos, com entregas definidas em cada pacote. Motion graphics recebe orçamento próprio."}</p></div><ServiceOffers kind={kind} />{!apps && <aside className={s.customPlan}><div><h3>Motion graphics sob medida</h3><p>Animações para apresentar sua oferta, valorizar uma campanha ou dar movimento à sua identidade. Formato, duração, direção visual, áudio quando aplicável, revisões e arquivos de entrega são definidos na proposta, e o valor é orçado separadamente dos pacotes.</p></div><Link href="/contato?interest=design&source=media#orcamento" className={s.textLink}>Pedir orçamento de animação <ArrowUpRight size={20} /></Link></aside>}</div></section>
     <section className={`${s.section} ${s.faq}`} id="faq"><div><p className={s.kicker}>06 / ANTES DE COMEÇAR</p><h2>Perguntas claras.<br /><em>Decisões melhores.</em></h2><p>Confira o que cada formato pode incluir. A proposta confirma as entregas, os prazos e as condições antes de começarmos.</p></div><div>{faqs.map(({ q, a }) => <details key={q}><summary>{q}<Plus size={18} /></summary><p>{a}</p></details>)}</div></section>
     <section className={s.finalCta}><p className={s.kicker}>A PRÓXIMA CONEXÃO COMEÇA COM UMA CONVERSA.</p><Link href={quote}><h2>{apps ? "Vamos simplificar" : "Vamos dar vida"}<br /><em>{apps ? "sua operação?" : "à sua marca?"}</em></h2><ArrowUpRight /></Link><p>{apps ? "Tem uma rotina que precisa melhorar? Conte como ela funciona." : "Conte sua ideia, suas referências e o que sua marca precisa comunicar."}</p></section>
   </div>;

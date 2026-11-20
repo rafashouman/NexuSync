@@ -117,3 +117,22 @@
 .motionSample video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;background:#0c1428;border:1px solid #ffffff26;box-shadow:14px 14px 0 #5b97ff26}
 .motionSample figcaption{margin-top:16px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9aa6c2}
 @media(max-width:760px){.motionSample{max-width:300px}.motionSample video{box-shadow:8px 8px 0 #5b97ff26}}
+
+.workFilter{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.workFilter button{border:1px solid #ffffff2e;background:transparent;color:#c1c9d5;padding:11px 16px;font-size:12px;transition:background .2s,color .2s,border-color .2s}
+.workFilter button:hover{border-color:#ffb547;color:#ffb547}
+.workFilter button[aria-pressed="true"]{background:#ffb547;border-color:#ffb547;color:#080b12}
+.workGrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.workGrid li{min-width:0}
+.workArt{position:relative;aspect-ratio:4/3;background:#f1f2e9;overflow:hidden;border:1px solid #ffffff1f}
+.workArt img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:14px;transition:transform .5s}
+.workGrid li:hover .workArt img{transform:scale(1.05)}
+.workGrid p{margin:14px 0 0!important;display:flex;flex-direction:column;gap:4px}
+.workGrid p b{font-size:15px;font-weight:550;color:#f1f2e9;letter-spacing:-.02em}
+.workGrid p span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#ffb547}
+.deliveryStrip{list-style:none;margin:38px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #ffffff30}
+.deliveryStrip li{padding:20px 22px 0 0;font-size:12px;color:#a8b0bf;line-height:1.6}
+.deliveryStrip li b{display:block;font-size:13px;font-weight:550;color:#f1f2e9;margin-bottom:6px}
+.deliveryStrip li span{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#ffb547;margin-bottom:10px}
+@media(max-width:1100px){.workGrid{grid-template-columns:repeat(3,1fr)}.deliveryStrip{grid-template-columns:1fr 1fr}.deliveryStrip li{padding-bottom:14px}}
+@media(max-width:760px){.workGrid{grid-template-columns:repeat(2,1fr);gap:16px}.deliveryStrip{grid-template-columns:1fr}.workFilter button{padding:10px 13px}}
