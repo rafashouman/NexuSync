@@ -49,7 +49,7 @@ export const pillars = [
 
 export const faqs = [
   ["Qual tipo de site é indicado para meu negócio?", "Uma landing page concentra uma oferta e facilita o contato. Um site institucional apresenta a empresa e seus serviços. Um hotsite atende uma campanha, evento ou lançamento. Ajudamos a escolher conforme seu objetivo."],
-  ["O site ajuda a aparecer no Google?", "O plano Presence inclui SEO básico para mecanismos de busca: páginas organizadas, títulos e descrições pensados para o que seu cliente pesquisa. Posicionamento depende também da concorrência e do conteúdo, por isso não prometemos uma posição específica."],
+  ["O site vai aparecer no Google?", "Os planos de site incluem a configuração de SEO descrita na proposta. No Presence, é o SEO básico para mecanismos de busca. Isso prepara o site, mas a indexação e a posição nas pesquisas dependem também dos mecanismos de busca, da concorrência e da continuidade do trabalho de conteúdo e divulgação, por isso não garantimos uma posição. Para um acompanhamento contínuo, existe o serviço de SEO e presença local, contratado à parte."],
   ["Preciso fornecer textos, fotos e logotipo?", "Reunimos as informações e os materiais disponíveis no início do projeto. A proposta define o que você fornece e se será necessário contratar produção de textos, imagens ou identidade visual."],
   ["Domínio e hospedagem estão incluídos?", "O registro do domínio e a hospedagem precisam ser confirmados no orçamento. Configurar um domínio não inclui automaticamente pagar seu registro ou suas renovações."],
   ["O site funciona no celular?", "Sim. Os sites são adaptados para celular, tablet e computador, com atenção à leitura, à navegação e aos botões de contato."],
