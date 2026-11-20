@@ -9,12 +9,18 @@ import s from "./rua.module.css";
 const CHIPS = ["hamburgueria", "loja de roupas", "dentista", "barbearia"] as const;
 const CYCLE: HomeSearchCategory[] = ["hamburgueria", "dentista", "loja de roupas", "advogado", "pet shop", "barbearia"];
 
-/** O que o site da "Sua empresa" mostra em cada segmento e qual demonstração o "Explorar" abre. */
+/** O que o site do concorrente (um site como os que a NexuSync faz) mostra em cada ramo e qual demonstração o botão abre. */
 const DEMO_BY_CATEGORY: Record<string, { features: string; href: string }> = {
-  hamburgueria: { features: "Monte seu pedido · cardápio com fotos", href: "/templates/cardapio" },
-  "loja de roupas": { features: "Vitrine da coleção · peças por categoria", href: "/templates/streetwear" },
+  hamburgueria: { features: "Cardápio com fotos · pedido pelo WhatsApp · abre rápido no celular", href: "/templates/cardapio" },
+  "loja de roupas": { features: "Coleção por categoria · pedido pelo WhatsApp · abre rápido no celular", href: "/templates/streetwear" },
 };
-const DEFAULT_DEMO = { features: "Serviços explicados · agenda · WhatsApp", href: "/templates" };
+const DEFAULT_DEMO = { features: "Serviços explicados · agenda pelo WhatsApp · abre rápido no celular", href: "/templates" };
+/** Como o negócio do visitante aparece: alterna a cada busca. */
+const YOU_STATES = [
+  "Sem site · só um perfil no Instagram",
+  "Site lento · ainda carregando…",
+  "Site antigo · informações desatualizadas",
+] as const;
 const demoOf = (q: string) => DEMO_BY_CATEGORY[q.trim().toLowerCase()] ?? DEFAULT_DEMO;
 const categoryOf = (q: string): HomeSearchCategory => {
   const normalized = q.trim().toLowerCase();
@@ -27,6 +33,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export function SearchSimulator() {
   const [query, setQuery] = useState("hamburgueria");
   const [result, setResult] = useState<string | null>("hamburgueria");
+  const [youState, setYouState] = useState(0);
   const token = useRef(0);
   const auto = useRef(true);
   const box = useRef<HTMLDivElement>(null);
@@ -38,6 +45,7 @@ export function SearchSimulator() {
 
   function show(q: string) {
     setResult(q);
+    setYouState((n) => (n + 1) % YOU_STATES.length);
     announce();
   }
 
@@ -80,7 +88,7 @@ export function SearchSimulator() {
   function onSubmit(event: FormEvent) {
     event.preventDefault();
     stopAuto();
-    const q = query.trim().slice(0, 40) || "seu serviço";
+    const q = query.trim().slice(0, 40) || "seu ramo";
     setQuery(q);
     show(q);
     trackAnalyticsEvent({ eventName: "home_search_simulated", category: categoryOf(q), input: "typed" });
@@ -88,20 +96,19 @@ export function SearchSimulator() {
 
   return (
     <div className={s.search} ref={box} data-rua-search="">
-      <p className={s.searchTitle}>Simule uma busca. Qual resultado você abriria?</p>
+      <p className={s.searchTitle}>Digite o seu ramo e compare</p>
       <form className={s.field} onSubmit={onSubmit} autoComplete="off">
         <label htmlFor="rua-q">
           <SearchIcon />
-          <input id="rua-q" name="q" maxLength={40} value={query} aria-label="Seu serviço"
+          <input id="rua-q" name="q" maxLength={40} value={query} aria-label="Seu ramo"
             onFocus={(e) => { if (auto.current) { stopAuto(); e.currentTarget.select(); } }}
             onChange={(e) => setQuery(e.target.value)} />
-          <span className={s.near}>perto de mim</span>
         </label>
-        <button type="submit" aria-label="Pesquisar">
+        <button type="submit" aria-label="Comparar">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
         </button>
       </form>
-      <div className={s.chips} role="group" aria-label="Exemplos de serviço">
+      <div className={s.chips} role="group" aria-label="Exemplos de ramo">
         {CHIPS.map((chip) => (
           <button key={chip} type="button" className={s.chip} aria-pressed={result === chip}
             onClick={() => {
@@ -120,14 +127,14 @@ export function SearchSimulator() {
             <li key={`top-${result}`} className={s.top}>
               <span className={s.rpin} aria-hidden="true" />
               <div>
-                <b>Sua empresa · {cap(result)}</b>
+                <b>{cap(result)} · concorrente</b>
                 <small>{demoOf(result).features}</small>
-                <span className={s.acts}><a href={demoOf(result).href}><span>Explorar</span></a><span>Rotas</span><span>Ligar</span></span>
+                <span className={s.acts}><a href={demoOf(result).href}><span>Ver um exemplo</span></a></span>
               </div>
             </li>
             <li key={`you-${result}`} className={s.you}>
               <span className={`${s.rpin} ${s.rpinOff}`} aria-hidden="true" />
-              <div><b>{cap(result)} · site padrão</b><small>Início · Sobre · Contato. Nada para explorar.</small></div>
+              <div><b>Seu negócio</b><small>{YOU_STATES[youState]}</small></div>
             </li>
           </>
         )}

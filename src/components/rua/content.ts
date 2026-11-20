@@ -23,9 +23,54 @@ export const WA_DISPLAY = "51 99358-3936";
 export const go = sitePlans.find((plan) => plan.name === "Go")!;
 export const pulse = sitePlans.find((plan) => plan.name === "Pulse")!;
 
+/** Linhas do recibo de cada plano: sempre itens reais de sitePlans, nunca escritos à mão. */
+const PLAN_RECEIPTS = {
+  Go: {
+    interest: "landing-page",
+    features: [
+      "Estrutura de até 3 páginas ou seções principais",
+      "Design responsivo para celular, tablet e desktop",
+      "Mini catálogo ou mini cardápio",
+      "Botão de contato pelo WhatsApp",
+      "Formulário de contato",
+      "Configuração básica de SEO",
+      "Publicação e configuração inicial do site",
+    ],
+  },
+  Presence: { interest: "institucional", features: RECEIPT_FEATURES },
+  Pulse: {
+    interest: "loja-virtual",
+    features: [
+      "Pequenos e-commerces",
+      "Configuração inicial da loja virtual",
+      "Configuração de categorias e páginas de produto",
+      "Integração com meios de pagamento compatíveis",
+      "Configuração de frete ou entrega, quando aplicável",
+      "SEO técnico básico",
+      "Testes de navegação e compra",
+    ],
+  },
+} as const;
+
+/** Os três planos do simulador. O Pulse aparece como "Consulte": o valor depende do escopo. */
+export const planOptions = sitePlans.map((plan) => {
+  const receipt = PLAN_RECEIPTS[plan.name as keyof typeof PLAN_RECEIPTS];
+  return {
+    name: plan.name,
+    price: plan.price,
+    originalPrice: plan.originalPrice,
+    badge: "badge" in plan ? plan.badge : undefined,
+    idealFor: plan.idealFor,
+    deliveryTime: plan.deliveryTime,
+    consult: plan.name === "Pulse",
+    interest: receipt.interest,
+    items: (receipt.features as readonly string[]).filter((item) => plan.features.includes(item)),
+  };
+});
+
 /** Link do pedido de proposta (mesmo destino do antigo orçamento: formulário de contato). */
-export function proposalHref(source: "header" | "hero" | "sites") {
-  return `/contato?interest=institucional&source=${source}#orcamento`;
+export function proposalHref(source: "header" | "hero" | "sites", interest = "institucional") {
+  return `/contato?interest=${interest}&source=${source}#orcamento`;
 }
 
 export const attempts = [
@@ -45,15 +90,15 @@ export const phases = [
 ] as const;
 
 export const pillars = [
-  { title: "Estrutura e estratégia", text: "Cada informação no lugar certo, para o visitante entender sua proposta e achar o que procura.", tag: "Alicerce", href: "/criacao-de-sites", cta: "Como criamos sites" },
+  { title: "Estrutura e estratégia", text: "Cada informação no lugar certo, para o visitante entender sua proposta e achar o que procura.", href: "/criacao-de-sites", cta: "Como criamos sites" },
   { title: "Design e identidade", text: "Sua marca reconhecível em cada tela, e também em anúncios, motion graphics e vídeos.", href: "/design", cta: "Ver design e motion" },
   { title: "Interatividade", text: "Cardápios que montam o pedido, vitrines, jornadas guiadas e gamificação. Sempre com um objetivo.", href: "/templates", cta: "Experimentar as demonstrações" },
-  { title: "Performance e SEO", text: "Leve até em celular com alguns anos de uso e organizado para os buscadores. Sem prometer posição no Google.", tag: "Em todos os andares", href: "/seo-para-negocios-locais", cta: "Como trabalhamos o SEO" },
+  { title: "Performance e SEO", text: "Leve até em celular com alguns anos de uso e organizado para os buscadores. Sem prometer posição no Google.", href: "/seo-para-negocios-locais", cta: "Como trabalhamos o SEO" },
 ] as const;
 
 export const faqs = [
   ["Qual tipo de site é indicado para meu negócio?", "Uma landing page concentra uma oferta e facilita o contato. Um site institucional apresenta a empresa e seus serviços. Um hotsite atende uma campanha, evento ou lançamento. Ajudamos a escolher conforme seu objetivo."],
-  ["Quanto custa criar meu site?", `Os planos de site vão de R$ ${go.price} (${go.name}) a R$ ${pulse.price} (${pulse.name}), e o que cada um inclui está descrito na página de criação de sites. Hotsites interativos, gamificação e recursos sob medida recebem proposta própria, com escopo, prazo e investimento antes de você decidir.`],
+  ["Quanto custa criar meu site?", `O plano ${go.name} sai por R$ ${go.price} e o ${presence.name}, recomendado para a maioria dos negócios, por R$ ${presence.price}. O ${pulse.name}, para lojas virtuais e projetos completos, é sob consulta, porque o valor depende do escopo. O que cada plano inclui está na página de criação de sites. Hotsites interativos, gamificação e recursos sob medida recebem proposta própria, com escopo, prazo e investimento antes de você decidir.`],
   ["Meu site pode ter animações, quiz ou gamificação?", "Sim. Animações, quizzes, escolhas guiadas e gamificação podem entrar quando ajudam o visitante a entender ou escolher. O tipo de interação é definido na proposta, sempre pensando em usabilidade e no desempenho no celular."],
   ["O site vai aparecer no Google?", "Os planos de site incluem a configuração de SEO descrita na proposta. No Presence, é o SEO básico para mecanismos de busca. Isso prepara o site, mas a indexação e a posição nas pesquisas dependem também dos mecanismos de busca, da concorrência e da continuidade do trabalho de conteúdo e divulgação, por isso não garantimos uma posição. Para um acompanhamento contínuo, existe o serviço de SEO e presença local, contratado à parte."],
   ["Preciso fornecer textos, fotos e logotipo?", "Reunimos as informações e os materiais disponíveis no início do projeto. A proposta define o que você fornece e se será necessário contratar produção de textos, imagens ou identidade visual."],

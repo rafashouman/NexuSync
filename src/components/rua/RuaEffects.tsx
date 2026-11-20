@@ -21,7 +21,6 @@ export function RuaEffects() {
     const step = byId("rua-step");
     const segs = Array.from(byId("rua-segs")?.children ?? []);
     const phases = Array.from(byId("rua-phases")?.children ?? []);
-    const lines = Array.from(document.querySelectorAll<HTMLElement>("[data-rua-line]"));
     const receipt = byId("rua-receipt");
     const drill = byId("rua-drill");
     const drillG = byId("rua-drill-g");
@@ -52,6 +51,8 @@ export function RuaEffects() {
 
     function printReceipt() {
       if (!receipt) return;
+      // Lines are re-queried each frame: switching plans remounts them.
+      const lines = receipt.querySelectorAll<HTMLElement>("[data-rua-line]");
       const r = receipt.getBoundingClientRect();
       const p = clamp((window.innerHeight * 0.9 - r.top) / (r.height * 0.85));
       lines.forEach((line, i) => line.setAttribute("data-ink", String(p > ((i + 0.5) / lines.length) * 0.9)));
@@ -81,6 +82,27 @@ export function RuaEffects() {
       chain.forEach((c, i) => c.setAttribute("data-on", String(steps[i])));
     }
 
+    // pilares: entram de 01 a 04, de cima para baixo, conforme a rolagem
+    const floorsEl = byId("rua-floors");
+    const floors = Array.from(floorsEl?.children ?? []) as HTMLElement[];
+    let shown = 0;
+    let floorsIO: IntersectionObserver | null = null;
+    if (floorsEl && !reduce && "IntersectionObserver" in window) {
+      floorsEl.setAttribute("data-reveal", "true");
+      floors.forEach((li) => li.setAttribute("data-in", "false"));
+      floorsIO = new IntersectionObserver((entries) => {
+        const last = Math.max(-1, ...entries.filter((e) => e.isIntersecting).map((e) => floors.indexOf(e.target as HTMLElement)));
+        // nunca mostra um pilar antes do anterior: revela até o último visível, em sequência
+        for (let i = shown; i <= last; i++) {
+          floors[i].style.transitionDelay = `${(i - shown) * 140}ms`;
+          floors[i].setAttribute("data-in", "true");
+          floorsIO?.unobserve(floors[i]);
+        }
+        shown = Math.max(shown, last + 1);
+      }, { threshold: 0.4, rootMargin: "0px 0px -8% 0px" });
+      floors.forEach((li) => floorsIO!.observe(li));
+    }
+
     let raf = 0;
     const loop = (ms: number) => {
       method();
@@ -101,6 +123,7 @@ export function RuaEffects() {
     return () => {
       cancelAnimationFrame(raf);
       clearInterval(timer);
+      floorsIO?.disconnect();
       lenis?.destroy();
     };
   }, []);

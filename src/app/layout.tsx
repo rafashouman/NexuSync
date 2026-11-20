@@ -11,8 +11,10 @@ export const metadata: Metadata = {
       { url: "/images/favicon.ico?v=20261120", type: "image/x-icon" },
       { url: "/images/favicon-32x32.png?v=20261120", sizes: "32x32", type: "image/png" },
       { url: "/images/favicon-16x16.png?v=20261120", sizes: "16x16", type: "image/png" },
+      { url: "/images/android-chrome-512x512.png?v=20261120", sizes: "512x512", type: "image/png" },
     ],
     shortcut: "/images/favicon.ico?v=20261120",
+    apple: [{ url: "/images/apple-touch-icon.png?v=20261120", sizes: "180x180", type: "image/png" }],
   },
   other: {
     "p:domain_verify": "3ea911eb961dc25477766381f746866b",

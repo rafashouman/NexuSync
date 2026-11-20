@@ -40,7 +40,7 @@ export default async function SegmentPage({ params }: Props) {
       <JsonLd data={breadcrumbs(["Criação de sites", "/criacao-de-sites"], [`Sites para ${segment.plural}`, path])} />
 
       <header className={s.hero}>
-        <div className={s.eyebrow}><Link href="/">NEXUSYNC</Link><span>/ SITES PARA {segment.plural.toUpperCase()}</span><span>PRESENÇA ONLINE EM PRIMEIRO LUGAR.</span></div>
+        <div className={s.eyebrow}><Link href="/">NEXUSYNC</Link><span>/ SITES PARA {segment.plural.toUpperCase()}</span><span>SITES SOB MEDIDA E INTERATIVOS.</span></div>
         <div className={s.heroGrid}>
           <div>
             <p className={s.kicker}>SITE E SEO PARA {segment.plural.toUpperCase()}</p>

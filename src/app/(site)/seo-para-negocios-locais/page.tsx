@@ -61,7 +61,7 @@ export default function SeoPage() {
       <JsonLd data={breadcrumbs(["SEO para negócios locais", path])} />
 
       <header className={s.hero}>
-        <div className={s.eyebrow}><Link href="/">NEXUSYNC</Link><span>/ SEO PARA NEGÓCIOS LOCAIS</span><span>PRESENÇA ONLINE EM PRIMEIRO LUGAR.</span></div>
+        <div className={s.eyebrow}><Link href="/">NEXUSYNC</Link><span>/ SEO PARA NEGÓCIOS LOCAIS</span><span>SITES SOB MEDIDA E INTERATIVOS.</span></div>
         <div className={s.heroGrid}>
           <div>
             <p className={s.kicker}>SEO ORGÂNICO, SEM DEPENDER DE ANÚNCIO.</p>

@@ -33,7 +33,7 @@ export function AttemptCards() {
   }, []);
 
   return (
-    <div className={s.tries} ref={grid}>
+    <div className={s.tries} ref={grid} data-rua-stagger="">
       {attempts.map((attempt, i) => (
         <article key={attempt.name} className={s.try} tabIndex={0}
           data-state={lit.i === i && lit.on ? "on" : "off"}
@@ -42,8 +42,8 @@ export function AttemptCards() {
           onFocus={() => { hold.current = true; light(i); }}
           onBlur={() => { hold.current = false; }}>
           <h3>{attempt.name}</h3>
-          <p className={s.up}><b>Acende</b>{attempt.up}</p>
-          <p className={s.down}><b>Apaga</b>{attempt.down}</p>
+          <p className={s.up}><span>{attempt.up}</span></p>
+          <p className={s.down}><span>{attempt.down}</span></p>
         </article>
       ))}
     </div>

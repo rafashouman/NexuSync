@@ -110,7 +110,7 @@ type Building = {
 
 type AttemptSign = { mesh: Mesh<PlaneGeometry, MeshBasicMaterial>; canvas: HTMLCanvasElement; tex: CanvasTexture; text: string; t0: number };
 
-const ATTEMPT_LABELS = ["INSTAGRAM", "PERFIL NO GOOGLE", "CONSTRUTOR DE SITES", "SITE POR IA", "CARTÃO DE VISITA", "WHATSAPP"];
+const ATTEMPT_LABELS = ["INSTAGRAM", "PERFIL NO GOOGLE", "CONSTRUTOR", "SITE POR IA", "CARTÃO DE VISITA", "WHATSAPP"];
 const NUMERIC_KEYS = ["shift", "shiftY", "city", "rival", "you", "beam", "scan", "grow", "veilS", "veilF", "tagR", "tagY", "signs"] as const;
 
 export function createWorld(refs: WorldRefs): (() => void) | null {
@@ -702,7 +702,7 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
       const youOn = cur.beam > 0.5;
       if (youOn !== youLabelOn) {
         youLabelOn = youOn;
-        tagYouTxt.textContent = youOn ? "Você · primeiro na busca" : "Você · invisível na busca";
+        tagYouTxt.textContent = youOn ? "Aberto · seu negócio" : "Fechado · seu negócio";
         tagYou.dataset.on = String(youOn);
       }
       placeTag(tagYou, you.cx, yH + (youOn ? 3.1 : 1.2), you.cz, cur.tagY);
