@@ -372,6 +372,42 @@ O TBT que sobra vem sobretudo da compilação de shaders no primeiro quadro: o C
 
 **Aceite:** todas as metas da seção 6 atingidas.
 
+### Preparação do merge (19/11/2026)
+
+**Estado verificado:**
+
+| Item | Resultado |
+| --- | --- |
+| `main` remota vs. base da branch | Iguais (`e1af5a2`). O merge é um fast-forward, sem conflitos. |
+| Commits que entram | `ff8a843` (home Rua Acesa), `ef0c045` (otimização 3D), `4d4b95e` (menu pelos pilares) |
+| Arquivos | 23 arquivos e nenhuma exclusão. A limpeza local de docs **não** entra. |
+| Deploy | `Dockerfile`, `docker-compose.yml`, `.dockerignore` e `deploy.yml` intactos na branch. O `.dockerignore` deixa `public/videos/` entrar. `npm ci` resolve o `lenis` pelo lockfile. |
+| CI (mesma sequência do `deploy.yml`) | `npm ci` ✓ · `lint` ✓ · `tsc --noEmit` ✓ · `test-quote-validation` ✓ · `build` ✓ (45 rotas) |
+| `scripts/check-public-routes.cjs` no build de produção | 39 de 40 destinos OK, incluindo `/`, `/#metodo` e as âncoras novas do `/marketing`. **Falha anterior à branch:** `/templates/seguro-piloto` dá 404 porque a página foi removida no commit `43f5f11`, mas continua listada em `src/data/appCatalog.ts`. Já acontece hoje em produção. |
+
+**Como publicar (escolha uma):**
+
+- **A. Pull request:** push da branch `feat/rua-acesa` e PR para a `main` no GitHub. Revisão no GitHub, e o merge dispara o deploy.
+- **B. Direto:**
+  ```
+  git switch main
+  git merge --ff-only feat/rua-acesa
+  git push origin main
+  ```
+  O push dispara o deploy.
+
+**Como desfazer:** `git revert --no-edit e1af5a2..4d4b95e` na `main` e push. O deploy volta à home anterior.
+
+**Pendências que não bloqueiam o merge:**
+
+- Banner de cookies global ainda em lima (`#d4ff38`).
+- Revisar a pergunta nova do FAQ "O site ajuda a aparecer no Google?".
+- Testar num celular real (o TBT foi medido com GPU emulada).
+- Eventos novos de analytics (seção 7) ainda não implementados.
+- Vídeo sem `faststart` (o arquivo é 5,4 MB e só baixa quando o modal abre).
+- Imagem de Open Graph nova.
+- O 404 de `/templates/seguro-piloto`.
+
 ### Fase 6 — Lançamento
 - [ ] Revisão final com você na branch.
 - [ ] Merge na `main` (dispara o deploy).
