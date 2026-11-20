@@ -417,6 +417,8 @@ O TBT que sobra vem sobretudo da compilação de shaders no primeiro quadro: o C
 - **Acessibilidade:** home e páginas internas medidas com script próprio (contraste mínimo de 4,5:1 e ordem dos títulos); `/contato` tinha dois `h1`. Contraste de textos opacos em mocks (labels de 7 px de demos) e estados desabilitados não foi tratado.
 - **Performance da home:** framer-motion e o chrome animado saíram do JS inicial (cerca de 216 KB para 161 KB gzip) e a cena 3D começa em idle depois do `load`. Lighthouse oficial a rodar depois do deploy.
 - **Limpeza:** 30 componentes sem rota removidos (`PilotosLanding` ficou), dependência `@heroicons/react` removida.
+- **Logo sem lima:** a metade lima do símbolo virou âmbar (`#ffb547`) em `logo-big`, `logo-text`, `icon`, `image-icon*`, favicons, ícones Android e Apple, nas capas e criativos de divulgação, no vídeo de exemplo e na imagem Open Graph da home. Os ícones de `src/app` (`icon.png`, `apple-icon.png`, `favicon.ico`) ainda eram a versão **roxa** antiga e, por serem arquivos de convenção do Next, tinham prioridade sobre `metadata.icons`; foram substituídos e a versão do cache subiu para `v=20261120`.
+- **Open Graph das páginas internas:** o padrão `site-preview-desktop.webp` tinha sido apagado no commit `8468977`, então a imagem de compartilhamento das páginas internas dava 404 (e `/quem-somos` apontava para `capa-nexusync.png`, que não existe). Criei `public/images/og-nexusync.jpg` (1200×630) e todas passam a usá-la.
 
 ### Fase 6 — Lançamento
 - [ ] Revisão final com você na branch.

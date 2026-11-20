@@ -9,9 +9,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://nexusync.online/quem-somos" },
   openGraph: {
     title, description, url: "https://nexusync.online/quem-somos", type: "website", locale: "pt_BR", siteName: "NexuSync",
-    images: [{ url: "https://nexusync.online/images/capa-nexusync.png", alt: "NexuSync — Soluções digitais" }],
+    images: [{ url: "https://nexusync.online/images/og-nexusync.jpg", alt: "NexuSync — Soluções digitais" }],
   },
-  twitter: { card: "summary_large_image", title, description, images: ["https://nexusync.online/images/capa-nexusync.png"] },
+  twitter: { card: "summary_large_image", title, description, images: ["https://nexusync.online/images/og-nexusync.jpg"] },
 };
 
 export default function AboutPage() { return <AboutExperience />; }

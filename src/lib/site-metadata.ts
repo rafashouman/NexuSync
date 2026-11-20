@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const previewImage = "/images/site-preview-desktop.webp";
+const previewImage = "/images/og-nexusync.jpg";
 
 export function nexuSyncMetadata({
   title,

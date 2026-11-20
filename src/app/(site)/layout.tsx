@@ -17,9 +17,9 @@ export const metadata: Metadata = {
       "Criação de sites, aplicativos, design e marketing para empresas que querem apresentar melhor seus serviços e facilitar o contato.",
     images: [
       {
-        url: "/images/site-preview-desktop.webp",
-        width: 1440,
-        height: 1000,
+        url: "/images/og-nexusync.jpg",
+        width: 1200,
+        height: 630,
         alt: "Exemplo de site desenvolvido pela NexuSync",
       },
     ],
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     title: "NexuSync | Sites e soluções digitais para empresas",
     description:
       "Criação de sites, aplicativos, design e marketing para empresas que querem apresentar melhor seus serviços e facilitar o contato.",
-    images: ["/images/site-preview-desktop.webp"],
+    images: ["/images/og-nexusync.jpg"],
   },
 };
 
