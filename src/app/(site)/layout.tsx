@@ -46,6 +46,7 @@ const structuredData = {
       description: "Agência digital que cria sites marcantes com SEO orgânico, design com motion graphics, gestão de redes sociais e tráfego pago para negócios locais.",
       areaServed: { "@type": "Country", name: "Brasil" },
       knowsAbout: ["Criação de sites", "SEO orgânico", "Motion graphics", "Gestão de redes sociais", "Tráfego pago"],
+      sameAs: ["https://www.instagram.com/nexusync_company/"],
       contactPoint: {
         "@type": "ContactPoint",
         telephone: "+5551993583936",
