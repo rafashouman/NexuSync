@@ -19,10 +19,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://nexusync.online/images/site-preview-desktop.webp",
-        width: 1440,
-        height: 1000,
-        alt: "NexuSync — criação de sites e SEO orgânico",
+        url: "https://nexusync.online/images/og-rua-acesa.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Rua à noite com o concorrente em 1º na busca e o seu negócio invisível: NexuSync, sites e SEO orgânico",
       },
     ],
   },
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["https://nexusync.online/images/site-preview-desktop.webp"],
+    images: ["https://nexusync.online/images/og-rua-acesa.jpg"],
   },
 };
 
