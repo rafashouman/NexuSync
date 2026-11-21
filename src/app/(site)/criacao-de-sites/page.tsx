@@ -1,5 +1,5 @@
-import SitesExperience from "@/components/home/SitesExperience";
 import { JsonLd } from "@/components/JsonLd";
+import SitesPage from "@/components/servicos/sites/SitesPage";
 import { breadcrumbs, serviceSchema } from "@/lib/seo";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
@@ -9,12 +9,12 @@ const description = "Sites institucionais, landing pages e hotsites para apresen
 
 export const metadata = nexuSyncMetadata({ title, description, path });
 
-export default function SitesPage() {
+export default function Page() {
   return (
     <>
       <JsonLd data={serviceSchema({ name: "Criação de sites", path, serviceType: "Criação de sites institucionais, landing pages e hotsites", description })} />
       <JsonLd data={breadcrumbs(["Criação de sites", path])} />
-      <SitesExperience />
+      <SitesPage />
     </>
   );
 }

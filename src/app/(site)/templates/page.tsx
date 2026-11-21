@@ -1,4 +1,4 @@
-import TemplatesExperience from "@/components/home/TemplatesExperience";
+import TemplatesPage from "@/components/servicos/templates/TemplatesPage";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
 export const metadata = nexuSyncMetadata({
@@ -8,4 +8,4 @@ export const metadata = nexuSyncMetadata({
   path: "/templates",
 });
 
-export default function Page() { return <TemplatesExperience />; }
+export default function Page() { return <TemplatesPage />; }

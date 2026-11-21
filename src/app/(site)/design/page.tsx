@@ -1,5 +1,5 @@
-import CreativeExperience from "@/components/home/CreativeExperience";
 import { JsonLd } from "@/components/JsonLd";
+import DesignPage from "@/components/servicos/design/DesignPage";
 import { designFaqs } from "@/data/designFaqs";
 import { breadcrumbs, faqSchema, serviceSchema } from "@/lib/seo";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
@@ -16,7 +16,7 @@ export default function Page() {
       <JsonLd data={serviceSchema({ name: "Design e motion graphics", path, serviceType: "Motion graphics, identidade visual e design digital", description })} />
       <JsonLd data={faqSchema(designFaqs.map(({ q, a }) => [q, a] as const))} />
       <JsonLd data={breadcrumbs(["Design e motion graphics", path])} />
-      <CreativeExperience kind="design" />
+      <DesignPage />
     </>
   );
 }

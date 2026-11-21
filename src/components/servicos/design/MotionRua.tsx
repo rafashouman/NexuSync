@@ -2,13 +2,13 @@
 
 import { useRef } from "react";
 import { trackAnalyticsEvent } from "@/lib/analytics";
-import s from "./CreativeExperience.module.css";
+import s from "../servico.module.css";
 
 /** Real motion graphics sample. The video only downloads when the visitor presses play. */
-export function MotionSample() {
+export function MotionRua() {
   const played = useRef(false);
   return (
-    <figure className={s.motionSample}>
+    <figure className={s.motionFig}>
       <video
         controls
         playsInline

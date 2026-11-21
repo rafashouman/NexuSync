@@ -1,0 +1,6 @@
+{
+ "kit": "/rua/models/rua-kit.glb",
+ "procedural": {"front": true, "back": true, "parks": true, "lamps": true},
+ "items": [
+ ]
+}

@@ -52,31 +52,69 @@ Em `cameraKeys.ts`, cada linha de `cameraKeys` corresponde a uma seção com `da
 
 Dica: para achar um bom `pos`, rode a página, abra o console e mexa nos números até gostar. A câmera interpola sozinha entre uma seção e a próxima.
 
-## Criar objetos 3D
+## Montar a cidade com os seus modelos (kit + mapa)
 
-**Do jeito mais leve (recomendado para coisas simples)**: formas do próprio three.js, como já fazemos com as árvores (`ConeGeometry`) e os postes (`CylinderGeometry`). Se o objeto se repete (árvores, bancos, carros), use **`InstancedMesh`**: um único desenho na GPU para todos. Siga o bloco das árvores como modelo.
+A ideia: **um arquivo com cada peça uma vez** (o kit) e **uma lista de onde cada cópia vai** (o mapa). O site baixa a peça uma vez e repete pelas posições da lista. Cem árvores custam o download de uma árvore e um único desenho na placa de vídeo.
 
-**Com modelo do Blender**:
+| Arquivo | O que é |
+| --- | --- |
+| `tools/rua-blender/rua-mapa.blend` | Onde você monta tudo. Tem três coleções: `ref`, `kit` e `mapa`. |
+| `tools/rua-blender/exportar_rua.py` | O botão de exportar (também vem dentro do `.blend`, aba Scripting). |
+| `tools/rua-blender/criar_mapa.py` | Recria o `.blend` do zero com a rua nas posições exatas. **Sobrescreve** o arquivo. |
+| `public/rua/models/rua-kit.glb` | O kit exportado (gerado). |
+| `public/rua/city.json` | O mapa exportado (gerado), mais as chaves do que continua sendo desenhado por código. |
+| `src/components/rua/world/kit.ts` | O código que lê os dois e cria um `InstancedMesh` por peça. |
 
-1. Modele com poucos polígonos (um carro ou banco: até ~1.500 triângulos). Aplique escala e rotação (Ctrl+A).
-2. Exporte como **glTF binário (`.glb`)**.
-3. Comprima: `npx @gltf-transform/cli optimize entrada.glb saida.glb --compress meshopt --texture-compress webp`. Mire em menos de 200 KB por modelo.
-4. Salve em `public/rua/models/`.
-5. Carregue dentro do bloco assíncrono de `scene.ts`, depois que a cidade já existe:
+### No Blender
 
-```ts
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
+1. Abra `tools/rua-blender/rua-mapa.blend`.
+2. **`ref`** (travada, não exporta): avenida, calçadas, transversais, a grade de lotes (8 × 8), a faixa da fileira da frente, `ref_SEU_PREDIO` (âmbar) e `ref_CONCORRENTE` (azul). Esses dois continuam sendo do código, porque acendem com a história. Não construa em cima deles.
+3. **`kit`**: uma peça de cada. Regras:
+   - Um objeto por peça (se a peça tem várias partes, junte com Ctrl+J).
+   - **Origem na base** do objeto, no centro de baixo (é o ponto que encosta no chão).
+   - O nome do objeto é o nome da peça (`predio_a`, `arvore`, `banco`…).
+   - Todas usando o mesmo material e a mesma textura.
+   - Onde a peça fica dentro do kit não importa: ela está longe da cidade só para não atrapalhar.
+4. **`mapa`**: selecione uma peça do kit, **Alt+D** (cópia ligada) e leve para o lugar. Pode girar no eixo Z e escalar. Não use Shift+D: a cópia solta não é reconhecida como peça.
+5. Cor por cópia (opcional): selecione a cópia, Object Properties › Custom Properties › adicione `tint` como texto, por exemplo `#9fb3ff`. A cor multiplica a textura.
+6. Aba **Scripting** › texto `exportar_rua.py` › **Run Script** (Alt+P). O console mostra quantas cópias de cada peça saíram e o peso do kit.
 
-const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-loader.load("/rua/models/banco.glb", (gltf) => {
-  if (disposed) return;
-  gltf.scene.position.set(-4.6, 0, 12); // calçada esquerda
-  scene.add(gltf.scene);
-});
+O script já comprime o kit com o gltf-transform (meshopt + WebP). Ele desliga as opções que juntariam as peças num bloco só (`--join false --flatten false --instance false`); sem isso, o código não acharia cada peça pelo nome. Se a compressão falhar, o console mostra o comando para rodar no terminal.
+
+### No `city.json`
+
+```json
+{
+ "kit": "/rua/models/rua-kit.glb",
+ "procedural": {"front": true, "back": true, "parks": true, "lamps": true},
+ "items": [
+  {"asset": "arvore", "p": [-16, 0, 32], "s": 0.8},
+  {"asset": "predio_a", "p": [32, 0, -24], "r": [0, 1.571, 0], "tint": "#9fb3ff"}
+ ]
+}
 ```
 
-O `dispose` no fim do arquivo já percorre a cena e libera geometrias e materiais de tudo o que foi adicionado com `scene.add`.
+- `procedural` desliga partes da cidade feita por código quando o seu kit as substitui. O export mantém o que você escreveu aqui.
+  - `front`: a fileira da frente (o seu prédio e o do concorrente ficam sempre).
+  - `back`: os prédios do fundo.
+  - `parks`: os parques, as praças e as árvores.
+  - `lamps`: os postes.
+  - A avenida, as transversais, as faixas e os nomes no chão ficam sempre.
+- `p` = posição, `r` = rotação em radianos, `s` = escala. Os eixos são os do three.js (Y para cima); o script já converte do Blender.
+- Com `"items": []` nada é baixado e a cidade é 100% código (o estado atual).
+
+### Peso e luz
+
+- O kit carrega depois que a cena já está na tela e só se houver itens: não pesa no carregamento da página. Mesmo assim, mire em **até 1–1,5 MB** de kit; para a cidade toda, as cópias não somam nada.
+- Se o kit crescer, divida em `kit-perto` e `kit-fundo` (dois `city.json` ou um campo novo). Peça ajuda para ligar isso no `kit.ts`.
+- Materiais do kit viram `MeshLambertMaterial` (o mesmo tipo de luz da cena). Se a peça tem **emissive** (janelas acesas na textura), ela acende e apaga junto com a cidade conforme a rolagem.
+- Para recriar a referência depois de mudar `CROSS` ou o tamanho da rua:
+  `& "C:\Program Files\Blender Foundation\Blender 5.0\blender.exe" --background --factory-startup --python tools/rua-blender/criar_mapa.py`
+  (faça uma cópia do seu `rua-mapa.blend` antes, porque ele é sobrescrito).
+
+## Criar objetos 3D por código
+
+Para coisas simples, as formas do próprio three.js bastam, como já fazemos com as árvores (`ConeGeometry`) e os postes (`CylinderGeometry`). Se o objeto se repete, use **`InstancedMesh`** e siga o bloco das árvores em `scene.ts` como modelo.
 
 ## Texturas leves
 

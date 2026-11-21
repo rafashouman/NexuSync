@@ -1,20 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Archivo, Inter, JetBrains_Mono } from "next/font/google";
 import { AttemptCards } from "./AttemptCards";
+import { ruaFonts } from "./fonts";
 import { contactWhatsApp, EMAIL, faqs, go, phases, pillars, presenceWhatsApp, proposalHref, WA_DISPLAY } from "./content";
 import { ArrowIcon } from "./icons";
 import { PlanReceipt } from "./PlanReceipt";
 import { RuaEffects } from "./RuaEffects";
+import { RuaNav } from "./RuaNav";
 import { RuaText } from "./RuaText";
 import { RuaWorld } from "./RuaWorld";
 import { SearchSimulator } from "./SearchSimulator";
 import { VideoModal } from "./VideoModal";
 import s from "./rua.module.css";
 
-const display = Archivo({ subsets: ["latin"], axes: ["wdth"], variable: "--font-rua-display", display: "swap" });
-const body = Inter({ subsets: ["latin"], variable: "--font-rua-body", display: "optional" });
-const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-rua-mono", display: "optional" });
 
 const MARQUEE = ["Sites sob medida", "Landing pages", "Hotsites interativos", "Catálogos digitais", "Gamificação", "SEO desde a base"];
 
@@ -39,7 +37,7 @@ function WhatsAppButton({ href = presenceWhatsApp }: { href?: string }) {
 
 export default function RuaHome() {
   return (
-    <div className={`${s.rua} ${display.variable} ${body.variable} ${mono.variable}`} data-rua-root="">
+    <div className={`${s.rua} ${ruaFonts}`} data-rua-root="">
       <RuaWorld />
       <RuaEffects />
       <RuaText />
@@ -49,13 +47,7 @@ export default function RuaHome() {
           <Link className={s.brand} href="/" aria-label="NexuSync, início">
             <Image src="/images/logo-text.png" width={517} height={91} sizes="150px" alt="NexuSync" priority />
           </Link>
-          <nav className={s.navLinks} aria-label="Seções da página">
-            <a href="#tentativas">O que você já tentou</a>
-            <a href="#metodo">Como funciona</a>
-            <a href="#praquem">Pra quem é</a>
-            <a href="#entregaveis">Planos</a>
-            <Link href="/templates">Exemplos</Link>
-          </nav>
+          <RuaNav />
           <ProposalButton source="header" small>
             <b className={s.long}>Pedir minha proposta</b>
             <b className={s.short}>Proposta</b>

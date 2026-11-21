@@ -1,5 +1,5 @@
-import ShopsExperience from "@/components/home/ShopsExperience";
 import { JsonLd } from "@/components/JsonLd";
+import LojasPage from "@/components/servicos/lojas/LojasPage";
 import { breadcrumbs, serviceSchema } from "@/lib/seo";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
@@ -14,7 +14,7 @@ export default function Page() {
     <>
       <JsonLd data={serviceSchema({ name: "Lojas virtuais e catálogos digitais", path, serviceType: "Criação de lojas virtuais e catálogos digitais", description })} />
       <JsonLd data={breadcrumbs(["Lojas virtuais e catálogos", path])} />
-      <ShopsExperience />
+      <LojasPage />
     </>
   );
 }

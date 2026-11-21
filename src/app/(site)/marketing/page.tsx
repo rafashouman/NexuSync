@@ -1,5 +1,5 @@
-import MarketingExperience from "@/components/home/MarketingExperience";
 import { JsonLd } from "@/components/JsonLd";
+import MarketingPage from "@/components/servicos/marketing/MarketingPage";
 import { breadcrumbs, serviceSchema } from "@/lib/seo";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
@@ -10,12 +10,12 @@ const description =
 
 export const metadata = nexuSyncMetadata({ title, description, path });
 
-export default function MarketingPage() {
+export default function Page() {
   return (
     <>
       <JsonLd data={serviceSchema({ name: "Marketing digital", path, serviceType: "SEO, gestão de redes sociais e tráfego pago", description })} />
       <JsonLd data={breadcrumbs(["Marketing", path])} />
-      <MarketingExperience />
+      <MarketingPage />
     </>
   );
 }

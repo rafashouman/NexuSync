@@ -48,6 +48,7 @@ import {
 } from "three";
 import { cameraKeys, DEFAULT_KEY, LAST, METHOD, methodKey, mixKey, type CameraKey } from "./cameraKeys";
 import { ATTEMPT_EVENT, PULSE_EVENT } from "../events";
+import type { CityLayout } from "./kit";
 
 export type WorldRefs = {
   root: HTMLElement;
@@ -219,6 +220,10 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
 
   // Everything that depends on the built scene lives here; the build yields to the main thread between steps.
   (async () => {
+    // public/rua/city.json: where the kit assets go (see docs/Rua — guia de edição.md). Tiny, fetched in parallel.
+    const layoutP: Promise<CityLayout | null> = fetch("/rua/city.json")
+      .then((r) => (r.ok ? (r.json() as Promise<CityLayout>) : null))
+      .catch(() => null);
     const glow = radial();
 
     // lights, ground, grid, street
@@ -287,10 +292,14 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
       scene.add(label);
     }
 
+    const layout = await layoutP;
+    if (disposed) return;
+    const proc = { front: true, back: true, parks: true, lamps: true, ...layout?.procedural };
+
     // street lights: cool white, never amber (amber means "a business is visible").
     // Kept low and at the curb so their glow never sits on top of a roof.
     const lampSpots: [number, number][] = [];
-    for (let z = -96; z <= 96; z += 12) for (const sx of [-3.75, 3.75]) {
+    if (proc.lamps) for (let z = -96; z <= 96; z += 12) for (const sx of [-3.75, 3.75]) {
       const zz = z + (sx > 0 ? 6 : 0);
       if (!onCross(zz, 1)) lampSpots.push([sx, zz]);
     }
@@ -316,7 +325,7 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
     const texV = [0, 1, 2, 3, 4, 5].map((i) => winTex(11 + i));
     const span = mobile ? 64 : 96;
     const specs: { side: number; cz: number; w: number; d: number; h: number; shop: number; base: number }[] = [];
-    for (const side of [-1, 1]) {
+    for (const side of proc.front ? [-1, 1] : []) {
       let z = -span;
       while (z < span) {
         const w = 3 + R() * 2.6;
@@ -386,9 +395,9 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
         for (const side of [-1, 1]) {
           const lot = { x: side * gx * CELL, z };
           const r = R();
-          if (r < 0.6) lots.block.push(lot);
-          else if (r < 0.72) lots.park.push(lot);
-          else if (r < 0.78) lots.plaza.push(lot);
+          if (r < 0.6) { if (proc.back) lots.block.push(lot); }
+          else if (r < 0.72) { if (proc.parks) lots.park.push(lot); }
+          else if (r < 0.78) { if (proc.parks) lots.plaza.push(lot); }
         }
       }
     }
@@ -398,7 +407,8 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
     bTex.repeat.set(2, 3);
     const backMat = new MeshLambertMaterial({ color: 0xffffff, emissive: raw(0x9fb3ff), emissiveMap: bTex, emissiveIntensity: 0.2 });
     const backRoof = new MeshLambertMaterial({ color: 0xc8c8c8 });
-    const back = new InstancedMesh(buildingBox(1, 1, 1), [backMat, backRoof], backN);
+    const back = new InstancedMesh(buildingBox(1, 1, 1), [backMat, backRoof], Math.max(1, backN));
+    back.count = backN;
     const m4 = new Matrix4();
     const q = new Quaternion();
     const sc = new Vector3();
@@ -578,6 +588,7 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
     const drag = { on: false, yaw: 0, lx: 0 };
     let pulse = 0;
     let lastInput = 0;
+    let kitGlow: MeshLambertMaterial[] = [];
     const onMove = (e: PointerEvent) => {
       mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.y = (e.clientY / window.innerHeight) * 2 - 1;
@@ -763,6 +774,7 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
         signs.instanceMatrix.needsUpdate = true;
       }
       backMat.emissiveIntensity = 0.06 + city * 0.38;
+      for (const m of kitGlow) m.emissiveIntensity = m.userData.base * (0.3 + city * 1.4);
 
       // the visitor's building: grows, gets scanned, then lights up with its own beam
       const gS = 1 + 0.7 * cur.grow;
@@ -835,6 +847,14 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
     }
     if (disposed) return;
     raf = requestAnimationFrame(frame);
+
+    // kit city: loaded after the first frames, only when city.json lists items; the three.js loader stays out of the main bundle
+    if (layout?.items?.length) {
+      import("./kit")
+        .then(({ buildKitCity }) => buildKitCity(scene, layout, textures, () => disposed))
+        .then((g) => { kitGlow = g; lastInput = performance.now(); })
+        .catch((err) => console.warn("[rua] kit não carregou; a cidade desenhada por código continua", err));
+    }
   })();
 
   return () => {

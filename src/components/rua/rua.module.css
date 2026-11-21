@@ -77,13 +77,46 @@
 .tagYou[data-on="true"] i { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
 
 /* ---------- header ---------- */
-.nav { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 20; background: rgba(var(--night-rgb), 0.62); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(150, 176, 255, 0.08); }
+.nav { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 45; background: rgba(var(--night-rgb), 0.62); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(150, 176, 255, 0.08); }
 .navInner { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 16px; }
 .brand { display: flex; align-items: center; }
 .brand img { display: block; width: 150px; height: auto; }
-.navLinks { display: flex; gap: 28px; }
-.navLinks a { color: var(--mute); text-decoration: none; font-size: 14px; transition: color 0.2s; }
-.navLinks a:hover { color: var(--ink); }
+.navLinks { display: flex; align-items: center; gap: 34px; margin-right: auto; margin-left: 48px; }
+.navPlain,
+.drop > summary { color: var(--ink); text-decoration: none; font: 500 14px var(--body); transition: color 0.2s; cursor: pointer; }
+.navPlain:hover,
+.drop > summary:hover,
+.drop[open] > summary { color: var(--amber); }
+.drop { position: relative; }
+.drop > summary { list-style: none; display: flex; align-items: center; gap: 7px; padding-block: 6px; }
+.drop > summary::-webkit-details-marker { display: none; }
+.drop > summary svg { width: 13px; height: 13px; transition: rotate 0.25s; }
+.drop[open] > summary svg { rotate: 180deg; }
+.drop > summary:focus-visible,
+.navPlain:focus-visible { outline: 2px solid var(--signal); outline-offset: 4px; border-radius: 2px; }
+/* dropdown panel: dark card under the header, mono pillar labels, arrow per link */
+.dropPanel { position: absolute; top: calc(100% + 18px); left: -22px; width: 284px; padding: 14px 0 12px; display: flex; flex-direction: column; background: rgba(13, 19, 34, 0.97); border: 1px solid var(--line); border-radius: 3px; box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7); animation: dropIn 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.dropLabel { display: block; padding: 12px 22px 6px; font: 500 11px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
+.dropLabel:first-child { padding-top: 4px; }
+.dropPanel a,
+.menuPanel a { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 11px 22px; color: var(--ink); text-decoration: none; font: 500 14px var(--body); transition: background 0.2s, color 0.2s; }
+.dropPanel a svg,
+.menuPanel a svg { width: 13px; height: 13px; flex: none; color: var(--mute); transition: translate 0.2s, color 0.2s; }
+.dropPanel a:hover,
+.dropPanel a:focus-visible { background: rgba(150, 176, 255, 0.06); color: var(--amber); outline: none; }
+.dropPanel a:hover svg,
+.dropPanel a:focus-visible svg { color: var(--amber); translate: 2px -2px; }
+@keyframes dropIn { from { opacity: 0; translate: 0 -6px; } }
+/* mobile menu */
+.menuBtn { display: none; width: 44px; height: 40px; border: 1px solid var(--line); border-radius: 2px; background: rgba(var(--night-rgb), 0.4); cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+.menuBtn i { display: block; width: 16px; height: 1.6px; background: var(--ink); transition: rotate 0.25s, translate 0.25s, opacity 0.2s; }
+.menuBtn[aria-expanded="true"] i:nth-child(1) { translate: 0 5.6px; rotate: 45deg; }
+.menuBtn[aria-expanded="true"] i:nth-child(2) { opacity: 0; }
+.menuBtn[aria-expanded="true"] i:nth-child(3) { translate: 0 -5.6px; rotate: -45deg; }
+/* the header has backdrop-filter, so it is the containing block: size from its bottom to the end of the screen */
+.menuPanel { position: fixed; left: 0; right: 0; top: 100%; height: calc(100dvh - 100%); overflow-y: auto; overscroll-behavior: contain; padding: 10px 0 40px; background: var(--night); border-top: 1px solid var(--line); animation: dropIn 0.25s both; }
+.menuPanel > div { padding: 12px 0; border-bottom: 1px solid rgba(150, 176, 255, 0.08); }
+.menuPanel a { padding-block: 13px; font-size: 16px; }
 
 /* ---------- buttons: rectangular with a separate arrow block ---------- */
 .btn { display: inline-flex; align-items: stretch; text-decoration: none; font: 600 15px/1 var(--body); border: 0; cursor: pointer; border-radius: 2px; overflow: hidden; transition: transform 0.25s, box-shadow 0.35s; }
@@ -451,6 +484,8 @@
 
 @media (max-width: 860px) {
   .navLinks { display: none; }
+  .menuBtn { display: flex; order: 2; margin-left: 10px; }
+  .brand { margin-right: auto; }
   .nav .long { display: none; }
   .nav .short { display: inline; }
   .hero { min-height: auto; padding-block: 104px 64px; align-items: flex-start; }
@@ -473,6 +508,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .mq,
+  .dropPanel,
+  .menuPanel,
   .hint > b,
   .mTyping i,
   .rcItems .rcLine { animation: none; }

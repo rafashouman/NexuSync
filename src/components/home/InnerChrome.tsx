@@ -15,7 +15,7 @@ export default function InnerChrome({ children }: { children: React.ReactNode })
       <StudioCursor key={pathname} />
       <ScrollProgress className="from-turquoise via-ice to-champagne" />
       <ChaosHeader />
-      <main id="conteudo" className="relative flex min-h-screen flex-col overflow-hidden">{children}</main>
+      <main id="conteudo" className="relative flex min-h-screen flex-col overflow-clip">{children}</main>
       <ChaosFooter />
       <FloatingWA />
     </MotionConfig>
