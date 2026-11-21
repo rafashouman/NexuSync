@@ -7,6 +7,10 @@ import { segments } from "@/data/segments";
 const servicePaths = ["/seo-para-negocios-locais", "/criacao-de-sites", "/lojas-virtuais", "/design", "/redes-sociais", "/marketing", "/apps"];
 const segmentPaths = segments.map((segment) => `/sites-para/${segment.slug}`);
 
+/** Template demos use fictional brands: they stay out of the sitemap so search focuses on the pages that sell.
+ *  /templates (the gallery) and /templates/cyber-oregon (indexed on purpose) are listed by hand below. */
+const isTemplateDemo = (path: string) => path.startsWith("/templates/");
+
 const publicPaths = [...new Set([
   "/",
   ...servicePaths,
@@ -18,7 +22,7 @@ const publicPaths = [...new Set([
   "/templates",
   "/templates/cyber-oregon",
   "/privacidade",
-  ...appCatalog.map(app => app.path),
+  ...appCatalog.map(app => app.path).filter((path) => !isTemplateDemo(path)),
 ])];
 
 function priorityOf(path: string) {

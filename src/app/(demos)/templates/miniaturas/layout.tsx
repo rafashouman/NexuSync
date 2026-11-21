@@ -5,6 +5,7 @@ export const metadata = nexuSyncMetadata({
   description:
     "Configure uma miniatura sob medida em uma demonstração de experiência digital para apresentar produtos personalizados.",
   path: "/templates/miniaturas",
+  noindex: true,
 });
 
 export default function MiniaturasLayout({

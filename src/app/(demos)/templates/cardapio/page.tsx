@@ -8,6 +8,7 @@ export const metadata = nexuSyncMetadata({
   description:
     "Explore uma demonstração de cardápio digital para hamburgueria: personalize um pedido e veja o fluxo de atendimento.",
   path: "/templates/cardapio",
+  noindex: true,
 });
 
 export default function CardapioPage() {

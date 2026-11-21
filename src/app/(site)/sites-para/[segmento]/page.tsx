@@ -8,6 +8,20 @@ import { getSegment, planOf, segments } from "@/data/segments";
 import { breadcrumbs, faqSchema, serviceSchema } from "@/lib/seo";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
+/** Search results show about 160 characters: use the fullest version of the text that still fits. */
+function segmentDescription(intro: string, plural: string) {
+  const options = [
+    `${intro} Site e SEO básico para ${plural}, sem prometer posição no Google.`,
+    `${intro} Site e SEO básico para ${plural}, sem prometer posição.`,
+    `${intro} Site e SEO básico, sem prometer posição.`,
+    intro,
+  ];
+  const fits = options.find((text) => text.length <= 160);
+  if (fits) return fits;
+  // the intro alone is longer than a result snippet: cut at the last full word
+  return `${intro.slice(0, 157).replace(/\s+\S*$/, "")}…`;
+}
+
 type Props = { params: Promise<{ segmento: string }> };
 
 export function generateStaticParams() {
@@ -20,7 +34,7 @@ export async function generateMetadata({ params }: Props) {
   const label = segment.plural.charAt(0).toUpperCase() + segment.plural.slice(1);
   return nexuSyncMetadata({
     title: `Site para ${label} com SEO Local | NexuSync`,
-    description: `${segment.intro} A NexuSync cria o site e o SEO básico para ${segment.plural}, sem prometer posição no Google.`,
+    description: segmentDescription(segment.intro, segment.plural),
     path: `/sites-para/${segment.slug}`,
   });
 }

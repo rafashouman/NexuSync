@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/JsonLd";
 import { ProductOverview } from "@/components/ProductOverview";
+import { breadcrumbs } from "@/lib/seo";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
 export const metadata: Metadata = {
@@ -13,6 +15,9 @@ export const metadata: Metadata = {
 
 export default function VisionSyncPage() {
   return (
-    <ProductOverview product="visionsync" />
+    <>
+      <JsonLd data={breadcrumbs(["VisionSync", "/visionsync"])} />
+      <ProductOverview product="visionsync" />
+    </>
   );
 }

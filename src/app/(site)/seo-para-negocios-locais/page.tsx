@@ -4,9 +4,9 @@ import { breadcrumbs, faqSchema, serviceSchema } from "@/lib/seo";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
 const path = "/seo-para-negocios-locais";
-const title = "SEO para Negócios Locais: Seja Encontrado no Google | NexuSync";
+const title = "SEO para Negócios Locais: Seja Encontrado | NexuSync";
 const description =
-  "Quem procura o seu serviço no Google precisa te encontrar. A NexuSync entrega SEO básico em todos os sites e um serviço de SEO e presença local, sem prometer posição.";
+  "Quem procura o seu serviço no Google precisa te encontrar. SEO básico em todos os sites da NexuSync e serviço de SEO e presença local, sem prometer posição.";
 
 export const metadata = nexuSyncMetadata({ title, description, path });
 

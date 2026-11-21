@@ -5,6 +5,7 @@ export const metadata = nexuSyncMetadata({
   description:
     "Explore uma experiência demonstrativa de jogo de cartas com combinações e desafios interativos no navegador.",
   path: "/templates/bluemoon",
+  noindex: true,
 });
 
 export default function BlueMoonLayout({

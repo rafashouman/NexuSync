@@ -7,16 +7,20 @@ export function nexuSyncMetadata({
   description,
   path,
   image = previewImage,
+  noindex = false,
 }: {
   title: string;
   description: string;
   path: string;
   image?: string;
+  /** Keeps the page out of search results (links on it are still followed). */
+  noindex?: boolean;
 }): Metadata {
   return {
     title,
     description,
     alternates: { canonical: path },
+    ...(noindex ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       title,
       description,

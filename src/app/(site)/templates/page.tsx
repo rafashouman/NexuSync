@@ -1,4 +1,6 @@
+import { JsonLd } from "@/components/JsonLd";
 import TemplatesPage from "@/components/servicos/templates/TemplatesPage";
+import { breadcrumbs } from "@/lib/seo";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
 export const metadata = nexuSyncMetadata({
@@ -8,4 +10,11 @@ export const metadata = nexuSyncMetadata({
   path: "/templates",
 });
 
-export default function Page() { return <TemplatesPage />; }
+export default function Page() {
+  return (
+    <>
+      <JsonLd data={breadcrumbs(["Exemplos", "/templates"])} />
+      <TemplatesPage />
+    </>
+  );
+}

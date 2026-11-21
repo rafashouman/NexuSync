@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/JsonLd";
 import SobrePage from "@/components/servicos/sobre/SobrePage";
+import { breadcrumbs } from "@/lib/seo";
 
-const title = "Quem somos | NexuSync — Sua presença digital com personalidade";
+const title = "Quem somos | NexuSync: presença digital com personalidade";
 const description = "Conheça o jeito NexuSync de conectar sites, aplicativos, design, tráfego pago e SEO aos objetivos do seu negócio. Criação com identidade e atendimento próximo.";
 
 export const metadata: Metadata = {
@@ -14,4 +16,11 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title, description, images: ["https://nexusync.online/images/og-nexusync.jpg"] },
 };
 
-export default function AboutPage() { return <SobrePage />; }
+export default function AboutPage() {
+  return (
+    <>
+      <JsonLd data={breadcrumbs(["Quem somos", "/quem-somos"])} />
+      <SobrePage />
+    </>
+  );
+}

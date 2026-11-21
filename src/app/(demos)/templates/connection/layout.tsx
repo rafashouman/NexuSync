@@ -5,6 +5,7 @@ export const metadata = nexuSyncMetadata({
   description:
     "Experimente uma demonstração interativa de leitura de tarot e veja como uma página temática pode apresentar uma experiência digital.",
   path: "/templates/connection",
+  noindex: true,
 });
 
 export default function ConnectionLayout({

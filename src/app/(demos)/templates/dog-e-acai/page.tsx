@@ -4,10 +4,11 @@ import DeliveryMenu from "@/components/DeliveryMenu";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
 export const metadata = nexuSyncMetadata({
-  title: "Cardápio digital para lancheria | Demonstração Dog & Açaí",
+  title: "Cardápio digital para lancheria | Demo Dog & Açaí",
   description:
     "Explore um cardápio digital para lancheria: personalize cachorro-quente, açaí e combos para entrega ou retirada.",
   path: "/templates/dog-e-acai",
+  noindex: true,
   image: "/images/dog-acai/cardapio.webp",
 });
 

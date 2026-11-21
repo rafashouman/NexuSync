@@ -6,7 +6,7 @@ import { nexuSyncMetadata } from "@/lib/site-metadata";
 
 const path = "/design";
 const title = "Design e Motion Graphics para Marcas e Negócios | NexuSync";
-const description = "Motion graphics para dar vida à sua marca, além de identidade visual, peças digitais e interfaces para sites e apps. Veja um exemplo em vídeo e peça um orçamento.";
+const description = "Motion graphics para dar vida à sua marca, além de identidade visual, peças digitais e interfaces para sites e apps. Veja um vídeo de exemplo e peça orçamento.";
 
 export const metadata = nexuSyncMetadata({ title, description, path });
 

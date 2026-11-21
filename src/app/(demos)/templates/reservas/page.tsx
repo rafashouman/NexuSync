@@ -7,6 +7,7 @@ export const metadata = nexuSyncMetadata({
   description:
     "Veja uma demonstração de reservas de mesas e operação de restaurante com atendimento e fluxo de cozinha.",
   path: "/templates/reservas",
+  noindex: true,
 });
 
 export default function ReservasStandalonePage() {

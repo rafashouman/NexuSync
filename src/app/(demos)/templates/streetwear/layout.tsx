@@ -5,6 +5,7 @@ export const metadata = nexuSyncMetadata({
   description:
     "Explore uma loja de camisetas, manga longa e acessórios, com cores, tamanhos e pedido pelo WhatsApp. Demonstração NexuSync.",
   path: "/templates/streetwear",
+  noindex: true,
 });
 
 export default function StreetwearLayout({

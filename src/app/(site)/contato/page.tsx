@@ -1,5 +1,6 @@
-import AboutExperience from "@/components/home/AboutExperience";
-import ContactExperience from "@/components/home/ContactExperience";
+import { JsonLd } from "@/components/JsonLd";
+import ContatoPage from "@/components/servicos/contato/ContatoPage";
+import { breadcrumbs } from "@/lib/seo";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
 export const metadata = nexuSyncMetadata({
@@ -11,9 +12,8 @@ export const metadata = nexuSyncMetadata({
 export default function ContactPage() {
   return (
     <>
-      <ContactExperience /> 
-      <AboutExperience headingTag="h2" />
+      <JsonLd data={breadcrumbs(["Contato e orçamento", "/contato"])} />
+      <ContatoPage />
     </>
   );
-
 }

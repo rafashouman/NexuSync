@@ -16,7 +16,8 @@ function entry(slug: Slug) {
 export function demoMetadata(slug: Slug): Metadata {
   const { name, description, path } = entry(slug);
   const title = `${name} | NexuSync`;
-  return nexuSyncMetadata({ title, description, path });
+  // the catalog description is a one-liner for cards; the meta description needs a bit more context for search
+  return nexuSyncMetadata({ title, description: `${description} Demonstração interativa da NexuSync, para testar direto no navegador.`, path });
 }
 
 export function DemoPage({ slug, children }: { slug: Slug; children: React.ReactNode }) {

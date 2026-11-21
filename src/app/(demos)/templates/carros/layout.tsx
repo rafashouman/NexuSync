@@ -5,6 +5,7 @@ export const metadata = nexuSyncMetadata({
   description:
     "Explore uma demonstração de site para concessionária com estoque de veículos e formulário de interesse.",
   path: "/templates/carros",
+  noindex: true,
 });
 
 export default function CarrosLayout({

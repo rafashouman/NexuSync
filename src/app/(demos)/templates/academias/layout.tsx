@@ -5,6 +5,7 @@ export const metadata = nexuSyncMetadata({
   description:
     "Conheça uma academia com musculação, aulas em grupo, planos e agendamento de aula experimental. Demonstração NexuSync.",
   path: "/templates/academias",
+  noindex: true,
 });
 
 export default function AcademiasLayout({

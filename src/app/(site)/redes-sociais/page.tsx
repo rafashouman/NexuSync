@@ -5,7 +5,7 @@ import { nexuSyncMetadata } from "@/lib/site-metadata";
 
 const path = "/redes-sociais";
 const title = "Gestão de Redes Sociais para Pequenas Empresas | NexuSync";
-const description = "Organizamos conteúdo, legendas e publicações para Instagram e Facebook com o plano Presença Ativa: calendário, artes, stories e relatório mensal, sem prometer alcance.";
+const description = "Conteúdo, legendas e publicações para Instagram e Facebook com o plano Presença Ativa: calendário, stories e relatório mensal, sem prometer alcance.";
 
 export const metadata = nexuSyncMetadata({ title, description, path });
 
