@@ -1,0 +1,906 @@
+/* Rota Litoral: pousada na estrada. Azul-noite + âmbar; sem lima e sem roxo. */
+
+.root {
+  --ink: #07142a;
+  --ink-2: #0d2442;
+  --cream: #fbf3e4;
+  --cream-dim: #d9cfba;
+  --coral: #ef6c4a;
+  --amber: #f5a93d;
+  --teal: #38b2a6;
+  --line: rgba(251, 243, 228, 0.2);
+  --mono: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  --serif: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+
+  position: relative;
+  min-height: 100svh;
+  overflow-x: clip;
+  color: var(--cream);
+  font-family: var(--font-sans, "Geist"), system-ui, sans-serif;
+  background: #6aa6d6;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- cena e acabamento ---------- */
+
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, var(--sky-top, #6aa6d6) 0%, var(--sky-bottom, #f6b985) 100%);
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .95 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(4, 12, 28, 0.32) 100%);
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------- topo e rota ---------- */
+
+.top {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 3vw, 40px);
+  height: 58px;
+  padding: 0 clamp(14px, 3vw, 36px);
+  background: rgba(7, 20, 42, 0.8);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--cream);
+  font-family: var(--font-display, "Montserrat"), sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.brandMark {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 0 4px rgba(245, 169, 61, 0.25);
+}
+
+.route {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  margin: 0 clamp(10px, 3vw, 44px);
+}
+
+.track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 3px;
+  margin-top: -1px;
+  background: rgba(251, 243, 228, 0.18);
+}
+
+.track > span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--amber);
+}
+
+.route ol {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.route li {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.route button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 100%;
+  min-width: 44px;
+  padding: 0 4px;
+  color: var(--cream-dim);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--cream);
+  border-radius: 50%;
+  background: var(--ink);
+  transition: transform 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.stopText {
+  position: absolute;
+  top: calc(50% + 11px);
+  white-space: nowrap;
+  display: none;
+}
+
+.stopText b {
+  color: var(--amber);
+  font-weight: 700;
+}
+
+.route button[aria-current="step"] {
+  color: var(--cream);
+}
+
+.route button[aria-current="step"] .dot {
+  transform: scale(1.35);
+  border-color: var(--amber);
+  background: var(--amber);
+}
+
+.route button:hover .dot {
+  border-color: var(--amber);
+}
+
+.exit {
+  display: inline-flex;
+  gap: 6px;
+  color: var(--cream-dim);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.exit:hover {
+  color: var(--amber);
+}
+
+.exit span:first-child {
+  display: none;
+}
+
+@media (min-width: 720px) {
+  .stopText {
+    display: block;
+  }
+  .exit span:first-child {
+    display: inline;
+  }
+}
+
+/* ---------- paradas ---------- */
+
+.stop {
+  display: flex;
+  align-items: center;
+  min-height: 120svh;
+  padding: 14svh clamp(16px, 5vw, 80px);
+}
+
+.stop.right {
+  justify-content: flex-end;
+}
+
+.hero {
+  min-height: 100svh;
+  align-items: flex-end;
+  padding-top: 18svh;
+  padding-bottom: 14svh;
+}
+
+.panel {
+  width: min(560px, 100%);
+  padding: clamp(22px, 3vw, 40px);
+  background: rgba(7, 20, 42, 0.88);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--amber);
+  border-radius: 6px;
+  box-shadow: 0 30px 80px rgba(2, 8, 20, 0.45);
+  backdrop-filter: blur(14px);
+}
+
+.wide {
+  width: min(840px, 100%);
+}
+
+.kicker,
+.mono {
+  margin: 0 0 14px;
+  color: var(--amber);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mono {
+  margin: 0 0 6px;
+  color: var(--cream-dim);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.panel h1,
+.panel h2 {
+  margin: 0 0 18px;
+  font-family: var(--font-display, "Montserrat"), sans-serif;
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.panel h1 {
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+}
+
+.panel h2 {
+  font-size: clamp(2rem, 4.4vw, 3.2rem);
+}
+
+.panel h1 em,
+.panel h2 em {
+  color: var(--amber);
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+.panel h3 {
+  margin: 0 0 6px;
+  font-family: var(--font-display, "Montserrat"), sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: -0.015em;
+}
+
+.lead {
+  margin: 0 0 24px;
+  color: var(--cream);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.muted {
+  margin: 0;
+  color: var(--cream-dim);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.hint {
+  margin: 18px 0 0;
+  color: var(--cream-dim);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+}
+
+.card {
+  margin: 0 0 20px;
+  padding: 18px 20px;
+  background: rgba(251, 243, 228, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.list {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.list li {
+  padding-left: 18px;
+  position: relative;
+}
+
+.list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 2px;
+  background: var(--amber);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ---------- botões: retangulares, com bloco de seta separado ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: stretch;
+  color: var(--cream);
+  background: transparent;
+  border: 1px solid var(--cream);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn > span {
+  display: flex;
+  align-items: center;
+  padding: 0.95rem 1.15rem;
+}
+
+.btn > em {
+  display: grid;
+  place-items: center;
+  width: 3.1rem;
+  color: var(--ink);
+  background: var(--amber);
+  border-left: 1px solid var(--cream);
+  font-size: 1.1rem;
+  font-style: normal;
+  transition: transform 0.2s;
+}
+
+.btn:hover > em {
+  transform: translate(2px, -2px);
+}
+
+.btnSolid {
+  color: var(--ink);
+  background: var(--amber);
+  border-color: var(--amber);
+}
+
+.btnSolid > em {
+  color: var(--amber);
+  background: var(--ink);
+  border-left-color: var(--ink);
+}
+
+.btnSolid:hover {
+  background: #ffbd5e;
+}
+
+.arrowBtn {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  color: var(--cream);
+  background: transparent;
+  border: 1px solid var(--cream);
+  cursor: pointer;
+  font-size: 1.15rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.arrowBtn:hover:not(:disabled) {
+  color: var(--ink);
+  background: var(--amber);
+  border-color: var(--amber);
+}
+
+.arrowBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.textBtn {
+  padding: 0.6rem 0.2rem;
+  color: var(--cream);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--amber);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.textBtn:hover {
+  color: var(--amber);
+}
+
+/* ---------- escolhas (passeios e refeições) ---------- */
+
+.choices {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.choice {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 11px 14px;
+  color: var(--cream);
+  text-align: left;
+  background: rgba(251, 243, 228, 0.05);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.choice:hover {
+  border-color: rgba(245, 169, 61, 0.7);
+}
+
+.choice[aria-pressed="true"] {
+  background: rgba(245, 169, 61, 0.16);
+  border-color: var(--amber);
+}
+
+.choiceHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.choiceHead b {
+  font-family: var(--font-display, "Montserrat"), sans-serif;
+  font-size: 1.02rem;
+}
+
+.choiceHead i {
+  color: var(--amber);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.choice .mono {
+  margin: 0;
+}
+
+/* ---------- planejador ---------- */
+
+.planner {
+  display: grid;
+  gap: 28px;
+  margin-top: 8px;
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.fieldLabel {
+  color: var(--cream-dim);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0 14px;
+  color: var(--cream);
+  color-scheme: dark;
+  background: rgba(251, 243, 228, 0.07);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font: inherit;
+}
+
+.field select option {
+  color: #111;
+}
+
+.stepper {
+  display: grid;
+  grid-template-columns: 3rem 1fr 3rem;
+  align-items: center;
+  text-align: center;
+}
+
+.stepper output {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+.warn {
+  margin: 0;
+  padding: 10px 12px;
+  color: #ffd9a8;
+  background: rgba(239, 108, 74, 0.16);
+  border-left: 3px solid var(--coral);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.summary {
+  align-self: start;
+  padding: 20px;
+  background: rgba(251, 243, 228, 0.06);
+  border: 1px dashed rgba(251, 243, 228, 0.35);
+  border-radius: 4px;
+}
+
+.summary dl {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 16px;
+}
+
+.summary dt {
+  color: var(--cream-dim);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.summary dd {
+  margin: 2px 0 0;
+  font-size: 0.98rem;
+}
+
+@media (min-width: 860px) {
+  .planner {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+
+/* ---------- rodapé ---------- */
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 28px;
+  padding: 22px clamp(16px, 5vw, 80px) 104px;
+  background: var(--ink);
+  border-top: 1px solid var(--line);
+  color: var(--cream-dim);
+  font-size: 0.9rem;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer a {
+  color: var(--amber);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- rádio e painel da viagem ---------- */
+
+.radio,
+.dash {
+  position: fixed;
+  bottom: 14px;
+  z-index: 20;
+  background: rgba(7, 20, 42, 0.9);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  backdrop-filter: blur(12px);
+}
+
+.radio {
+  left: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: calc(100vw - 28px);
+  padding: 8px 12px 8px 8px;
+}
+
+.play {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.8rem;
+  height: 2.8rem;
+  color: var(--ink);
+  background: var(--amber);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.radioText {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+  font-size: 0.86rem;
+}
+
+.radioText .mono {
+  margin: 0;
+  font-size: 0.62rem;
+}
+
+.radioText b {
+  font-family: var(--font-display, "Montserrat"), sans-serif;
+  white-space: nowrap;
+}
+
+.radioNote {
+  display: none;
+  color: var(--cream-dim);
+  font-size: 0.74rem;
+}
+
+.eq {
+  display: none;
+  align-items: flex-end;
+  gap: 3px;
+  height: 18px;
+}
+
+.eq i {
+  width: 3px;
+  height: 100%;
+  background: var(--amber);
+  transform: scaleY(0.2);
+  transform-origin: bottom;
+}
+
+.eq[data-on="true"] i {
+  animation: bounce 0.9s ease-in-out infinite;
+}
+
+.eq[data-on="true"] i:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.eq[data-on="true"] i:nth-child(3) {
+  animation-delay: -0.6s;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: scaleY(0.2);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.tune {
+  display: none;
+  gap: 6px;
+}
+
+.tune .arrowBtn {
+  width: 2.2rem;
+  height: 2.2rem;
+  font-size: 0.95rem;
+}
+
+.volume {
+  display: none;
+}
+
+.volume input {
+  width: 84px;
+  accent-color: var(--amber);
+}
+
+.dash {
+  right: 14px;
+  display: grid;
+  gap: 10px;
+  padding: 10px 12px;
+  font-family: var(--mono);
+}
+
+.dash > div:first-child {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.km {
+  color: var(--amber);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  min-width: 5.5ch;
+}
+
+.clock {
+  color: var(--cream);
+  font-size: 0.95rem;
+}
+
+.period {
+  display: none;
+  color: var(--cream-dim);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.pager .mono {
+  margin: 0;
+  font-size: 0.62rem;
+  white-space: nowrap;
+}
+
+.pager .arrowBtn {
+  width: 2.2rem;
+  height: 2.2rem;
+  font-size: 0.95rem;
+}
+
+@media (min-width: 720px) {
+  .radioNote,
+  .eq,
+  .tune,
+  .volume {
+    display: flex;
+  }
+  .radioNote {
+    display: block;
+  }
+  .period {
+    display: inline;
+  }
+  .radio,
+  .dash {
+    bottom: 20px;
+  }
+  .radio {
+    left: 20px;
+  }
+  .dash {
+    right: 20px;
+  }
+}
+
+/* ---------- celular ---------- */
+
+@media (max-width: 759px) {
+  .stop {
+    align-items: flex-end;
+    min-height: 108svh;
+    padding: 12svh 12px 120px;
+  }
+  .hero {
+    padding-bottom: 120px;
+  }
+  .panel {
+    padding: 20px 18px;
+  }
+  .row {
+    grid-template-columns: 1fr;
+  }
+  .radio {
+    gap: 8px;
+    padding: 6px 12px 6px 6px;
+  }
+  .radioText .mono {
+    display: none;
+  }
+  .radioText b {
+    font-size: 0.78rem;
+  }
+  .play {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+  .dash {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+  }
+  .dash .clock,
+  .pager .mono {
+    display: none;
+  }
+  .km {
+    font-size: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eq[data-on="true"] i {
+    animation: none;
+    transform: scaleY(0.7);
+  }
+}

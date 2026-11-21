@@ -103,6 +103,10 @@ export const appCatalog = [
     description: "Explore um portfólio residencial com plantas baixas em 3D.",
   },
   {
+    slug: "litoral", name: "Maré Mansa", category: "Turismo e hospedagem", path: "/templates/litoral",
+    description: "Dirija pelo litoral até a pousada e monte o roteiro da estadia.",
+  },
+  {
     slug: "cyber-oregon", name: "CyberOregon", category: "Cybersegurança", path: "/templates/cyber-oregon",
     description: "Segurança ofensiva, Pentest, Red Team e resposta a incidentes com simulador de escopo.",
   },

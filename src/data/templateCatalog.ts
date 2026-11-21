@@ -224,4 +224,16 @@ export const templateCatalog = [
       modules: ["Portfólio residencial", "Planta 3D e vista superior", "Áreas por ambiente"],
       stack: ["Next.js", "React", "SVG"],
     },
+    {
+      number: "11", code: "Turismo", category: "Turismo e hospedagem",
+      title: "Pousadas e turismo de praia", brandName: "Maré Mansa",
+      description: "Uma viagem de carro pelo litoral: o scroll dirige do amanhecer à noite, com paradas para quartos, passeios e refeições, rádio ambiente e um planejador de estadia que envia o roteiro pelo WhatsApp.",
+      href: "/templates/litoral", theme: "from-amber-500/20 to-stone-950",
+      badgeColor: "border-amber-400/35 text-amber-200", accentText: "text-amber-300",
+      btnGradient: "from-champagne to-champagne text-abyss",
+      palette: [{ name: "Azul-noite", hex: "#07142a" }, { name: "Âmbar", hex: "#f5a93d" }, { name: "Coral", hex: "#ef6c4a" }],
+      conversionFocus: "Roteiro de estadia enviado pelo WhatsApp",
+      modules: ["Cena 3D guiada pelo scroll, do amanhecer à noite", "Acomodações em carrossel com setas", "Passeios e refeições que entram no roteiro", "Rádio ambiente com ondas e violão", "Planejador de estadia com mensagem pronta no WhatsApp"],
+      stack: ["Next.js", "React Three Fiber", "Web Audio", "CSS Modules"],
+    },
   ];
