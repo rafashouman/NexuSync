@@ -21,12 +21,12 @@ const sections = [
     image: "/images/mini-cardapio/assados.webp",
     imageAlt: "Frango assado e carnes na brasa",
     products: [
-      { name: "Espeto de Frango", price: "R$ 35,00", image: "/images/mini-cardapio/espeto-frango.webp" },
-      { name: "Espeto de Galeto", price: "R$ 55,00", image: "/images/mini-cardapio/espeto-galeto.webp" },
-      { name: "Espeto de Costela", price: "R$ 65,00", image: "/images/mini-cardapio/espeto-costela.webp" },
-      { name: "Espeto de Vazio", price: "R$ 65,00", image: "/images/mini-cardapio/espeto-vazio.webp" },
-      { name: "Espeto de Salsichão", price: "R$ 65,00", image: "/images/mini-cardapio/espeto-salsichao.webp" },
-      { name: "Espeto de Xixo", price: "R$ 65,00", image: "/images/mini-cardapio/espeto-xixo.webp" },
+      { name: "Espeto de Frango", price: "R$ 49,90", description: "Frango inteiro no espeto", image: "/images/mini-cardapio/espeto-frango.webp" },
+      { name: "Espeto de Galeto", price: "R$ 55,00", description: "Espeto de galeto na brasa", image: "/images/mini-cardapio/espeto-galeto.webp" },
+      { name: "Espeto de Costela", price: "R$ 48,90", description: "Espeto de costela na brasa", image: "/images/mini-cardapio/espeto-costela.webp" },
+      /* { name: "Espeto de Vazio", price: "R$ 65,00", description: "Espeto de vazio na brasa", image: "/images/mini-cardapio/espeto-vazio.webp" }, */
+      { name: "Espeto de Salsichão", price: "R$ 35,90",  description: "10 unidades de salsichão no espeto", image: "/images/mini-cardapio/espeto-salsichao.webp" },
+      /* { name: "Espeto de Xixo", price: "R$ 65,00", image: "/images/mini-cardapio/espeto-xixo.webp" }, */
     ],
   },
   {
@@ -37,8 +37,8 @@ const sections = [
     image: "/images/mini-cardapio/marmitex.webp",
     imageAlt: "Marmitex com carne, arroz, feijão e acompanhamentos",
     products: [
-      { name: "Marmitex uma carne", price: "R$ 15,00", image: "/images/mini-cardapio/marmitex-uma-carne.webp" },
-      { name: "Marmitex duas carnes", price: "R$ 20,00", image: "/images/mini-cardapio/marmitex-duas-carnes.webp" },
+      { name: "Marmitex uma carne", price: "R$ 15,00", description: "Marmitex com uma carne, arroz, feijão e acompanhamentos", image: "/images/mini-cardapio/marmitex-uma-carne.webp" },
+      { name: "Marmitex duas carnes", price: "R$ 20,00", description: "Marmitex com duas carnes, arroz, feijão e acompanhamentos", image: "/images/mini-cardapio/marmitex-duas-carnes.webp" },
     ],
   },
 ] as const;
@@ -142,17 +142,20 @@ export default function MiniCardapioPage() {
                     </div>
                     <div className={styles.productDetails}>
                       <div className={styles.productName}>
-                        <span>{product.name}</span>
+                        <h2>{product.name}</h2>
                         <span className={styles.dots} aria-hidden="true" />
                         <strong>{product.price}</strong>
                       </div>
+                      {"description" in product && (
+                        <p className={styles.productDescription}>{product.description}</p>
+                      )}
                       <a
                         href={whatsappLink(`Olá! Gostaria de pedir ${product.name}${section.id === "assados" ? ` - ${product.price}` : ""}.`)}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`Pedir ${product.name} pelo WhatsApp`}
                       >
-                        Pedir <ArrowUpRight size={14} aria-hidden="true" />
+                        Pedir Agora<ArrowUpRight size={14} aria-hidden="true" />
                       </a>
                     </div>
                   </li>

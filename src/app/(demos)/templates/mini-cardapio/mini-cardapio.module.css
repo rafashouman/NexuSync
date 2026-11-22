@@ -87,11 +87,13 @@
 .productPhoto { position: relative; flex: 0 0 104px; aspect-ratio: 1; background: #e8dac7; overflow: hidden; }
 .productPhoto img { object-fit: contain; }
 .productDetails { flex: 1; min-width: 0; }
-.productName { display: flex; align-items: baseline; gap: 8px; font-size: 15px; font-weight: 700; }
+.productName { display: flex; align-items: baseline; gap: 8px; font-size: 18px; font-weight: 700; }
 .productName strong { white-space: nowrap; color: var(--rust); }
 .dots { flex: 1; min-width: 12px; border-bottom: 1px dotted #bca790; }
-.productDetails > a { display: inline-flex; align-items: center; gap: 3px; margin-top: 8px; color: #805039; font-size: 12px; font-weight: 700; }
-.productDetails > a:hover { color: var(--rust); text-decoration: underline; }
+.productDescription { margin-top: 4px; color: #6b5444; font-size: 13px; line-height: 1.4; }
+.productDetails > a { display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; padding: 6px 11px; background: var(--rust); color: #fff !important; font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; transition: background .2s; }
+.productDetails > a:hover { background: #7a2a15; }
+.productDetails > a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 .contact { display: flex; justify-content: space-between; align-items: center; gap: 30px; padding: 40px max(24px, calc((100% - 1072px) / 2)); background: #78351e; color: #fff3df; }
 .contact h2 { color: #fff3df; }
 .contact > div > p:last-child { margin-top: 9px; color: #f0d7c3; font-size: 14px; }
