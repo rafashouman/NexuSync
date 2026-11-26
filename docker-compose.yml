@@ -28,6 +28,10 @@ services:
       AUTH_SECRET: ${AUTH_SECRET:-}
       # "true" quando o site é servido por HTTPS (recomendado em produção)
       COOKIE_SECURE: ${COOKIE_SECURE:-true}
+      # API de Conversões da Meta. Sem token, o Lead vai só pelo Pixel do navegador.
+      META_CAPI_ACCESS_TOKEN: ${META_CAPI_ACCESS_TOKEN:-}
+      # Só para testar em "Eventos de teste"; deixe vazio durante a campanha.
+      META_CAPI_TEST_EVENT_CODE: ${META_CAPI_TEST_EVENT_CODE:-}
     # Sem porta publicada: o Traefik (Dokploy) acessa pela rede interna.
     # Para rodar localmente, use um docker-compose.override.yml com ports.
     expose:

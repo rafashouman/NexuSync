@@ -5,17 +5,11 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { trackAnalyticsEvent } from "@/lib/analytics";
+import { readConsent, saveConsent, subscribeConsent, type Consent } from "@/lib/consent";
+import { pixelForEvent } from "@/lib/meta";
 import { isQuoteSection } from "@/lib/quote";
 
-export const META_PIXEL_ID =
-  process.env.NEXT_PUBLIC_META_PIXEL_ID || "1587285682708459";
-const CYBEROREGON_PIXEL_ID = process.env.NEXT_PUBLIC_CYBEROREGON_META_PIXEL_ID;
 const initializedPixels = new Set<string>();
-
-function pixelForPath(pathname: string) {
-  return (pathname === "/templates/cyber-oregon" || pathname.startsWith("/templates/cyber-oregon/"))
-    && CYBEROREGON_PIXEL_ID ? CYBEROREGON_PIXEL_ID : META_PIXEL_ID;
-}
 
 function initializePixel(pixelId: string) {
   if (!initializedPixels.has(pixelId) && window.fbq) {
@@ -28,22 +22,26 @@ export const GA_MEASUREMENT_ID =
 
 declare global {
   interface Window {
-    fbq?: (...args: unknown[]) => void;
+    fbq?: ((...args: unknown[]) => void) & { disablePushState?: boolean };
     _fbq?: unknown;
     gtag?: (...args: unknown[]) => void;
     dataLayer?: unknown[];
   }
 }
 
-// Helper global para disparar eventos customizados de qualquer componente/botão
+// Helper global para disparar eventos de qualquer componente/botão. Em demos e apps
+// de exemplo o evento é descartado (ver `pixelForEvent`).
+// `eventId` casa o evento do navegador com o enviado pela API de Conversões.
 export const trackMetaEvent = (
   eventName: string,
-  params?: Record<string, unknown>
+  params?: Record<string, unknown>,
+  eventId?: string
 ) => {
   if (typeof window !== "undefined" && readConsent() === "granted" && typeof window.fbq === "function") {
-    const pixelId = pixelForPath(window.location.pathname);
+    const pixelId = pixelForEvent(window.location.pathname, eventName);
+    if (!pixelId) return;
     initializePixel(pixelId);
-    window.fbq("trackSingle", pixelId, eventName, params);
+    window.fbq("trackSingle", pixelId, eventName, params, eventId ? { eventID: eventId } : undefined);
   }
 };
 
@@ -80,8 +78,8 @@ function MetaPixelRouteTracker({ ready }: { ready: boolean }) {
         page_path: `${pathname}${query ? `?${query}` : ""}`,
       });
     }
-    if (typeof window.fbq === "function") {
-      const pixelId = pixelForPath(pathname);
+    const pixelId = pixelForEvent(pathname, "PageView");
+    if (pixelId && typeof window.fbq === "function") {
       initializePixel(pixelId);
       window.fbq("trackSingle", pixelId, "PageView");
     }
@@ -117,9 +115,6 @@ function MetaPixelRouteTracker({ ready }: { ready: boolean }) {
   return null;
 }
 
-const CONSENT_KEY = "nexusync-cookie-consent-v2";
-type Consent = "granted" | "denied";
-
 function ConsentBanner({ onChoose }: { onChoose: (value: Consent) => void }) {
   return (
     <div
@@ -128,8 +123,10 @@ function ConsentBanner({ onChoose }: { onChoose: (value: Consent) => void }) {
       className="fixed inset-x-3 bottom-3 z-[100] mx-auto max-w-xl rounded-2xl border border-[#96b0ff]/20 bg-[#0c1428]/95 p-4 text-sm text-[#edf0f7]/80 shadow-2xl backdrop-blur-md sm:p-5"
     >
       <p className="leading-6">
-        Usamos cookies, Google Analytics e o Pixel da Meta para medir audiência
-        e interações. Só ativamos com a sua permissão. Saiba mais no{" "}
+        Usamos cookies, Google Analytics e o Pixel da Meta para medir audiência,
+        interações e anúncios. Se você enviar um orçamento, a Meta também recebe
+        seu nome e contato protegidos por código (hash). Só ativamos com a sua
+        permissão. Saiba mais no{" "}
         <Link
           href="/privacidade"
           className="font-semibold text-[#5b97ff] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5b97ff]"
@@ -158,24 +155,6 @@ function ConsentBanner({ onChoose }: { onChoose: (value: Consent) => void }) {
   );
 }
 
-const consentListeners = new Set<() => void>();
-
-function subscribeConsent(cb: () => void) {
-  consentListeners.add(cb);
-  return () => {
-    consentListeners.delete(cb);
-  };
-}
-
-function readConsent(): Consent | null {
-  try {
-    const saved = window.localStorage.getItem(CONSENT_KEY);
-    return saved === "granted" || saved === "denied" ? saved : null;
-  } catch {
-    return null;
-  }
-}
-
 export default function MetaPixel() {
   const [ready, setReady] = useState(false);
   // undefined = renderização no servidor / antes da hidratação.
@@ -185,19 +164,9 @@ export default function MetaPixel() {
     () => undefined
   );
 
-  const choose = (value: Consent) => {
-    try {
-      window.localStorage.setItem(CONSENT_KEY, value);
-    } catch {
-      // Se o navegador bloqueia o armazenamento, continuamos sem rastreamento.
-      return;
-    }
-    consentListeners.forEach((cb) => cb());
-  };
-
   // Sem consentimento nada é carregado.
   if (consent === undefined) return null;
-  if (consent === null) return <ConsentBanner onChoose={choose} />;
+  if (consent === null) return <ConsentBanner onChoose={saveConsent} />;
   if (consent === "denied") return null;
 
   return (
@@ -233,6 +202,8 @@ export default function MetaPixel() {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
+            // O PageView por navegação é nosso; sem isto a Meta manda outro a cada troca de URL.
+            window.fbq.disablePushState = true;
           `,
         }}
       />

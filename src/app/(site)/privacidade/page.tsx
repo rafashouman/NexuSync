@@ -1,6 +1,7 @@
 import s from "@/components/home/SitesExperience.module.css";
 import c from "@/components/home/PrivacyExperience.module.css";
 import Link from "next/link";
+import { CookiePreferences } from "@/components/CookiePreferences";
 import { nexuSyncMetadata } from "@/lib/site-metadata";
 
 export const metadata = nexuSyncMetadata({
@@ -21,19 +22,22 @@ export default function PrivacyPage() {
         <p className={c.intro}>
           Este aviso explica quais dados são registrados neste site, para que
           são usados e como você pode exercer seus direitos. Última atualização:
-          28 de outubro de 2026.
+          26 de novembro de 2026.
         </p>
 
         <div className={c.sections}>
           <section>
             <h2>Solicitações de contato</h2>
             <p>
-              Se você enviar o briefing, armazenamos seu nome, empresa, mensagem,
-              tipo de projeto, plano de referência, página de origem e registro
-              do seu consentimento. Usamos essas informações apenas para
-              responder ao pedido e preparar um orçamento. O WhatsApp é aberto
-              separadamente; não recebemos confirmação de envio da mensagem por
-              esse serviço.
+              Se você enviar o pedido de orçamento, armazenamos seu nome,
+              empresa, segmento, WhatsApp ou e-mail, objetivo, serviço de
+              interesse, faixa de orçamento, mensagem, canal escolhido e o
+              registro dos seus consentimentos. Nossa equipe também recebe o
+              pedido por e-mail. Usamos essas informações para responder,
+              preparar o orçamento e, se você marcar essa opção, enviar
+              novidades. A medição de anúncios está descrita em Estatísticas e
+              anúncios. O WhatsApp é aberto separadamente; não recebemos
+              confirmação de envio da mensagem por esse serviço.
             </p>
             <p className="mt-2">
               Os registros são excluídos automaticamente após 180 dias.
@@ -82,14 +86,35 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2>Estatísticas</h2>
+            <h2>Estatísticas e anúncios</h2>
             <p>
-              Com sua permissão, usamos o Google Analytics para registrar
-              visualizações de páginas e interações de forma estatística. O
-              Google pode processar dados de navegação conforme a própria
-              política de privacidade. Você pode recusar o uso desses cookies
-              no aviso exibido no site.
+              Só com a sua permissão, usamos o Google Analytics e o Pixel da
+              Meta (Facebook e Instagram) para registrar visitas e interações,
+              como cliques no WhatsApp e envios do formulário, medir resultados
+              e direcionar nossos anúncios. Essas ferramentas usam cookies e
+              recebem dados de navegação, como o endereço da página, o endereço
+              IP e informações do navegador.
             </p>
+            <p className="mt-2">
+              Se você aceitou os cookies e enviar o pedido de orçamento, nosso
+              servidor também informa esse envio à Meta pela API de Conversões.
+              Seguem o serviço de interesse, o endereço da página, o endereço
+              IP, os dados do navegador, os identificadores da Meta presentes
+              nos cookies ou no link do anúncio e o seu nome e e-mail ou
+              telefone convertidos em códigos (hash SHA-256), que a Meta compara
+              com os cadastros dela. Empresa, segmento, objetivo, faixa de
+              orçamento e mensagem não são enviados.
+            </p>
+            <p className="mt-2">
+              Google e Meta tratam esses dados conforme as próprias políticas de
+              privacidade. Se você recusar os cookies, nada disso é carregado nem
+              enviado.
+            </p>
+          </section>
+
+          <section>
+            <h2>Preferências de cookies</h2>
+            <CookiePreferences />
           </section>
 
           <section>
@@ -98,8 +123,9 @@ export default function PrivacyPage() {
               Briefings, leads de tarot, leads Costi, reservas de demonstração
               e registros dos jogos são armazenados em um banco MongoDB
               privado, inacessível ao público. Os leads são removidos
-              automaticamente após 180 dias. Não vendemos os dados nem os
-              usamos para publicidade comportamental.
+              automaticamente após 180 dias. Não vendemos os dados. O
+              compartilhamento para publicidade se limita ao descrito em
+              Estatísticas e anúncios e depende da sua permissão.
             </p>
           </section>
 

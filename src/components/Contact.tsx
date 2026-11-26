@@ -8,6 +8,7 @@ import { ArrowIcon } from "@/components/rua/icons";
 import { trackMetaEvent } from "@/components/MetaPixel";
 import s from "@/components/servicos/servico.module.css";
 import { trackAnalyticsEvent } from "@/lib/analytics";
+import { readConsent } from "@/lib/consent";
 import {
   INTEREST_EVENT,
   isQuoteSection,
@@ -137,6 +138,8 @@ function ContactForm() {
       `Segmento: ${field("segmento")}`,
       field("mensagem"),
     ].filter(Boolean).join("\n");
+    // Mesmo ID no Pixel e na API de Conversões. randomUUID não existe em HTTP sem TLS.
+    const eventId = crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
     try {
       const result = await saveQuoteRequest({
         channel,
@@ -151,10 +154,12 @@ function ContactForm() {
         consentContact: data.get("consentContact") === "on",
         consentPromo: data.get("consentPromo") === "on",
         website: field("website"),
+        // O servidor só informa a Meta quando o visitante aceitou os cookies.
+        tracking: readConsent() === "granted" ? { eventId, sourceUrl: window.location.href } : undefined,
       });
       if (result.ok) {
         if (result.recorded) {
-          trackMetaEvent("Lead", { content_name: interest });
+          trackMetaEvent("Lead", { content_name: interest }, eventId);
           trackAnalyticsEvent({
             eventName: "contact_submit_success",
             interest,

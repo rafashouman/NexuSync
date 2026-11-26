@@ -24,7 +24,6 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { onPlayerChange, signInPlayer, type Player } from "@/lib/player";
-import { META_PIXEL_ID, trackMetaEvent } from "@/components/MetaPixel";
 
 // ==========================================
 // WEB AUDIO SYNTHESIZER (CYBER TELEMETRY FX)
@@ -240,6 +239,9 @@ interface PixelEventLog {
   latency: string;
 }
 
+// ID fictício: a demonstração nunca envia eventos à Meta.
+const DEMO_PIXEL_ID = "DEMO-000000";
+
 export default function PulseMetricsDashboard() {
   const soundRef = useRef<MetricsSoundEngine | null>(null);
   const [soundEnabled, setSoundEnabled] = useState(true);
@@ -252,7 +254,7 @@ export default function PulseMetricsDashboard() {
     {
       id: "EV-9921",
       eventName: "PageView",
-      pixelId: META_PIXEL_ID,
+      pixelId: DEMO_PIXEL_ID,
       payload: '{ page: "/apps", referrer: "instagram.com" }',
       timestamp: "Agora mesmo",
       latency: "18ms",
@@ -260,7 +262,7 @@ export default function PulseMetricsDashboard() {
     {
       id: "EV-9920",
       eventName: "ViewContent",
-      pixelId: META_PIXEL_ID,
+      pixelId: DEMO_PIXEL_ID,
       payload: '{ content_name: "PulseMetrics BI", currency: "BRL" }',
       timestamp: "Há 12s",
       latency: "22ms",
@@ -268,7 +270,7 @@ export default function PulseMetricsDashboard() {
     {
       id: "EV-9919",
       eventName: "Lead",
-      pixelId: META_PIXEL_ID,
+      pixelId: DEMO_PIXEL_ID,
       payload: '{ value: 189.00, currency: "BRL", source: "WhatsApp" }',
       timestamp: "Há 45s",
       latency: "24ms",
@@ -301,20 +303,17 @@ export default function PulseMetricsDashboard() {
 
   const handleFireLivePixelEvent = (eventName: string, samplePayload: Record<string, unknown>) => {
     soundRef.current?.playPulseSuccess();
-    // Dispara de verdade no Meta Pixel (window.fbq) se carregado na página
-    trackMetaEvent(eventName, samplePayload);
-
     const newLog: PixelEventLog = {
       id: `EV-${Math.floor(1000 + Math.random() * 9000)}`,
       eventName,
-      pixelId: META_PIXEL_ID,
+      pixelId: DEMO_PIXEL_ID,
       payload: JSON.stringify(samplePayload),
       timestamp: new Date().toLocaleTimeString("pt-BR"),
       latency: `${Math.floor(14 + Math.random() * 15)}ms`,
     };
 
     setPixelLogs((prev) => [newLog, ...prev.slice(0, 5)]);
-    showToast(`Evento [${eventName}] enviado ao Meta Pixel #${META_PIXEL_ID}`);
+    showToast(`Evento [${eventName}] simulado. Nada foi enviado à Meta.`);
   };
 
   const handleGoogleSync = async () => {
@@ -371,7 +370,7 @@ export default function PulseMetricsDashboard() {
               <div className="flex flex-wrap items-center gap-2 mb-1">
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 font-mono text-[10px] font-bold uppercase tracking-widest text-cyan-300">
                   <Radio className="w-3 h-3 animate-pulse text-cyan-400" />
-                  Meta Pixel ID: {META_PIXEL_ID}
+                  Pixel de demonstração: {DEMO_PIXEL_ID}
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-teal-500/10 border border-teal-400/25 font-mono text-[10px] font-bold text-teal-300">
                   ● STREAM ATIVO
@@ -659,7 +658,7 @@ export default function PulseMetricsDashboard() {
               <div className="flex items-center gap-2.5">
                 <Sparkles className="w-4 h-4 text-cyan-400 shrink-0" />
                 <span className="text-xs font-medium text-cyan-100">
-                  Diagnóstico: Pixel <strong>#{META_PIXEL_ID}</strong> operando sem perda de pacote.
+                  Demonstração: os indicadores desta tela são fictícios.
                 </span>
               </div>
               <Globe className="w-4 h-4 text-cyan-400 shrink-0" />
@@ -678,11 +677,11 @@ export default function PulseMetricsDashboard() {
                 <span>Console de Disparo & Auditoria em Tempo Real</span>
               </div>
               <h3 className="text-lg font-black uppercase text-white">
-                Testador Interativo do Meta Pixel ({META_PIXEL_ID})
+                Simulador de eventos do Pixel
               </h3>
               <p className="text-xs text-slate-400">
-                Clique nos botões abaixo para disparar eventos reais no navegador (`window.fbq`) e
-                validar no extensão Meta Pixel Helper.
+                Clique nos botões abaixo para ver como um evento aparece no histórico. É uma
+                simulação: nada é enviado à Meta.
               </p>
             </div>
 
@@ -748,7 +747,7 @@ export default function PulseMetricsDashboard() {
                   <span className="text-slate-400 truncate text-[11px]">{log.payload}</span>
                 </div>
                 <div className="flex items-center gap-3 shrink-0 text-[11px]">
-                  <span className="text-emerald-400">200 OK ({log.latency})</span>
+                  <span className="text-emerald-400">Simulado ({log.latency})</span>
                   <span className="text-slate-500">{log.timestamp}</span>
                 </div>
               </motion.div>

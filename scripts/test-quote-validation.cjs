@@ -11,8 +11,16 @@ let databaseAvailable = true;
 const testEnv = {};
 const notifications = [];
 const notificationStatuses = [];
+const afterTasks = [];
+const metaRequests = [];
+let metaResponse = async () => ({ ok: true });
 const mocks = {
-  'next/headers': { headers: async () => new Map([['x-real-ip', `test-${++requestNumber}`]]) },
+  'next/headers': {
+    headers: async () => new Map([['x-real-ip', `test-${++requestNumber}`], ['user-agent', 'teste']]),
+    cookies: async () => new Map([['_fbp', { value: 'fb.1.1.123' }]]),
+  },
+  'next/server': { after: (task) => afterTasks.push(task) },
+  'node:crypto': require('node:crypto'),
   mongodb: { ObjectId: class {} },
   '@/lib/mongodb': { getDb: async () => {
     if (!databaseAvailable) throw new Error('Simulated database outage');
@@ -31,12 +39,69 @@ function load(path) {
   const exports = {};
   vm.runInNewContext(output, {
     exports, require: (id) => { if (!(id in mocks)) throw new Error(`Unexpected import: ${id}`); return mocks[id]; },
-    console, Date, Map, process: { env: testEnv },
+    console, Date, Map, URL, URLSearchParams, AbortSignal, process: { env: testEnv },
+    fetch: async (url, init) => { metaRequests.push({ url, body: init.body }); return metaResponse(); },
   });
   return exports;
 }
 mocks['@/data/marketingPlans'] = load('src/data/marketingPlans.ts');
 mocks['@/lib/quote'] = load('src/lib/quote.ts');
+mocks['@/lib/meta'] = load('src/lib/meta.ts');
+mocks['@/lib/meta-capi'] = load('src/lib/meta-capi.ts');
+
+async function testMeta(saveQuoteRequest, base) {
+  const sha256 = (value) => require('node:crypto').createHash('sha256').update(value).digest('hex');
+  const runAfter = async () => { for (const task of afterTasks.splice(0)) await task(); };
+  const lastEvent = () => JSON.parse(metaRequests.at(-1).body.get('data'))[0];
+  const tracking = { eventId: 'teste-evento-1', sourceUrl: 'https://nexusync.online/contato?fbclid=abc' };
+
+  await saveQuoteRequest(base);
+  assert.equal(afterTasks.length, 0, 'Without cookie consent nothing goes to Meta');
+
+  await saveQuoteRequest({ ...base, tracking });
+  await runAfter();
+  assert.equal(metaRequests.length, 0, 'Without a token nothing goes to Meta');
+
+  testEnv.META_CAPI_ACCESS_TOKEN = 'test-only';
+  await saveQuoteRequest({ ...base, name: 'Maria da Silva', contact: 'Maria@Example.com', message: 'segredo', tracking });
+  await runAfter();
+  assert.ok(metaRequests.at(-1).url.endsWith('/1587285682708459/events'));
+  const event = lastEvent();
+  assert.equal(event.event_name, 'Lead');
+  assert.equal(event.event_id, tracking.eventId);
+  assert.equal(event.user_data.em[0], sha256('maria@example.com'));
+  assert.equal(event.user_data.fn[0], sha256('maria'));
+  assert.equal(event.user_data.ln[0], sha256('silva'));
+  assert.equal(event.user_data.fbp, 'fb.1.1.123');
+  assert.match(event.user_data.fbc, /^fb\.1\.\d+\.abc$/);
+  assert.ok(!/Maria|segredo/i.test(JSON.stringify(event)), 'No raw personal data in the payload');
+
+  await saveQuoteRequest({ ...base, contact: '(51) 99999-0000', tracking });
+  await runAfter();
+  assert.equal(lastEvent().user_data.ph[0], sha256('5551999990000'));
+  const { normalizePhone } = mocks['@/lib/meta-capi'];
+  assert.equal(normalizePhone('+55 51 99999-0000'), '5551999990000');
+  assert.equal(normalizePhone('99999-0000'), null);
+
+  metaResponse = async () => { throw new Error('Meta unavailable'); };
+  const result = await saveQuoteRequest({ ...base, tracking });
+  await runAfter();
+  assert.equal(result.recorded, true, 'Meta outage must not affect the lead');
+
+  const { pixelForEvent, AGENCY_PATHS } = mocks['@/lib/meta'];
+  assert.ok(pixelForEvent('/contato', 'Lead'));
+  assert.ok(pixelForEvent('/sites-para/dentistas', 'Contact'));
+  assert.equal(pixelForEvent('/templates/academias', 'Lead'), null);
+  assert.equal(pixelForEvent('/pulsespin', 'Lead'), null);
+  assert.ok(pixelForEvent('/templates/academias', 'PageView'));
+  assert.equal(pixelForEvent('/admin/orcamentos', 'PageView'), null);
+  const sitePages = fs.readdirSync('src/app/(site)', { recursive: true })
+    .map((file) => String(file).replaceAll('\\', '/'))
+    .filter((file) => /(^|\/)page\.tsx$/.test(file) && !file.includes('['))
+    .map((file) => `/${file.replace(/\/?page\.tsx$/, '')}`);
+  assert.deepEqual([...AGENCY_PATHS].sort(), sitePages.sort(), 'AGENCY_PATHS must match the (site) pages');
+  console.log('Passed: Meta conversions respect consent, hash personal data, survive outages and skip demo pages. Nothing sent.');
+}
 const { saveQuoteRequest } = load('src/app/actions/quotes.ts');
 const homeInterests = mocks['@/lib/quote'].HOME_QUOTE_INTERESTS.map(({ id }) => id);
 const base = {
@@ -68,6 +133,7 @@ const base = {
     assert.equal(notifications.at(-1).interest, 'SEO e presença no Google');
     assert.equal(notificationStatuses.at(-1).emailStatus, 'sent');
   }
+  await testMeta(saveQuoteRequest, base);
   emailDelivery = false;
   const emailFailure = await saveQuoteRequest({ ...base, channel: 'email' });
   assert.equal(emailFailure.ok, true, 'SMTP outage must not lose the saved lead');

@@ -1,10 +1,12 @@
 "use server";
 
 import { notifyQuote } from "@/lib/quote-notification";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { after } from "next/server";
 import { ObjectId } from "mongodb";
 import { getDb } from "@/lib/mongodb";
 import { isAdmin } from "@/lib/admin-auth";
+import { parseTracking, sendMetaLead, type MetaLead } from "@/lib/meta-capi";
 import {
   QUOTE_BUDGETS,
   QUOTE_GOALS,
@@ -47,6 +49,25 @@ export interface QuoteInput {
   consentPromo: boolean;
   website: string;
   channel?: "email" | "whatsapp";
+  /** Presente só quando o visitante aceitou os cookies. */
+  tracking?: { eventId: string; sourceUrl: string };
+}
+
+// Envia o Lead à Meta depois da resposta, sem atrasar nem derrubar o formulário.
+async function scheduleMetaLead(
+  tracking: unknown,
+  lead: Pick<MetaLead, "interest" | "name" | "contact" | "ip" | "userAgent">
+) {
+  try {
+    const event = parseTracking(tracking);
+    if (!event) return;
+    const store = await cookies();
+    const fbp = store.get("_fbp")?.value;
+    const fbc = store.get("_fbc")?.value;
+    after(() => sendMetaLead({ ...lead, ...event, fbp, fbc }));
+  } catch {
+    console.error("Could not schedule the Meta conversion; lead remains saved.");
+  }
 }
 
 export async function saveQuoteRequest(
@@ -119,6 +140,13 @@ export async function saveQuoteRequest(
       status: "novo",
       createdAt: new Date(),
       deleteAfter: new Date(Date.now() + RETENTION_DAYS * DAY_IN_MS),
+    });
+    await scheduleMetaLead(input.tracking, {
+      interest: interest.id,
+      name,
+      contact,
+      ip: ip === "unknown" ? undefined : ip,
+      userAgent: requestHeaders.get("user-agent") ?? undefined,
     });
     const emailSent = await notifyQuote({
       id: result.insertedId.toString(), name, company, contact, segment,
