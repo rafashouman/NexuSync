@@ -57,7 +57,7 @@ const compare = [
 const examples = [
   ["Moda e e-commerce", "Vortex Atelier", "Uma vitrine editorial para destacar uma coleção de moda.", "/templates/streetwear"],
   ["Cardápio e delivery", "Kobra Burger Fire", "Monte um hambúrguer e teste a comanda digital.", "/templates/cardapio"],
-  ["Delivery e retirada", "Dog & Açaí", "Monte um cachorro-quente, escolha seu açaí e confira o pedido.", "/templates/dog-e-acai"],
+  ["Mini cardápio", "Dog & Açaí", "Poucos produtos cadastrados pelo dono e pedido pronto no WhatsApp.", "/templates/dog-e-acai"],
 ] as const;
 
 const steps = [

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { discountPercent, installmentLabel, money, productPath, type Product } from "./catalog-data";
+import { QuickAdd } from "./AddToCart";
 import { ProductArt } from "./ProductArt";
 import s from "./ferragem.module.css";
 
@@ -8,7 +9,7 @@ export function ProductCard({ product, headingLevel = 3 }: { product: Product; h
   const off = discountPercent(product);
   const Heading = headingLevel === 2 ? "h2" : "h3";
   return (
-    <article className={s.card}>
+    <article className={s.card} data-spot>
       <div className={s.cardArt}>
         <ProductArt product={product} />
         {(product.badge || off > 0) && (
@@ -21,6 +22,7 @@ export function ProductCard({ product, headingLevel = 3 }: { product: Product; h
           <Link href={productPath(product)} className={s.cardLink}>{product.name}</Link>
         </Heading>
         <PriceBlock product={product} compact />
+        <QuickAdd product={product} />
       </div>
     </article>
   );

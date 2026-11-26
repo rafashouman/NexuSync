@@ -57,7 +57,7 @@ export const appCatalog = [
   {
     slug: "dog-e-acai", name: "Dog & Açaí", category: "Delivery",
     path: "/templates/dog-e-acai",
-    description: "Monte um cachorro-quente, escolha seu açaí e confira o pedido.",
+    description: "Mini cardápio: cadastre produtos no modo dono e envie o pedido pelo WhatsApp.",
   },
   {
     slug: "reservas", name: "Kobra Fire Reservas", category: "Operação de restaurante",

@@ -37,7 +37,8 @@ export function pixelForEvent(pathname: string, eventName: string): string | nul
   if (CYBEROREGON_PIXEL_ID && isUnder(pathname, "/templates/cyber-oregon")) {
     return CYBEROREGON_PIXEL_ID;
   }
-  if (isUnder(pathname, "/admin")) return null;
+  // Painéis mostram dados de clientes: nada vai para o Pixel.
+  if (isUnder(pathname, "/admin") || isUnder(pathname, "/templates/cardapio-lancheria/painel")) return null;
   if (eventName === "PageView") return META_PIXEL_ID;
   return isAgencyPath(pathname) ? META_PIXEL_ID : null;
 }

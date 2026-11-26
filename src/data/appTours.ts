@@ -58,5 +58,4 @@ export const tours = {
     { target: "sound", title: "Controle o som", text: "Toque em Áudio para ligar ou silenciar o gabinete." },
   ],
   cardapio: delivery,
-  "dog-e-acai": delivery,
 } satisfies Record<string, TourStep[]>;

@@ -24,6 +24,8 @@ type Store = {
   /** Base real das rotas desta demo. */
   basePath: string;
   whatsapp: string;
+  /** O mesmo número, como aparece escrito na página. */
+  whatsappLabel: string;
   city?: string;
   address?: string;
   hours?: string;
@@ -35,11 +37,12 @@ type Store = {
 export const STORE: Store = {
   name: "Total Lar",
   tagline: "Casa e construção",
-  logo: { src: "/images/ferragem/totallar-logo.png", width: 181, height: 53 },
+  logo: { src: "/images/ferragem/totallar-logo-vertical.png", width: 144, height: 72 },
   demoDomain: "www.totallar.com",
   basePath: "/templates/ferragem-total",
-  // WhatsApp da NexuSync enquanto for demonstração.
-  whatsapp: "5551993583936",
+  // Número informado para a loja: os pedidos da demonstração chegam nele.
+  whatsapp: "556131420595",
+  whatsappLabel: "(61) 3142-0595",
   maxInstallments: 10,
   minInstallment: 1500,
 };
@@ -222,6 +225,8 @@ export function getCategory(slug: string) {
   return CATEGORIES.find((category) => category.slug === slug);
 }
 
+export const cartPath = `${STORE.basePath}/carrinho`;
+
 export function productPath(product: Pick<Product, "slug">) {
   return `${STORE.basePath}/produto/${product.slug}`;
 }
@@ -244,14 +249,41 @@ export function money(cents: number) {
 }
 
 /** Texto do parcelamento, igual em card, página e mensagem. */
-export function installmentLabel(product: Product) {
-  const { count, value } = installmentsFor(product.cardPrice);
-  return count > 1 ? `${count}x de ${money(value)} sem juros` : `${money(product.cardPrice)} no cartão`;
+export function installmentText(cardPrice: number) {
+  const { count, value } = installmentsFor(cardPrice);
+  return count > 1 ? `${count}x de ${money(value)} sem juros` : `${money(cardPrice)} no cartão`;
 }
+
+export const installmentLabel = (product: Product) => installmentText(product.cardPrice);
 
 /** Link de WhatsApp da loja com mensagem pronta. */
 export function storeWhatsApp(message: string) {
   return `https://wa.me/${STORE.whatsapp}?text=${encodeURIComponent(message)}`;
+}
+
+/** Pedido com todos os itens do carrinho, para enviar à loja. */
+export function orderMessage(lines: { product: Product; qty: number }[], note: string) {
+  const cash = lines.reduce((sum, line) => sum + line.product.cashPrice * line.qty, 0);
+  const card = lines.reduce((sum, line) => sum + line.product.cardPrice * line.qty, 0);
+  // Uma linha só e sem asteriscos, para a observação não imitar outras partes do pedido.
+  const cleanNote = note.replace(/\*/g, "").replace(/\s+/g, " ").trim();
+  const items = lines.flatMap(({ product, qty }) => [
+    `${qty}x ${product.name} (cód. ${product.sku})`,
+    `   ${money(product.cashPrice)} cada = ${money(product.cashPrice * qty)}`,
+  ]);
+  const installments = installmentsFor(card).count > 1 ? ` (${installmentText(card)})` : "";
+
+  return [
+    `*Pedido pelo catálogo ${STORE.name}*`,
+    "",
+    ...items,
+    "",
+    `*Total à vista no Pix: ${money(cash)}*`,
+    `No cartão: ${money(card)}${installments}`,
+    ...(cleanNote ? ["", `Observação: ${cleanNote}`] : []),
+    "",
+    "Podem confirmar estoque e entrega?",
+  ].join("\n");
 }
 
 /** Mensagem pronta para compartilhar o produto. */

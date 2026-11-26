@@ -71,8 +71,8 @@ export function CatalogBrowser({ products, scopeLabel }: { products: Product[]; 
 
       {list.length ? (
         <ul className={s.grid}>
-          {list.map((product) => (
-            <li key={product.slug}><ProductCard product={product} /></li>
+          {list.map((product, index) => (
+            <li key={product.slug} data-reveal style={{ "--i": index % 4 } as React.CSSProperties}><ProductCard product={product} /></li>
           ))}
         </ul>
       ) : (

@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Clock, Hammer, MapPin, MessageCircle, type LucideIcon } from "lucide-react";
-import { CATEGORIES, STORE, storeWhatsApp } from "./catalog-data";
+import { Clock, Hammer, MapPin, MessageCircle, ShoppingCart, type LucideIcon } from "lucide-react";
+import { CATEGORIES, STORE, cartPath, storeWhatsApp } from "./catalog-data";
+import { useCart } from "./cart-store";
 import { ICONS } from "./ProductArt";
 import s from "./ferragem.module.css";
 
@@ -36,6 +37,28 @@ function Brand() {
   );
 }
 
+/** Atalho do carrinho com o total de unidades. */
+function CartLink() {
+  const count = useCart().items.reduce((sum, item) => sum + item.qty, 0);
+  const current = usePathname() === cartPath;
+  const units = `${count} ${count === 1 ? "unidade" : "unidades"}`;
+  return (
+    <>
+      <Link href={cartPath} className={s.cartButton} aria-current={current ? "page" : undefined}>
+        <ShoppingCart size={20} aria-hidden="true" />
+        <span className={s.cartLabel}>Carrinho</span>
+        {count > 0 && (
+          <span className={s.cartCount}>
+            {count > 999 ? "999+" : count}
+            <span className={s.srOnly}> {count === 1 ? "unidade" : "unidades"}</span>
+          </span>
+        )}
+      </Link>
+      <span className={s.srOnly} role="status">{count > 0 ? `Carrinho com ${units}` : ""}</span>
+    </>
+  );
+}
+
 export function StoreHeader() {
   return (
     <header className={s.header}>
@@ -54,6 +77,7 @@ export function StoreHeader() {
           <span>Falar com a loja</span>
           <span className={s.srOnly}> pelo WhatsApp (abre em nova aba)</span>
         </a>
+        <CartLink />
       </div>
       <CategoryNav />
     </header>
@@ -95,10 +119,11 @@ export function StoreFooter() {
           <p>{STORE.tagline}</p>
           {place && <p>{place}</p>}
           {STORE.hours && <p>{STORE.hours}</p>}
+          <p>WhatsApp {STORE.whatsappLabel}</p>
         </div>
         <div>
           <p className={s.footerNote}>
-            Catálogo para consulta. Os pedidos são combinados com a loja pelo WhatsApp. Preços e estoque podem mudar sem aviso.
+            Monte o carrinho e envie o pedido pelo WhatsApp: a loja confirma preço, estoque e entrega.
           </p>
           <p className={s.footerNote}>
             Demonstração criada pela <Link href="/criacao-de-sites">NexuSync</Link>: produtos, marcas e preços são

@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, Info, MessageCircle } from "lucide-react";
+import { Info, MessageCircle } from "lucide-react";
 import { JsonLd } from "@/components/JsonLd";
 import {
   PRODUCTS, STORE, getCategory, getProduct, installmentLabel, money, productPath, storeWhatsApp, type Product,
 } from "@/components/ferragem/catalog-data";
-import { PriceBlock, ProductCard } from "@/components/ferragem/ProductCard";
+import { AddToCart } from "@/components/ferragem/AddToCart";
+import { PriceBlock } from "@/components/ferragem/ProductCard";
 import { ProductArt } from "@/components/ferragem/ProductArt";
+import { ProductRow } from "@/components/ferragem/ProductRow";
 import { SharePanel } from "@/components/ferragem/SharePanel";
+import { goesWith, similarTo } from "@/components/ferragem/suggestions";
 import s from "@/components/ferragem/ferragem.module.css";
 
 const SITE = "https://nexusync.online";
@@ -53,8 +56,9 @@ export default async function ProductPage({ params }: Props) {
   if (!product) notFound();
   const category = getCategory(product.category)!;
   const path = productPath(product);
-  const related = PRODUCTS.filter((item) => item.category === product.category && item.slug !== product.slug).slice(0, 4);
-  const orderMessage = `Olá! Tenho interesse neste produto do catálogo:\n*${product.name}* (cód. ${product.sku})\n${money(product.cashPrice)} à vista\n${SITE}${path}`;
+  const together = goesWith(product.slug);
+  const similar = similarTo(product, together);
+  const askMessage = `Olá! Tenho interesse neste produto do catálogo:\n*${product.name}* (cód. ${product.sku})\n${money(product.cashPrice)} à vista\n${SITE}${path}`;
 
   return (
     <>
@@ -109,14 +113,12 @@ export default async function ProductPage({ params }: Props) {
 
             <PriceBlock product={product} />
 
-            <div className={s.ctaRow}>
-              <a className={s.ctaWa} href={storeWhatsApp(orderMessage)} target="_blank" rel="noopener noreferrer">
-                <span><MessageCircle size={20} aria-hidden="true" />Pedir pelo WhatsApp</span>
-                <span className={s.ctaArrow} aria-hidden="true"><ArrowUpRight size={20} /></span>
-                <span className={s.srOnly}> (abre em nova aba)</span>
-              </a>
-            </div>
-            <p className={s.ctaNote}>A mensagem já vai com o nome, o código e o link do produto.</p>
+            <AddToCart key={product.slug} product={product} />
+
+            <a className={s.ask} href={storeWhatsApp(askMessage)} target="_blank" rel="noopener noreferrer">
+              <MessageCircle size={18} aria-hidden="true" />Tirar dúvida sobre este produto
+              <span className={s.srOnly}> pelo WhatsApp (abre em nova aba)</span>
+            </a>
 
             <section className={s.specs} aria-labelledby="ficha-tecnica">
               <h2 id="ficha-tecnica">Ficha técnica</h2>
@@ -132,20 +134,12 @@ export default async function ProductPage({ params }: Props) {
           </div>
         </div>
 
-        {related.length > 0 && (
-          <section className={s.related} aria-labelledby="relacionados">
-            <h2 id="relacionados">Mais em {category.name.toLowerCase()}</h2>
-            <ul className={s.grid}>
-              {related.map((item) => (
-                <li key={item.slug}><ProductCard product={item} /></li>
-              ))}
-            </ul>
-          </section>
-        )}
+        <ProductRow id="leve-junto" title="Leve junto" products={together} />
+        <ProductRow id="parecidos" title={`Veja também em ${category.name.toLowerCase()}`} products={similar} />
 
         <p className={s.notice}>
           <Info size={18} aria-hidden="true" />
-          <span>Catálogo para consulta: escolha os produtos e combine o pedido com a loja pelo WhatsApp.</span>
+          <span>Catálogo para consulta: monte o carrinho e combine o pedido com a loja pelo WhatsApp.</span>
         </p>
       </div>
     </>
