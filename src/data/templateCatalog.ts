@@ -236,4 +236,16 @@ export const templateCatalog = [
       modules: ["Cena 3D guiada pelo scroll, do amanhecer à noite", "Acomodações em carrossel com setas", "Passeios e refeições que entram no roteiro", "Rádio ambiente com ondas e violão", "Planejador de estadia com mensagem pronta no WhatsApp"],
       stack: ["Next.js", "React Three Fiber", "Web Audio", "CSS Modules"],
     },
+    {
+      number: "12", code: "Catálogo", category: "Catálogo online",
+      title: "Ferragens e material de construção", brandName: "Total Lar",
+      description: "Catálogo com preço de, à vista e parcelado. Cada produto tem uma página para enviar pelo WhatsApp, Telegram, e-mail ou redes, e dá para ver a loja no seu próprio domínio.",
+      href: "/templates/ferragem-total", theme: "from-orange-500/20 to-stone-950",
+      badgeColor: "border-orange-400/35 text-orange-200", accentText: "text-orange-300",
+      btnGradient: "from-champagne to-champagne text-abyss",
+      palette: [{ name: "Papel", hex: "#f5f3ee" }, { name: "Grafite", hex: "#17202b" }, { name: "Laranja obra", hex: "#c2410c" }],
+      conversionFocus: "Pedidos e indicações de produto pelo WhatsApp",
+      modules: ["Preço de, à vista no Pix e parcelado no cartão", "Página por produto com prévia de link", "Envio por WhatsApp, Telegram, e-mail e redes", "Busca, categorias e filtro de ofertas", "Simulação com o domínio da loja"],
+      stack: ["Next.js", "React", "CSS Modules", "Open Graph"],
+    },
   ];

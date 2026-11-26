@@ -24,6 +24,12 @@ function segmentDescription(intro: string, plural: string) {
 
 type Props = { params: Promise<{ segmento: string }> };
 
+/**
+ * Todas as páginas são pré-renderizadas. Com <Suspense> em volta de `params`, o conteúdo iria no HTML
+ * dentro de um bloco oculto, exibido só via JavaScript; por isso a validação de navegação instantânea fica desligada.
+ */
+export const instant = false;
+
 export function generateStaticParams() {
   return segments.map((segment) => ({ segmento: segment.slug }));
 }
