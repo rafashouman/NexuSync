@@ -1,0 +1,219 @@
+/* Painel de sessões. As cores vêm das variáveis de luzinete.module.css. */
+.wrap {
+  width: min(860px, 100% - 32px);
+  min-height: 60vh;
+  margin-inline: auto;
+  padding: 32px 0 72px;
+}
+
+.wrap .title {
+  font-size: 2rem;
+}
+
+.login {
+  display: grid;
+  gap: 16px;
+  max-width: 420px;
+  margin-inline: auto;
+}
+
+.login form {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 24px;
+  background: var(--branco);
+  box-shadow: var(--sombra);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.head > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0 20px;
+}
+
+.filters button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 6px 18px;
+  border: 1.5px solid var(--marrom-claro);
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filters button[aria-pressed="true"] {
+  border-color: var(--marrom);
+  background: var(--marrom);
+  color: var(--branco);
+}
+
+.filters span {
+  min-width: 24px;
+  padding-inline: 6px;
+  border-radius: 999px;
+  background: var(--erva-clara);
+  color: var(--marrom);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.empty {
+  padding: 32px 20px;
+  border: 1.5px dashed var(--marrom-claro);
+  border-radius: 24px;
+  text-align: center;
+}
+
+.day {
+  margin-top: 28px;
+}
+
+.wrap .day h2 {
+  margin-bottom: 12px;
+  font-size: 1.5rem;
+}
+
+.day ul {
+  display: grid;
+  gap: 12px;
+}
+
+.card {
+  display: grid;
+  gap: 12px 24px;
+  padding: 20px;
+  border-radius: 24px;
+  background: var(--branco);
+  box-shadow: var(--sombra);
+}
+
+.card[data-cancelled="true"] {
+  background: #ece8e1;
+}
+
+.wrap .time {
+  font-family: var(--font-lz-title), Georgia, serif;
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.info {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.wrap .info h3 {
+  font-size: 1.375rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.tags span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: var(--erva-clara);
+}
+
+.tags .first {
+  background: var(--erva);
+}
+
+.tags .cancelled {
+  background: var(--erro);
+  color: var(--branco);
+}
+
+.tags svg,
+.mail svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.mail {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.wrap .note {
+  margin-top: 8px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--bege);
+}
+
+.created {
+  margin-top: 8px;
+  font-size: 0.8125rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.danger {
+  min-height: 48px;
+  padding: 10px 22px;
+  border: 1.5px solid var(--erro);
+  border-radius: 999px;
+  color: var(--erro);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.danger:hover {
+  background: var(--erro);
+  color: var(--branco);
+}
+
+.danger:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+@media (min-width: 700px) {
+  .card {
+    grid-template-columns: 96px 1fr 190px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

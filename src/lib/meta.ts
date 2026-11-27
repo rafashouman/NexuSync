@@ -39,6 +39,8 @@ export function pixelForEvent(pathname: string, eventName: string): string | nul
   }
   // Painéis mostram dados de clientes: nada vai para o Pixel.
   if (isUnder(pathname, "/admin") || isUnder(pathname, "/templates/cardapio-lancheria/painel")) return null;
+  // Terapia é dado sensível de saúde: o site da terapeuta não conta nem PageView.
+  if (isUnder(pathname, "/templates/luzinete-terapeuta")) return null;
   if (eventName === "PageView") return META_PIXEL_ID;
   return isAgencyPath(pathname) ? META_PIXEL_ID : null;
 }

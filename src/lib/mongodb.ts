@@ -2,7 +2,7 @@ import "server-only";
 
 import { MongoClient, type Db } from "mongodb";
 
-const LEAD_COLLECTIONS = ["leads", "pilot_leads", "tarot_leads", "daemon_runs", "quote_requests", "lanchonete_pedidos", "ferragem_pedidos"];
+const LEAD_COLLECTIONS = ["leads", "pilot_leads", "tarot_leads", "daemon_runs", "quote_requests", "lanchonete_pedidos", "ferragem_pedidos", "luzinete_agendamentos"];
 
 type MongoGlobal = typeof globalThis & {
   __nexusyncMongo?: Promise<Db>;
@@ -40,6 +40,11 @@ async function connect(): Promise<Db> {
     db.collection("lanchonete_pedidos").createIndex({ createdAt: -1 }),
     db.collection("ferragem_pedidos").createIndex({ requestId: 1 }, { unique: true }),
     db.collection("ferragem_pedidos").createIndex({ createdAt: -1 }),
+    // Um horário só pode ter uma reserva ativa.
+    db.collection("luzinete_agendamentos").createIndex(
+      { date: 1, time: 1 },
+      { unique: true, partialFilterExpression: { active: true } },
+    ),
     db.collection("leaderboard").createIndex({ gameId: 1, score: -1 }),
   ]);
 

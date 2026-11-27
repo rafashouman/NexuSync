@@ -31,6 +31,12 @@ services:
       # Painel de pedidos do cardápio de demonstração. Vazio usa o login padrão da demonstração.
       LANCHONETE_ADMIN_USER: ${LANCHONETE_ADMIN_USER:-}
       LANCHONETE_ADMIN_PASSWORD: ${LANCHONETE_ADMIN_PASSWORD:-}
+      # Modelo da terapeuta: aviso automático de agendamento pelo CallMeBot. Vazio desliga.
+      LUZINETE_CALLMEBOT_PHONE: ${LUZINETE_CALLMEBOT_PHONE:-}
+      LUZINETE_CALLMEBOT_KEY: ${LUZINETE_CALLMEBOT_KEY:-}
+      # Painel de sessões da terapeuta. Sem senha, o painel fica desligado em produção.
+      LUZINETE_ADMIN_USER: ${LUZINETE_ADMIN_USER:-}
+      LUZINETE_ADMIN_PASSWORD: ${LUZINETE_ADMIN_PASSWORD:-}
       # API de Conversões da Meta. Sem token, o Lead vai só pelo Pixel do navegador.
       META_CAPI_ACCESS_TOKEN: ${META_CAPI_ACCESS_TOKEN:-}
       # Só para testar em "Eventos de teste"; deixe vazio durante a campanha.
