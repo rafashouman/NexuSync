@@ -39,6 +39,8 @@ type Store = {
   heavyFreight: number;
   /** Cidade/UF somada ao endereço no link do mapa, para o Google achar a rua certa. */
   mapsRegion?: string;
+  /** Dias que o pedido fica gravado antes de o banco apagar sozinho. */
+  retentionDays: number;
 };
 
 export const STORE: Store = {
@@ -54,7 +56,15 @@ export const STORE: Store = {
   minInstallment: 1500,
   // Definido com a loja: R$ 25,00 uma vez por pedido, só na entrega com produto pesado.
   heavyFreight: 2500,
+  retentionDays: 90,
 };
+
+export const painelPath = `${STORE.basePath}/painel`;
+
+/** Limites do carrinho, valendo no navegador e no servidor. */
+export const MAX_QTY = 999;
+export const NOTE_MAX = 300;
+export const ADDRESS_MAX = 120;
 
 export type IconKey =
   | "hammer" | "wrench" | "ruler" | "drill" | "zap" | "plug" | "cable" | "lightbulb"
@@ -273,6 +283,9 @@ export function storeWhatsApp(message: string) {
 }
 
 export type Delivery = {
+  /** Nome e WhatsApp de quem compra: a loja usa no painel para retornar. */
+  name: string;
+  phone: string;
   mode: "entrega" | "retirada" | null;
   street: string;
   district: string;
@@ -295,7 +308,10 @@ export function mapsLink(delivery: Delivery) {
 
 /** O que falta preencher para a loja conseguir entregar. Vazio = pode enviar. */
 export function deliveryErrors(delivery: Delivery) {
-  const errors: Partial<Record<"mode" | "street" | "district", string>> = {};
+  const errors: Partial<Record<"name" | "phone" | "mode" | "street" | "district", string>> = {};
+  if (delivery.name.trim().length < 2) errors.name = "Informe seu nome.";
+  const digits = delivery.phone.replace(/\D/g, "");
+  if (digits.length < 10 || digits.length > 13) errors.phone = "Informe o WhatsApp com DDD, como (61) 99999-0000.";
   if (!delivery.mode) errors.mode = "Escolha entre entrega no endereço ou retirada na loja.";
   if (delivery.mode === "entrega") {
     if (delivery.street.trim().length < 5) errors.street = "Informe a rua e o número.";
@@ -308,7 +324,7 @@ export function deliveryErrors(delivery: Delivery) {
 const oneLine = (text: string) => text.replace(/\*/g, "").replace(/\s+/g, " ").trim();
 
 /** Pedido com todos os itens do carrinho, para enviar à loja. */
-export function orderMessage(lines: { product: Product; qty: number }[], note: string, delivery: Delivery) {
+export function orderMessage(lines: { product: Product; qty: number }[], note: string, delivery: Delivery, code?: string) {
   const freight = freightFor(lines, delivery.mode);
   const cash = lines.reduce((sum, line) => sum + line.product.cashPrice * line.qty, 0) + freight;
   const card = lines.reduce((sum, line) => sum + line.product.cardPrice * line.qty, 0) + freight;
@@ -320,7 +336,8 @@ export function orderMessage(lines: { product: Product; qty: number }[], note: s
   const installments = installmentsFor(card).count > 1 ? ` (${installmentText(card)})` : "";
 
   return [
-    `*Pedido pelo catálogo ${STORE.name}*`,
+    `*Pedido${code ? ` ${code}` : ""} pelo catálogo ${STORE.name}*`,
+    ...(delivery.name.trim() ? [`Cliente: ${oneLine(delivery.name)}${delivery.phone.trim() ? ` · ${oneLine(delivery.phone)}` : ""}`] : []),
     "",
     ...items,
     "",

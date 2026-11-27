@@ -2320,3 +2320,50 @@
 /* O cabeçalho fixo não cobre o campo que recebe o foco quando falta algo. */
 .checkout input,
 .checkout textarea { scroll-margin-top: 190px; }
+
+.order {
+  width: 100%;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.order:disabled { cursor: progress; opacity: 0.8; }
+
+.trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ——— Pedido registrado */
+.placed {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  max-width: 560px;
+  padding: 8px 0 48px;
+  color: var(--muted);
+}
+
+.placed .cartTitle { margin-bottom: 0; color: var(--ink); }
+.placed .order { max-width: 420px; padding: 0 20px; text-decoration: none; }
+.placedIcon { margin-top: 32px; color: var(--wa-text); }
+
+.placedCode {
+  padding: 0 8px;
+  background: var(--hazard);
+  color: #1c1400;
+  white-space: nowrap;
+}
+
+.placedWarn {
+  margin: 0;
+  padding: 10px 14px;
+  border-left: 4px solid #b42318;
+  background: #fff5f4;
+  color: var(--ink);
+  font-weight: 600;
+}

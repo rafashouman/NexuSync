@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Clock, Hammer, MapPin, MessageCircle, ShoppingCart, type LucideIcon } from "lucide-react";
-import { CATEGORIES, STORE, cartPath, storeWhatsApp } from "./catalog-data";
+import { CATEGORIES, STORE, cartPath, painelPath, storeWhatsApp } from "./catalog-data";
 import { useCart } from "./cart-store";
 import { ICONS } from "./ProductArt";
 import s from "./ferragem.module.css";
@@ -128,6 +128,9 @@ export function StoreFooter() {
           <p className={s.footerNote}>
             Demonstração criada pela <Link href="/criacao-de-sites">NexuSync</Link>: produtos, marcas e preços são
             ilustrativos e não representam o estoque da loja.
+          </p>
+          <p className={s.footerNote}>
+            <Link href={painelPath} prefetch={false}>Área da loja</Link>
           </p>
         </div>
       </div>

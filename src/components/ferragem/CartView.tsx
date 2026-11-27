@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, type MouseEvent } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { Check, LocateFixed, MapPin, MessageCircle, Store, Truck, Weight } from "lucide-react";
+import { Check, CircleCheckBig, LocateFixed, MapPin, MessageCircle, Store, Truck, Weight } from "lucide-react";
+import { sendFerragemOrder } from "@/app/actions/ferragemPedidos";
 import {
   PRODUCTS, STORE, deliveryErrors, freightFor, getProduct, installmentText, mapsLink, money, orderMessage, productPath, storeWhatsApp,
 } from "./catalog-data";
@@ -20,6 +21,11 @@ export function CartView() {
   const hydrated = useHydrated();
   const [showErrors, setShowErrors] = useState(false);
   const [locating, setLocating] = useState<Locating>("idle");
+  const [sending, setSending] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [website, setWebsite] = useState("");
+  const [done, setDone] = useState<{ code?: string; url: string; error?: string; opened: boolean } | null>(null);
+  const attempt = useRef<{ id: string; key: string } | null>(null);
   const lines = items.map((item) => ({ product: getProduct(item.slug)!, qty: item.qty }));
 
   if (!hydrated) {
@@ -27,6 +33,27 @@ export function CartView() {
       <div className={s.cartEmpty}>
         <h1 className={s.cartTitle}>Seu carrinho</h1>
         <p>Abrindo o carrinho…</p>
+      </div>
+    );
+  }
+
+  if (done) {
+    return (
+      <div className={s.placed} role="status">
+        <CircleCheckBig size={48} aria-hidden="true" className={s.placedIcon} />
+        <h1 className={s.cartTitle}>{done.code ? <>Pedido <span className={s.placedCode}>{done.code}</span> registrado</> : "Pedido pronto para enviar"}</h1>
+        {done.error && <p className={s.placedWarn}>{done.error}</p>}
+        <p>
+          {done.opened
+            ? "O WhatsApp abriu em outra aba com o pedido escrito. Se não apareceu, toque no botão abaixo."
+            : "Toque no botão para abrir o WhatsApp com o pedido escrito e enviar para a loja."}
+        </p>
+        <a className={s.order} href={done.url} target="_blank" rel="noopener noreferrer">
+          <MessageCircle size={22} aria-hidden="true" />Abrir o WhatsApp com o pedido
+          <span className={s.srOnly}> (abre em nova aba)</span>
+        </a>
+        <p className={s.checkoutNote}>A loja confirma estoque, valores e {done.code ? `entrega pelo código ${done.code}` : "entrega"} no WhatsApp {STORE.whatsappLabel}.</p>
+        <Link href={STORE.basePath} className={s.linkButton}>Voltar ao catálogo</Link>
       </div>
     );
   }
@@ -55,12 +82,52 @@ export function CartView() {
   const map = delivery.mode === "entrega" ? mapsLink(delivery) : null;
   const show = (key: keyof typeof errors) => (showErrors ? errors[key] : undefined);
 
-  function send(event: MouseEvent<HTMLAnchorElement>) {
-    if (!blocked) return;
-    event.preventDefault();
-    setShowErrors(true);
-    const first = errors.mode ? "entrega-modo-entrega" : errors.street ? "entrega-rua" : "entrega-bairro";
-    document.getElementById(first)?.focus();
+  async function send() {
+    if (sending) return;
+    setFormError("");
+    if (blocked) {
+      setShowErrors(true);
+      const first = errors.name
+        ? "cliente-nome"
+        : errors.phone
+          ? "cliente-whatsapp"
+          : errors.mode
+            ? "entrega-modo-entrega"
+            : errors.street
+              ? "entrega-rua"
+              : "entrega-bairro";
+      document.getElementById(first)?.focus();
+      return;
+    }
+    // Mesmo pedido (toque repetido) usa o mesmo id e não grava duas vezes; se o carrinho mudou, é pedido novo.
+    const key = JSON.stringify({ items, note, delivery });
+    if (!attempt.current || attempt.current.key !== key) attempt.current = { id: crypto.randomUUID(), key };
+    // A aba abre já no toque: aberta depois da espera, o navegador do celular bloqueia.
+    const tab = window.open("", "_blank");
+    if (tab) tab.opener = null;
+    const go = (url: string) => {
+      if (tab) tab.location.href = url;
+      return Boolean(tab);
+    };
+    setSending(true);
+    try {
+      const result = await sendFerragemOrder({ requestId: attempt.current.id, items, note, delivery, website });
+      if (result.ok) {
+        setDone({ code: result.code, url: result.url, opened: go(result.url) });
+        attempt.current = null;
+        clearCart();
+      } else if (result.url) {
+        setDone({ url: result.url, error: result.error, opened: go(result.url) });
+      } else {
+        tab?.close();
+        setFormError(result.error);
+      }
+    } catch {
+      const url = storeWhatsApp(orderMessage(lines, note, delivery));
+      setDone({ url, error: "Sem conexão com a loja agora: o pedido não ficou registrado, mas você pode enviá-lo pelo WhatsApp.", opened: go(url) });
+    } finally {
+      setSending(false);
+    }
   }
 
   function locate() {
@@ -107,6 +174,38 @@ export function CartView() {
 
         <section className={s.checkout} aria-labelledby="resumo-pedido">
           <h2 id="resumo-pedido">Resumo do pedido</h2>
+
+          <div className={s.shipTo}>
+            <div className={s.addressField}>
+              <label htmlFor="cliente-nome">Seu nome</label>
+              <input
+                id="cliente-nome"
+                value={delivery.name}
+                maxLength={ADDRESS_MAX}
+                autoComplete="name"
+                onChange={(event) => setDelivery({ name: event.target.value })}
+                aria-invalid={Boolean(show("name"))}
+                aria-describedby={show("name") ? "erro-nome" : undefined}
+              />
+              {show("name") && <p id="erro-nome" className={s.fieldError}>{errors.name}</p>}
+            </div>
+            <div className={s.addressField}>
+              <label htmlFor="cliente-whatsapp">Seu WhatsApp</label>
+              <input
+                id="cliente-whatsapp"
+                type="tel"
+                inputMode="tel"
+                value={delivery.phone}
+                maxLength={20}
+                autoComplete="tel-national"
+                placeholder="(61) 99999-0000"
+                onChange={(event) => setDelivery({ phone: event.target.value })}
+                aria-invalid={Boolean(show("phone"))}
+                aria-describedby={show("phone") ? "erro-whatsapp" : undefined}
+              />
+              {show("phone") && <p id="erro-whatsapp" className={s.fieldError}>{errors.phone}</p>}
+            </div>
+          </div>
 
           <fieldset className={s.receive} aria-describedby={show("mode") ? "erro-modo" : undefined}>
             <legend>Como você quer receber?</legend>
@@ -234,17 +333,15 @@ export function CartView() {
             placeholder="Ex.: furadeira em 220 V; entregar depois das 14 h"
           />
 
-          <a
-            className={s.order}
-            href={storeWhatsApp(orderMessage(lines, note, delivery))}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={send}
-            aria-disabled={blocked || undefined}
-          >
-            <MessageCircle size={22} aria-hidden="true" />Fazer pedido
+          <div className={s.trap} aria-hidden="true">
+            <label htmlFor="pedido-site">Deixe em branco</label>
+            <input id="pedido-site" tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />
+          </div>
+          {formError && <p className={s.fieldError} role="alert">{formError}</p>}
+          <button type="button" className={s.order} onClick={send} aria-disabled={blocked || undefined} disabled={sending}>
+            <MessageCircle size={22} aria-hidden="true" />{sending ? "Registrando pedido…" : "Fazer pedido"}
             <span className={s.srOnly}> pelo WhatsApp (abre em nova aba)</span>
-          </a>
+          </button>
           <p className={s.checkoutNote}>
             O pedido abre pronto no WhatsApp {STORE.whatsappLabel}
             {delivery.mode === "entrega" ? ", com o endereço e o link do mapa" : ""}; é só tocar em enviar. A loja confirma

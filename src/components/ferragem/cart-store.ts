@@ -2,17 +2,15 @@
 
 /** Carrinho guardado no navegador do cliente. Sem armazenamento disponível, vale só enquanto a página está aberta. */
 import { useSyncExternalStore } from "react";
-import { getProduct, type Delivery } from "./catalog-data";
+import { ADDRESS_MAX, MAX_QTY, NOTE_MAX, getProduct, type Delivery } from "./catalog-data";
 
-export const MAX_QTY = 999;
-export const NOTE_MAX = 300;
-export const ADDRESS_MAX = 120;
+export { ADDRESS_MAX, MAX_QTY, NOTE_MAX };
 
 export type CartItem = { slug: string; qty: number };
 type Cart = { items: CartItem[]; note: string; delivery: Delivery };
 
 const KEY = "total-lar-carrinho-v1";
-const NO_DELIVERY: Delivery = { mode: null, street: "", district: "", reference: "", coords: null };
+const NO_DELIVERY: Delivery = { name: "", phone: "", mode: null, street: "", district: "", reference: "", coords: null };
 const EMPTY: Cart = { items: [], note: "", delivery: NO_DELIVERY };
 
 const text = (value: unknown) => (typeof value === "string" ? value.slice(0, ADDRESS_MAX) : "");
@@ -23,6 +21,8 @@ function readDelivery(data: unknown): Delivery {
   const raw = (data ?? {}) as Partial<Record<keyof Delivery, unknown>>;
   const c = raw.coords as { lat?: unknown; lng?: unknown } | null | undefined;
   return {
+    name: text(raw.name),
+    phone: text(raw.phone).slice(0, 20),
     mode: raw.mode === "entrega" || raw.mode === "retirada" ? raw.mode : null,
     street: text(raw.street),
     district: text(raw.district),
@@ -112,7 +112,7 @@ export function setDelivery(patch: Partial<Delivery>) {
   const cart = snapshot();
   const touchesAddress = "street" in patch || "district" in patch;
   const delivery: Delivery = { ...cart.delivery, ...(touchesAddress && !("coords" in patch) ? { coords: null } : {}), ...patch };
-  for (const key of ["street", "district", "reference"] as const) delivery[key] = delivery[key].slice(0, ADDRESS_MAX);
+  for (const key of ["name", "phone", "street", "district", "reference"] as const) delivery[key] = delivery[key].slice(0, ADDRESS_MAX);
   write({ ...cart, delivery });
 }
 
