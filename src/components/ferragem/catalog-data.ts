@@ -32,6 +32,13 @@ type Store = {
   maxInstallments: number;
   /** Valor mínimo de cada parcela, em centavos. */
   minInstallment: number;
+  /**
+   * Frete cobrado uma vez por pedido, só quando a entrega leva produto pesado (`heavy: true`).
+   * Sem produto pesado a entrega não tem frete. Retirada na loja nunca tem frete. Em centavos.
+   */
+  heavyFreight: number;
+  /** Cidade/UF somada ao endereço no link do mapa, para o Google achar a rua certa. */
+  mapsRegion?: string;
 };
 
 export const STORE: Store = {
@@ -45,6 +52,8 @@ export const STORE: Store = {
   whatsappLabel: "(61) 3142-0595",
   maxInstallments: 10,
   minInstallment: 1500,
+  // Definido com a loja: R$ 25,00 uma vez por pedido, só na entrega com produto pesado.
+  heavyFreight: 2500,
 };
 
 export type IconKey =
@@ -90,6 +99,8 @@ export type Product = {
   specs: [string, string][];
   badge?: string;
   image?: string;
+  /** Produto pesado ou volumoso (cimento, argamassa, galão de 18 L…): a entrega dele tem frete. */
+  heavy?: boolean;
 };
 
 // Marcas fictícias. Produtos com foto de fabricante usam a marca que aparece na foto.
@@ -159,7 +170,7 @@ export const PRODUCTS: Product[] = [
     summary: "Para vedação de conexões roscáveis de água.", specs: [["Largura", "18 mm"], ["Comprimento", "25 m"]] },
 
   // ——— Tintas
-  { slug: "tinta-acrilica-fosca-18l", image: "/images/ferragem/tinta-acrilica-fosca-18l.webp", name: "Tinta acrílica fosca 18 L", brand: B.cor, category: "tintas", sku: "TI-5001", icon: "paint", unit: "lata", listPrice: 38990, cashPrice: 31990, cardPrice: 34490, badge: "Oferta",
+  { slug: "tinta-acrilica-fosca-18l", heavy: true, image: "/images/ferragem/tinta-acrilica-fosca-18l.webp", name: "Tinta acrílica fosca 18 L", brand: B.cor, category: "tintas", sku: "TI-5001", icon: "paint", unit: "lata", listPrice: 38990, cashPrice: 31990, cardPrice: 34490, badge: "Oferta",
     summary: "Para paredes internas e externas. Rende até 380 m² por demão.", specs: [["Volume", "18 L"], ["Acabamento", "Fosco"], ["Rendimento", "Até 380 m²/demão"], ["Cor", "Branco neve"]] },
   { slug: "esmalte-sintetico-900ml", name: "Esmalte sintético brilhante 900 ml", brand: B.cor, category: "tintas", sku: "TI-5002", icon: "paint", unit: "lata", cashPrice: 4990, cardPrice: 5390,
     summary: "Para madeira e metal. Secagem rápida e alto brilho.", specs: [["Volume", "900 ml"], ["Superfície", "Madeira e metal"], ["Acabamento", "Brilhante"]] },
@@ -175,11 +186,11 @@ export const PRODUCTS: Product[] = [
     summary: "Para metal, madeira, cerâmica e plástico. Várias cores.", specs: [["Volume", "400 ml"], ["Secagem", "Ao toque em 30 min"]] },
 
   // ——— Construção
-  { slug: "cimento-cp-ii-50kg", name: "Cimento CP II 50 kg", brand: B.obra, category: "construcao", sku: "CO-6001", icon: "brick", unit: "saco", cashPrice: 3890, cardPrice: 4190, badge: "Mais procurado",
+  { slug: "cimento-cp-ii-50kg", heavy: true, name: "Cimento CP II 50 kg", brand: B.obra, category: "construcao", sku: "CO-6001", icon: "brick", unit: "saco", cashPrice: 3890, cardPrice: 4190, badge: "Mais procurado",
     summary: "Uso geral em concreto, reboco e contrapiso.", specs: [["Peso", "50 kg"], ["Tipo", "CP II"]] },
-  { slug: "argamassa-ac2-20kg", name: "Argamassa AC II 20 kg", brand: B.obra, category: "construcao", sku: "CO-6002", icon: "brick", unit: "saco", cashPrice: 2690, cardPrice: 2890,
+  { slug: "argamassa-ac2-20kg", heavy: true, name: "Argamassa AC II 20 kg", brand: B.obra, category: "construcao", sku: "CO-6002", icon: "brick", unit: "saco", cashPrice: 2690, cardPrice: 2890,
     summary: "Para assentar pisos e revestimentos em áreas internas e externas.", specs: [["Peso", "20 kg"], ["Tipo", "AC II"], ["Uso", "Interno e externo"]] },
-  { slug: "carrinho-de-mao-60l", name: "Carrinho de mão 60 L", brand: B.obra, category: "construcao", sku: "CO-6003", icon: "construction", unit: "unidade", listPrice: 32990, cashPrice: 27990, cardPrice: 29990,
+  { slug: "carrinho-de-mao-60l", heavy: true, name: "Carrinho de mão 60 L", brand: B.obra, category: "construcao", sku: "CO-6003", icon: "construction", unit: "unidade", listPrice: 32990, cashPrice: 27990, cardPrice: 29990,
     summary: "Caçamba metálica reforçada e pneu com câmara.", specs: [["Capacidade", "60 L"], ["Caçamba", "Aço"], ["Pneu", "Com câmara"]] },
   { slug: "pa-de-bico", name: "Pá de bico com cabo de madeira", brand: B.obra, category: "construcao", sku: "CO-6004", icon: "shovel", unit: "unidade", cashPrice: 4990, cardPrice: 5390,
     summary: "Aço carbono temperado, cabo de 71 cm.", specs: [["Lâmina", "Aço carbono"], ["Cabo", "Madeira 71 cm"]] },
@@ -187,7 +198,7 @@ export const PRODUCTS: Product[] = [
     summary: "Formato oval com cabo de madeira envernizado.", specs: [["Tamanho", "8\""], ["Formato", "Oval"]] },
   { slug: "rejunte-flexivel-1kg", name: "Rejunte flexível 1 kg", brand: B.obra, category: "construcao", sku: "CO-6006", icon: "layers", unit: "pacote", cashPrice: 1290, cardPrice: 1390,
     summary: "Para juntas de 2 a 10 mm em pisos e azulejos. Cinza platina.", specs: [["Peso", "1 kg"], ["Juntas", "2 a 10 mm"], ["Cor", "Cinza platina"]] },
-  { slug: "impermeabilizante-18kg", name: "Impermeabilizante acrílico 18 kg", brand: B.obra, category: "construcao", sku: "CO-6007", icon: "paint", unit: "balde", listPrice: 34990, cashPrice: 28990, cardPrice: 30990,
+  { slug: "impermeabilizante-18kg", heavy: true, name: "Impermeabilizante acrílico 18 kg", brand: B.obra, category: "construcao", sku: "CO-6007", icon: "paint", unit: "balde", listPrice: 34990, cashPrice: 28990, cardPrice: 30990,
     summary: "Manta líquida para lajes, telhados e marquises.", specs: [["Peso", "18 kg"], ["Uso", "Lajes e telhados"], ["Cor", "Branco"]] },
 
   // ——— Fixação e ferragens
@@ -261,12 +272,47 @@ export function storeWhatsApp(message: string) {
   return `https://wa.me/${STORE.whatsapp}?text=${encodeURIComponent(message)}`;
 }
 
+export type Delivery = {
+  mode: "entrega" | "retirada" | null;
+  street: string;
+  district: string;
+  reference: string;
+  /** Localização do aparelho, quando o cliente toca em "Usar minha localização". */
+  coords: { lat: number; lng: number } | null;
+};
+
+/** Frete do pedido: só na entrega e só se houver produto pesado. */
+export function freightFor(lines: { product: Product }[], mode: Delivery["mode"]) {
+  return mode === "entrega" && lines.some((line) => line.product.heavy) ? STORE.heavyFreight : 0;
+}
+
+/** Link do Google Maps: o ponto exato, se o cliente mandou a localização, ou a busca pelo endereço digitado. */
+export function mapsLink(delivery: Delivery) {
+  if (delivery.coords) return `https://maps.google.com/?q=${delivery.coords.lat.toFixed(6)},${delivery.coords.lng.toFixed(6)}`;
+  const query = [delivery.street, delivery.district, STORE.mapsRegion].map((part) => part?.trim()).filter(Boolean).join(", ");
+  return query ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}` : null;
+}
+
+/** O que falta preencher para a loja conseguir entregar. Vazio = pode enviar. */
+export function deliveryErrors(delivery: Delivery) {
+  const errors: Partial<Record<"mode" | "street" | "district", string>> = {};
+  if (!delivery.mode) errors.mode = "Escolha entre entrega no endereço ou retirada na loja.";
+  if (delivery.mode === "entrega") {
+    if (delivery.street.trim().length < 5) errors.street = "Informe a rua e o número.";
+    if (delivery.district.trim().length < 2) errors.district = "Informe o bairro.";
+  }
+  return errors;
+}
+
+/** Uma linha só e sem asteriscos, para o texto do cliente não imitar outras partes do pedido. */
+const oneLine = (text: string) => text.replace(/\*/g, "").replace(/\s+/g, " ").trim();
+
 /** Pedido com todos os itens do carrinho, para enviar à loja. */
-export function orderMessage(lines: { product: Product; qty: number }[], note: string) {
-  const cash = lines.reduce((sum, line) => sum + line.product.cashPrice * line.qty, 0);
-  const card = lines.reduce((sum, line) => sum + line.product.cardPrice * line.qty, 0);
-  // Uma linha só e sem asteriscos, para a observação não imitar outras partes do pedido.
-  const cleanNote = note.replace(/\*/g, "").replace(/\s+/g, " ").trim();
+export function orderMessage(lines: { product: Product; qty: number }[], note: string, delivery: Delivery) {
+  const freight = freightFor(lines, delivery.mode);
+  const cash = lines.reduce((sum, line) => sum + line.product.cashPrice * line.qty, 0) + freight;
+  const card = lines.reduce((sum, line) => sum + line.product.cardPrice * line.qty, 0) + freight;
+  const cleanNote = oneLine(note);
   const items = lines.flatMap(({ product, qty }) => [
     `${qty}x ${product.name} (cód. ${product.sku})`,
     `   ${money(product.cashPrice)} cada = ${money(product.cashPrice * qty)}`,
@@ -278,12 +324,30 @@ export function orderMessage(lines: { product: Product; qty: number }[], note: s
     "",
     ...items,
     "",
+    ...(delivery.mode === "entrega" ? [freight ? `Frete (produto pesado): ${money(freight)}` : "Frete: grátis"] : []),
     `*Total à vista no Pix: ${money(cash)}*`,
     `No cartão: ${money(card)}${installments}`,
+    "",
+    ...(delivery.mode === "entrega" ? deliveryLines(delivery) : delivery.mode === "retirada" ? pickupLines() : []),
     ...(cleanNote ? ["", `Observação: ${cleanNote}`] : []),
     "",
-    "Podem confirmar estoque e entrega?",
+    delivery.mode === "entrega" ? "Podem confirmar estoque e prazo de entrega?" : "Podem confirmar estoque e quando posso retirar?",
   ].join("\n");
+}
+
+function deliveryLines(delivery: Delivery) {
+  const map = mapsLink(delivery);
+  return [
+    "*Entregar em:*",
+    `${oneLine(delivery.street)} – ${oneLine(delivery.district)}`,
+    ...(delivery.reference.trim() ? [`Referência: ${oneLine(delivery.reference)}`] : []),
+    ...(map ? [`Mapa${delivery.coords ? " (localização enviada pelo cliente)" : ""}: ${map}`] : []),
+  ];
+}
+
+function pickupLines() {
+  const place = [STORE.address, STORE.city].filter(Boolean).join(", ");
+  return ["*Vou retirar na loja.*", ...(place ? [place] : [])];
 }
 
 /** Mensagem pronta para compartilhar o produto. */

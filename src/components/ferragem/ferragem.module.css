@@ -2108,3 +2108,215 @@
   .ruler,
   .deal { transform: none; }
 }
+
+/* ——— Entrega ou retirada (carrinho) */
+.heavyTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: -4px 0 10px !important;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: rgb(255 194 26 / 22%);
+  color: var(--ink) !important;
+  font-family: var(--mono);
+  font-size: 0.72rem !important;
+  font-weight: 700;
+}
+
+.receive {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.receive legend {
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.receiveOptions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.receiveOption {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 64px;
+  padding: 10px 12px;
+  border: 2px solid var(--line-2);
+  border-radius: 6px;
+  background: var(--bg-2);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.receiveOption:hover { border-color: var(--accent); }
+
+.receiveOption input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.receiveOption svg {
+  flex: none;
+  color: var(--accent-text);
+}
+
+.receiveOption span {
+  display: grid;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.receiveOption small {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.receiveOption:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.receiveOption:has(input:focus-visible) {
+  outline: 3px solid var(--accent-text);
+  outline-offset: 2px;
+}
+
+.shipTo {
+  display: grid;
+  gap: 12px;
+  animation: dealIn 0.35s var(--ease);
+}
+
+.addressField {
+  display: grid;
+  gap: 4px;
+}
+
+.addressField label {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.addressField input {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 4px;
+  background: var(--bg-2);
+  color: var(--ink);
+  font: inherit;
+}
+
+.addressField input::placeholder { color: var(--dim); }
+
+.addressField input[aria-invalid="true"] {
+  border: 2px solid #b42318;
+  background: #fff5f4;
+}
+
+.fieldError {
+  margin: 0;
+  color: #b42318;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.locate {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border: 1px dashed var(--line-2);
+  border-radius: 6px;
+}
+
+.locate > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  background: var(--bg-2);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.locate > button:hover:not(:disabled) {
+  background: var(--ink);
+  color: #fff;
+}
+
+.locate > button:disabled { cursor: progress; }
+
+.locate p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.linkButton {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent-text);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.mapPreview {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  color: var(--accent-text);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
+.order[aria-disabled="true"] {
+  background: #b9c2bc;
+  color: #26302a;
+  box-shadow: none;
+}
+
+.heavyNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border-left: 4px solid var(--hazard);
+  border-radius: 4px;
+  background: rgb(255 194 26 / 16%);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.heavyNote svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+/* O cabeçalho fixo não cobre o campo que recebe o foco quando falta algo. */
+.checkout input,
+.checkout textarea { scroll-margin-top: 190px; }

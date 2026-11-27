@@ -2,16 +2,34 @@
 
 /** Carrinho guardado no navegador do cliente. Sem armazenamento disponível, vale só enquanto a página está aberta. */
 import { useSyncExternalStore } from "react";
-import { getProduct } from "./catalog-data";
+import { getProduct, type Delivery } from "./catalog-data";
 
 export const MAX_QTY = 999;
 export const NOTE_MAX = 300;
+export const ADDRESS_MAX = 120;
 
 export type CartItem = { slug: string; qty: number };
-type Cart = { items: CartItem[]; note: string };
+type Cart = { items: CartItem[]; note: string; delivery: Delivery };
 
 const KEY = "total-lar-carrinho-v1";
-const EMPTY: Cart = { items: [], note: "" };
+const NO_DELIVERY: Delivery = { mode: null, street: "", district: "", reference: "", coords: null };
+const EMPTY: Cart = { items: [], note: "", delivery: NO_DELIVERY };
+
+const text = (value: unknown) => (typeof value === "string" ? value.slice(0, ADDRESS_MAX) : "");
+const coord = (value: unknown, limit: number) => typeof value === "number" && Number.isFinite(value) && Math.abs(value) <= limit;
+
+/** Endereço salvo: fica no aparelho para a próxima compra. */
+function readDelivery(data: unknown): Delivery {
+  const raw = (data ?? {}) as Partial<Record<keyof Delivery, unknown>>;
+  const c = raw.coords as { lat?: unknown; lng?: unknown } | null | undefined;
+  return {
+    mode: raw.mode === "entrega" || raw.mode === "retirada" ? raw.mode : null,
+    street: text(raw.street),
+    district: text(raw.district),
+    reference: text(raw.reference),
+    coords: c && coord(c.lat, 90) && coord(c.lng, 180) ? { lat: c.lat as number, lng: c.lng as number } : null,
+  };
+}
 
 let cache: Cart | null = null;
 const listeners = new Set<() => void>();
@@ -29,6 +47,7 @@ function read(): Cart {
     return {
       items: [...found].map(([slug, qty]) => ({ slug, qty })),
       note: typeof data?.note === "string" ? data.note.slice(0, NOTE_MAX) : "",
+      delivery: readDelivery(data?.delivery),
     };
   } catch {
     return EMPTY;
@@ -88,4 +107,14 @@ export function setQuantity(slug: string, qty: number) {
 
 export const setNote = (note: string) => write({ ...snapshot(), note: note.slice(0, NOTE_MAX) });
 
-export const clearCart = () => write(EMPTY);
+/** Troca parte da entrega. Mexer na rua ou no bairro apaga a localização do aparelho, que pode não bater mais. */
+export function setDelivery(patch: Partial<Delivery>) {
+  const cart = snapshot();
+  const touchesAddress = "street" in patch || "district" in patch;
+  const delivery: Delivery = { ...cart.delivery, ...(touchesAddress && !("coords" in patch) ? { coords: null } : {}), ...patch };
+  for (const key of ["street", "district", "reference"] as const) delivery[key] = delivery[key].slice(0, ADDRESS_MAX);
+  write({ ...cart, delivery });
+}
+
+/** Esvazia os produtos e a observação; o endereço fica salvo para a próxima compra. */
+export const clearCart = () => write({ ...EMPTY, delivery: snapshot().delivery });

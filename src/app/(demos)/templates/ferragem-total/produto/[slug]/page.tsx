@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Info, MessageCircle } from "lucide-react";
+import { Info, MessageCircle, Weight } from "lucide-react";
 import { JsonLd } from "@/components/JsonLd";
 import {
   PRODUCTS, STORE, getCategory, getProduct, installmentLabel, money, productPath, storeWhatsApp, type Product,
@@ -112,6 +112,12 @@ export default async function ProductPage({ params }: Props) {
             <p className={s.productSummary}>{product.summary}</p>
 
             <PriceBlock product={product} />
+            {product.heavy && (
+              <p className={s.heavyNote}>
+                <Weight size={18} aria-hidden="true" />
+                <span>Produto pesado: frete de {money(STORE.heavyFreight)} na entrega. Retirando na loja, não tem frete.</span>
+              </p>
+            )}
 
             <AddToCart key={product.slug} product={product} />
 
