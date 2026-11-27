@@ -21,6 +21,7 @@ const publicPaths = [...new Set([
   "/visionsync",
   "/templates",
   "/templates/cyber-oregon",
+  "/calculadora-cpa",
   "/privacidade",
   ...appCatalog.map(app => app.path).filter((path) => !isTemplateDemo(path)),
 ])];
@@ -30,6 +31,7 @@ function priorityOf(path: string) {
   if (servicePaths.includes(path)) return 0.9;
   if (segmentPaths.includes(path)) return 0.8;
   if (path === "/contato" || path === "/quem-somos") return 0.7;
+  if (path === "/calculadora-cpa") return 0.6;
   return 0.4;
 }
 

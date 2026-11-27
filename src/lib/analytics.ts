@@ -61,6 +61,11 @@ export type AnalyticsEvent =
       durationSeconds?: number;
     }
   | {
+      /** CPA calculator: only the action is sent, never the numbers typed. */
+      eventName: "cpa_calculator_interaction";
+      action: "mode_site" | "mode_whatsapp" | "goal_target" | "add_product" | "copy_summary" | "whatsapp_click";
+    }
+  | {
       eventName: "miniapp_interaction";
       appId: "image-blend";
       action:

@@ -16,7 +16,7 @@ export const siteNavigation: readonly NavGroup[] = [
   { title: "Soluções", links: solutionPillars.flatMap((group) => group.links) },
   { title: "Produtos e experiências", links: [
     ["ArcSync · Publicações", "/arcsync"], ["VisionSync · Atendimento", "/visionsync"],
-    ["Templates e demonstrações", "/templates"], ["Aplicativos para experimentar", "/apps#todos-os-aplicativos"], ["Arcade · Jogos", "/arcade"],
+    ["Templates e demonstrações", "/templates"], ["Aplicativos para experimentar", "/apps#todos-os-aplicativos"], ["Calculadora de anúncios", "/calculadora-cpa"], ["Arcade · Jogos", "/arcade"],
   ] },
   { title: "NexuSync", links: [
     ["Quem somos", "/quem-somos"], ["Como funciona", "/#metodo"], ["Planos de sites", "/criacao-de-sites#planos"],
