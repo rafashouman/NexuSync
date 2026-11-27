@@ -12,6 +12,7 @@ export const AGENCY_PATHS: readonly string[] = [
   "/apps",
   "/arcade",
   "/arcsync",
+  "/calculadora-cpa",
   "/contato",
   "/criacao-de-sites",
   "/design",
