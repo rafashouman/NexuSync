@@ -26,6 +26,7 @@ import {
   Mesh,
   MeshBasicMaterial,
   MeshLambertMaterial,
+  NearestFilter,
   Object3D,
   PerspectiveCamera,
   Plane,
@@ -48,7 +49,7 @@ import {
 } from "three";
 import { cameraKeys, DEFAULT_KEY, LAST, METHOD, methodKey, mixKey, type CameraKey } from "./cameraKeys";
 import { ATTEMPT_EVENT, PULSE_EVENT } from "../events";
-import type { CityLayout } from "./kit";
+import type { CityLayout, KitShop } from "./kit";
 
 export type WorldRefs = {
   root: HTMLElement;
@@ -92,21 +93,64 @@ function buildingBox(d: number, h: number, w: number) {
   return g;
 }
 
+/** Windows of the code-drawn front row: they start above the sign, in whole columns and floors. */
+const WIN = { from: 2.35, top: 0.25, pitchX: 1, pitchY: 1, w: 0.48, h: 0.62 };
+
+/** One quad per window on the four facades. Each picks one of the 4 light levels of the window texture (0 = off). */
+function windowsGeometry(d: number, h: number, w: number, seed: number) {
+  const r = rng(seed);
+  const pos: number[] = [];
+  const nor: number[] = [];
+  const uv: number[] = [];
+  const index: number[] = [];
+  // facade normal (x, z), distance from the center and width
+  const faces = [[1, 0, d / 2, w], [-1, 0, d / 2, w], [0, 1, w / 2, d], [0, -1, w / 2, d]];
+  for (const [nx, nz, out, width] of faces) {
+    const cols = Math.floor((width - 0.5) / WIN.pitchX);
+    for (let y = WIN.from; y + WIN.h <= h - WIN.top; y += WIN.pitchY) {
+      for (let c = 0; c < cols; c++) {
+        const level = r() < 0.42 ? 1 + Math.floor(r() * 3) : 0;
+        const first = pos.length / 3;
+        for (const [du, dv] of [[-1, 0], [1, 0], [1, 1], [-1, 1]]) {
+          const along = (c - (cols - 1) / 2) * WIN.pitchX + (du * WIN.w) / 2;
+          // seen from outside, "right" on this facade is (nz, 0, -nx)
+          pos.push(nx * (out + 0.015) + nz * along, y + dv * WIN.h, nz * (out + 0.015) - nx * along);
+          nor.push(nx, 0, nz);
+          uv.push((level + 0.5) / 4, 0.5);
+        }
+        index.push(first, first + 1, first + 2, first, first + 2, first + 3);
+      }
+    }
+  }
+  const g = new BufferGeometry();
+  g.setAttribute("position", new Float32BufferAttribute(pos, 3));
+  g.setAttribute("normal", new Float32BufferAttribute(nor, 3));
+  g.setAttribute("uv", new Float32BufferAttribute(uv, 2));
+  g.setIndex(index);
+  return g;
+}
+
 type Building = {
+  /** What the pointer ray hits. For a kit building it is an invisible box. */
   mesh: Mesh;
-  i: number;
   side: number;
   cx: number;
   cz: number;
   w: number;
   d: number;
   h: number;
-  facade: MeshLambertMaterial;
+  /** Window material of a code-drawn building. Kit buildings share one material, lit with the whole city. */
+  glass: MeshLambertMaterial | null;
   shop: number;
   base: number;
   lift: number;
   hover: number;
   level: number;
+  /** Lights storefront, sign and sidewalk pool (0 to 1). */
+  paint: (level: number) => void;
+  raise: (y: number) => void;
+  /** Takes a code-drawn building off the street when the kit replaces it. */
+  retire?: () => void;
 };
 
 type AttemptSign = { mesh: Mesh<PlaneGeometry, MeshBasicMaterial>; canvas: HTMLCanvasElement; tex: CanvasTexture; text: string; t0: number };
@@ -131,6 +175,8 @@ const PLAZA = 0x302818;
 /** Cross streets (z). Kept away from the visitor's building (z 4) and the rival (z -6). */
 const CROSS = [-72, -40, 24, 56];
 const CROSS_HALF = 3;
+/** Where the lamp of the kit's "poste" ends up (|x| and height). tools/rua-blender/montar_kit.py puts the poles at |x| 3.85. */
+const KIT_LAMP_HEAD = { x: 2.6, y: 3.1 };
 /** Street names painted on the ground, like a map. */
 const STREET_NAMES: { text: string; x: number; z: number; along: boolean }[] = [
   { text: "AV. CENTRAL", x: -1.6, z: 38, along: true },
@@ -301,7 +347,9 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
     const lampSpots: [number, number][] = [];
     if (proc.lamps) for (let z = -96; z <= 96; z += 12) for (const sx of [-3.75, 3.75]) {
       const zz = z + (sx > 0 ? 6 : 0);
-      if (!onCross(zz, 1)) lampSpots.push([sx, zz]);
+      // no lamp at left z 12 (right in front of the camera of the second section) nor at right z 6 (in front
+      // of the visitor's building)
+      if (!onCross(zz, 1) && !(sx < 0 && zz === 12) && !(sx > 0 && zz === 6)) lampSpots.push([sx, zz]);
     }
     const poles = new InstancedMesh(new CylinderGeometry(0.05, 0.07, 3.4, 6), new MeshLambertMaterial({ color: raw(0x1a2340) }), lampSpots.length);
     const lampPools = new InstancedMesh(new PlaneGeometry(4.4, 4.4), new MeshBasicMaterial({ map: glow, color: raw(0x56669a), transparent: true, opacity: 0.3, blending: AdditiveBlending, depthWrite: false }), lampSpots.length);
@@ -315,14 +363,40 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
     lampGeo.setAttribute("position", new Float32BufferAttribute(lampPos, 3));
     const lamps = new Points(lampGeo, new PointsMaterial({ map: glow, color: raw(0xcfd9ff), size: 2.6, sizeAttenuation: true, transparent: true, opacity: 0.5, blending: AdditiveBlending, depthWrite: false }));
     scene.add(poles, lampPools, lamps);
+    // the kit brings its own poles (procedural.poles: false): drop ours and move the glow under the kit lamp
+    const swapToKitPoles = () => {
+      poles.visible = false;
+      const at = lampGeo.getAttribute("position");
+      lampSpots.forEach(([sx, zz], i) => at.setXYZ(i, Math.sign(sx) * KIT_LAMP_HEAD.x, KIT_LAMP_HEAD.y, zz));
+      at.needsUpdate = true;
+    };
 
     await yieldToMain();
     if (disposed) return;
 
     // front-row buildings
-    const blds: Building[] = [];
+    let blds: Building[] = [];
     const roofMats = BLOCK_TONES.map((t) => new MeshLambertMaterial({ color: raw(t.roof) }));
-    const texV = [0, 1, 2, 3, 4, 5].map((i) => winTex(11 + i));
+    const facadeMats = BLOCK_TONES.map((t) => new MeshLambertMaterial({ color: raw(t.facade) }));
+    // the four light levels a window can have (read as linear values, like the rest of the scene)
+    const levels = document.createElement("canvas");
+    levels.width = 4;
+    levels.height = 1;
+    const lg = levels.getContext("2d")!;
+    [0, 0.45, 0.7, 1].forEach((v, i) => {
+      const c = Math.round(v * 255);
+      lg.fillStyle = `rgb(${c},${c},${c})`;
+      lg.fillRect(i, 0, 1, 1);
+    });
+    const levelTex = new CanvasTexture(levels);
+    levelTex.magFilter = levelTex.minFilter = NearestFilter;
+    levelTex.generateMipmaps = false;
+    textures.push(levelTex);
+    // the visitor's building grows during the story: its windows are laid out for the final height and
+    // revealed floor by floor, so they are never stretched
+    const GROW = 1.7;
+    const youClip = new Plane(new Vector3(0, -1, 0), 0);
+    let youWindows: Mesh | null = null;
     const span = mobile ? 64 : 96;
     const specs: { side: number; cz: number; w: number; d: number; h: number; shop: number; base: number }[] = [];
     for (const side of proc.front ? [-1, 1] : []) {
@@ -355,45 +429,76 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
     const pools = new InstancedMesh(new PlaneGeometry(1, 1), new MeshBasicMaterial({ map: glow, color: 0xffffff, transparent: true, blending: AdditiveBlending, depthWrite: false }), n);
     kept.forEach((s, i) => {
       const cx = s.side * (5 + s.d / 2);
-      const tex = texV[Math.floor(R() * texV.length)].clone();
-      tex.needsUpdate = true;
-      tex.repeat.set(Math.max(1, s.w / 3.2), Math.max(1, s.h / 3.6));
-      textures.push(tex);
+      const seed = Math.floor(R() * 1e6);
       // the visitor and the rival keep the original navy so the story colors (amber, signal blue) stay readable
       const special = i >= kept.length - 2;
       const tone = special ? 0 : Math.floor(R() * BLOCK_TONES.length);
       const tint = special ? WINDOW_TINTS[0] : WINDOW_TINTS[Math.floor(R() * WINDOW_TINTS.length)];
-      const facade = new MeshLambertMaterial({ color: raw(BLOCK_TONES[tone].facade), emissive: raw(tint), emissiveMap: tex, emissiveIntensity: 0 });
-      const mesh = new Mesh(buildingBox(s.d, s.h, s.w), [facade, roofMats[tone]]);
+      const visitor = i === kept.length - 2;
+      const glass = new MeshLambertMaterial({
+        color: raw(0x081022), emissive: raw(tint), emissiveMap: levelTex, emissiveIntensity: 0,
+        polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1, clippingPlanes: visitor ? [youClip] : null,
+      });
+      const mesh = new Mesh(buildingBox(s.d, s.h, s.w), [facadeMats[tone], roofMats[tone]]);
       mesh.position.set(cx, 0, s.cz);
       scene.add(mesh);
+      const windows = new Mesh(windowsGeometry(s.d, visitor ? s.h * GROW : s.h, s.w, seed), glass);
+      if (visitor) {
+        youWindows = windows;
+        windows.position.set(cx, 0, s.cz);
+        scene.add(windows);
+      } else mesh.add(windows);
       place(fronts, i, s.side * 4.97, 0.95, s.cz, 0, (-s.side * Math.PI) / 2, s.w * 0.78, 1.5);
       place(signs, i, s.side * 4.96, 2.0, s.cz, 0, (-s.side * Math.PI) / 2, s.w * 0.5, 0.22);
       place(pools, i, s.side * 3.2, 0.06, s.cz, -Math.PI / 2, 0, 3.6, s.w * 1.15);
       fronts.setColorAt(i, DARK);
       signs.setColorAt(i, DARK);
       pools.setColorAt(i, tmp.setRGB(0, 0, 0));
-      const b: Building = { mesh, i, side: s.side, cx, cz: s.cz, w: s.w, d: s.d, h: s.h, facade, shop: s.shop, base: s.base, lift: 0, hover: 0, level: -1 };
+      const b: Building = {
+        mesh, side: s.side, cx, cz: s.cz, w: s.w, d: s.d, h: s.h, glass, shop: s.shop, base: s.base, lift: 0, hover: 0, level: -1,
+        paint: (level) => {
+          fronts.setColorAt(i, tmp.copy(DARK).lerp(AMBER, level));
+          signs.setColorAt(i, tmp.copy(DARK).lerp(AMBER, level * 0.75));
+          pools.setColorAt(i, tmp.copy(AMBER).multiplyScalar(level * 0.6));
+          for (const m of [fronts, signs, pools]) m.instanceColor!.needsUpdate = true;
+        },
+        raise: (y) => {
+          mesh.position.y = y;
+          place(fronts, i, s.side * 4.97, 0.95 + y, s.cz, 0, (-s.side * Math.PI) / 2, s.w * 0.78, 1.5);
+          place(signs, i, s.side * 4.96, 2 + y, s.cz, 0, (-s.side * Math.PI) / 2, s.w * 0.5, 0.22);
+          fronts.instanceMatrix.needsUpdate = true;
+          signs.instanceMatrix.needsUpdate = true;
+        },
+        retire: () => {
+          mesh.visible = false;
+          for (const m of [fronts, signs, pools]) {
+            m.setMatrixAt(i, new Matrix4().makeScale(0, 0, 0));
+            m.instanceMatrix.needsUpdate = true;
+          }
+        },
+      };
       mesh.userData.b = b;
       blds.push(b);
     });
     scene.add(fronts, signs, pools);
     const you = blds[n - 2];
     const rival = blds[n - 1];
-    const meshes = blds.map((b) => b.mesh);
+    let meshes = blds.map((b) => b.mesh);
 
     // back city: an 8×8 grid of lots, one thing per lot (block, park or plaza), so nothing overlaps.
     // Windows only on the facades (group 0); roofs (group 1) stay plain, so no "lights on top".
     const CELL = 8;
     const maxBack = mobile ? 150 : 320;
-    type Lot = { x: number; z: number };
+    type Lot = { x: number; z: number; kit: boolean };
+    const area = proc.kitArea;
+    const inKit = (x: number, z: number) => !!area && Math.abs(x) <= area.x && z >= area.z[0] && z <= area.z[1];
     const lots: { block: Lot[]; park: Lot[]; plaza: Lot[] } = { block: [], park: [], plaza: [] };
     for (let gx = 2; gx <= 11; gx++) {
       for (let gz = -14; gz <= 14; gz++) {
         const z = gz * CELL;
         if (onCross(z, CELL / 2 - 0.5)) continue;
         for (const side of [-1, 1]) {
-          const lot = { x: side * gx * CELL, z };
+          const lot = { x: side * gx * CELL, z, kit: inKit(side * gx * CELL, z) };
           const r = R();
           if (r < 0.6) { if (proc.back) lots.block.push(lot); }
           else if (r < 0.72) { if (proc.parks) lots.park.push(lot); }
@@ -404,8 +509,18 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
     const blockLots = lots.block.slice(0, maxBack);
     const backN = blockLots.length;
     const bTex = winTex(99);
-    bTex.repeat.set(2, 3);
     const backMat = new MeshLambertMaterial({ color: 0xffffff, emissive: raw(0x9fb3ff), emissiveMap: bTex, emissiveIntensity: 0.2 });
+    // every box has its own size: repeat the window texture a whole number of times per facade (about one
+    // window per 1.1 units), so no window is stretched or cut at an edge
+    backMat.onBeforeCompile = (shader) => {
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <uv_vertex>",
+        `#include <uv_vertex>
+        vec3 boxSize = vec3(length(instanceMatrix[0].xyz), length(instanceMatrix[1].xyz), length(instanceMatrix[2].xyz));
+        float faceWidth = abs(normal.x) > 0.5 ? boxSize.z : boxSize.x;
+        vEmissiveMapUv = uv * max(vec2(1.0), floor(vec2(faceWidth, boxSize.y) / 1.1)) / 4.0;`,
+      );
+    };
     const backRoof = new MeshLambertMaterial({ color: 0xc8c8c8 });
     const back = new InstancedMesh(buildingBox(1, 1, 1), [backMat, backRoof], Math.max(1, backN));
     back.count = backN;
@@ -430,8 +545,8 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
       tileMesh.setColorAt(i, raw(t.c));
     });
     tileMesh.count = tiles.length;
-    const treeSpots: [number, number, number][] = [];
-    for (const p of lots.park) for (let k = 0; k < 4; k++) treeSpots.push([p.x + (R() - 0.5) * 5, p.z + (R() - 0.5) * 5, 0.5 + R() * 0.35]);
+    const treeSpots: [number, number, number, boolean][] = [];
+    for (const p of lots.park) for (let k = 0; k < 4; k++) treeSpots.push([p.x + (R() - 0.5) * 5, p.z + (R() - 0.5) * 5, 0.5 + R() * 0.35, p.kit]);
     const treeGeo = new ConeGeometry(0.9, 2.4, 7);
     treeGeo.translate(0, 1.4, 0);
     const trees = new InstancedMesh(treeGeo, new MeshLambertMaterial({ color: 0xffffff }), Math.max(1, treeSpots.length));
@@ -444,6 +559,56 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
     });
     trees.count = treeSpots.length;
     scene.add(tileMesh, trees);
+
+    // front row from the kit: same story as the code buildings (amber storefront, pool on the sidewalk, hover)
+    const openKitShops = (shops: KitShop[]) => {
+      const zone = proc.frontArea;
+      if (!shops.length) return;
+      const replaced = (b: Building) => !!zone && b !== you && b !== rival && b.cz >= zone.z[0] && b.cz <= zone.z[1];
+      blds.filter(replaced).forEach((b) => b.retire?.());
+      const shopPools = new InstancedMesh(new PlaneGeometry(1, 1), pools.material, shops.length);
+      const hitBox = new BoxGeometry(1, 1, 1);
+      hitBox.translate(0, 0.5, 0);
+      const unseen = new MeshBasicMaterial({ visible: false });
+      const chance = rng(31);
+      const opened = shops.map((s, i): Building => {
+        place(shopPools, i, s.side * 3.2, 0.065, s.z, -Math.PI / 2, 0, 3.6, s.w * 1.15);
+        shopPools.setColorAt(i, tmp.setRGB(0, 0, 0));
+        const mesh = new Mesh(hitBox, unseen);
+        mesh.position.set(s.x, 0, s.z);
+        mesh.scale.set(s.d, s.h, s.w);
+        scene.add(mesh);
+        const b: Building = {
+          mesh, side: s.side, cx: s.x, cz: s.z, w: s.w, d: s.d, h: s.h, glass: null,
+          shop: chance() < 0.34 ? 0.35 + chance() * 0.45 : 0, base: 0, lift: 0, hover: 0, level: -1,
+          paint: (level) => {
+            s.light(tmp.copy(DARK).lerp(AMBER, level));
+            shopPools.setColorAt(i, tmp.copy(AMBER).multiplyScalar(level * 0.6));
+            shopPools.instanceColor!.needsUpdate = true;
+          },
+          raise: s.raise,
+        };
+        mesh.userData.b = b;
+        return b;
+      });
+      scene.add(shopPools);
+      blds = [...blds.filter((b) => !replaced(b)), ...opened];
+      meshes = blds.map((b) => b.mesh);
+    };
+
+    // the kit takes over its area only once it is on screen: if it fails to load, the code city stays whole
+    const handOverToKit = (shops: KitShop[]) => {
+      const gone = new Matrix4().makeScale(0, 0, 0);
+      const clear = (mesh: InstancedMesh, inside: boolean[]) => {
+        inside.forEach((yes, i) => { if (yes) mesh.setMatrixAt(i, gone); });
+        mesh.instanceMatrix.needsUpdate = true;
+      };
+      clear(back, blockLots.map((l) => l.kit));
+      clear(tileMesh, tiles.map((t) => t.kit));
+      clear(trees, treeSpots.map((t) => t[3]));
+      if (proc.poles === false) swapToKitPoles();
+      openKitShops(shops);
+    };
 
     await yieldToMain();
     if (disposed) return;
@@ -728,8 +893,6 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
       }
 
       const city = cur.city;
-      let colorsDirty = false;
-      let matricesDirty = false;
       for (const b of blds) {
         const hoverTarget = b === hovered ? 1 : 0;
         if (b.hover !== hoverTarget) {
@@ -737,10 +900,7 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
           const lift = b.hover * 0.35;
           if (lift !== b.lift) {
             b.lift = lift;
-            b.mesh.position.y = lift;
-            place(fronts, b.i, b.side * 4.97, 0.95 + lift, b.cz, 0, (-b.side * Math.PI) / 2, b.w * 0.78, 1.5);
-            place(signs, b.i, b.side * 4.96, 2 + lift, b.cz, 0, (-b.side * Math.PI) / 2, b.w * 0.5, 0.22);
-            matricesDirty = true;
+            b.raise(lift);
           }
         }
         let level: number;
@@ -748,38 +908,28 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
           const dorHold = st.i === 1 && st.t === 0;
           const flick = dorHold && !reduce && Math.sin(now * 2.3) > 0.93 && Math.random() < 0.45 ? 0.28 : 0;
           level = Math.max(cur.you, flick, b.hover * 0.6);
-          b.facade.emissiveIntensity = 0.05 + cur.you * 0.5;
+          b.glass!.emissiveIntensity = 0.05 + cur.you * 0.5;
         } else if (b === rival) {
           level = clamp(cur.rival * 0.85 + pulse * 0.4 + 0.15);
-          b.facade.emissiveIntensity = 0.25 + cur.rival * 0.35;
+          b.glass!.emissiveIntensity = 0.25 + cur.rival * 0.35;
         } else {
           level = Math.max(b.shop * clamp(city * 1.7), b.hover * 0.9);
-          b.facade.emissiveIntensity = (0.12 + b.base * 0.85) * city * 0.9 + b.hover * 0.25;
+          if (b.glass) b.glass.emissiveIntensity = (0.12 + b.base * 0.85) * city * 0.9 + b.hover * 0.25;
         }
         if (Math.abs(level - b.level) > 0.002) {
           b.level = level;
-          fronts.setColorAt(b.i, tmp.copy(DARK).lerp(AMBER, level));
-          signs.setColorAt(b.i, tmp.copy(DARK).lerp(AMBER, level * 0.75));
-          pools.setColorAt(b.i, tmp.copy(AMBER).multiplyScalar(level * 0.6));
-          colorsDirty = true;
+          b.paint(level);
         }
-      }
-      if (colorsDirty) {
-        fronts.instanceColor!.needsUpdate = true;
-        signs.instanceColor!.needsUpdate = true;
-        pools.instanceColor!.needsUpdate = true;
-      }
-      if (matricesDirty) {
-        fronts.instanceMatrix.needsUpdate = true;
-        signs.instanceMatrix.needsUpdate = true;
       }
       backMat.emissiveIntensity = 0.06 + city * 0.38;
       for (const m of kitGlow) m.emissiveIntensity = m.userData.base * (0.3 + city * 1.4);
 
       // the visitor's building: grows, gets scanned, then lights up with its own beam
-      const gS = 1 + 0.7 * cur.grow;
+      const gS = 1 + (GROW - 1) * cur.grow;
       const yH = you.h * gS;
       you.mesh.scale.y = gS;
+      youClip.constant = yH + you.lift - WIN.top;
+      if (youWindows) youWindows.position.y = you.lift;
       clip.constant = cur.scan * yH + you.lift + 0.001;
       (edges.material as LineBasicMaterial).opacity = cur.scan > 0.002 ? 0.95 * (1 - cur.you * 0.7) : 0;
       edges.visible = cur.scan > 0.002;
@@ -852,7 +1002,12 @@ export function createWorld(refs: WorldRefs): (() => void) | null {
     if (layout?.items?.length) {
       import("./kit")
         .then(({ buildKitCity }) => buildKitCity(scene, layout, textures, () => disposed))
-        .then((g) => { kitGlow = g; lastInput = performance.now(); })
+        .then((kit) => {
+          if (disposed) return;
+          kitGlow = kit.glow;
+          handOverToKit(kit.shops);
+          lastInput = performance.now();
+        })
         .catch((err) => console.warn("[rua] kit não carregou; a cidade desenhada por código continua", err));
     }
   })();

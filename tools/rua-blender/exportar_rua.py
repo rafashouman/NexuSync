@@ -114,39 +114,56 @@ def find_layer(lc, name):
 kit_layer = find_layer(view_layer.layer_collection, "kit")
 kit_layer.exclude = False
 view_layer.active_layer_collection = kit_layer
-bpy.ops.export_scene.gltf(
-    filepath=raw_glb,
-    export_format="GLB",
-    use_active_collection=True,
-    use_visible=False,
-    use_selection=False,
-    export_apply=True,
-    export_yup=True,
-    export_cameras=False,
-    export_lights=False,
-    export_animations=False,
-)
+# Cada peça vai para a origem só durante o export. Assim o transform de cada nó no .glb é o da própria
+# compressão, e o kit.ts pode aplicá-lo sem herdar o lugar onde a peça está dentro do kit.
+guardado = [(o, o.matrix_world.copy()) for o in kit_objs]
+try:
+    for o, _ in guardado:
+        o.matrix_world = Matrix.Identity(4)
+    view_layer.update()
+    bpy.ops.export_scene.gltf(
+        filepath=raw_glb,
+        export_format="GLB",
+        use_active_collection=True,
+        use_visible=False,
+        use_selection=False,
+        export_apply=True,
+        export_yup=True,
+        export_cameras=False,
+        export_lights=False,
+        export_animations=False,
+    )
+finally:
+    for o, matriz in guardado:
+        o.matrix_world = matriz
 
-# 3) compressão: sem join/flatten/instance, senão as peças viram um bloco só e o código não acha pelo nome
+# 3) compressão: texturas em WebP sem perdas (com perdas, as cores de uma paleta pequena mudam) e meshopt na
+# geometria. Sem join/flatten/instance, senão as peças viram um bloco só e o código não acha pelo nome.
+webp_glb = os.path.join(blend_dir, "rua-kit-webp.glb")
+passos = [
+    ["webp", raw_glb, webp_glb, "--lossless", "true"],
+    ["optimize", webp_glb, final_glb, "--compress", "meshopt", "--texture-compress", "false",
+     "--join", "false", "--flatten", "false", "--instance", "false", "--palette", "false", "--simplify", "false"],
+]
 ok = False
 if COMPRIMIR:
-    cmd = ["npx", "--yes", "@gltf-transform/cli", "optimize", raw_glb, final_glb,
-           "--compress", "meshopt", "--texture-compress", "webp",
-           "--join", "false", "--flatten", "false", "--instance", "false",
-           "--palette", "false", "--simplify", "false"]
     try:
-        res = subprocess.run(cmd, cwd=root, shell=(os.name == "nt"), capture_output=True, text=True)
-        ok = res.returncode == 0
-        if not ok:
-            print(res.stdout[-2000:], res.stderr[-2000:])
+        for passo in passos:
+            res = subprocess.run(["npx", "--yes", "@gltf-transform/cli", *passo], cwd=root,
+                                 shell=(os.name == "nt"), capture_output=True, text=True)
+            ok = res.returncode == 0
+            if not ok:
+                print(res.stdout[-2000:], res.stderr[-2000:])
+                break
     except Exception as err:
+        ok = False
         print("gltf-transform falhou:", err)
+    if os.path.exists(webp_glb):
+        os.remove(webp_glb)
 if not ok:
     shutil.copyfile(raw_glb, final_glb)
     if COMPRIMIR:
-        print("AVISO: kit copiado sem compressão. Rode no terminal, na pasta do projeto:")
-        print("  npx @gltf-transform/cli optimize tools/rua-blender/rua-kit-bruto.glb public/rua/models/rua-kit.glb "
-              "--compress meshopt --texture-compress webp --join false --flatten false --instance false --palette false --simplify false")
+        print("AVISO: kit copiado sem compressão. O gltf-transform precisa do Node instalado e, na 1ª vez, de internet.")
 
 kb = os.path.getsize(final_glb) / 1024
 msg = [f"Rua exportada: {len(items)} cópias de {len(count)} peças · kit {kb:.0f} KB" + ("" if ok or not COMPRIMIR else " (sem compressão)")]

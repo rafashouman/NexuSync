@@ -37,6 +37,8 @@ No topo de `scene.ts`, logo depois de `ATTEMPT_LABELS`:
 - **Prédio do visitante e do concorrente**: `YOU` e `RIV`, e a linha `kept.push(...)` logo abaixo, que define o tamanho dos dois.
 - **Cidade do fundo**: bloco `// back city`. É uma grade de lotes de 8 × 8 (`CELL`). Cada lote recebe só uma coisa (prédio, parque ou praça), por isso nada encavala. As chances estão em `if (r < 0.6)` (prédio), `< 0.72` (parque) e `< 0.78` (praça); o resto fica vazio.
 - Os telhados usam um material sem janelas (grupo 1 da `buildingBox`). Não coloque `emissiveMap` neles, senão voltam as "luzes no topo".
+- **Janelas da fileira da frente** (incluindo o seu prédio e o concorrente): uma janela por quadrado, em colunas e andares inteiros, começando acima do letreiro. Ajuste tamanho e espaçamento em `WIN`, no topo de `scene.ts`. As do seu prédio são montadas na altura final e aparecem andar por andar enquanto ele cresce.
+- **Janelas do fundo**: a textura se repete um número inteiro de vezes em cada fachada (cerca de uma janela a cada 1,1), então nenhuma fica cortada na quina (`backMat.onBeforeCompile`).
 
 ## Câmera e história
 
@@ -61,9 +63,32 @@ A ideia: **um arquivo com cada peça uma vez** (o kit) e **uma lista de onde cad
 | `tools/rua-blender/rua-mapa.blend` | Onde você monta tudo. Tem três coleções: `ref`, `kit` e `mapa`. |
 | `tools/rua-blender/exportar_rua.py` | O botão de exportar (também vem dentro do `.blend`, aba Scripting). |
 | `tools/rua-blender/criar_mapa.py` | Recria o `.blend` do zero com a rua nas posições exatas. **Sobrescreve** o arquivo. |
+| `tools/rua-blender/montar_kit.py` | Monta o kit noturno e um mapa inicial a partir dos `.glb` originais. **Sobrescreve** as coleções `kit` e `mapa`. |
+| `tools/rua-blender/assets/` | Os modelos originais, usados só pelo `montar_kit.py`. Ficam fora de `public/` para não irem ao ar. |
 | `public/rua/models/rua-kit.glb` | O kit exportado (gerado). |
 | `public/rua/city.json` | O mapa exportado (gerado), mais as chaves do que continua sendo desenhado por código. |
 | `src/components/rua/world/kit.ts` | O código que lê os dois e cria um `InstancedMesh` por peça. |
+
+### O kit atual (montado pelo `montar_kit.py`)
+
+20 peças: `predio_1` a `predio_7`, uma `predio_N_vitrine` para cada prédio, `arvore_1`, `arvore_2`, `banco`, `poste`, `gramado` e `praca`. Todas usam **um material** (`kit_noite`) e duas texturas de 64 px: `kit_paleta` (cor) e `kit_paleta_luz` (janelas e lâmpadas acesas). A frente de cada peça aponta para **+X**: do lado esquerdo da avenida não precisa girar; do lado direito, gire 180° no eixo Z.
+
+Para mudar cores, escala ou quais janelas acendem, edite o topo do `montar_kit.py` e rode de novo:
+
+`& "C:\Program Files\Blender Foundation\Blender 5.0\blender.exe" --background tools/rua-blender/rua-mapa.blend --python tools/rua-blender/montar_kit.py -- --refazer`
+
+Depois exporte (passo 6 abaixo, ou o mesmo comando trocando o script por `exportar_rua.py` e sem o `-- --refazer`).
+
+**Atenção:** `--refazer` apaga o que você moveu à mão no `mapa`. Depois de começar a editar o mapa no Blender, não rode mais o `montar_kit.py` (ou salve uma cópia do `.blend` antes).
+
+Modelo novo no kit: pinte as faces com a mesma paleta, ou acrescente o arquivo na lista `PREDIOS` do `montar_kit.py`, dizendo o papel de cada cor original (parede, vidro, friso…).
+
+### Fileira da frente e vitrines
+
+- Um prédio do `mapa` com **|x| menor que 13** é uma loja da avenida: o site acende a vitrine em âmbar, cria a poça de luz na calçada e levanta o prédio quando o mouse passa. Nem toda loja acende sozinha (cerca de um terço), e todas acendem ao passar o mouse.
+- A vitrine é a peça `predio_N_vitrine`: uma cópia do vidro do térreo (mais o letreiro), um pouco à frente do prédio. **Não coloque vitrines no mapa**; o site acrescenta sozinho. Se mudar a forma de um prédio no `kit`, rode o `montar_kit.py` antes de começar a editar o mapa, ou ajuste a vitrine junto.
+- Encoste a fachada em **x = ±5,05** (a frente da peça aponta para +X; no lado direito, gire 180°).
+- Perto das câmeras os prédios precisam ser baixos (`TETOS` no `montar_kit.py`): lado direito entre z 6 e 24 até 3,8; lado esquerdo entre z 0 e 24 até 4,2; lado esquerdo entre z -18 e 0 até 5.
 
 ### No Blender
 
@@ -79,14 +104,16 @@ A ideia: **um arquivo com cada peça uma vez** (o kit) e **uma lista de onde cad
 5. Cor por cópia (opcional): selecione a cópia, Object Properties › Custom Properties › adicione `tint` como texto, por exemplo `#9fb3ff`. A cor multiplica a textura.
 6. Aba **Scripting** › texto `exportar_rua.py` › **Run Script** (Alt+P). O console mostra quantas cópias de cada peça saíram e o peso do kit.
 
-O script já comprime o kit com o gltf-transform (meshopt + WebP). Ele desliga as opções que juntariam as peças num bloco só (`--join false --flatten false --instance false`); sem isso, o código não acharia cada peça pelo nome. Se a compressão falhar, o console mostra o comando para rodar no terminal.
+O script já comprime o kit com o gltf-transform (meshopt na geometria, WebP **sem perdas** nas texturas, para a paleta não mudar de cor). Ele desliga as opções que juntariam as peças num bloco só (`--join false --flatten false --instance false`); sem isso, o código não acharia cada peça pelo nome. Se a compressão falhar, o kit sai sem compressão e o console avisa (precisa do Node e, na primeira vez, de internet).
+
+Use sempre o `exportar_rua.py`: ele leva cada peça à origem durante o export (e devolve ao lugar depois). Um `.glb` exportado à mão, com as peças espalhadas, aparece deslocado no site.
 
 ### No `city.json`
 
 ```json
 {
  "kit": "/rua/models/rua-kit.glb",
- "procedural": {"front": true, "back": true, "parks": true, "lamps": true},
+ "procedural": {"front": true, "back": true, "parks": true, "lamps": true, "poles": false, "kitArea": {"x": 36, "z": [-68, 52]}, "frontArea": {"z": [-69, 53]}},
  "items": [
   {"asset": "arvore", "p": [-16, 0, 32], "s": 0.8},
   {"asset": "predio_a", "p": [32, 0, -24], "r": [0, 1.571, 0], "tint": "#9fb3ff"}
@@ -98,14 +125,18 @@ O script já comprime o kit com o gltf-transform (meshopt + WebP). Ele desliga a
   - `front`: a fileira da frente (o seu prédio e o do concorrente ficam sempre).
   - `back`: os prédios do fundo.
   - `parks`: os parques, as praças e as árvores.
-  - `lamps`: os postes.
+  - `lamps`: os postes, com os halos e as poças de luz.
+  - `poles: false`: o kit traz os postes. Quando ele carrega, os postes do código somem e os halos vão para debaixo da lâmpada do kit (`KIT_LAMP_HEAD` em `scene.ts`). Os halos não seguem o mapa: mantenha os postes em x = ±3,85, nas mesmas posições z.
+  - `kitArea`: retângulo dos lotes do fundo que são do kit (`|x|` até `x`, `z` entre os dois valores). Fora dele continuam as caixas do código, que são muito mais leves. Dentro dele as caixas ficam só até o kit aparecer; se ele falhar, a cidade continua inteira.
+  - `frontArea`: trecho (em z) da fileira da frente que é do kit. Fora dele ficam as caixas do código; o seu prédio e o do concorrente ficam sempre. As pontas do trecho caem logo depois das transversais, para os dois tipos não se sobreporem.
   - A avenida, as transversais, as faixas e os nomes no chão ficam sempre.
 - `p` = posição, `r` = rotação em radianos, `s` = escala. Os eixos são os do three.js (Y para cima); o script já converte do Blender.
 - Com `"items": []` nada é baixado e a cidade é 100% código (o estado atual).
 
 ### Peso e luz
 
-- O kit carrega depois que a cena já está na tela e só se houver itens: não pesa no carregamento da página. Mesmo assim, mire em **até 1–1,5 MB** de kit; para a cidade toda, as cópias não somam nada.
+- O kit carrega depois que a cena já está na tela e só se houver itens: não pesa no carregamento da página. Mesmo assim, mire em **até 1–1,5 MB** de kit (hoje: cerca de 250 KB). No download as cópias não somam nada.
+- Na placa de vídeo elas somam: cada cópia desenha os triângulos da peça. O mapa atual tem cerca de 285 mil. Antes de aumentar a `kitArea` ou a `frontArea`, ou lotar o mapa, teste num celular de verdade.
 - Se o kit crescer, divida em `kit-perto` e `kit-fundo` (dois `city.json` ou um campo novo). Peça ajuda para ligar isso no `kit.ts`.
 - Materiais do kit viram `MeshLambertMaterial` (o mesmo tipo de luz da cena). Se a peça tem **emissive** (janelas acesas na textura), ela acende e apaga junto com a cidade conforme a rolagem.
 - Para recriar a referência depois de mudar `CROSS` ou o tamanho da rua:
